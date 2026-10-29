@@ -58,6 +58,13 @@ Get the latest build from [Releases](https://github.com/wesleypayton/deskflow-pl
 The files aren't code signed, so Windows SmartScreen will warn the first time: choose **More info**, then
 **Run anyway**. Deskflow Plus and Deskflow share their settings and network port, so don't run both at once.
 
+> [!NOTE]
+> Deskflow Plus needs the Microsoft Visual C++ Redistributable. The setup installs it for you and the
+> portable copy carries its own, so you shouldn't need it separately. If Windows reports a missing
+> `VCRUNTIME140` or `MSVCP140` DLL, install the latest
+> [`vc_redist.x64.exe`](https://aka.ms/vc14/vc_redist.x64.exe)
+> ([details from Microsoft](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)).
+
 ## Building
 
 Build it the same way as Deskflow: see [docs/dev/build.md](../docs/dev/build.md). After building a Release
@@ -73,6 +80,12 @@ and its contributors. Deskflow began as Synergy, created by Chris Schoeneman in 
 - Deskflow: [github.com/deskflow/deskflow](https://github.com/deskflow/deskflow)
 - Deskflow contributors: [contributors](https://github.com/deskflow/deskflow/graphs/contributors)
 - Similar projects: [Input Leap](https://github.com/input-leap/input-leap), [Lan Mouse](https://github.com/feschber/lan-mouse), [Synergy](https://symless.com/synergy)
+
+## AI disclosure
+
+The Deskflow Plus additions (the free-form layout, monitor reporting, file transfer and Windows
+packaging) were coded with **Claude Opus 5.5**, an AI model made by Anthropic, working under the
+maintainer's direction. The original Deskflow code it builds on was written by the Deskflow contributors.
 
 ## License
 
