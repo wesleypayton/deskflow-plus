@@ -75,7 +75,7 @@ void HelpDialog::changeEvent(QEvent *e)
 
 void HelpDialog::updateText()
 {
-  setWindowTitle(tr("%1 Help").arg(kAppName));
+  setWindowTitle(tr("%1 Help").arg(kDisplayName));
   m_btnClose->setText(tr("Close"));
 }
 

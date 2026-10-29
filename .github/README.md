@@ -109,8 +109,11 @@ be copied at once (512 MB by default, 0 turns it off).
   one who crossed last takes over, and the other's mouse goes back to working on their own computer.
 - **A client's mouse can't carry a file drag across**, and it doesn't cross while one of its buttons is held,
   so dragging a window against the edge still snaps it.
-- **Crossing follows each computer's outline, not its monitors.** With two monitors of different heights,
-  the cursor can only cross where the computer's overall outline touches the next computer.
+- **The cursor only crosses at the outer edge of a computer.** It crosses wherever a monitor on each side
+  meets that edge, which the green lines show. A monitor set back from the edge, such as the shorter of
+  two side by side, can't be crossed from on that side.
+- **Dragging files needs the Deskflow Plus window running** (it can be closed to the tray) when Deskflow Plus
+  is installed, as it does the parts of a drop that must run as you.
 - **Not yet tried on two separate computers**: using a client's own mouse and keyboard on other computers,
   dropping into an open folder or onto the desktop, dropping into the right tab of an Explorer window with
   several, and dragging files that start on a client.
@@ -120,11 +123,14 @@ be copied at once (512 MB by default, 0 turns it off).
 
 ## Roadmap
 
-- Crossing between individual monitors rather than each computer's outline
+- Crossing from monitors set back from a computer's outer edge
 - Untested macOS and Linux builds, once the features are in good shape
 
 ## Troubleshooting
 
+- **The cursor won't cross part of an edge.** Only the green parts of an edge cross. Where a computer's
+  monitors don't reach the edge there's nothing to land on, so move the computers until the green line
+  covers the part you use.
 - **The computers don't connect.** Check both are on the same network, that Windows allowed Deskflow Plus
   through the firewall (look for Deskflow Plus or Deskflow in Windows Defender Firewall's allowed apps), and that
   Deskflow, Mouse Without Borders and ShareMouse aren't running.

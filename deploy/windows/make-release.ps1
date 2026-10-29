@@ -66,7 +66,7 @@ if (-not $bal) { throw 'the WiX Bal extension is missing: wix extension add --gl
 $setup = Join-Path $packages "$base-setup.exe"
 wix build "$PSScriptRoot\bundle.wxs" -arch x64 -ext $bal -ext WixToolset.Util.wixext `
   -d "Version=$version" -d "Msi=$msi" -d "VcRedist=$VcRedist" -d "RuntimeMinor=$runtimeMinor" `
-  -d "Icon=$repo\src\apps\res\deskflow.ico" -o $setup
+  -d "Icon=$repo\src\apps\res\deskflow.ico" -d "Logo=$PSScriptRoot\theme\logo.png" -o $setup
 if ($LASTEXITCODE -ne 0) { throw 'wix build failed' }
 
 # the portable .exe: a 7-Zip self-extracting archive of the portable folder

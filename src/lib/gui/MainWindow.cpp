@@ -142,7 +142,7 @@ MainWindow::MainWindow()
   if (TlsUtility::isEnabled()) {
     if (Settings::value(Settings::Security::KeySize).toInt() < 2048) {
       QMessageBox::information(
-          this, kAppName,
+          this, kDisplayName,
           tr("Your current TLS key is smaller than the minimum allowed size, A new key 2048-bit key will be generated.")
       );
       Settings::setValue(Settings::Security::KeySize, 2048);
@@ -409,7 +409,7 @@ void MainWindow::coreProcessError(CoreProcess::Error error)
       message.append(tr("\nAdditionally, check you are able to %1 the server config file: %2")
                          .arg(mode, Settings::serverConfigFile()));
     }
-    QMessageBox::warning(this, kAppName, message);
+    QMessageBox::warning(this, kDisplayName, message);
   }
 }
 
@@ -701,6 +701,7 @@ void MainWindow::setupTrayIcon()
   trayMenu->insertSeparator(m_actionMinimize);
   trayMenu->insertSeparator(m_actionTrayQuit);
   m_trayIcon->setContextMenu(trayMenu);
+  m_trayIcon->setToolTip(kDisplayName);
 
   setTrayIcon();
   m_trayIcon->show();
@@ -709,9 +710,9 @@ void MainWindow::setupTrayIcon()
 void MainWindow::applyConfig()
 {
   if (Settings::value(Settings::Gui::ShowVersionInTitle).toBool()) {
-    setWindowTitle(QStringLiteral("%1 - %2").arg(kAppName, kDisplayVersion));
+    setWindowTitle(QStringLiteral("%1 - %2").arg(kDisplayName, kDisplayVersion));
   } else {
-    setWindowTitle(kAppName);
+    setWindowTitle(kDisplayName);
   }
 
   if (const auto host = Settings::value(Settings::Client::RemoteHost).toString(); !host.isEmpty())
@@ -818,7 +819,7 @@ void MainWindow::handleConnectionRefused(deskflow::core::ConnectionRefusal reaso
 
   const auto address = Settings::value(Settings::Client::RemoteHost).toString();
   QMessageBox::warning(
-      this, tr("%1 Connection Error").arg(kAppName),
+      this, tr("%1 Connection Error").arg(kDisplayName),
       tr("<p>Failed to connect to the server '%1'.</p>"
          "<p>A Client with your name is already connected to the server.</p>"
          "Please ensure that you're using a unique name and that only a "
@@ -1069,13 +1070,13 @@ void MainWindow::updateText()
   m_actionQuit->setText(tr("&Quit"));
   m_actionTrayQuit->setText(tr("&Quit"));
   //: %1 will be the replaced with the appname
-  m_actionRestore->setText(tr("&Open %1").arg(kAppName));
+  m_actionRestore->setText(tr("&Open %1").arg(kDisplayName));
   m_actionSettings->setText(tr("&Preferences"));
   m_actionStartCore->setText(tr("&Start"));
   m_actionRestartCore->setText(tr("Rest&art"));
   m_actionStopCore->setText(tr("S&top"));
   //: %1 will be the replaced with the appname
-  m_actionAbout->setText(tr("About %1...").arg(kAppName));
+  m_actionAbout->setText(tr("About %1...").arg(kDisplayName));
 
   m_actionShowHelp->setText(tr("View &Help"));
 

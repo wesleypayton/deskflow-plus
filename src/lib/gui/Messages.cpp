@@ -38,7 +38,7 @@ void raiseCriticalDialog()
 void showErrorDialog(const QString &message, const QString &fileLine, QtMsgType type)
 {
   auto errorType = QtFatalMsg ? QObject::tr("fatal error") : QObject::tr("error");
-  auto title = QStringLiteral("%1 %2").arg(kAppName, errorType);
+  auto title = QStringLiteral("%1 %2").arg(kDisplayName, errorType);
   auto text = QObject::tr(
                   R"(<p>Please <a href="%1">report a bug</a>)"
                   " and copy/paste the following error:</p><pre>v%2\n%3\n%4</pre>"
@@ -114,7 +114,7 @@ void showCloseReminder(QWidget *parent)
                      "<p>%1 will continue to run in the background and can be accessed via the %1 icon in your "
                      "system notifications area. This setting can be disabled.</p>"
   )
-                     .arg(kAppName);
+                     .arg(kDisplayName);
 
 #if defined(Q_OS_LINUX)
   message.append(
@@ -122,29 +122,29 @@ void showCloseReminder(QWidget *parent)
           "<p>On Linux systems using GNOME 3, the notification area might be disabled. "
           R"(You may need to <a href="%1">enable an extension</a> to see the %2 tray icon.</p>)"
       )
-          .arg(kUrlGnomeTrayFix, kAppName)
+          .arg(kUrlGnomeTrayFix, kDisplayName)
   );
 #endif
 
-  QMessageBox::information(parent, kAppName, message);
+  QMessageBox::information(parent, kDisplayName, message);
 }
 
 void showFirstServerStartMessage(QWidget *parent)
 {
   QMessageBox::information(
-      parent, QObject::tr("%1 Server").arg(kAppName),
+      parent, QObject::tr("%1 Server").arg(kDisplayName),
       QObject::tr(
           "<p>Great, the %1 server is now running.</p>"
           "<p>Now you can connect your client computers to this server. "
           "You should see a prompt here on the server when a new client tries to connect.</p>"
       )
-          .arg(kAppName)
+          .arg(kDisplayName)
   );
 }
 
 void showFirstConnectedMessage(QWidget *parent)
 {
-  auto message = QObject::tr("<p>%1 is now connected!</p>").arg(kAppName);
+  auto message = QObject::tr("<p>%1 is now connected!</p>").arg(kDisplayName);
 
   if (Settings::value(Settings::Core::CoreMode).value<Settings::CoreMode>() == Settings::Server) {
     message.append(
@@ -168,7 +168,7 @@ void showFirstConnectedMessage(QWidget *parent)
             "the background, you'll need to keep this window open or minimized "
             "to keep %1 running.</p>"
         )
-            .arg(kAppName)
+            .arg(kDisplayName)
     );
   } else {
     message.append(
@@ -176,11 +176,11 @@ void showFirstConnectedMessage(QWidget *parent)
             "<p>You can now close this window and %1 will continue to run in "
             "the background. This setting can be disabled.</p>"
         )
-            .arg(kAppName)
+            .arg(kDisplayName)
     );
   }
 
-  const auto title = QObject::tr("%1 Connected").arg(kAppName);
+  const auto title = QObject::tr("%1 Connected").arg(kDisplayName);
   QMessageBox::information(parent, title, message);
 }
 
@@ -191,7 +191,7 @@ bool showNewClientPrompt(QWidget *parent, const QString &clientName)
     // When peer auth is enabled you will be prompted to allow the connection before seeing this dialog.
     // This is why we do not show a dialog with an option to ignore the new client
     QMessageBox::information(
-        parent, QObject::tr("%1 - New Client").arg(kAppName),
+        parent, QObject::tr("%1 - New Client").arg(kDisplayName),
         QObject::tr(
             "A new client called '%1' has been accepted. You'll need to add it to your server's computer layout."
         )
@@ -218,7 +218,7 @@ bool showUpdateCheckOption(QWidget *parent)
           "<p>Checking for updates requires an Internet connection.</p>"
           "<p>URL: <pre>%2</pre></p>"
       )
-          .arg(kAppName, Settings::value(Settings::Gui::UpdateCheckUrl).toString())
+          .arg(kDisplayName, Settings::value(Settings::Gui::UpdateCheckUrl).toString())
   );
 
   message.exec();
@@ -244,7 +244,7 @@ bool showDaemonOffline(QWidget *parent)
           "<p>If you did not stop the background service intentionally, there may be a problem with it. "
           "Please retry or try restarting the %1 service from the Windows services program.</p>"
       )
-          .arg(kAppName)
+          .arg(kDisplayName)
   );
   message.exec();
 

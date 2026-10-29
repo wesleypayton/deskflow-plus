@@ -190,9 +190,9 @@ void SettingsDialog::setLogToFile(bool logToFile)
 void SettingsDialog::resetAllSettings()
 {
   auto result = QMessageBox::question(
-      this, tr("%1 Clear Settings").arg(kAppName),
+      this, tr("%1 Clear Settings").arg(kDisplayName),
       tr("<p>Are you sure you want to clear all settings and restart %1?</p> <p>This action cannot be undone.</p>")
-          .arg(kAppName)
+          .arg(kDisplayName)
   );
   if (result == QMessageBox::Yes)
     Q_EMIT requestRemoveAllSettings();

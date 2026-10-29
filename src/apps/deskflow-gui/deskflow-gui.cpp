@@ -42,7 +42,7 @@ using namespace deskflow::gui;
 bool checkMacAssistiveDevices();
 #endif
 
-const static auto kHeader = QStringLiteral("%1: %2\n").arg(kAppName, kDisplayVersion);
+const static auto kHeader = QStringLiteral("%1: %2\n").arg(kDisplayName, kDisplayVersion);
 
 int main(int argc, char *argv[])
 {
@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setApplicationName(kAppName);
   QCoreApplication::setOrganizationName(kAppName);
+  QGuiApplication::setApplicationDisplayName(kDisplayName);
   QCoreApplication::setApplicationVersion(kVersion);
   QCoreApplication::setOrganizationDomain(kOrgDomain); // used in prefix, can't be a url
   QGuiApplication::setDesktopFileName(kRevFqdnName);
@@ -113,7 +114,7 @@ int main(int argc, char *argv[])
     if (!socket.waitForConnected()) {
       // If we can't connect to the other instance tell the user its running.
       // This should never happen but just incase we should show something
-      QMessageBox::information(nullptr, kAppName, QObject::tr("%1 is already running").arg(kAppName));
+      QMessageBox::information(nullptr, kDisplayName, QObject::tr("%1 is already running").arg(kDisplayName));
     }
     socket.disconnectFromServer();
     return s_exitDuplicate;
@@ -136,7 +137,7 @@ int main(int argc, char *argv[])
         "Please drag %1 to the Applications folder, "
         "and open it from there."
     );
-    QMessageBox::information(nullptr, kAppName, msgBody.arg(kAppName));
+    QMessageBox::information(nullptr, kDisplayName, msgBody.arg(kDisplayName));
     return 1;
   }
 

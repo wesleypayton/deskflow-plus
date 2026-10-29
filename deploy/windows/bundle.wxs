@@ -17,11 +17,17 @@
       IconSourceFile="$(Icon)">
 
     <BootstrapperApplication>
+      <!-- the standard hyperlink theme, plus a box to start the app when setup finishes -->
       <bal:WixStandardBootstrapperApplication
           Theme="hyperlinkLicense"
+          ThemeFile="$(sys.SOURCEFILEDIR)theme\SetupTheme.xml"
+          LocalizationFile="$(sys.SOURCEFILEDIR)theme\SetupTheme.wxl"
+          LogoFile="$(Logo)"
           LicenseUrl="https://github.com/wesleypayton/deskflow-plus/blob/master/LICENSE"
           ShowVersion="yes" />
     </BootstrapperApplication>
+
+    <Variable Name="LaunchAfterSetup" Type="numeric" Value="1" />
 
     <!-- the MSI needs at least this runtime, see wix-custom.cpp -->
     <util:RegistrySearch
@@ -44,7 +50,9 @@
         <ExitCode Value="1638" Behavior="success" />
         <ExitCode Value="3010" Behavior="scheduleReboot" />
       </ExePackage>
-      <MsiPackage SourceFile="$(Msi)" />
+      <MsiPackage SourceFile="$(Msi)">
+        <MsiProperty Name="LAUNCHAPP" Value="[LaunchAfterSetup]" />
+      </MsiPackage>
     </Chain>
   </Bundle>
 </Wix>

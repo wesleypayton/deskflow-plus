@@ -96,7 +96,24 @@
       Impersonate="yes"
       Return="asyncNoWait" />
 
+    <!--
+      Started by setup.exe when its "start when setup finishes" box is ticked. The install
+      runs elevated, and the app must not, or Explorer can't drag files to it: Explorer
+      started this way hands the program to the user's own Explorer, which starts it as them.
+    -->
+    <CustomAction
+      Id="LaunchForUser"
+      ExeCommand="&quot;[WindowsFolder]explorer.exe&quot; &quot;[INSTALL_ROOT]deskflow.exe&quot;"
+      Directory="INSTALL_ROOT"
+      Execute="immediate"
+      Impersonate="yes"
+      Return="asyncNoWait" />
+
     <InstallExecuteSequence>
+      <Custom
+        Action="LaunchForUser"
+        After="InstallFinalize"
+        Condition="LAUNCHAPP = 1 AND NOT (REMOVE = &quot;ALL&quot;)" />
       <Custom
         Action="CheckVCRedist"
         Before="InstallInitialize"

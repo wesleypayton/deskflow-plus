@@ -148,6 +148,25 @@ Since then:
   taking over ends the capture, and a release always follows its press so no
   key or button is left held on either side. Not yet tried on two machines.
 
+Since the first two-machine test:
+
+* The installed service runs the core as SYSTEM. Explorer can't drag onto a
+  window owned by SYSTEM, and SYSTEM can't see the user's Explorer windows or
+  folders, so dragging failed. The core now hands the user-facing parts (the
+  drop target, finding the folder under the cursor, revealing files) to the
+  GUI over core IPC (`deskflow/ipc/UserShell.h`, `common/ShellIntegration.h`);
+  the GUI announces itself with `shellHelper` and its temp folder, which the
+  clipboard inbox then uses.
+* The server only crosses where the landing point is on a monitor of the
+  destination (`Server::mapToNeighbor`), and the canvas draws green lines only
+  where monitors of two computers meet.
+* A Plus client's clipboard grab is accepted even with an old sequence number,
+  since its own user copies things while the cursor is elsewhere; before, the
+  grab was ignored and the client's clipboard overwritten on the next enter.
+* The setup .exe has a box, ticked by default, to start the app when setup
+  finishes. The MSI starts it through Explorer, so it runs as the user and not
+  elevated.
+
 Still to do:
 
 * Crossing between individual monitors rather than each computer's outline.
