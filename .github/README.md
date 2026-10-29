@@ -40,6 +40,9 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
   Progress shows in the app's status bar, and a notification says when files arrive.
 - **Drag files across.** Drag files in Explorer to the edge of the screen and keep holding: the cursor
   crosses to the next computer, and releasing drops the files into the folder or desktop under the cursor.
+- **Use any computer's mouse and keyboard.** A client's own mouse crosses to the server and on to the other
+  computers, as in Mouse Without Borders, and its keyboard follows. Bring the cursor back to the client and
+  its mouse and keyboard work there again.
 
 Files are sent through the server, encrypted with the rest of the connection, and are never written
 outside the folder they're dropped in. More detail is in the [design notes](../docs/dev/layout-rework.md).
@@ -52,8 +55,8 @@ yet across many setups. Expect rough edges, and please report what you find.
 Builds for macOS and Linux will come once the features are in good shape. They'll be marked as untested
 until someone has tried them, and the new features may not work there at first.
 
-- The layout is set up on the server, so it works with any client. Copying and dragging files, and
-  showing a client's real monitors, need Deskflow Plus on both computers.
+- The layout is set up on the server, so it works with any client. Copying and dragging files, showing a
+  client's real monitors, and using a client's own mouse and keyboard need Deskflow Plus on both computers.
 - Deskflow Plus still works with stock Deskflow, Input Leap and Barrier computers for mouse, keyboard and
   clipboard sharing.
 
@@ -102,19 +105,21 @@ be copied at once (512 MB by default, 0 turns it off).
 ## Known limitations
 
 - **Windows only.** The new features have only been built and tested on Windows.
-- **Only the server's mouse and keyboard travel.** As in Deskflow, a client's own mouse and keyboard only
-  control that client. Moving a client's mouse onto the server, as Mouse Without Borders allows, is planned.
+- **One client's mouse at a time.** If two people at two clients both move onto other computers, the
+  one who crossed last takes over, and the other's mouse goes back to working on their own computer.
+- **A client's mouse can't carry a file drag across**, and it doesn't cross while one of its buttons is held,
+  so dragging a window against the edge still snaps it.
 - **Crossing follows each computer's outline, not its monitors.** With two monitors of different heights,
   the cursor can only cross where the computer's overall outline touches the next computer.
-- **Not yet tried on two separate computers**: dropping into an open folder or onto the desktop, dropping
-  into the right tab of an Explorer window with several, and dragging files that start on a client.
+- **Not yet tried on two separate computers**: using a client's own mouse and keyboard on other computers,
+  dropping into an open folder or onto the desktop, dropping into the right tab of an Explorer window with
+  several, and dragging files that start on a client.
 - **The portable copy can't control the login screen or UAC prompts**, as it doesn't include the
   background service.
 - **Not code signed**, so Windows warns before running the downloads.
 
 ## Roadmap
 
-- Using a client's own mouse and keyboard on the server and other computers
 - Crossing between individual monitors rather than each computer's outline
 - Untested macOS and Linux builds, once the features are in good shape
 

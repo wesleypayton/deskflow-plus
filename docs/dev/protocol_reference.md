@@ -158,6 +158,8 @@ This table lists all protocol messages in alphabetical order. For a typical sequ
 | [**DINF**](@ref kMsgDInfo) | @ref kMsgDInfo | Data | Client→Server | Computer information | [MsgSize](#constraint-protocol-max-message-length) | 1.0+ |
 | [**DMON**](@ref kMsgDMonitors) | @ref kMsgDMonitors | Data | Client→Server | Monitor rectangles (deskflow-plus) | [MsgSize](#constraint-protocol-max-message-length) | Plus |
 | [**DPLS**](@ref kMsgDPlusFeatures) | @ref kMsgDPlusFeatures | Data | Client→Server | Deskflow Plus features (deskflow-plus) | [MsgSize](#constraint-protocol-max-message-length) | Plus |
+| [**DRCP**](@ref kMsgDRemoteCapture) | @ref kMsgDRemoteCapture | Data | Server→Client | Capture the client's own mouse and keyboard (deskflow-plus) | [MsgSize](#constraint-protocol-max-message-length) | Plus |
+| [**DRIN**](@ref kMsgDRemoteInput) | @ref kMsgDRemoteInput | Data | Client→Server | Input from the client's own mouse and keyboard (deskflow-plus) | [MsgSize](#constraint-protocol-max-message-length) | Plus |
 | [**DKDL**](@ref kMsgDKeyDown) | @ref kMsgDKeyDown | Data | Server→Client | Key down with language | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.8+ |
 | [**DKDN**](@ref kMsgDKeyDown1_1) | @ref kMsgDKeyDown1_1 | Data | Server→Client | Key down | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.1+ |
 | [**DKDN**](@ref kMsgDKeyDown1_0) | @ref kMsgDKeyDown1_0 | Data | Server→Client | Key down (legacy) | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.0 |

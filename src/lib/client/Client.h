@@ -175,6 +175,9 @@ public:
   //! A file transfer message from the server
   void handleTransferMessage(const deskflow::transfer::TransferMessage &message);
 
+  //! The server wants this computer's own mouse and keyboard captured and sent to it, or no longer
+  void setRemoteCapture(bool capture);
+
   //@}
 
   // IComputer overrides
@@ -233,6 +236,8 @@ private:
   void enablePlusFeatures(uint32_t serverFeatures);
   void setupFileTransfer();
   void offerClipboardFiles();
+  void setupRemoteInput();
+  void sendRemoteInput();
   void bindNetworkInterface(IDataSocket *socket) const;
 
 private:
@@ -255,6 +260,7 @@ private:
   bool m_useSecureNetwork = false;
   std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
   std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;
+  bool m_watchingInput = false;
   bool m_enableClipboard = true;
   bool m_relativeMouseMoves = false;
   bool m_hasRelativeRestorePosition = false;

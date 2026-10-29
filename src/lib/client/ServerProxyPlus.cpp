@@ -13,6 +13,8 @@
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/TransferProtocol.h"
 
+#include <cstring>
+
 ServerProxyPlus::ServerProxyPlus(Client *client, deskflow::IStream *stream, IEventQueue *events)
     : ServerProxy1_8(client, stream, events)
 {
@@ -34,6 +36,13 @@ void ServerProxyPlus::enablePlus(uint32_t serverFeatures)
 ServerProxy::ConnectionResult ServerProxyPlus::parseMessage(const uint8_t *code)
 {
   using namespace deskflow::transfer;
+  if ((m_features & deskflow::plus::kFeatureRemoteInput) && memcmp(code, kMsgDRemoteCapture, 4) == 0) {
+    uint8_t capture = 0;
+    if (!ProtocolUtil::readf(getStream(), kMsgDRemoteCapture + 4, &capture))
+      return ConnectionResult::Disconnect;
+    getClient()->setRemoteCapture(capture != 0);
+    return ConnectionResult::Okay;
+  }
   if (!(m_features & deskflow::plus::kFeatureFileTransfer) || !isTransferMessage(code))
     return ServerProxy1_8::parseMessage(code);
 

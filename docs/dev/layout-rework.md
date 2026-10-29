@@ -133,11 +133,21 @@ Since then:
   a client's reported monitors change the layout, and reported shapes survive
   the server settings dialog being saved.
 * Drops onto a Windows 11 Explorer window go into its visible tab.
+* Two-way control (feature bit 4, `DRIN` and `DRCP`). A Plus client watches its
+  own physical mouse and keyboard with low-level hooks on a thread of its own
+  (`deskflow/RemoteInput.h`, `win32/RemoteInputWindows.cpp`), ignoring injected
+  input, so the server's control of it is unaffected. When its own mouse pushes
+  against an edge of its desktop it sends an Edge; the server maps that to the
+  neighbor, tells the client to capture, and switches there. While captured the
+  client parks its cursor out of sight and sends moves, buttons, wheel and keys.
+  The server plays buttons, wheel and keys back on itself with `SendInput`, so
+  its own hooks forward them to the active computer with hotkeys working as
+  usual; moves go to `onMouseMoveSecondary`, or move the server's cursor and go
+  through `onMouseMovePrimary`, so no pointer acceleration is applied twice.
+  Switching back into the source, the source disconnecting, or another client
+  taking over ends the capture, and a release always follows its press so no
+  key or button is left held on either side. Not yet tried on two machines.
 
 Still to do:
 
-* Two-way control: a client's own mouse and keyboard crossing to the server
-  and on to other computers, as in Mouse Without Borders. Needs input capture
-  that can be switched on and off in a client process, and messages carrying
-  input from client to server.
 * Crossing between individual monitors rather than each computer's outline.

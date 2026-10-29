@@ -91,6 +91,18 @@ public:
   {
     // only clients that support file transfer get messages
   }
+
+  //! True if the client is Deskflow Plus and can use its own mouse and keyboard on other computers
+  virtual bool supportsRemoteInput() const
+  {
+    return false;
+  }
+
+  //! Tell the client to start or stop capturing its own mouse and keyboard and sending them here
+  virtual void setRemoteCapture(bool)
+  {
+    // only clients that support remote input capture
+  }
   virtual std::string getSecureInputApp() const = 0;
   virtual void secureInputNotification(const std::string &app) const = 0;
   std::string getName() const override;

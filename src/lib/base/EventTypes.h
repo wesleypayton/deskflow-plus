@@ -45,6 +45,10 @@ enum class EventTypes : uint32_t
    */
   ClientDisconnectRequested,
 
+  /** Input from the client computer's own mouse and keyboard is waiting to be sent to the server.
+   */
+  ClientRemoteInput,
+
   /// A stream sends this event when \c read() will return with data.
   StreamInputReady,
 

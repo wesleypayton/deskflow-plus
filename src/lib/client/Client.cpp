@@ -25,6 +25,7 @@
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
+#include "deskflow/RemoteInput.h"
 #include "deskflow/StreamChunker.h"
 #include "deskflow/TransferAgent.h"
 #include "deskflow/TransferHooks.h"
@@ -568,6 +569,13 @@ void Client::cleanupComputer()
     m_server = nullptr;
   }
   m_transferAgent.reset();
+
+  // never leave this computer's mouse and keyboard captured for a server that's gone
+  if (m_watchingInput) {
+    deskflow::remote::platform::stopWatching();
+    m_events->removeHandler(EventTypes::ClientRemoteInput, getEventTarget());
+    m_watchingInput = false;
+  }
 }
 
 void Client::enablePlusFeatures(uint32_t serverFeatures)
@@ -579,6 +587,8 @@ void Client::enablePlusFeatures(uint32_t serverFeatures)
   plus->enablePlus(serverFeatures);
   if (plus->features() & deskflow::plus::kFeatureFileTransfer)
     setupFileTransfer();
+  if (plus->features() & deskflow::plus::kFeatureRemoteInput)
+    setupRemoteInput();
 }
 
 void Client::setupFileTransfer()
@@ -607,6 +617,34 @@ void Client::offerClipboardFiles()
 {
   if (m_transferAgent)
     deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
+}
+
+void Client::setupRemoteInput()
+{
+  // the input is watched on a thread of its own, which wakes this one to send it
+  m_events->addHandler(EventTypes::ClientRemoteInput, getEventTarget(), [this](const auto &) { sendRemoteInput(); });
+  m_watchingInput = deskflow::remote::platform::startWatching([events = m_events, target = getEventTarget()] {
+    events->addEvent(Event(EventTypes::ClientRemoteInput, target));
+  });
+  if (!m_watchingInput)
+    m_events->removeHandler(EventTypes::ClientRemoteInput, getEventTarget());
+}
+
+void Client::sendRemoteInput()
+{
+  for (const auto &input : deskflow::remote::platform::takeInput()) {
+    if (m_stream == nullptr)
+      return;
+    ProtocolUtil::writef(
+        m_stream, kMsgDRemoteInput, static_cast<uint32_t>(input.type), input.a, input.b, input.c, input.d
+    );
+  }
+}
+
+void Client::setRemoteCapture(bool capture)
+{
+  if (m_watchingInput)
+    deskflow::remote::platform::setCapture(capture);
 }
 
 void Client::cleanupTimer()

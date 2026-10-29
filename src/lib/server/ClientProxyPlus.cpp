@@ -10,9 +10,11 @@
 #include "base/Log.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
+#include "deskflow/RemoteInput.h"
 #include "deskflow/TransferProtocol.h"
 #include "server/Server.h"
 
+#include <array>
 #include <cstring>
 
 ClientProxyPlus::ClientProxyPlus(
@@ -47,6 +49,9 @@ bool ClientProxyPlus::parseMessage(const uint8_t *code)
   if (memcmp(code, kMsgDMonitors, 4) == 0 && (m_features & deskflow::plus::kFeatureMonitors)) {
     return recvMonitors();
   }
+  if (memcmp(code, kMsgDRemoteInput, 4) == 0 && supportsRemoteInput()) {
+    return recvRemoteInput();
+  }
   if ((m_features & deskflow::plus::kFeatureFileTransfer) && deskflow::transfer::isTransferMessage(code)) {
     deskflow::transfer::TransferMessage message;
     if (!deskflow::transfer::readTransferMessage(getStream(), code, message))
@@ -60,6 +65,29 @@ bool ClientProxyPlus::parseMessage(const uint8_t *code)
 void ClientProxyPlus::sendTransfer(const deskflow::transfer::TransferMessage &message)
 {
   deskflow::transfer::writeTransferMessage(getStream(), message);
+}
+
+void ClientProxyPlus::setRemoteCapture(bool capture)
+{
+  ProtocolUtil::writef(getStream(), kMsgDRemoteCapture, capture ? 1 : 0);
+}
+
+bool ClientProxyPlus::recvRemoteInput()
+{
+  uint8_t type = 0;
+  std::array<uint32_t, 4> values{};
+  if (!ProtocolUtil::readf(getStream(), kMsgDRemoteInput + 4, &type, &values[0], &values[1], &values[2], &values[3])) {
+    return false;
+  }
+
+  deskflow::remote::RemoteInput input;
+  input.type = static_cast<deskflow::remote::InputType>(type);
+  input.a = static_cast<int32_t>(values[0]);
+  input.b = static_cast<int32_t>(values[1]);
+  input.c = static_cast<int32_t>(values[2]);
+  input.d = static_cast<int32_t>(values[3]);
+  getServer()->handleRemoteInput(this, input);
+  return true;
 }
 
 bool ClientProxyPlus::recvPlusFeatures()

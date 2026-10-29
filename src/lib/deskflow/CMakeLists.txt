@@ -13,12 +13,14 @@ if(WIN32)
     win32/AppUtilWindows.h
     win32/DragProbeWindows.cpp
     win32/FileTransferPlatformWindows.cpp
+    win32/RemoteInputWindows.cpp
   )
 elseif(UNIX)
   set(PLATFORM_CODE
     unix/AppUtilUnix.cpp
     unix/AppUtilUnix.h
     unix/FileTransferPlatformUnix.cpp
+    unix/RemoteInputUnix.cpp
     unix/DeskflowXkbKeyboard.cpp
     unix/DeskflowXkbKeyboard.h
     unix/ISO639Table.h
@@ -81,6 +83,7 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ProtocolTypes.h
   ProtocolUtil.cpp
   ProtocolUtil.h
+  RemoteInput.h
   ServerApp.cpp
   ServerApp.h
   StreamChunker.cpp

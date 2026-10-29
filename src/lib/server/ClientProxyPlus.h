@@ -22,6 +22,11 @@ public:
     return (m_features & deskflow::plus::kFeatureFileTransfer) != 0;
   }
   void sendTransfer(const deskflow::transfer::TransferMessage &message) override;
+  bool supportsRemoteInput() const override
+  {
+    return (m_features & deskflow::plus::kFeatureRemoteInput) != 0;
+  }
+  void setRemoteCapture(bool capture) override;
 
 protected:
   bool parseMessage(const uint8_t *code) override;
@@ -29,6 +34,7 @@ protected:
 private:
   bool recvMonitors();
   bool recvPlusFeatures();
+  bool recvRemoteInput();
 
   uint32_t m_features = 0;
 

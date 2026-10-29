@@ -18,6 +18,7 @@
 #include "deskflow/OptionTypes.h"
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
+#include "deskflow/RemoteInput.h"
 #include "deskflow/StreamChunker.h"
 #include "deskflow/TransferAgent.h"
 #include "deskflow/TransferHooks.h"
@@ -462,6 +463,11 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
 
   // stop waiting to switch
   stopSwitch();
+
+  // the cursor is back on the computer whose own mouse was driving it, so that mouse works there again
+  if (dst == m_remoteSource) {
+    stopRemoteControl();
+  }
 
   // record new position
   m_x = x;
@@ -1991,6 +1997,10 @@ bool Server::removeClient(BaseClientProxy *client)
   if (m_transferRouter)
     m_transferRouter->disconnected(name);
 
+  if (client == m_remoteSource) {
+    m_remoteSource = nullptr;
+  }
+
   return true;
 }
 
@@ -2220,6 +2230,86 @@ void Server::setupFileTransfer()
       [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); },
       m_transferState
   ));
+}
+
+void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::RemoteInput &input)
+{
+  using enum deskflow::remote::InputType;
+  namespace platform = deskflow::remote::platform;
+  if (!m_clientSet.contains(client) || client == m_primaryClient) {
+    return;
+  }
+
+  if (input.type == Edge) {
+    if (input.a >= static_cast<int32_t>(Direction::FirstDirection) &&
+        input.a <= static_cast<int32_t>(Direction::LastDirection)) {
+      startRemoteControl(client, static_cast<Direction>(input.a), input.b, input.c);
+    }
+    return;
+  }
+
+  // a release still counts after the cursor has gone back, so nothing stays held down here
+  if (client != m_remoteSource && !input.isRelease()) {
+    return;
+  }
+
+  if (input.type != Move) {
+    // played back here as if from this computer's own mouse and keyboard, so it reaches the active computer the
+    // same way, hotkeys included
+    platform::playBack(input);
+  } else if (m_active != m_primaryClient) {
+    onMouseMoveSecondary(input.a, input.b);
+  } else if (int32_t x = 0, y = 0; platform::moveCursorBy(input.a, input.b, x, y)) {
+    onMouseMovePrimary(x, y);
+  }
+}
+
+void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y)
+{
+  if (client == m_remoteSource || !client->supportsRemoteInput() || isLockedToComputer()) {
+    return;
+  }
+
+  // the client reports where its cursor is against the edge; the neighbor search starts just past it
+  using enum Direction;
+  switch (side) {
+  case Left:
+    --x;
+    break;
+  case Right:
+    ++x;
+    break;
+  case Top:
+    --y;
+    break;
+  case Bottom:
+    ++y;
+    break;
+  default:
+    return;
+  }
+
+  BaseClientProxy *dst = mapToNeighbor(client, side, x, y);
+  if (dst == nullptr || dst == client) {
+    return;
+  }
+
+  // one client's mouse at a time: whoever reached an edge last takes over
+  stopRemoteControl();
+  LOG_INFO("\"%s\" is using its own mouse and keyboard on \"%s\"", getName(client).c_str(), getName(dst).c_str());
+  m_remoteSource = client;
+  client->setRemoteCapture(true);
+  switchComputer(dst, x, y, false);
+}
+
+void Server::stopRemoteControl()
+{
+  if (m_remoteSource == nullptr) {
+    return;
+  }
+  LOG_INFO("\"%s\" is using its own mouse and keyboard locally again", getName(m_remoteSource).c_str());
+  m_remoteSource->setRemoteCapture(false);
+  m_remoteSource = nullptr;
 }
 
 void Server::handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message)

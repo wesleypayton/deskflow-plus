@@ -1166,7 +1166,8 @@ extern const char *const kMsgDLanguageSynchronisation;
 namespace deskflow::plus {
 inline constexpr uint32_t kFeatureMonitors = 1;     //!< kMsgDMonitors
 inline constexpr uint32_t kFeatureFileTransfer = 2; //!< the file transfer messages
-inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer;
+inline constexpr uint32_t kFeatureRemoteInput = 4;  //!< kMsgDRemoteInput and kMsgDRemoteCapture
+inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput;
 } // namespace deskflow::plus
 
 /**
@@ -1259,6 +1260,50 @@ extern const char *const kMsgDFileEnd;
 extern const char *const kMsgDFileAck;
 extern const char *const kMsgDFileCancel;
 extern const char *const kMsgDFileProbe;
+
+/**
+ * @brief Input from the secondary's own mouse and keyboard
+ *
+ * **Message Code**: `"DRIN"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DRIN%1i%4i%4i%4i%4i"`
+ * **Parameters**:
+ * - `$1`: Type, see deskflow::remote::InputType
+ * - `$2` to `$5`: Depending on the type
+ *   - Edge (1): side (a Direction), x, y, unused. The secondary's cursor was pushed against the edge of its
+ *     computer by its own mouse
+ *   - Move (2): dx, dy, unused, unused
+ *   - Button (3): button (1 left, 2 right, 3 middle, 4 and 5 the side buttons), 1 for a press or 0 for a release,
+ *     unused, unused
+ *   - Wheel (4): horizontal, vertical (120 is one notch), unused, unused
+ *   - Key (5): virtual key, scan code, flags (1 extended key, 2 release), unused
+ *
+ * Lets someone sitting at a secondary use its mouse and keyboard on the other computers, as if they were
+ * plugged into the primary. When the secondary's own mouse reaches an edge that leads to another computer, the
+ * primary switches there and tells the secondary to capture its input with kMsgDRemoteCapture. The primary
+ * plays the captured input back on itself, so its own edges, hotkeys and links to other computers all apply,
+ * until the cursor comes back to the secondary. Signed values are sent as their two's complement. Move, Wheel
+ * and presses are only sent while captured; a release follows wherever its press went.
+ *
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDRemoteInput;
+
+/**
+ * @brief Capture the secondary's own mouse and keyboard
+ *
+ * **Message Code**: `"DRCP"`
+ * **Direction**: Primary → Secondary
+ * **Format**: `"DRCP%1i"`
+ * **Parameters**:
+ * - `$1`: 1 to start capturing, 0 to stop
+ *
+ * While capturing, the secondary keeps its own mouse and keyboard input from its applications and sends it to the
+ * primary with kMsgDRemoteInput. A secondary stops capturing when it disconnects.
+ *
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDRemoteCapture;
 
 /** @} */ // end of protocol_system group
 

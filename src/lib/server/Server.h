@@ -32,6 +32,9 @@ struct LocalTransferState;
 namespace deskflow::server {
 class TransferRouter;
 } // namespace deskflow::server
+namespace deskflow::remote {
+struct RemoteInput;
+} // namespace deskflow::remote
 
 class BaseClientProxy;
 class EventQueueTimer;
@@ -216,6 +219,9 @@ public:
 
   //! A file transfer message from a client
   void handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message);
+
+  //! Input from a client's own mouse and keyboard
+  void handleRemoteInput(BaseClientProxy *client, const deskflow::remote::RemoteInput &input);
 
   //@}
 
@@ -498,6 +504,11 @@ private:
   std::unique_ptr<deskflow::server::TransferRouter> m_transferRouter;
   std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
   std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;
+
+  //! The client whose own mouse and keyboard are driving the cursor, until the cursor goes back to it
+  BaseClientProxy *m_remoteSource = nullptr;
+  void startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y);
+  void stopRemoteControl();
 
   // a held drag of files being carried to another computer
   bool m_lookingForDrag = false;  //!< a held button reached an edge and we're checking for files
