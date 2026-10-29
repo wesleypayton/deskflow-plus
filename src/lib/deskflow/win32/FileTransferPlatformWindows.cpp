@@ -22,6 +22,10 @@ namespace {
 // clipboard inboxes older than this are cleared out when a new one is made
 constexpr auto kInboxLifetime = std::chrono::hours(24);
 
+// how many times, and how far apart, to try reading a file list that isn't ready yet
+constexpr int kReadAttempts = 10;
+constexpr DWORD kReadRetryMs = 50;
+
 // another program may hold the clipboard for a moment
 bool openClipboard(HWND owner)
 {
@@ -58,19 +62,31 @@ HGLOBAL copyToGlobal(const void *data, size_t size)
 std::vector<std::filesystem::path> filesOnClipboard()
 {
   std::vector<std::filesystem::path> items;
-  if (!IsClipboardFormatAvailable(CF_HDROP) || !openClipboard(nullptr))
+  if (!IsClipboardFormatAvailable(CF_HDROP))
     return items;
 
-  if (auto *drop = static_cast<HDROP>(GetClipboardData(CF_HDROP)); drop != nullptr) {
-    const auto count = DragQueryFileW(drop, 0xFFFFFFFF, nullptr, 0);
-    for (UINT i = 0; i < count; ++i) {
-      std::wstring path(DragQueryFileW(drop, i, nullptr, 0) + 1, L'\0');
-      path.resize(DragQueryFileW(drop, i, path.data(), static_cast<UINT>(path.size())));
-      items.emplace_back(path);
+  // the copying program may still be handing the list over when we're told the clipboard changed
+  for (int attempt = 0; attempt < kReadAttempts && items.empty(); ++attempt) {
+    if (attempt > 0)
+      Sleep(kReadRetryMs);
+    if (!openClipboard(nullptr))
+      return items;
+
+    if (auto *drop = static_cast<HDROP>(GetClipboardData(CF_HDROP)); drop != nullptr) {
+      const auto count = DragQueryFileW(drop, 0xFFFFFFFF, nullptr, 0);
+      for (UINT i = 0; i < count; ++i) {
+        std::wstring path(DragQueryFileW(drop, i, nullptr, 0) + 1, L'\0');
+        path.resize(DragQueryFileW(drop, i, path.data(), static_cast<UINT>(path.size())));
+        items.emplace_back(path);
+      }
     }
+    CloseClipboard();
   }
 
-  CloseClipboard();
+  if (items.empty())
+    LOG_WARN("the clipboard has a file list that couldn't be read");
+  else
+    LOG_DEBUG("the clipboard has %d copied items", static_cast<int>(items.size()));
   return items;
 }
 
