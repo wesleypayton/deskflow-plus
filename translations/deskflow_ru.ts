@@ -175,6 +175,21 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ComputerLayoutView</name>
+    <message>
+        <source>Edit…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag a new computer here to add it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
@@ -953,15 +968,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>Перетащите компьютер в корзину, чтобы удалить его.</translation>
+        <translation type="vanished">Перетащите компьютер в корзину, чтобы удалить его.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
+        <translation type="vanished">Настройте расположение мониторов, перетаскивая их в нужные места.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>Перетащите на сетку, чтобы добавить компьютер.</translation>
+        <translation type="vanished">Перетащите на сетку, чтобы добавить компьютер.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1093,6 +1108,18 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Enable lock to computer at startup</source>
         <translation>Включать привязку к компьютеру при запуске</translation>
+    </message>
+    <message>
+        <source>Drag a computer off the layout onto the trashcan to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag onto the layout to add a new computer.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

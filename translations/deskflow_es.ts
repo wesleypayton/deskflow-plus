@@ -175,6 +175,21 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ComputerLayoutView</name>
+    <message>
+        <source>Edit…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag a new computer here to add it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
@@ -953,15 +968,15 @@ Además, verifique que puede %1 el archivo de configuración del servidor: %2</t
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation type="unfinished">Arrastre una computadora desde la cuadrícula a la papelera para eliminarla.</translation>
+        <translation type="obsolete">Arrastre una computadora desde la cuadrícula a la papelera para eliminarla.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation type="unfinished">Configura el diseño de las pantallas de tu computadora arrastrándolas hacia donde quieras.</translation>
+        <translation type="obsolete">Configura el diseño de las pantallas de tu computadora arrastrándolas hacia donde quieras.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation type="unfinished">Arrastre a la cuadrícula para agregar una nueva computadora.</translation>
+        <translation type="obsolete">Arrastre a la cuadrícula para agregar una nueva computadora.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1095,6 +1110,18 @@ Al habilitar esta opción, se deshabilitará la interfaz gráfica de usuario (GU
     <message>
         <source>Enable lock to computer at startup</source>
         <translation type="unfinished">Activar el bloqueo del ordenador al iniciar</translation>
+    </message>
+    <message>
+        <source>Drag a computer off the layout onto the trashcan to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag onto the layout to add a new computer.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

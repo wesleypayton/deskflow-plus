@@ -175,6 +175,21 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ComputerLayoutView</name>
+    <message>
+        <source>Edit…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag a new computer here to add it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
@@ -953,15 +968,15 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>Trascina un computer dalla griglia nel cestino per rimuoverlo.</translation>
+        <translation type="vanished">Trascina un computer dalla griglia nel cestino per rimuoverlo.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>Configura il layout degli schermi dei tuoi computer trascinandoli dove desideri.</translation>
+        <translation type="vanished">Configura il layout degli schermi dei tuoi computer trascinandoli dove desideri.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>Trascina nella griglia per aggiungere un nuovo computer.</translation>
+        <translation type="vanished">Trascina nella griglia per aggiungere un nuovo computer.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1095,6 +1110,18 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     <message>
         <source>Enable lock to computer at startup</source>
         <translation type="unfinished">Abilita il blocco al computer all&apos;avvio</translation>
+    </message>
+    <message>
+        <source>Drag a computer off the layout onto the trashcan to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag onto the layout to add a new computer.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
