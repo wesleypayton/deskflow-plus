@@ -11,10 +11,12 @@
 #include "dialogs/ComputerSettingsDialog.h"
 
 #include <QContextMenuEvent>
+#include <QCoreApplication>
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
+#include <QFontMetrics>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
@@ -25,6 +27,7 @@
 #include <QStyleOptionGraphicsItem>
 
 #include <algorithm>
+#include <array>
 
 namespace {
 
@@ -36,6 +39,24 @@ constexpr qreal kFitMargin = 0.08;
 
 // colour of the edges the cursor can cross
 const QColor kEdgeColor(46, 204, 113);
+
+// a computer being dragged onto another
+const QColor kOverlapColor(220, 38, 38);
+
+// labels sit on the computer colours, which are all dark enough for white text
+const QColor kTextColor(255, 255, 255);
+
+// the server's colour, then one per other computer; none is green or red, which mark edges and overlaps.
+// fixed rather than taken from the theme so each computer stays distinct in light and dark mode alike.
+const std::array kComputerColors = {
+    QColor(37, 99, 235),  // blue, the server
+    QColor(234, 88, 12),  // orange
+    QColor(124, 58, 237), // purple
+    QColor(219, 39, 119), // pink
+    QColor(8, 145, 178),  // cyan
+    QColor(217, 119, 6),  // amber
+    QColor(79, 70, 229),  // indigo
+};
 
 // big enough that dragging never runs into the edge of the scene
 const QRectF kSceneBounds(-1e6, -1e6, 2e6, 2e6);
@@ -66,58 +87,64 @@ public:
 
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override
   {
-    const auto &palette = m_view->palette();
-    const bool server = computer().isServer();
-
-    auto fill = server ? palette.color(QPalette::Highlight) : palette.color(QPalette::Button);
-    if (m_overlapping)
-      fill = QColor(220, 60, 60);
-
-    auto border = isSelected() ? palette.color(QPalette::Highlight).darker(140) : palette.color(QPalette::Mid);
-    QPen pen(border, isSelected() ? 3 : 1.5);
-    pen.setCosmetic(true);
     painter->setRenderHint(QPainter::Antialiasing);
 
-    // with several monitors, outline the whole desktop faintly so gaps between monitors read as one computer
+    // everything below is sized in screen pixels, so convert once
+    const auto scale = painter->transform().m11() > 0 ? painter->transform().m11() : 1;
+    const auto pixel = 1 / scale;
+
+    const auto accent = m_overlapping ? kOverlapColor : m_view->colorFor(m_index);
     const auto monitors = computer().monitors();
+    const auto group = boundingRect();
+
+    // several monitors share one tinted, outlined backdrop so they read as one computer
     if (monitors.size() > 1) {
-      QPen outline(palette.color(QPalette::Mid), 1, Qt::DashLine);
+      auto tint = accent;
+      tint.setAlpha(55);
+      QPen outline(accent, 2);
       outline.setCosmetic(true);
       painter->setPen(outline);
-      painter->setBrush(Qt::NoBrush);
-      painter->drawRect(boundingRect());
+      painter->setBrush(tint);
+      painter->drawRoundedRect(group, 6 * pixel, 6 * pixel);
     }
 
-    const auto radius = std::min(boundingRect().width(), boundingRect().height()) * 0.03;
-    painter->setPen(pen);
-    painter->setBrush(fill);
+    // a small gap between monitors keeps them apart however far the view is zoomed out
+    const auto inset = (monitors.size() > 1 ? 4 : 0) * pixel;
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(accent);
     for (const auto &monitor : monitors)
-      painter->drawRoundedRect(QRectF(monitor).adjusted(8, 8, -8, -8), radius, radius);
+      painter->drawRoundedRect(QRectF(monitor).adjusted(inset, inset, -inset, -inset), 4 * pixel, 4 * pixel);
 
-    // draw the name in screen pixels so it stays readable however far the view is zoomed out
-    const auto deviceRect = painter->transform().mapRect(boundingRect());
+    if (isSelected()) {
+      QPen selection(kTextColor, 3);
+      selection.setCosmetic(true);
+      painter->setPen(selection);
+      painter->setBrush(Qt::NoBrush);
+      painter->drawRoundedRect(group.adjusted(-3 * pixel, -3 * pixel, 3 * pixel, 3 * pixel), 8 * pixel, 8 * pixel);
+    }
+
+    // labels are drawn in screen pixels so they stay readable at any zoom
+    const auto toDevice = painter->transform();
     painter->save();
     painter->resetTransform();
-    auto font = m_view->font();
-    font.setBold(server);
-    painter->setFont(font);
-    painter->setPen(
-        server && !m_overlapping ? palette.color(QPalette::HighlightedText) : palette.color(QPalette::ButtonText)
-    );
-    const auto text =
-        painter->fontMetrics().elidedText(computer().name(), Qt::ElideRight, static_cast<int>(deviceRect.width()) - 8);
-    painter->drawText(deviceRect, Qt::AlignCenter, text);
-    painter->restore();
-  }
 
-  //! Size or position changed in the model
-  void refresh()
-  {
-    prepareGeometryChange();
-    m_snapping = false;
-    setPos(computer().layoutRect().topLeft());
-    setToolTip(computer().name());
-    update();
+    if (monitors.size() > 1) {
+      auto numberFont = m_view->font();
+      numberFont.setPointSizeF(numberFont.pointSizeF() * 0.85);
+      painter->setFont(numberFont);
+      painter->setPen(kTextColor);
+      for (qsizetype i = 0; i < monitors.size(); ++i) {
+        const auto corner = toDevice.mapRect(QRectF(monitors.at(i))).adjusted(7, 5, 0, 0);
+        painter->drawText(corner, Qt::AlignLeft | Qt::AlignTop, QString::number(i + 1));
+      }
+    }
+
+    // on the biggest monitor rather than the middle of the group, which may be a gap between monitors
+    const auto largest = std::ranges::max_element(monitors, {}, [](const QRect &monitor) {
+      return static_cast<qint64>(monitor.width()) * monitor.height();
+    });
+    paintName(painter, toDevice.mapRect(QRectF(*largest)));
+    painter->restore();
   }
 
 protected:
@@ -179,6 +206,43 @@ private:
   Computer &computer() const
   {
     return m_view->computerAt(m_index);
+  }
+
+  //! The computer's name centred on its monitors, on a dark pill so it reads over any colour
+  void paintName(QPainter *painter, const QRectF &area) const
+  {
+    auto nameFont = m_view->font();
+    nameFont.setBold(true);
+    auto noteFont = m_view->font();
+    noteFont.setPointSizeF(noteFont.pointSizeF() * 0.85);
+
+    const QFontMetrics nameMetrics(nameFont);
+    const QFontMetrics noteMetrics(noteFont);
+    const auto maxWidth = static_cast<int>(area.width()) - 16;
+    const auto name = nameMetrics.elidedText(computer().name(), Qt::ElideRight, maxWidth);
+    const auto note = computer().isServer() ? noteMetrics.elidedText(
+                                                  QCoreApplication::translate("ComputerLayoutView", "This computer"),
+                                                  Qt::ElideRight, maxWidth
+                                              )
+                                            : QString();
+
+    const auto width = std::max(nameMetrics.horizontalAdvance(name), noteMetrics.horizontalAdvance(note));
+    const auto height = nameMetrics.height() + (note.isEmpty() ? 0 : noteMetrics.height());
+    QRectF pill(0, 0, width + 16, height + 8);
+    pill.moveCenter(area.center());
+
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(QColor(0, 0, 0, 110));
+    painter->drawRoundedRect(pill, 6, 6);
+
+    painter->setPen(kTextColor);
+    painter->setFont(nameFont);
+    const QRectF nameRect(pill.left(), pill.top() + 4, pill.width(), nameMetrics.height());
+    painter->drawText(nameRect, Qt::AlignCenter, name);
+    if (!note.isEmpty()) {
+      painter->setFont(noteFont);
+      painter->drawText(nameRect.translated(0, nameMetrics.height()), Qt::AlignCenter, note);
+    }
   }
 
   ComputerLayoutView *m_view;
@@ -344,6 +408,29 @@ void ComputerLayoutView::drawBackground(QPainter *painter, const QRectF &rect)
   painter->setPen(palette().color(QPalette::PlaceholderText));
   painter->drawText(viewport()->rect(), Qt::AlignCenter, tr("Drag a new computer here to add it."));
   painter->restore();
+}
+
+QSize ComputerLayoutView::sizeHint() const
+{
+  // QGraphicsView sizes itself from the scene, which is deliberately huge, so ask for something sensible
+  return {640, 360};
+}
+
+QColor ComputerLayoutView::colorFor(qsizetype index) const
+{
+  const auto &computers = m_model->m_computers;
+  if (computers.at(index).isServer())
+    return kComputerColors.front();
+
+  // other computers take the remaining colours in name order, so a computer keeps its colour between sessions
+  QStringList names;
+  for (const auto &computer : computers) {
+    if (!computer.isNull() && !computer.isServer())
+      names.append(computer.name());
+  }
+  names.sort(Qt::CaseInsensitive);
+  const auto position = static_cast<size_t>(std::max<qsizetype>(names.indexOf(computers.at(index).name()), 0));
+  return kComputerColors.at(1 + position % (kComputerColors.size() - 1));
 }
 
 Computer &ComputerLayoutView::computerAt(qsizetype index) const

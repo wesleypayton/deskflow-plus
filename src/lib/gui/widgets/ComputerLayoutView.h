@@ -34,6 +34,8 @@ public:
   //! Rebuild the canvas from the model's computers
   void reload();
 
+  QSize sizeHint() const override;
+
 protected:
   void resizeEvent(QResizeEvent *event) override;
   void dragEnterEvent(QDragEnterEvent *event) override;
@@ -46,6 +48,7 @@ protected:
 
 private:
   Computer &computerAt(qsizetype index) const;
+  QColor colorFor(qsizetype index) const;
   QList<QRectF> otherRects(qsizetype index) const;
   QPointF snap(qsizetype index, const QPointF &proposed) const;
   bool overlapsOthers(qsizetype index, const QRectF &rect) const;

@@ -177,6 +177,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ComputerLayoutView</name>
     <message>
+        <source>This computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Edit…</source>
         <translation type="unfinished"></translation>
     </message>
