@@ -95,6 +95,9 @@ Q_SIGNALS:
   void peerFingerprint(const QString &fingerprint);
   void missingKeyboardLayouts(const QString &layouts);
   void computerShape(const QString &computerName, const QList<QRect> &monitors);
+  void fileTransferStatus(
+      const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
+  );
 
 private Q_SLOTS:
   void onProcessFinished(int exitCode, QProcess::ExitStatus);

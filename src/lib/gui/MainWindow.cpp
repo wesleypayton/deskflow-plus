@@ -278,6 +278,7 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::retryIn, this, &MainWindow::updateTimeoutDelay);
   connect(&m_coreProcess, &CoreProcess::peerFingerprint, this, &MainWindow::handlePeerFingerprint);
   connect(&m_coreProcess, &CoreProcess::missingKeyboardLayouts, this, &MainWindow::handleMissingKeyboardLayouts);
+  connect(&m_coreProcess, &CoreProcess::fileTransferStatus, this, &MainWindow::showFileTransferStatus);
   connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
     // remember the client's real arrangement so the layout shows it, even once it has disconnected
     m_reportedShapes.insert(name, monitors);
@@ -1097,6 +1098,42 @@ void MainWindow::showConfigureServer(const QString &message)
     applyReportedShapes();
     if (m_coreProcess.isStarted())
       m_coreProcess.restart();
+  }
+}
+
+void MainWindow::showFileTransferStatus(
+    const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
+)
+{
+  // how long finished and failed transfers stay in the status bar
+  constexpr int kResultTimeout = 8000;
+
+  const auto megabytes = [](qulonglong bytes) { return QString::number(bytes / (1024.0 * 1024.0), 'f', 1); };
+
+  if (phase == QStringLiteral("started") || phase == QStringLiteral("progress")) {
+    const auto percent = total > 0 ? done * 100 / total : 0;
+    const auto text = incoming ? tr("Receiving files: %1% (%2 of %3 MB)") : tr("Sending files: %1% (%2 of %3 MB)");
+    m_statusBar->showMessage(text.arg(percent).arg(megabytes(done), megabytes(total)));
+    return;
+  }
+
+  if (phase == QStringLiteral("finished")) {
+    if (!incoming) {
+      m_statusBar->showMessage(tr("Files sent"), kResultTimeout);
+      return;
+    }
+    const auto items = detail.toInt();
+    const auto text = dragged ? tr("Received %n dropped item(s)", "", items)
+                              : tr("Received %n copied item(s), ready to paste", "", items);
+    m_statusBar->showMessage(text, kResultTimeout);
+    m_trayIcon->showMessage(tr("Files received"), text, QSystemTrayIcon::Information, kResultTimeout);
+    return;
+  }
+
+  if (phase == QStringLiteral("failed")) {
+    const auto text = tr("File transfer failed: %1").arg(detail);
+    m_statusBar->showMessage(text, kResultTimeout);
+    m_trayIcon->showMessage(tr("File transfer failed"), detail, QSystemTrayIcon::Warning, kResultTimeout);
   }
 }
 

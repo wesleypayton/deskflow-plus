@@ -622,6 +622,44 @@ Vuoi connetterti al server?
         <translation>Errore di connessione %1</translation>
     </message>
     <message>
+        <source>Receiving files: %1% (%2 of %3 MB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sending files: %1% (%2 of %3 MB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Received %n dropped item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Received %n copied item(s), ready to paste</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Files received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfer failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfer failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid Computer Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1125,6 +1163,14 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>Drag onto the layout to add a new computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copied files limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

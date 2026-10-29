@@ -35,7 +35,7 @@ struct TransferMessage
   {
     Offer,   //!< "DFOF": id = offer id, value = file count, size = total bytes, text = names, kind
     Request, //!< "DFRQ": id = transfer id, value = offer id
-    Start,   //!< "DFST": id = transfer id, kind
+    Start,   //!< "DFST": id = transfer id, kind, size = total bytes
     Header,  //!< "DFHD": id = transfer id, value = 1 for an empty folder, size = file size, text = relative path
     Data,    //!< "DFDT": id = transfer id, text = bytes
     End,     //!< "DFEN": id = transfer id

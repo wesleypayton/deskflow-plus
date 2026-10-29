@@ -129,6 +129,9 @@ private:
   void updateComputerName();
   void saveSettings() const;
   void applyReportedShapes();
+  void showFileTransferStatus(
+      const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
+  );
   void showConfigureServer(const QString &message);
   void showConfigureClient();
   void restoreWindow();

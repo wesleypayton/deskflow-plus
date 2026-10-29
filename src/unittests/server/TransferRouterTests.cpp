@@ -96,6 +96,7 @@ struct Network
     fs::path inbox;
     std::vector<std::vector<fs::path>> received;
     std::vector<std::string> failures;
+    std::vector<TransferStatus> statuses;
   };
 
   std::map<std::string, Computer> computers;
@@ -116,6 +117,7 @@ struct Network
       computer.received.push_back(items);
     };
     hooks.failed = [&computer](const std::string &reason) { computer.failures.push_back(reason); };
+    hooks.status = [&computer](const TransferStatus &status) { computer.statuses.push_back(status); };
     computer.agent = std::make_unique<TransferAgent>(hooks);
   }
 
@@ -205,6 +207,19 @@ void TransferRouterTests::relay_clientToClient()
   QCOMPARE(readFile(root(inboxB) / "Folder" / "note.txt"), std::string("hello"));
   QVERIFY(!network.router.busy());
   QVERIFY(!network.computers["laptop"].agent->busy());
+
+  // both ends report how it went: started, some progress, finished, with the whole size
+  using Phase = TransferStatus::Phase;
+  for (const auto *name : {"laptop", "desk"}) {
+    const auto &statuses = network.computers[name].statuses;
+    QVERIFY(statuses.size() > 3);
+    QVERIFY(statuses.front().phase == Phase::Started);
+    QVERIFY(statuses.back().phase == Phase::Finished);
+    QCOMPARE(statuses.back().total, uint64_t{big.size() + 5});
+    QCOMPARE(statuses.back().done, statuses.back().total);
+    QCOMPARE(statuses.back().incoming, std::string(name) == "desk");
+  }
+  QCOMPARE(network.computers["desk"].statuses.back().detail, std::string("2"));
 }
 
 void TransferRouterTests::relay_fromServerItself()

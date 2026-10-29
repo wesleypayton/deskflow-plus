@@ -662,6 +662,15 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
     Q_EMIT peerFingerprint(args);
   } else if (command == "missingKeyboardLayouts") {
     Q_EMIT missingKeyboardLayouts(args);
+  } else if (command == "fileTransfer") {
+    // phase|in or out|clipboard or drag|done|total|detail
+    const auto parts = args.split(QLatin1Char('|'));
+    if (parts.size() >= 6) {
+      Q_EMIT fileTransferStatus(
+          parts.at(0), parts.at(1) == QStringLiteral("in"), parts.at(2) == QStringLiteral("drag"),
+          parts.at(3).toULongLong(), parts.at(4).toULongLong(), parts.mid(5).join(QLatin1Char('|'))
+      );
+    }
   } else if (command == "computerShape") {
     // name|x,y,width,height;x,y,width,height...
     const auto name = args.section(QLatin1Char('|'), 0, 0);

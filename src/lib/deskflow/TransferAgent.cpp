@@ -6,6 +6,8 @@
 
 #include "deskflow/TransferAgent.h"
 
+#include <algorithm>
+
 namespace deskflow::transfer {
 
 using enum TransferMessage::Type;
@@ -65,6 +67,8 @@ void TransferAgent::handle(const TransferMessage &message)
       return;
     }
     m_outgoing[message.id] = std::make_shared<FileSender>(offer->second);
+    m_progress[message.id] = {TransferStatus::Phase::Started, false, {}, 0, m_outgoing[message.id]->totalBytes(), {}};
+    report(message.id, TransferStatus::Phase::Started);
     pump(message.id);
     break;
   }
@@ -129,6 +133,7 @@ void TransferAgent::pump(uint32_t id)
     case Data:
       message.type = TransferMessage::Type::Data;
       message.text = std::move(next->data);
+      addProgress(id, message.text.size());
       break;
     case End:
       message.type = TransferMessage::Type::End;
@@ -142,6 +147,7 @@ void TransferAgent::pump(uint32_t id)
     cancel(id, error, true);
   } else if (sender.finished()) {
     m_outgoing.erase(id);
+    report(id, TransferStatus::Phase::Finished);
   }
 }
 
@@ -154,6 +160,8 @@ void TransferAgent::handleIncoming(const TransferMessage &message)
       return;
     }
     m_incoming[message.id] = {message.kind, std::make_unique<FileReceiver>(destination, m_maxReceiveBytes)};
+    m_progress[message.id] = {TransferStatus::Phase::Started, true, message.kind, 0, message.size, {}};
+    report(message.id, TransferStatus::Phase::Started);
     return;
   }
 
@@ -168,9 +176,11 @@ void TransferAgent::handleIncoming(const TransferMessage &message)
     ok = receiver.makeFolder(message.text, error);
   else if (message.type == Header)
     ok = receiver.beginFile(message.text, message.size, error);
-  else if (message.type == Data)
+  else if (message.type == Data) {
     ok = receiver.write(message.text, error);
-  else
+    if (ok)
+      addProgress(message.id, message.text.size());
+  } else
     ok = receiver.finish(error);
 
   if (!ok) {
@@ -185,6 +195,7 @@ void TransferAgent::handleIncoming(const TransferMessage &message)
     const auto kind = incoming->second.kind;
     const auto items = receiver.topLevelItems();
     m_incoming.erase(incoming);
+    report(message.id, TransferStatus::Phase::Finished, std::to_string(items.size()));
     if (m_hooks.received)
       m_hooks.received(kind, items);
   }
@@ -198,8 +209,41 @@ void TransferAgent::cancel(uint32_t id, const std::string &reason, bool tellServ
 
   if (tellServer)
     m_hooks.send({Cancel, id, 0, {}, 0, reason});
+  report(id, TransferStatus::Phase::Failed, reason);
   if (m_hooks.failed)
     m_hooks.failed(reason);
+}
+
+void TransferAgent::addProgress(uint32_t id, uint64_t bytes)
+{
+  const auto progress = m_progress.find(id);
+  if (progress == m_progress.end())
+    return;
+
+  progress->second.done += bytes;
+  const auto total = std::max<uint64_t>(progress->second.total, 1);
+  const auto percent = progress->second.done * 100 / total;
+  if (percent >= m_lastReportedPercent[id] + kReportEveryPercent) {
+    m_lastReportedPercent[id] = percent;
+    report(id, TransferStatus::Phase::Progress);
+  }
+}
+
+void TransferAgent::report(uint32_t id, TransferStatus::Phase phase, const std::string &detail)
+{
+  const auto progress = m_progress.find(id);
+  if (progress == m_progress.end())
+    return;
+
+  auto status = progress->second;
+  status.phase = phase;
+  status.detail = detail;
+  if (phase == TransferStatus::Phase::Finished || phase == TransferStatus::Phase::Failed) {
+    m_progress.erase(progress);
+    m_lastReportedPercent.erase(id);
+  }
+  if (m_hooks.status)
+    m_hooks.status(status);
 }
 
 } // namespace deskflow::transfer

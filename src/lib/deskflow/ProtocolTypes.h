@@ -1201,7 +1201,7 @@ extern const char *const kMsgDMonitors;
  * - Offer `"DFOF%4i%1i%4i%4i%4i%s"`: offer id, kind (1 clipboard, 2 drag), file count,
  *   total size high and low halves, top level names separated by newlines
  * - Request `"DFRQ%4i%4i"` (primary to source): transfer id, offer id
- * - Start `"DFST%4i%1i"` (primary to destination): transfer id, kind
+ * - Start `"DFST%4i%1i%4i%4i"` (primary to destination): transfer id, kind, total size high and low halves
  * - Header `"DFHD%4i%1i%4i%4i%s"`: transfer id, 1 if it's an empty folder rather than a file,
  *   file size high and low halves, relative path
  * - Data `"DFDT%4i%s"`: transfer id, up to 64 KB of the current file

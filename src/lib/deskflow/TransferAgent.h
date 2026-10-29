@@ -19,6 +19,25 @@
 
 namespace deskflow::transfer {
 
+//! How a transfer is going, for showing to the user
+struct TransferStatus
+{
+  enum class Phase
+  {
+    Started,
+    Progress,
+    Finished,
+    Failed
+  };
+
+  Phase phase = Phase::Started;
+  bool incoming = false;
+  TransferKind kind = TransferKind::Clipboard;
+  uint64_t done = 0;  //!< bytes sent or received so far
+  uint64_t total = 0; //!< bytes in the whole transfer
+  std::string detail; //!< the reason, for a failure
+};
+
 //! One computer's side of file transfers: what it offers, what it sends and what it receives
 /*!
 The agent doesn't know about the network or the platform. It sends messages
@@ -41,6 +60,9 @@ public:
 
     //! a transfer, in either direction, failed or was cancelled
     std::function<void(const std::string &reason)> failed;
+
+    //! how a transfer is going: when it starts, every few percent, and when it ends
+    std::function<void(const TransferStatus &)> status;
   };
 
   explicit TransferAgent(Hooks hooks, uint64_t maxReceiveBytes = UINT64_MAX);
@@ -76,6 +98,8 @@ private:
   };
 
   void pump(uint32_t id);
+  void report(uint32_t id, TransferStatus::Phase phase, const std::string &detail = {});
+  void addProgress(uint32_t id, uint64_t bytes);
   void handleIncoming(const TransferMessage &message);
   void cancel(uint32_t id, const std::string &reason, bool tellServer);
 
@@ -87,6 +111,13 @@ private:
   std::map<uint32_t, std::shared_ptr<FileSender>> m_outgoing;
   std::set<uint32_t> m_pumping;
   std::map<uint32_t, Incoming> m_incoming;
+
+  // progress of each transfer in either direction, for status reports
+  std::map<uint32_t, TransferStatus> m_progress;
+  std::map<uint32_t, uint64_t> m_lastReportedPercent;
+
+  //! progress is reported each time it moves on by this many percent
+  static constexpr uint64_t kReportEveryPercent = 5;
 };
 
 } // namespace deskflow::transfer

@@ -99,6 +99,7 @@ bool TransferRouter::start(Kind kind, const std::string &source, const std::stri
   startMessage.type = Type::Start;
   startMessage.id = id;
   startMessage.kind = kind;
+  startMessage.size = offer->second.size;
   m_deliver(destination, startMessage);
 
   if (!m_routes.contains(id))

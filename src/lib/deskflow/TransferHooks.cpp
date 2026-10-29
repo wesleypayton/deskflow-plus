@@ -8,6 +8,9 @@
 
 #include "base/Log.h"
 #include "deskflow/FileTransferPlatform.h"
+#include "deskflow/ipc/CoreIpc.h"
+
+#include <QString>
 
 namespace deskflow::transfer {
 
@@ -50,6 +53,23 @@ platformHooks(std::function<void(const TransferMessage &)> send, std::shared_ptr
   };
 
   hooks.failed = [](const std::string &reason) { LOG_WARN("file transfer failed: %s", reason.c_str()); };
+
+  // phase|in or out|clipboard or drag|done|total|detail, for the GUI to show
+  hooks.status = [](const TransferStatus &status) {
+    static const char *const phases[] = {"started", "progress", "finished", "failed"};
+    auto detail = QString::fromStdString(status.detail);
+    detail.replace(QLatin1Char('='), QLatin1Char('-')).replace(QLatin1Char('\n'), QLatin1Char(' '));
+    ipcSendToClient(
+        QStringLiteral("fileTransfer"),
+        QStringLiteral("%1|%2|%3|%4|%5|%6")
+            .arg(QString::fromLatin1(phases[static_cast<int>(status.phase)]))
+            .arg(status.incoming ? QStringLiteral("in") : QStringLiteral("out"))
+            .arg(status.kind == TransferKind::Drag ? QStringLiteral("drag") : QStringLiteral("clipboard"))
+            .arg(status.done)
+            .arg(status.total)
+            .arg(detail)
+    );
+  };
   return hooks;
 }
 
