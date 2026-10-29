@@ -285,13 +285,15 @@ std::filesystem::path knownFolder(REFKNOWNFOLDERID id)
   return result;
 }
 
-// the folder an Explorer window is showing
+// the folder an Explorer window is showing, in its active tab
 std::filesystem::path explorerFolder(HWND window)
 {
   ComPtr<IShellWindows> windows;
   if (FAILED(CoCreateInstance(CLSID_ShellWindows, nullptr, CLSCTX_ALL, IID_PPV_ARGS(&windows))))
     return {};
 
+  // every tab of a window shares its handle; only the tab in front has its view showing
+  std::filesystem::path firstTab;
   long count = 0;
   windows->get_Count(&count);
   for (long i = 0; i < count; ++i) {
@@ -326,9 +328,14 @@ std::filesystem::path explorerFolder(HWND window)
       result = path;
     CoTaskMemFree(path);
     CoTaskMemFree(pidl);
-    return result;
+
+    HWND viewWindow = nullptr;
+    if (SUCCEEDED(view->GetWindow(&viewWindow)) && IsWindowVisible(viewWindow))
+      return result;
+    if (firstTab.empty())
+      firstTab = result;
   }
-  return {};
+  return firstTab;
 }
 
 DropFolder findDropFolder()
