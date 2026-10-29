@@ -46,6 +46,22 @@ std::vector<std::filesystem::path> filesFromDrop(HDROP drop)
   return files;
 }
 
+// a cursor pinned against an edge doesn't move, so nothing looks at it again until it does: nudge it in and
+// back, which both the drag loop and Deskflow's own edge check see as movement
+void nudgeCursor(DWORD firstFlags = 0)
+{
+  std::array<INPUT, 3> inputs{};
+  for (auto &input : inputs)
+    input.type = INPUT_MOUSE;
+  inputs[0].mi.dwFlags = firstFlags;
+  inputs[1].mi.dx = -1;
+  inputs[1].mi.dwFlags = MOUSEEVENTF_MOVE;
+  inputs[2].mi.dx = 1;
+  inputs[2].mi.dwFlags = MOUSEEVENTF_MOVE;
+  const auto first = firstFlags == 0 ? 1 : 0;
+  SendInput(static_cast<UINT>(inputs.size() - first), inputs.data() + first, sizeof(INPUT));
+}
+
 //! Records what a drag carries and accepts nothing, so the source never deletes or moves anything
 class ProbeTarget : public IDropTarget
 {
@@ -84,9 +100,16 @@ public:
       ReleaseStgMedium(&medium);
     }
 
-    std::scoped_lock lock(m_mutex);
-    m_files = files;
-    *effect = m_files.empty() ? DROPEFFECT_NONE : DROPEFFECT_COPY;
+    LOG_DEBUG("drag probe entered by a drag of %d files", static_cast<int>(files.size()));
+    {
+      std::scoped_lock lock(m_mutex);
+      m_files = files;
+      *effect = m_files.empty() ? DROPEFFECT_NONE : DROPEFFECT_COPY;
+    }
+
+    // let the edge check see the files without waiting for the user to move
+    if (!files.empty())
+      nudgeCursor();
     return S_OK;
   }
 
@@ -230,19 +253,14 @@ private:
     if (message == kShowMessage) {
       const auto x = static_cast<int>(static_cast<intptr_t>(wParam));
       const auto y = static_cast<int>(lParam);
+      LOG_DEBUG("drag probe shown at %d,%d", x, y);
       SetWindowPos(
           window, HWND_TOPMOST, x - kProbeSize / 2, y - kProbeSize / 2, kProbeSize, kProbeSize,
           SWP_NOACTIVATE | SWP_SHOWWINDOW
       );
 
-      // a cursor pinned against an edge doesn't move, so nudge it for the drag loop to look again
-      std::array<INPUT, 2> nudge{};
-      for (auto &input : nudge)
-        input.type = INPUT_MOUSE;
-      nudge[0].mi.dx = -1;
-      nudge[1].mi.dx = 1;
-      nudge[0].mi.dwFlags = nudge[1].mi.dwFlags = MOUSEEVENTF_MOVE;
-      SendInput(static_cast<UINT>(nudge.size()), nudge.data(), sizeof(INPUT));
+      // the drag loop only notices the window when the cursor moves
+      nudgeCursor();
       return 0;
     }
     if (message == kHideMessage) {
@@ -367,10 +385,8 @@ std::vector<std::filesystem::path> dragProbeFiles()
 
 void endLocalDrag()
 {
-  INPUT input{};
-  input.type = INPUT_MOUSE;
-  input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-  SendInput(1, &input, sizeof(input));
+  // release over the drop target, then nudge so the edge is checked again now the button is up
+  nudgeCursor(MOUSEEVENTF_LEFTUP);
 }
 
 void stopDragProbe()
