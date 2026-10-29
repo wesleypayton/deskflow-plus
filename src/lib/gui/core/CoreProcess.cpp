@@ -582,6 +582,21 @@ void CoreProcess::cleanup()
   }
 }
 
+void CoreProcess::reloadServerConfig()
+{
+  if (m_mode != Settings::CoreMode::Server || !isStarted() || !m_coreIpcClient || !m_coreIpcClient->isConnected())
+    return;
+
+  // an external config file is the user's to edit, so only the generated one is rewritten
+  if (Settings::value(Settings::Server::ExternalConfig).toBool())
+    return;
+
+  if (const auto [readable, configFile] = persistServerConfig(); readable) {
+    qInfo("asking the server to reload %s", qPrintable(configFile));
+    m_coreIpcClient->sendReloadConfig();
+  }
+}
+
 QPair<bool, QString> CoreProcess::persistServerConfig() const
 {
   if (Settings::value(Settings::Server::ExternalConfig).toBool()) {

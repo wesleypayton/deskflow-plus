@@ -6,8 +6,10 @@
 
 #include "CoreIpcServer.h"
 
+#include "base/IEventQueue.h"
 #include "base/Log.h"
 #include "common/Constants.h"
+#include "deskflow/App.h"
 
 #include <QLocalSocket>
 
@@ -35,6 +37,14 @@ void CoreIpcServer::processCommand(QLocalSocket *clientSocket, const QString &co
     writeToClientSocket(clientSocket, QStringLiteral("ok"));
     broadcastCommand(QStringLiteral("bye"));
     Q_EMIT stopProcessRequested();
+    return;
+  }
+  if (command == QStringLiteral("reloadConfig")) {
+    // the GUI rewrote the server config, e.g. because a client's monitors changed
+    LOG_DEBUG("core ipc server got reload config message");
+    writeToClientSocket(clientSocket, QStringLiteral("ok"));
+    auto *events = App::instance().getEvents();
+    events->addEvent(Event(EventTypes::ServerAppReloadConfig, events->getSystemTarget()));
     return;
   }
   LOG_WARN("core ipc server got unknown command: %s", command.toUtf8().constData());

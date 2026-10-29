@@ -282,8 +282,11 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
     // remember the client's real arrangement so the layout shows it, even once it has disconnected
     m_reportedShapes.insert(name, monitors);
-    if (m_serverConfig.updateComputerMonitors(name, monitors))
+    if (m_serverConfig.updateComputerMonitors(name, monitors)) {
       m_serverConfig.commit();
+      // the layout may now link differently, so the running server picks it up straight away
+      m_coreProcess.reloadServerConfig();
+    }
   });
 
   if (Settings::value(Settings::Gui::AutoStartCore).toBool()) {

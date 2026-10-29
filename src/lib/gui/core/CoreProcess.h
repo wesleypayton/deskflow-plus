@@ -57,6 +57,9 @@ public:
   {
     return m_secureSocketVersion;
   }
+  //! Write the server config and have a running server use it, without restarting
+  void reloadServerConfig();
+
   bool isStarted() const
   {
     return m_processState == ProcessState::Started;

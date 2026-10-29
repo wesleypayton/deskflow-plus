@@ -21,6 +21,9 @@ public:
 
   void sendStop();
 
+  //! Ask a running server to reload its config without restarting
+  void sendReloadConfig();
+
 Q_SIGNALS:
   void commandReceived(const QString &command, const QString &args);
 
