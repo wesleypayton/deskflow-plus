@@ -86,13 +86,32 @@ aware on Windows, so monitor sizes from either are in the same real pixels.
 
 ### 4. File transfer (Windows)
 
-* Revive the deprecated `DDRG`/`DFTR` messages on protocol 1.9, sent over a
-  separate chunked stream so large files don't stall input.
-* Drag: when the cursor leaves the server during an OLE drag, a hidden drop
-  target window at the edge captures the `CF_HDROP` list; on button release on
-  the client the files are streamed and written to a "Received files" folder,
-  which is then opened (as Mouse Without Borders does).
-* Copy/paste: `CF_HDROP` on the clipboard is announced as a file list; on paste
-  the destination requests the data and materialises the files, then places a
-  `CF_HDROP` for them on its own clipboard.
-* Size limit and destination folder are settings.
+Done:
+
+* Transfer engine (`deskflow/FileTransfer`): files stream from disk as a header
+  per file and 64 KB chunks, with at most 16 messages unacknowledged so file
+  data never queues up in front of input. The receiver writes `.part` files and
+  renames them when complete, never overwrites (it picks "name (2).ext"),
+  enforces a size limit, and refuses relative paths that could leave its folder
+  or that Windows would quietly rename.
+* Protocol 1.9 messages `DFOF` offer, `DFRQ` request, `DFST` start, `DFHD`
+  header, `DFDT` data, `DFEN` end, `DFAK` ack and `DFCN` cancel. Every file goes
+  source -> server -> destination. Each computer's `TransferAgent` offers files
+  and only ever sends its own offers, referenced by id, so the server can't ask
+  a client for arbitrary paths. The server's `TransferRouter` only relays a
+  message from the right end of a transfer.
+* Copy/paste: copying files in Explorer offers them; copying anything else
+  withdraws the offer. When the cursor enters another computer, the clipboard
+  owner's files (up to 512 MB) are copied to `%TEMP%\Deskflow\Clipboard\...`
+  there and put on its clipboard, marked as Deskflow's so the sync doesn't bounce
+  them back.
+
+Still to do:
+
+* Drag across an edge: switching is blocked while a mouse button is held, so a
+  file drag needs an exception. When a held drag reaches an edge, a hidden drop
+  target window under the cursor reads the `CF_HDROP` list and ends the local
+  drag; switching is allowed for that drag, and releasing the button on the
+  destination drops the files into the Explorer folder or desktop under the
+  cursor, otherwise into a Deskflow folder that is opened.
+* Settings for the clipboard size limit, and progress and errors in the GUI.
