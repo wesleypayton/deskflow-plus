@@ -106,12 +106,21 @@ Done:
   there and put on its clipboard, marked as Deskflow's so the sync doesn't bounce
   them back.
 
+* Drag across an edge: switching is normally blocked while a button is held.
+  When a held button is pushed against an edge that leads somewhere, an almost
+  invisible drop target is put under the cursor and the cursor nudged so the
+  drag loop reports what it carries. Files are offered, the drag is ended on the
+  drop target with a release of our own (it accepts nothing, so the source
+  neither moves nor copies), and the cursor crosses with the button held.
+  Releasing it on another computer drops the files into the Explorer folder or
+  desktop under the cursor, otherwise into `Downloads\Deskflow`, which opens
+  with them selected. Drags that start on a client use the `DFPB` probe message.
+
+Verified live on one PC (server and client cores on loopback): copying three
+items client to server, and dragging them server to client into the fallback
+folder. Not yet verified live: dropping into an open Explorer folder or onto the
+desktop, drags starting on a client, and two real machines.
+
 Still to do:
 
-* Drag across an edge: switching is blocked while a mouse button is held, so a
-  file drag needs an exception. When a held drag reaches an edge, a hidden drop
-  target window under the cursor reads the `CF_HDROP` list and ends the local
-  drag; switching is allowed for that drag, and releasing the button on the
-  destination drops the files into the Explorer folder or desktop under the
-  cursor, otherwise into a Deskflow folder that is opened.
 * Settings for the clipboard size limit, and progress and errors in the GUI.
