@@ -280,6 +280,7 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::missingKeyboardLayouts, this, &MainWindow::handleMissingKeyboardLayouts);
   connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
     // remember the client's real arrangement so the layout shows it, even once it has disconnected
+    m_reportedShapes.insert(name, monitors);
     if (m_serverConfig.updateComputerMonitors(name, monitors))
       m_serverConfig.commit();
   });
@@ -616,6 +617,7 @@ void MainWindow::serverConnectionConfigureClient(const QString &clientName)
   m_serverConfigDialogVisible = true;
   ServerConfigDialog dialog(this, m_serverConfig);
   if (dialog.addClient(clientName) && dialog.exec() == QDialog::Accepted) {
+    applyReportedShapes();
     m_coreProcess.restart();
   }
   m_serverConfigDialogVisible = false;
@@ -1091,9 +1093,22 @@ void MainWindow::showConfigureServer(const QString &message)
 {
   ServerConfigDialog dialog(this, serverConfig());
   dialog.message(message);
-  if ((dialog.exec() == QDialog::Accepted) && m_coreProcess.isStarted()) {
-    m_coreProcess.restart();
+  if (dialog.exec() == QDialog::Accepted) {
+    applyReportedShapes();
+    if (m_coreProcess.isStarted())
+      m_coreProcess.restart();
   }
+}
+
+void MainWindow::applyReportedShapes()
+{
+  // saving the dialog copies back the layout as it was when the dialog opened, which may predate
+  // a client reporting new monitors
+  bool changed = false;
+  for (auto shape = m_reportedShapes.cbegin(); shape != m_reportedShapes.cend(); ++shape)
+    changed |= m_serverConfig.updateComputerMonitors(shape.key(), shape.value());
+  if (changed)
+    m_serverConfig.commit();
 }
 
 void MainWindow::showConfigureClient()

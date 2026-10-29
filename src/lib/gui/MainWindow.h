@@ -128,6 +128,7 @@ private:
   void updateFingerprintButton();
   void updateComputerName();
   void saveSettings() const;
+  void applyReportedShapes();
   void showConfigureServer(const QString &message);
   void showConfigureClient();
   void restoreWindow();
@@ -171,6 +172,9 @@ private:
   bool m_saveOnExit = true;
   bool m_clientErrorVisible = false;
   ServerConfig m_serverConfig;
+
+  // the latest monitors each client reported, re-applied after the server settings are saved
+  QMap<QString, QList<QRect>> m_reportedShapes;
   deskflow::gui::CoreProcess m_coreProcess;
   QSet<QString> m_ignoredClients;
   bool m_newClientPromptShowing = false;
