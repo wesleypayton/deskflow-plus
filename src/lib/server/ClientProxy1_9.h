@@ -17,6 +17,11 @@ public:
   ~ClientProxy1_9() override = default;
 
   deskflow::MonitorList getMonitors() const override;
+  bool supportsFileTransfer() const override
+  {
+    return true;
+  }
+  void sendTransfer(const deskflow::transfer::TransferMessage &message) override;
 
 protected:
   bool parseMessage(const uint8_t *code) override;

@@ -10,6 +10,8 @@
 #include "base/Log.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
+#include "deskflow/TransferProtocol.h"
+#include "server/Server.h"
 
 #include <cstring>
 
@@ -42,7 +44,19 @@ bool ClientProxy1_9::parseMessage(const uint8_t *code)
   if (memcmp(code, kMsgDMonitors, 4) == 0) {
     return recvMonitors();
   }
+  if (deskflow::transfer::isTransferMessage(code)) {
+    deskflow::transfer::TransferMessage message;
+    if (!deskflow::transfer::readTransferMessage(getStream(), code, message))
+      return false;
+    getServer()->handleTransferMessage(this, message);
+    return true;
+  }
   return ClientProxy1_8::parseMessage(code);
+}
+
+void ClientProxy1_9::sendTransfer(const deskflow::transfer::TransferMessage &message)
+{
+  deskflow::transfer::writeTransferMessage(getStream(), message);
 }
 
 bool ClientProxy1_9::recvMonitors()

@@ -22,6 +22,10 @@ TransferRouter::TransferRouter(Deliver deliver) : m_deliver(std::move(deliver))
 void TransferRouter::receive(const std::string &from, const Message &message)
 {
   if (message.type == Type::Offer) {
+    if (message.value == 0) {
+      m_offers.erase({from, message.kind});
+      return;
+    }
     LOG_DEBUG(
         "\"%s\" offers %u files (%llu bytes)", from.c_str(), message.value,
         static_cast<unsigned long long>(message.size)

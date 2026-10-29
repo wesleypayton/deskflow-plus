@@ -46,6 +46,15 @@ uint32_t TransferAgent::offer(TransferKind kind, const std::vector<std::filesyst
   return message.id;
 }
 
+void TransferAgent::withdraw(TransferKind kind)
+{
+  // an offer of nothing replaces whatever was offered before
+  TransferMessage message;
+  message.type = Offer;
+  message.kind = kind;
+  m_hooks.send(message);
+}
+
 void TransferAgent::handle(const TransferMessage &message)
 {
   switch (message.type) {

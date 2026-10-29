@@ -17,7 +17,15 @@
 #include "net/NetworkAddress.h"
 
 #include <climits>
+#include <filesystem>
+#include <memory>
 #include <string>
+#include <vector>
+
+namespace deskflow::transfer {
+class TransferAgent;
+struct TransferMessage;
+} // namespace deskflow::transfer
 
 class Event;
 class EventQueueTimer;
@@ -163,6 +171,9 @@ public:
   }
   size_t getMaximumClipboardReceiveSizeBytes() const;
 
+  //! A file transfer message from the server
+  void handleTransferMessage(const deskflow::transfer::TransferMessage &message);
+
   //@}
 
   // IComputer overrides
@@ -218,6 +229,8 @@ private:
   void handleSuspend();
   void handleResume();
   void sendClipboardThread(void *);
+  void setupFileTransfer();
+  void offerClipboardFiles();
   void bindNetworkInterface(IDataSocket *socket) const;
 
 private:
@@ -238,6 +251,8 @@ private:
   std::string m_dataClipboard[kClipboardEnd];
   IEventQueue *m_events = nullptr;
   bool m_useSecureNetwork = false;
+  std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
+  std::vector<std::filesystem::path> m_receivedClipboardFiles;
   bool m_enableClipboard = true;
   bool m_relativeMouseMoves = false;
   bool m_hasRelativeRestorePosition = false;

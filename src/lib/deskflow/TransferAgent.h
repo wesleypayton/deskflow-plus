@@ -53,6 +53,9 @@ public:
   */
   uint32_t offer(TransferKind kind, const std::vector<std::filesystem::path> &items);
 
+  //! Tell the server this computer no longer offers files of this kind, e.g. after copying text
+  void withdraw(TransferKind kind);
+
   //! Handle a message from the server
   void handle(const TransferMessage &message);
 

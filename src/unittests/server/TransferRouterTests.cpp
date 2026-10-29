@@ -6,8 +6,8 @@
 
 #include "TransferRouterTests.h"
 
-#include "io/IStream.h"
 #include "deskflow/TransferAgent.h"
+#include "io/IStream.h"
 #include "server/TransferRouter.h"
 
 #include <QTemporaryDir>
@@ -249,6 +249,11 @@ void TransferRouterTests::start_clipboardOfferOnlyOncePerComputer()
   QVERIFY(network.router.start(TransferKind::Clipboard, "laptop", "desk"));
   network.run();
   QVERIFY(!network.router.start(TransferKind::Clipboard, "laptop", "desk"));
+
+  // copying something else withdraws the offer
+  network.computers["laptop"].agent->withdraw(TransferKind::Clipboard);
+  network.run();
+  QVERIFY(!network.router.latestOffer(TransferKind::Clipboard, "laptop"));
 
   // copying again is a new offer, which goes again
   network.computers["laptop"].agent->offer(TransferKind::Clipboard, {root(source) / "a.txt"});

@@ -20,11 +20,13 @@
 #include "deskflow/Clipboard.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileTransferPlatform.h"
 #include "deskflow/IPlatformComputer.h"
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/StreamChunker.h"
+#include "deskflow/TransferAgent.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/IDataSocket.h"
 #include "net/ISocketFactory.h"
@@ -491,6 +493,7 @@ bool Client::setupComputer(int16_t protocolMinor)
     break;
   case 9:
     m_server = new ServerProxy1_9(this, m_stream, m_events);
+    setupFileTransfer();
     break;
   default:
     break;
@@ -557,6 +560,48 @@ void Client::cleanupComputer()
     m_events->removeHandler(EventTypes::ClipboardGrabbed, getEventTarget());
     delete m_server;
     m_server = nullptr;
+  }
+  m_transferAgent.reset();
+}
+
+void Client::setupFileTransfer()
+{
+  using namespace deskflow::transfer;
+
+  TransferAgent::Hooks hooks;
+  hooks.send = [this](const TransferMessage &message) { writeTransferMessage(m_stream, message); };
+  hooks.destination = [](TransferKind kind) {
+    return kind == TransferKind::Clipboard ? platform::clipboardInbox() : std::filesystem::path();
+  };
+  hooks.received = [this](TransferKind kind, const std::vector<std::filesystem::path> &items) {
+    if (kind != TransferKind::Clipboard)
+      return;
+    // remember them so putting them on the clipboard isn't mistaken for the user copying them
+    m_receivedClipboardFiles = items;
+    if (platform::putFilesOnClipboard(items))
+      LOG_INFO("received %d copied items, ready to paste", static_cast<int>(items.size()));
+  };
+  hooks.failed = [](const std::string &reason) { LOG_WARN("file transfer failed: %s", reason.c_str()); };
+  m_transferAgent = std::make_unique<TransferAgent>(hooks);
+}
+
+void Client::handleTransferMessage(const deskflow::transfer::TransferMessage &message)
+{
+  if (m_transferAgent)
+    m_transferAgent->handle(message);
+}
+
+void Client::offerClipboardFiles()
+{
+  using deskflow::transfer::TransferKind;
+  if (!m_transferAgent)
+    return;
+
+  const auto files = deskflow::transfer::platform::filesOnClipboard();
+  if (files.empty()) {
+    m_transferAgent->withdraw(TransferKind::Clipboard);
+  } else if (files != m_receivedClipboardFiles) {
+    m_transferAgent->offer(TransferKind::Clipboard, files);
   }
 }
 
@@ -660,6 +705,8 @@ void Client::handleClipboardGrabbed(const Event &event)
 
   // grab ownership
   m_server->onGrabClipboard(info->m_id);
+  if (info->m_id == kClipboardClipboard)
+    offerClipboardFiles();
 
   // we now own the clipboard and it has not been sent to the server
   m_ownClipboard[info->m_id] = true;

@@ -11,11 +11,13 @@ if(WIN32)
   set(PLATFORM_CODE
     win32/AppUtilWindows.cpp
     win32/AppUtilWindows.h
+    win32/FileTransferPlatformWindows.cpp
   )
 elseif(UNIX)
   set(PLATFORM_CODE
     unix/AppUtilUnix.cpp
     unix/AppUtilUnix.h
+    unix/FileTransferPlatformUnix.cpp
     unix/DeskflowXkbKeyboard.cpp
     unix/DeskflowXkbKeyboard.h
     unix/ISO639Table.h
@@ -65,6 +67,7 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   KeyState.h
   FileTransfer.cpp
   FileTransfer.h
+  FileTransferPlatform.h
   Monitors.cpp
   Monitors.h
   MouseTypes.h

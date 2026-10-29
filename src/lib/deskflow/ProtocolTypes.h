@@ -1209,7 +1209,7 @@ extern const char *const kMsgDMonitors;
  * - Cancel `"DFCN%4i%s"`: transfer id, reason
  *
  * A computer announces files it can send with an Offer when files are copied
- * or dragged. The primary starts a transfer by sending Start to the destination
+ * or dragged, and withdraws it with an Offer of no files. The primary starts a transfer by sending Start to the destination
  * and Request to the source, then relays Header, Data and End from the source
  * to the destination and Ack the other way. The source keeps at most 16
  * messages unacknowledged so file data never queues up in front of input. A

@@ -18,9 +18,19 @@
 #include "server/Config.h"
 
 #include <climits>
+#include <filesystem>
 #include <map>
+#include <memory>
 #include <set>
 #include <vector>
+
+namespace deskflow::transfer {
+class TransferAgent;
+struct TransferMessage;
+} // namespace deskflow::transfer
+namespace deskflow::server {
+class TransferRouter;
+} // namespace deskflow::server
 
 class BaseClientProxy;
 class EventQueueTimer;
@@ -203,11 +213,20 @@ public:
   void sendComputerShapeIpc(const BaseClientProxy *client) const;
   size_t getMaximumClipboardSizeBytes() const;
 
+  //! A file transfer message from a client
+  void handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message);
+
   //@}
 
 private:
   // get canonical name of client
   std::string getName(const BaseClientProxy *) const;
+
+  // file transfer
+  void setupFileTransfer();
+  void deliverTransfer(const std::string &computer, const deskflow::transfer::TransferMessage &message);
+  void offerPrimaryClipboardFiles();
+  void startClipboardTransfer(BaseClientProxy *destination);
 
   // get the sides of the primary computer that have neighbors
   uint32_t getActivePrimarySides() const;
@@ -471,4 +490,8 @@ private:
   bool m_defaultLockToComputerState = false;
   bool m_disableLockToComputer = false;
   bool m_enableClipboard = true;
+
+  std::unique_ptr<deskflow::server::TransferRouter> m_transferRouter;
+  std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
+  std::vector<std::filesystem::path> m_receivedClipboardFiles;
 };

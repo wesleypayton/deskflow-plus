@@ -13,17 +13,20 @@
 #include "deskflow/AppUtil.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileTransferPlatform.h"
 #include "deskflow/IPlatformComputer.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/StreamChunker.h"
+#include "deskflow/TransferAgent.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/TCPSocket.h"
 #include "server/ClientListener.h"
 #include "server/ClientProxy.h"
 #include "server/ClientProxyUnknown.h"
 #include "server/PrimaryClient.h"
+#include "server/TransferRouter.h"
 
 #ifdef _WIN32
 #include <algorithm>
@@ -122,6 +125,7 @@ Server::Server(ServerConfig &config, PrimaryClient *primaryClient, deskflow::Com
 
   // add connection
   addClient(m_primaryClient);
+  setupFileTransfer();
 
   // set initial configuration
   setConfig(config);
@@ -518,6 +522,9 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
         }
         m_active->setClipboard(id, &m_clipboards[id].m_clipboard);
       }
+
+      // copied files follow the cursor too
+      startClipboardTransfer(m_active);
     }
 
     auto *info = new Server::SwitchToComputerInfo(m_active->getName());
@@ -1198,6 +1205,9 @@ void Server::handleClipboardGrabbed(const Event &event, BaseClientProxy *grabber
     LOG_DEBUG("ignored computer \"%s\" grab of clipboard %d", getName(grabber).c_str(), info->m_id);
     return;
   }
+
+  if (grabber == m_primaryClient && info->m_id == kClipboardClipboard)
+    offerPrimaryClipboardFiles();
 
   // mark computer as owning clipboard
   LOG_DEBUG(
@@ -1954,8 +1964,12 @@ bool Server::removeClient(BaseClientProxy *client)
   m_events->removeHandler(ClipboardChanged, client->getEventTarget());
 
   // remove from list
-  m_clients.erase(getName(client));
+  const auto name = getName(client);
+  m_clients.erase(name);
   m_clientSet.erase(i);
+
+  if (m_transferRouter)
+    m_transferRouter->disconnected(name);
 
   return true;
 }
@@ -2080,4 +2094,101 @@ void Server::forceLeaveClient(const BaseClientProxy *client)
 
   // tell primary client about the active sides
   m_primaryClient->reconfigure(getActivePrimarySides());
+}
+
+//
+// file transfer
+//
+
+namespace {
+
+// copied files bigger than this aren't sent along with the cursor
+constexpr uint64_t kClipboardFileLimit = uint64_t{512} * 1024 * 1024;
+
+} // namespace
+
+void Server::setupFileTransfer()
+{
+  using namespace deskflow::transfer;
+
+  m_transferRouter = std::make_unique<deskflow::server::TransferRouter>(
+      [this](const std::string &computer, const TransferMessage &message) { deliverTransfer(computer, message); }
+  );
+
+  // this computer takes part like any client, with its messages going straight to the router
+  TransferAgent::Hooks hooks;
+  hooks.send = [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); };
+  hooks.destination = [](TransferKind kind) {
+    return kind == TransferKind::Clipboard ? platform::clipboardInbox() : std::filesystem::path();
+  };
+  hooks.received = [this](TransferKind kind, const std::vector<std::filesystem::path> &items) {
+    if (kind != TransferKind::Clipboard)
+      return;
+    // remember them so putting them on the clipboard isn't mistaken for the user copying them
+    m_receivedClipboardFiles = items;
+    if (platform::putFilesOnClipboard(items))
+      LOG_INFO("received %d copied items, ready to paste", static_cast<int>(items.size()));
+  };
+  hooks.failed = [](const std::string &reason) { LOG_WARN("file transfer failed: %s", reason.c_str()); };
+  m_transferAgent = std::make_unique<TransferAgent>(hooks);
+}
+
+void Server::handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message)
+{
+  if (m_transferRouter && m_clientSet.contains(const_cast<BaseClientProxy *>(client)))
+    m_transferRouter->receive(getName(client), message);
+}
+
+void Server::deliverTransfer(const std::string &computer, const deskflow::transfer::TransferMessage &message)
+{
+  if (computer == getName(m_primaryClient)) {
+    m_transferAgent->handle(message);
+    return;
+  }
+
+  if (const auto client = m_clients.find(computer);
+      client != m_clients.end() && client->second->supportsFileTransfer()) {
+    client->second->sendTransfer(message);
+  }
+}
+
+void Server::offerPrimaryClipboardFiles()
+{
+  using deskflow::transfer::TransferKind;
+  if (!m_transferAgent)
+    return;
+
+  const auto files = deskflow::transfer::platform::filesOnClipboard();
+  if (files.empty()) {
+    m_transferAgent->withdraw(TransferKind::Clipboard);
+  } else if (files != m_receivedClipboardFiles) {
+    m_transferAgent->offer(TransferKind::Clipboard, files);
+  }
+}
+
+void Server::startClipboardTransfer(BaseClientProxy *destination)
+{
+  using deskflow::transfer::TransferKind;
+  if (!m_transferRouter)
+    return;
+
+  const auto &owner = m_clipboards[kClipboardClipboard].m_clipboardOwner;
+  const auto name = getName(destination);
+  if (owner.empty() || owner == name)
+    return;
+  if (destination != m_primaryClient && !destination->supportsFileTransfer())
+    return;
+
+  const auto offer = m_transferRouter->latestOffer(TransferKind::Clipboard, owner);
+  if (!offer)
+    return;
+  if (offer->size > kClipboardFileLimit) {
+    LOG_INFO(
+        "not sending copied files to \"%s\", they're larger than %llu MB", name.c_str(),
+        static_cast<unsigned long long>(kClipboardFileLimit / 1024 / 1024)
+    );
+    return;
+  }
+
+  m_transferRouter->start(TransferKind::Clipboard, owner, name);
 }

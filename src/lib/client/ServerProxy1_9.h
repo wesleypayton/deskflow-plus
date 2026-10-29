@@ -17,4 +17,5 @@ public:
 
 protected:
   void sendExtraInfo() override;
+  ConnectionResult parseMessage(const uint8_t *code) override;
 };
