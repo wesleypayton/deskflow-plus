@@ -24,8 +24,9 @@ struct Format
 };
 
 const Format kFormats[] = {
-    {Offer, kMsgDFileOffer}, {Request, kMsgDFileRequest}, {Start, kMsgDFileStart}, {Header, kMsgDFileHeader},
-    {Data, kMsgDFileData},   {End, kMsgDFileEnd},         {Ack, kMsgDFileAck},     {Cancel, kMsgDFileCancel},
+    {Offer, kMsgDFileOffer},   {Request, kMsgDFileRequest}, {Start, kMsgDFileStart},
+    {Header, kMsgDFileHeader}, {Data, kMsgDFileData},       {End, kMsgDFileEnd},
+    {Ack, kMsgDFileAck},       {Cancel, kMsgDFileCancel},   {Probe, kMsgDFileProbe},
 };
 
 const char *formatFor(TransferMessage::Type type)
@@ -83,6 +84,7 @@ bool readTransferMessage(deskflow::IStream *stream, const uint8_t *code, Transfe
       break;
     case Request:
     case Ack:
+    case Probe:
       ok = ProtocolUtil::readf(stream, args, &message.id, &message.value);
       break;
     case Start:
@@ -123,6 +125,7 @@ void writeTransferMessage(deskflow::IStream *stream, const TransferMessage &mess
     break;
   case Request:
   case Ack:
+  case Probe:
     ProtocolUtil::writef(stream, format, message.id, message.value);
     break;
   case Start:

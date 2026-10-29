@@ -90,6 +90,10 @@ void TransferAgent::handle(const TransferMessage &message)
   case Offer:
     // only the server is interested in offers
     break;
+
+  case Probe:
+    // the computer looks for a drag itself, see probeForDrag()
+    break;
   }
 }
 

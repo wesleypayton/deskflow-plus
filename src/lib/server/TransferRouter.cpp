@@ -70,6 +70,7 @@ void TransferRouter::receive(const std::string &from, const Message &message)
   case Type::Offer:
   case Type::Request:
   case Type::Start:
+  case Type::Probe:
     // only the server sends these
     break;
   }

@@ -27,6 +27,7 @@
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/StreamChunker.h"
 #include "deskflow/TransferAgent.h"
+#include "deskflow/TransferHooks.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/IDataSocket.h"
 #include "net/ISocketFactory.h"
@@ -567,42 +568,29 @@ void Client::cleanupComputer()
 void Client::setupFileTransfer()
 {
   using namespace deskflow::transfer;
-
-  TransferAgent::Hooks hooks;
-  hooks.send = [this](const TransferMessage &message) { writeTransferMessage(m_stream, message); };
-  hooks.destination = [](TransferKind kind) {
-    return kind == TransferKind::Clipboard ? platform::clipboardInbox() : std::filesystem::path();
-  };
-  hooks.received = [this](TransferKind kind, const std::vector<std::filesystem::path> &items) {
-    if (kind != TransferKind::Clipboard)
-      return;
-    // remember them so putting them on the clipboard isn't mistaken for the user copying them
-    m_receivedClipboardFiles = items;
-    if (platform::putFilesOnClipboard(items))
-      LOG_INFO("received %d copied items, ready to paste", static_cast<int>(items.size()));
-  };
-  hooks.failed = [](const std::string &reason) { LOG_WARN("file transfer failed: %s", reason.c_str()); };
-  m_transferAgent = std::make_unique<TransferAgent>(hooks);
+  m_transferState = std::make_shared<LocalTransferState>();
+  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
+      [this](const TransferMessage &message) { writeTransferMessage(m_stream, message); }, m_transferState
+  ));
 }
 
 void Client::handleTransferMessage(const deskflow::transfer::TransferMessage &message)
 {
-  if (m_transferAgent)
+  using namespace deskflow::transfer;
+  if (!m_transferAgent)
+    return;
+
+  // the server asks while a held button is pushed against an edge
+  if (message.type == TransferMessage::Type::Probe)
+    probeForDrag(*m_transferAgent, *m_transferState, message.value != 0);
+  else
     m_transferAgent->handle(message);
 }
 
 void Client::offerClipboardFiles()
 {
-  using deskflow::transfer::TransferKind;
-  if (!m_transferAgent)
-    return;
-
-  const auto files = deskflow::transfer::platform::filesOnClipboard();
-  if (files.empty()) {
-    m_transferAgent->withdraw(TransferKind::Clipboard);
-  } else if (files != m_receivedClipboardFiles) {
-    m_transferAgent->offer(TransferKind::Clipboard, files);
-  }
+  if (m_transferAgent)
+    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
 }
 
 void Client::cleanupTimer()

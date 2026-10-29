@@ -25,4 +25,30 @@ std::filesystem::path clipboardInbox()
   return {};
 }
 
+void startDragProbe()
+{
+}
+
+std::vector<std::filesystem::path> dragProbeFiles()
+{
+  return {};
+}
+
+void endLocalDrag()
+{
+}
+
+void stopDragProbe()
+{
+}
+
+DropFolder dropFolderAtCursor()
+{
+  return {};
+}
+
+void revealInFileManager(const std::vector<std::filesystem::path> &)
+{
+}
+
 } // namespace deskflow::transfer::platform

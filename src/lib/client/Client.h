@@ -25,6 +25,7 @@
 namespace deskflow::transfer {
 class TransferAgent;
 struct TransferMessage;
+struct LocalTransferState;
 } // namespace deskflow::transfer
 
 class Event;
@@ -252,7 +253,7 @@ private:
   IEventQueue *m_events = nullptr;
   bool m_useSecureNetwork = false;
   std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
-  std::vector<std::filesystem::path> m_receivedClipboardFiles;
+  std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;
   bool m_enableClipboard = true;
   bool m_relativeMouseMoves = false;
   bool m_hasRelativeRestorePosition = false;

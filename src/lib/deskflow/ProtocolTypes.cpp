@@ -57,6 +57,7 @@ const char *const kMsgDFileData = "DFDT%4i%s";
 const char *const kMsgDFileEnd = "DFEN%4i";
 const char *const kMsgDFileAck = "DFAK%4i%4i";
 const char *const kMsgDFileCancel = "DFCN%4i%s";
+const char *const kMsgDFileProbe = "DFPB%4i%4i";
 const char *const kMsgQInfo = "QINF";
 const char *const kMsgEIncompatible = "EICV%2i%2i";
 const char *const kMsgEBusy = "EBSY";

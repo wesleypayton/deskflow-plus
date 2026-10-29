@@ -1207,12 +1207,13 @@ extern const char *const kMsgDMonitors;
  * - End `"DFEN%4i"`: transfer id, every file has been sent
  * - Ack `"DFAK%4i%4i"` (destination to source): transfer id, messages handled so far
  * - Cancel `"DFCN%4i%s"`: transfer id, reason
+ * - Probe `"DFPB%4i%4i"` (primary to secondary): unused, 1 to look for a file drag under the
+ *   cursor or 0 to stop. A secondary that finds one offers it as a drag and ends the drag locally.
  *
  * A computer announces files it can send with an Offer when files are copied
- * or dragged, and withdraws it with an Offer of no files. The primary starts a transfer by sending Start to the destination
- * and Request to the source, then relays Header, Data and End from the source
- * to the destination and Ack the other way. The source keeps at most 16
- * messages unacknowledged so file data never queues up in front of input. A
+ * or dragged, and withdraws it with an Offer of no files. The primary starts a transfer by sending Start to the
+ * destination and Request to the source, then relays Header, Data and End from the source to the destination and Ack
+ * the other way. The source keeps at most 16 messages unacknowledged so file data never queues up in front of input. A
  * source only sends files from its own offers, never a path it is asked for.
  * Relative paths are UTF-8 and '/' separated; the destination refuses any that
  * could leave its destination folder.
@@ -1228,6 +1229,7 @@ extern const char *const kMsgDFileData;
 extern const char *const kMsgDFileEnd;
 extern const char *const kMsgDFileAck;
 extern const char *const kMsgDFileCancel;
+extern const char *const kMsgDFileProbe;
 
 /** @} */ // end of protocol_system group
 

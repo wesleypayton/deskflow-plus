@@ -20,6 +20,7 @@
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/StreamChunker.h"
 #include "deskflow/TransferAgent.h"
+#include "deskflow/TransferHooks.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/TCPSocket.h"
 #include "server/ClientListener.h"
@@ -877,8 +878,9 @@ bool Server::isSwitchOkay(
     }
   }
 
-  // ignore if mouse is locked to computer and don't try to switch later
-  if (!preventSwitch && isLockedToComputer()) {
+  // ignore if mouse is locked to computer and don't try to switch later, unless the held button is
+  // dragging files, which may be carried across
+  if (!preventSwitch && isLockedToComputer() && (isLockedToComputerServer() || !fileDragAllowsSwitch())) {
     LOG_VERBOSE("locked to computer");
     preventSwitch = true;
     stopSwitch();
@@ -1632,8 +1634,17 @@ void Server::onMouseUp(ButtonID id)
   LOG_VERBOSE("onMouseUp id=%d", id);
   assert(m_active != nullptr);
 
+  // the release we made to end a drag on this computer, while the user still holds the button
+  if (id == kButtonLeft && m_endingLocalDrag) {
+    m_endingLocalDrag = false;
+    return;
+  }
+
   // relay
   m_active->mouseUp(id);
+
+  if (id == kButtonLeft)
+    finishFileDrag();
 }
 
 bool Server::onMouseMovePrimary(int32_t x, int32_t y)
@@ -2105,7 +2116,89 @@ namespace {
 // copied files bigger than this aren't sent along with the cursor
 constexpr uint64_t kClipboardFileLimit = uint64_t{512} * 1024 * 1024;
 
+// how often a client is asked to look for a drag while a held button is pushed against an edge, in seconds
+constexpr double kDragProbeInterval = 0.1;
+
 } // namespace
+
+bool Server::fileDragAllowsSwitch()
+{
+  using namespace deskflow::transfer;
+  if (!m_transferRouter)
+    return false;
+
+  // already carrying dragged files: the cursor may go anywhere with the button held
+  if (!m_dragSource.empty())
+    return !m_endingLocalDrag;
+
+  const auto active = getName(m_active);
+  const bool starting = !m_lookingForDrag;
+  if (starting) {
+    m_lookingForDrag = true;
+    const auto before = m_transferRouter->latestOffer(TransferKind::Drag, active);
+    m_dragOfferBefore = before ? before->id : 0;
+    m_dragProbeTimer.reset();
+  }
+
+  if (m_active == m_primaryClient) {
+    if (!probeForDrag(*m_transferAgent, *m_transferState, true))
+      return false;
+
+    // the drag here has been ended with a release of our own; once that has gone through, the button
+    // no longer holds the cursor here and it crosses as usual
+    m_dragSource = active;
+    m_endingLocalDrag = true;
+    return false;
+  }
+
+  if (!m_active->supportsFileTransfer())
+    return false;
+
+  // ask the client to look; it offers the files once it finds them
+  if (starting || m_dragProbeTimer.getTime() > kDragProbeInterval) {
+    m_dragProbeTimer.reset();
+    m_probedClient = active;
+    TransferMessage probe;
+    probe.type = TransferMessage::Type::Probe;
+    probe.value = 1;
+    deliverTransfer(active, probe);
+  }
+
+  if (const auto offer = m_transferRouter->latestOffer(TransferKind::Drag, active);
+      offer && offer->id != m_dragOfferBefore) {
+    m_dragSource = active;
+    return true;
+  }
+  return false;
+}
+
+void Server::finishFileDrag()
+{
+  using namespace deskflow::transfer;
+  if (!m_lookingForDrag)
+    return;
+
+  // dropped on another computer: send it the files
+  const auto destination = getName(m_active);
+  if (!m_dragSource.empty() && destination != m_dragSource &&
+      (m_active == m_primaryClient || m_active->supportsFileTransfer())) {
+    m_transferRouter->start(TransferKind::Drag, m_dragSource, destination);
+  }
+
+  // stop looking everywhere we looked
+  probeForDrag(*m_transferAgent, *m_transferState, false);
+  if (!m_probedClient.empty()) {
+    TransferMessage stop;
+    stop.type = TransferMessage::Type::Probe;
+    stop.value = 0;
+    deliverTransfer(m_probedClient, stop);
+  }
+
+  m_lookingForDrag = false;
+  m_dragSource.clear();
+  m_probedClient.clear();
+  m_endingLocalDrag = false;
+}
 
 void Server::setupFileTransfer()
 {
@@ -2116,21 +2209,11 @@ void Server::setupFileTransfer()
   );
 
   // this computer takes part like any client, with its messages going straight to the router
-  TransferAgent::Hooks hooks;
-  hooks.send = [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); };
-  hooks.destination = [](TransferKind kind) {
-    return kind == TransferKind::Clipboard ? platform::clipboardInbox() : std::filesystem::path();
-  };
-  hooks.received = [this](TransferKind kind, const std::vector<std::filesystem::path> &items) {
-    if (kind != TransferKind::Clipboard)
-      return;
-    // remember them so putting them on the clipboard isn't mistaken for the user copying them
-    m_receivedClipboardFiles = items;
-    if (platform::putFilesOnClipboard(items))
-      LOG_INFO("received %d copied items, ready to paste", static_cast<int>(items.size()));
-  };
-  hooks.failed = [](const std::string &reason) { LOG_WARN("file transfer failed: %s", reason.c_str()); };
-  m_transferAgent = std::make_unique<TransferAgent>(hooks);
+  m_transferState = std::make_shared<LocalTransferState>();
+  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
+      [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); },
+      m_transferState
+  ));
 }
 
 void Server::handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message)
@@ -2154,16 +2237,8 @@ void Server::deliverTransfer(const std::string &computer, const deskflow::transf
 
 void Server::offerPrimaryClipboardFiles()
 {
-  using deskflow::transfer::TransferKind;
-  if (!m_transferAgent)
-    return;
-
-  const auto files = deskflow::transfer::platform::filesOnClipboard();
-  if (files.empty()) {
-    m_transferAgent->withdraw(TransferKind::Clipboard);
-  } else if (files != m_receivedClipboardFiles) {
-    m_transferAgent->offer(TransferKind::Clipboard, files);
-  }
+  if (m_transferAgent)
+    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
 }
 
 void Server::startClipboardTransfer(BaseClientProxy *destination)

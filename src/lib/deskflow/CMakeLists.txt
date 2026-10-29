@@ -11,6 +11,7 @@ if(WIN32)
   set(PLATFORM_CODE
     win32/AppUtilWindows.cpp
     win32/AppUtilWindows.h
+    win32/DragProbeWindows.cpp
     win32/FileTransferPlatformWindows.cpp
   )
 elseif(UNIX)
@@ -86,6 +87,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   StreamChunker.h
   TransferAgent.cpp
   TransferAgent.h
+  TransferHooks.cpp
+  TransferHooks.h
   TransferProtocol.cpp
   TransferProtocol.h
   KeyboardLayoutManager.cpp

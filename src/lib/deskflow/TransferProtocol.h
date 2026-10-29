@@ -40,7 +40,8 @@ struct TransferMessage
     Data,    //!< "DFDT": id = transfer id, text = bytes
     End,     //!< "DFEN": id = transfer id
     Ack,     //!< "DFAK": id = transfer id, value = messages handled
-    Cancel   //!< "DFCN": id = transfer id, text = reason
+    Cancel,  //!< "DFCN": id = transfer id, text = reason
+    Probe    //!< "DFPB" (server to client): value = 1 to look for a file drag at the cursor, 0 to stop
   };
 
   Type type = Type::Cancel;
