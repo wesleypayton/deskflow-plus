@@ -54,15 +54,31 @@ fractional mapping scales onto the real shape.
 
 ### 3. GUI canvas
 
-* `QGraphicsView` replaces `ComputerSetupView`/`ComputerSetupModel`.
-* Each computer is a draggable group of monitor rectangles; snapping to edges
-  and centres of other groups within a screen-space threshold; overlaps are
-  rejected.
-* Zoom to fit, pan, double-click opens the existing computer settings dialog,
-  drag from the "new computer" tile to add, drag to trash to remove.
-* The existing grid in `internalConfig/screens` is converted to positions on
-  first run (grid cell size = default 1920x1080).
-* `ServerConfig` writes `section: layout` instead of `section: links`.
+Done:
+
+* `ComputerLayoutView` (a `QGraphicsView`) replaces the `ComputerSetupView`
+  grid; `ComputerSetupModel` stays as the owner of the computer list.
+* Each computer is drawn as its monitors and dragged as one piece. Edges and
+  centres snap to other computers within 12 screen pixels, a drop that overlaps
+  another computer springs back, and the edges the cursor can cross are drawn
+  in green, live while dragging.
+* The view zooms to fit. Double click or the context menu edits a computer;
+  Delete, the context menu, or dragging it off the canvas onto the trash removes
+  it; dropping the new computer tile adds one where it lands.
+* Each computer's layout rectangle and monitors are stored with its
+  `internalConfig/screens` entry. Settings from before the canvas are converted
+  once from the grid, pushing cells toward the server so its grid neighbours
+  touch it; computers added later are placed touching the server.
+* The server's own monitors come from `EnumDisplayMonitors` in the GUI. Clients
+  are 1920x1080 until phase 2's IPC tells the GUI their real shapes.
+* `ServerConfig` writes `section: layout` instead of `section: links`, leaving
+  out (with a warning) any computer that overlaps one already written so the
+  server still starts.
+
+Open: the core isn't DPI aware, so on a scaled display it sees a uniformly
+scaled desktop while the GUI sees real pixels. Links are proportional so this
+doesn't break crossing, but sizes drawn for clients (reported by the core) and
+for the server (read by the GUI) won't match until both use the same units.
 
 ### 4. File transfer (Windows)
 

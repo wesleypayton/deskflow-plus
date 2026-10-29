@@ -50,7 +50,7 @@
             <bool>true</bool>
            </property>
            <property name="toolTip">
-            <string>Drag a computer from the grid to the trashcan to remove it.</string>
+            <string>Drag a computer off the layout onto the trashcan to remove it.</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::Shape::StyledPanel</enum>
@@ -88,7 +88,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Configure the layout of your computer displays by dragging to where you want.</string>
+            <string>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -117,7 +117,7 @@
          <item>
           <widget class="NewComputerWidget" name="lblNewComputer">
            <property name="toolTip">
-            <string>Drag to the grid to add a new computer.</string>
+            <string>Drag onto the layout to add a new computer.</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::Shape::StyledPanel</enum>
@@ -146,7 +146,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="ComputerSetupView" name="computerSetupView">
+        <widget class="ComputerLayoutView" name="computerLayoutView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -885,9 +885,9 @@ Enabling this setting will disable the server config GUI.</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ComputerSetupView</class>
-   <extends>QTableView</extends>
-   <header>widgets/ComputerSetupView.h</header>
+   <class>ComputerLayoutView</class>
+   <extends>QGraphicsView</extends>
+   <header>widgets/ComputerLayoutView.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -902,7 +902,7 @@ Enabling this setting will disable the server config GUI.</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>computerSetupView</tabstop>
+  <tabstop>computerLayoutView</tabstop>
   <tabstop>listHotkeys</tabstop>
   <tabstop>btnNewHotkey</tabstop>
   <tabstop>btnEditHotkey</tabstop>

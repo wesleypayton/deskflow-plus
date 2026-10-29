@@ -16,6 +16,7 @@
 #include "dialogs/ActionDialog.h"
 #include "dialogs/ComputerSettingsDialog.h"
 #include "dialogs/HotkeyDialog.h"
+#include "gui/LocalMonitors.h"
 #include "gui/widgets/SettingsDialogButtonBox.h"
 
 #include <QFileDialog>
@@ -410,8 +411,6 @@ void ServerConfigDialog::loadFromConfig()
   for (const Hotkey &hotkey : std::as_const(serverConfig().hotkeys()))
     ui->listHotkeys->addItem(hotkey.text());
 
-  ui->computerSetupView->setModel(&m_computerSetupModel);
-
   auto &computers = serverConfig().computers();
   auto server = std::ranges::find_if(computers, [this](const Computer &computer) {
     return (computer.name() == serverConfig().getServerName());
@@ -420,10 +419,15 @@ void ServerConfigDialog::loadFromConfig()
   if (server == computers.end()) {
     Computer serverComputer(serverConfig().getServerName());
     serverComputer.markAsServer();
+    serverComputer.setMonitors(deskflow::gui::localMonitors());
+    computers.placeInLayout(serverComputer);
     model().computer(m_columns / 2, m_rows / 2) = serverComputer;
   } else {
     server->markAsServer();
   }
+
+  // set the model once the server is in place so the canvas shows it
+  ui->computerLayoutView->setModel(&m_computerSetupModel);
   updateControls();
 }
 
@@ -434,8 +438,7 @@ void ServerConfigDialog::resetFromSettings()
   m_serverConfig.setUseExternalConfig(m_originalServerConfigIsExternal);
   loadFromConfig();
   if (ui->tabWidget->currentWidget() == ui->tabComputers) {
-    ui->computerSetupView->reset();
-    ui->computerSetupView->update();
+    ui->computerLayoutView->reload();
   }
 }
 
@@ -518,6 +521,9 @@ void ServerConfigDialog::initConnections() const
       &m_computerSetupModel, &ComputerSetupModel::computersChanged, this,
       &ServerConfigDialog::setButtonBoxEnabledButtons
   );
+  connect(&m_computerSetupModel, &ComputerSetupModel::computersChanged, this, [this] {
+    ui->lblNewComputer->setEnabled(!m_computerSetupModel.isFull());
+  });
   connect(Settings::instance(), &Settings::settingsWritableChanged, this, &ServerConfigDialog::updateControls);
 }
 

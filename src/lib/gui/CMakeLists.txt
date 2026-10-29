@@ -21,6 +21,10 @@ add_library(${target} STATIC
   Diagnostic.h
   FileTail.cpp
   FileTail.h
+  LayoutGeometry.cpp
+  LayoutGeometry.h
+  LocalMonitors.cpp
+  LocalMonitors.h
   Logger.cpp
   Logger.h
   MainWindow.cpp
@@ -95,8 +99,8 @@ add_library(${target} STATIC
   validators/ValidationError.h
   validators/IpAddressValidator.cpp
   validators/IpAddressValidator.h
-  widgets/ComputerSetupView.cpp
-  widgets/ComputerSetupView.h
+  widgets/ComputerLayoutView.cpp
+  widgets/ComputerLayoutView.h
   widgets/FingerprintPreview.cpp
   widgets/FingerprintPreview.h
   widgets/KeySequenceWidget.cpp
