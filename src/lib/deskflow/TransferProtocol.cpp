@@ -91,7 +91,7 @@ bool readTransferMessage(deskflow::IStream *stream, const uint8_t *code, Transfe
       ok = ProtocolUtil::readf(stream, args, &message.id, &kind);
       break;
     case Header:
-      ok = ProtocolUtil::readf(stream, args, &message.id, &sizeHigh, &sizeLow, &message.text);
+      ok = ProtocolUtil::readf(stream, args, &message.id, &message.value, &sizeHigh, &sizeLow, &message.text);
       break;
     case Data:
     case Cancel:
@@ -132,7 +132,9 @@ void writeTransferMessage(deskflow::IStream *stream, const TransferMessage &mess
     ProtocolUtil::writef(stream, format, message.id, kind);
     break;
   case Header:
-    ProtocolUtil::writef(stream, format, message.id, high(message.size), low(message.size), &message.text);
+    ProtocolUtil::writef(
+        stream, format, message.id, message.value, high(message.size), low(message.size), &message.text
+    );
     break;
   case Data:
   case Cancel:

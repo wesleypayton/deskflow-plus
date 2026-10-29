@@ -124,6 +124,7 @@ void TransferAgent::pump(uint32_t id)
       message.type = TransferMessage::Type::Header;
       message.text = std::move(next->relativePath);
       message.size = next->size;
+      message.value = next->folder ? 1 : 0;
       break;
     case Data:
       message.type = TransferMessage::Type::Data;
@@ -163,7 +164,9 @@ void TransferAgent::handleIncoming(const TransferMessage &message)
   auto &receiver = *incoming->second.receiver;
   std::string error;
   bool ok = true;
-  if (message.type == Header)
+  if (message.type == Header && message.value == 1)
+    ok = receiver.makeFolder(message.text, error);
+  else if (message.type == Header)
     ok = receiver.beginFile(message.text, message.size, error);
   else if (message.type == Data)
     ok = receiver.write(message.text, error);

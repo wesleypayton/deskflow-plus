@@ -1202,7 +1202,8 @@ extern const char *const kMsgDMonitors;
  *   total size high and low halves, top level names separated by newlines
  * - Request `"DFRQ%4i%4i"` (primary to source): transfer id, offer id
  * - Start `"DFST%4i%1i"` (primary to destination): transfer id, kind
- * - Header `"DFHD%4i%4i%4i%s"`: transfer id, file size high and low halves, relative path
+ * - Header `"DFHD%4i%1i%4i%4i%s"`: transfer id, 1 if it's an empty folder rather than a file,
+ *   file size high and low halves, relative path
  * - Data `"DFDT%4i%s"`: transfer id, up to 64 KB of the current file
  * - End `"DFEN%4i"`: transfer id, every file has been sent
  * - Ack `"DFAK%4i%4i"` (destination to source): transfer id, messages handled so far

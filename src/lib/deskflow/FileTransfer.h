@@ -45,6 +45,7 @@ struct FileEntry
   std::filesystem::path source; //!< where to read it, on the sender only
   std::string relativePath;     //!< as sent, e.g. "Photos/2026/beach.jpg"
   uint64_t size = 0;
+  bool folder = false; //!< an empty folder, sent so it is recreated; folders with files come with them
 };
 
 //! Convert between UTF-8 strings and paths without going through the local code page
@@ -54,8 +55,9 @@ std::string pathToUtf8(const std::filesystem::path &path);
 //! Expand dropped or copied items into files
 /*!
 Files are taken as they are and directories are walked, with each file's
-relative path starting at the name of the item it came from. Symbolic links
-and anything that isn't a regular file or directory are skipped.
+relative path starting at the name of the item it came from. Empty folders
+are listed too, so they are recreated. Symbolic links and anything that isn't
+a regular file or directory are skipped.
 */
 std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &items);
 
@@ -73,7 +75,7 @@ public:
   {
     enum class Kind
     {
-      Header, //!< a file starts: relativePath and size
+      Header, //!< a file starts (relativePath and size), or an empty folder (folder set)
       Data,   //!< the next chunk of the current file
       End     //!< every file has been sent
     };
@@ -82,6 +84,7 @@ public:
     std::string relativePath;
     uint64_t size = 0;
     std::string data;
+    bool folder = false;
   };
 
   explicit FileSender(std::vector<FileEntry> files);
@@ -130,6 +133,9 @@ public:
   FileReceiver &operator=(const FileReceiver &) = delete;
 
   bool beginFile(const std::string &relativePath, uint64_t size, std::string &error);
+
+  //! Create an empty folder
+  bool makeFolder(const std::string &relativePath, std::string &error);
   bool write(const std::string &data, std::string &error);
 
   //! The end message arrived; fails if a file is still incomplete

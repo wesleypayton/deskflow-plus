@@ -79,14 +79,24 @@ std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &it
     if (!fs::is_directory(status))
       continue;
 
+    if (fs::is_empty(item, ec)) {
+      files.push_back({item, pathToUtf8(item.filename()), 0, true});
+      continue;
+    }
+
     for (auto it = fs::recursive_directory_iterator(item, fs::directory_options::skip_permission_denied, ec);
          !ec && it != fs::recursive_directory_iterator(); it.increment(ec)) {
       const auto entryStatus = it->symlink_status(ec);
-      if (ec || !fs::is_regular_file(entryStatus))
+      if (ec)
         continue;
 
       const auto relative = item.filename() / it->path().lexically_relative(item);
-      files.push_back({it->path(), pathToUtf8(relative), it->file_size(ec)});
+      if (fs::is_regular_file(entryStatus)) {
+        files.push_back({it->path(), pathToUtf8(relative), it->file_size(ec)});
+      } else if (fs::is_directory(entryStatus) && fs::is_empty(it->path(), ec)) {
+        // folders with files in are recreated along with them; empty ones need saying
+        files.push_back({it->path(), pathToUtf8(relative), 0, true});
+      }
     }
   }
   return files;
@@ -153,6 +163,12 @@ std::optional<FileSender::Message> FileSender::next(std::string &error)
     }
 
     const auto &file = m_files[m_current];
+    if (file.folder) {
+      ++m_current;
+      ++m_produced;
+      return Message{Header, file.relativePath, 0, {}, true};
+    }
+
     if (!m_headerSent) {
       m_stream = std::ifstream(file.source, std::ios::binary);
       if (!m_stream) {
@@ -271,6 +287,38 @@ bool FileReceiver::beginFile(const std::string &relativePath, uint64_t size, std
   m_written = 0;
   m_open = true;
   return size > 0 || completeCurrent(error);
+}
+
+bool FileReceiver::makeFolder(const std::string &relativePath, std::string &error)
+{
+  namespace fs = std::filesystem;
+
+  if (m_open && !completeCurrent(error))
+    return false;
+
+  const auto relative = safeRelativePath(relativePath);
+  if (!relative) {
+    error = "refused unsafe folder name \"" + relativePath + "\"";
+    return false;
+  }
+
+  // share the top level folder's name with any files that came in it
+  const auto first = *relative->begin();
+  auto folder = m_topLevel.find(first);
+  if (folder == m_topLevel.end()) {
+    const auto name = uniquePath(m_destination / first).filename();
+    folder = m_topLevel.emplace(first, name).first;
+    m_topLevelOrder.push_back(m_destination / name);
+  }
+
+  std::error_code ec;
+  const auto local = (m_destination / folder->second / relative->lexically_relative(first)).lexically_normal();
+  fs::create_directories(local, ec);
+  if (ec) {
+    error = "can't create " + pathToUtf8(local) + ": " + ec.message();
+    return false;
+  }
+  return true;
 }
 
 bool FileReceiver::write(const std::string &data, std::string &error)

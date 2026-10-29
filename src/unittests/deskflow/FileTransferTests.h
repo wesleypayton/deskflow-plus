@@ -17,6 +17,7 @@ private Q_SLOTS:
   void roundTrip_copiesEverything();
   void sender_waitsForAcknowledgement();
   void sender_reportsShrunkFile();
+  void receiver_refusesUnsafeFolder();
   void receiver_neverOverwrites();
   void receiver_enforcesLimit();
   void receiver_refusesMalformedStreams();

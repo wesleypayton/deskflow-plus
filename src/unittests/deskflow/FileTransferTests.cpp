@@ -57,7 +57,9 @@ bool transfer(FileSender &sender, FileReceiver &receiver, std::string &error)
     }
 
     bool ok = true;
-    if (message->kind == Header)
+    if (message->kind == Header && message->folder)
+      ok = receiver.makeFolder(message->relativePath, error);
+    else if (message->kind == Header)
       ok = receiver.beginFile(message->relativePath, message->size, error);
     else if (message->kind == Data)
       ok = receiver.write(message->data, error);
@@ -141,8 +143,10 @@ void FileTransferTests::roundTrip_copiesEverything()
   writeFile(source / "big.bin", big);
   writeFile(source / "empty.txt", "");
   writeFile(source / "Folder" / "inner" / "note.txt", "hello");
+  std::filesystem::create_directories(source / "Folder" / "nothing here");
+  std::filesystem::create_directories(source / "Blank");
 
-  FileSender sender(collectFiles({source / "big.bin", source / "empty.txt", source / "Folder"}));
+  FileSender sender(collectFiles({source / "big.bin", source / "empty.txt", source / "Folder", source / "Blank"}));
   FileReceiver receiver(root(to), UINT64_MAX);
   std::string error;
   QVERIFY2(transfer(sender, receiver, error), error.c_str());
@@ -152,11 +156,13 @@ void FileTransferTests::roundTrip_copiesEverything()
   QVERIFY(fs::exists(destination / "empty.txt"));
   QCOMPARE(fs::file_size(destination / "empty.txt"), uintmax_t{0});
   QCOMPARE(readFile(destination / "Folder" / "inner" / "note.txt"), std::string("hello"));
+  QVERIFY(fs::is_directory(destination / "Folder" / "nothing here"));
+  QVERIFY(fs::is_directory(destination / "Blank"));
 
   // nothing half written is left behind, and the top level items are what a paste would show
   for (const auto &entry : fs::recursive_directory_iterator(destination))
     QVERIFY(entry.path().extension() != ".part");
-  QCOMPARE(receiver.topLevelItems().size(), size_t{3});
+  QCOMPARE(receiver.topLevelItems().size(), size_t{4});
 }
 
 void FileTransferTests::sender_waitsForAcknowledgement()
@@ -193,6 +199,17 @@ void FileTransferTests::sender_reportsShrunkFile()
     // keep going until it notices
   }
   QVERIFY(error.find("changed while it was being sent") != std::string::npos);
+}
+
+void FileTransferTests::receiver_refusesUnsafeFolder()
+{
+  QTemporaryDir to;
+  FileReceiver receiver(root(to), UINT64_MAX);
+  std::string error;
+  QVERIFY(!receiver.makeFolder("../outside", error));
+  QVERIFY(!fs::exists(root(to).parent_path() / "outside"));
+  QVERIFY(receiver.makeFolder("Empty/inside", error));
+  QVERIFY(fs::is_directory(root(to) / "Empty" / "inside"));
 }
 
 void FileTransferTests::receiver_neverOverwrites()
