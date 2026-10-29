@@ -1192,6 +1192,43 @@ extern const char *const kMsgDLanguageSynchronisation;
  */
 extern const char *const kMsgDMonitors;
 
+/**
+ * @brief File transfer messages
+ *
+ * **Message Codes**: `"DFOF"`, `"DFRQ"`, `"DFST"`, `"DFHD"`, `"DFDT"`, `"DFEN"`, `"DFAK"`, `"DFCN"`
+ * **Direction**: Primary ↔ Secondary
+ * **Formats**:
+ * - Offer `"DFOF%4i%1i%4i%4i%4i%s"`: offer id, kind (1 clipboard, 2 drag), file count,
+ *   total size high and low halves, top level names separated by newlines
+ * - Request `"DFRQ%4i%4i"` (primary to source): transfer id, offer id
+ * - Start `"DFST%4i%1i"` (primary to destination): transfer id, kind
+ * - Header `"DFHD%4i%4i%4i%s"`: transfer id, file size high and low halves, relative path
+ * - Data `"DFDT%4i%s"`: transfer id, up to 64 KB of the current file
+ * - End `"DFEN%4i"`: transfer id, every file has been sent
+ * - Ack `"DFAK%4i%4i"` (destination to source): transfer id, messages handled so far
+ * - Cancel `"DFCN%4i%s"`: transfer id, reason
+ *
+ * A computer announces files it can send with an Offer when files are copied
+ * or dragged. The primary starts a transfer by sending Start to the destination
+ * and Request to the source, then relays Header, Data and End from the source
+ * to the destination and Ack the other way. The source keeps at most 16
+ * messages unacknowledged so file data never queues up in front of input. A
+ * source only sends files from its own offers, never a path it is asked for.
+ * Relative paths are UTF-8 and '/' separated; the destination refuses any that
+ * could leave its destination folder.
+ *
+ * @see deskflow::transfer::TransferMessage
+ * @since Protocol version 1.9 (deskflow-plus)
+ */
+extern const char *const kMsgDFileOffer;
+extern const char *const kMsgDFileRequest;
+extern const char *const kMsgDFileStart;
+extern const char *const kMsgDFileHeader;
+extern const char *const kMsgDFileData;
+extern const char *const kMsgDFileEnd;
+extern const char *const kMsgDFileAck;
+extern const char *const kMsgDFileCancel;
+
 /** @} */ // end of protocol_system group
 
 /** @} */ // end of protocol_data group

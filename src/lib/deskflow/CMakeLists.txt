@@ -81,6 +81,10 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ServerApp.h
   StreamChunker.cpp
   StreamChunker.h
+  TransferAgent.cpp
+  TransferAgent.h
+  TransferProtocol.cpp
+  TransferProtocol.h
   KeyboardLayoutManager.cpp
   KeyboardLayoutManager.h
   ipc/IpcServer.cpp
