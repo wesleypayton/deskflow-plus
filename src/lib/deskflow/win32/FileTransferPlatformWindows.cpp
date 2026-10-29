@@ -7,6 +7,7 @@
 #include "deskflow/FileTransferPlatform.h"
 
 #include "base/Log.h"
+#include "deskflow/ipc/UserShell.h"
 
 #include <Windows.h>
 #include <shlobj.h>
@@ -141,10 +142,20 @@ bool putFilesOnClipboard(const std::vector<std::filesystem::path> &items)
 std::filesystem::path clipboardInbox()
 {
   namespace fs = std::filesystem;
+  namespace userShell = deskflow::core::ipc::userShell;
   std::error_code ec;
-  const auto base = fs::temp_directory_path(ec) / "Deskflow" / "Clipboard";
-  if (ec)
+
+  // running as SYSTEM, our own temp folder is one the user can't read from, so use theirs
+  fs::path temp;
+  if (userShell::delegated())
+    temp = userShell::tempFolder();
+  else if (userShell::actsForUser())
+    temp = fs::temp_directory_path(ec);
+  if (temp.empty() || ec) {
+    LOG_WARN("there's nowhere the user can paste files from");
     return {};
+  }
+  const auto base = temp / "Deskflow" / "Clipboard";
 
   // clear out what earlier pastes left behind
   const auto now = fs::file_time_type::clock::now();

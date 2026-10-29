@@ -104,6 +104,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ipc/CoreIpc.h
   ipc/CoreIpcServer.cpp
   ipc/CoreIpcServer.h
+  ipc/UserShell.cpp
+  ipc/UserShell.h
 )
 
 target_link_libraries(${lib_name}

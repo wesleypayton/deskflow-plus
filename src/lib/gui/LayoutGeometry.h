@@ -37,6 +37,9 @@ Rectangles that only meet at a corner share nothing.
 */
 QList<QLineF> sharedEdges(const QList<QRectF> &rects);
 
+//! Where monitors of different computers touch, given each computer's monitors; monitors of one computer are skipped
+QList<QLineF> sharedEdges(const QList<QList<QRectF>> &computers);
+
 //! True if \c rect shares any area with one of \c others (touching edges is fine)
 bool overlapsAny(const QRectF &rect, const QList<QRectF> &others);
 

@@ -67,6 +67,18 @@ void LayoutGeometryTests::sharedEdges_spansWhereRectsTouch()
   QVERIFY(edges.contains(QLineF(0, 0, 1920, 0)));
 }
 
+void LayoutGeometryTests::sharedEdges_onlyWhereMonitorsTouch()
+{
+  // a server whose right monitor sits higher than its left one, with a client against its right
+  const QList<QRectF> server{QRectF(0, 400, 1920, 1080), QRectF(1920, 0, 2560, 1440)};
+  const QList<QRectF> client{QRectF(4480, -200, 1440, 2560)};
+  const auto edges = sharedEdges(QList<QList<QRectF>>{server, client});
+
+  // the outlines touch from 0 to 1480, but below 1440 there's no monitor on the server's side
+  QCOMPARE(edges.size(), 1);
+  QCOMPARE(edges.first(), QLineF(4480, 0, 4480, 1440));
+}
+
 void LayoutGeometryTests::placeBeside_prefersRightOfAnchor()
 {
   const QRect server(0, 0, 2560, 1440);

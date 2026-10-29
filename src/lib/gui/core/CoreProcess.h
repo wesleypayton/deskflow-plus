@@ -110,6 +110,9 @@ private Q_SLOTS:
   void daemonIpcClientConnected();
 
 private:
+  void announceUserShell();
+  bool handleUserShellCommand(const QString &command, const QString &args);
+  void reportDropProbeFiles();
   void startForegroundProcess(const QStringList &args);
   void startProcessFromDaemon();
   void stopForegroundProcess();
@@ -137,6 +140,8 @@ private:
   std::optional<ProcessMode> m_lastProcessMode = std::nullopt;
   QTimer m_retryTimer;
   deskflow::gui::ipc::CoreIpcClient *m_coreIpcClient = nullptr;
+  QTimer m_dropProbeTimer; //!< while the drop target is up, to tell the core what's dragged over it
+  QString m_dropProbeFiles;
   deskflow::gui::ipc::DaemonIpcClient *m_daemonIpcClient = nullptr;
   FileTail *m_daemonFileTail = nullptr;
   QProcess *m_process = nullptr;

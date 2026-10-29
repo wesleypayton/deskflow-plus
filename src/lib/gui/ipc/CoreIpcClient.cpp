@@ -27,6 +27,11 @@ void CoreIpcClient::sendReloadConfig()
   sendMessage(QStringLiteral("reloadConfig"));
 }
 
+void CoreIpcClient::sendCommand(const QString &command, const QString &args)
+{
+  sendMessage(args.isEmpty() ? command : QStringLiteral("%1=%2").arg(command, args));
+}
+
 void CoreIpcClient::processCommand(const QString &command, const QStringList &parts)
 {
   const auto args = parts.size() >= 2 ? parts.at(1) : QString();

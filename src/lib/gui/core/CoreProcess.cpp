@@ -8,6 +8,7 @@
 #include "CoreProcess.h"
 
 #include "common/ExitCodes.h"
+#include "common/ShellIntegration.h"
 #include "gui/ipc/CoreIpcClient.h"
 #include "gui/ipc/DaemonIpcClient.h"
 
@@ -470,8 +471,9 @@ void CoreProcess::start(std::optional<ProcessMode> processModeOption)
               m_coreIpcClient, &ipc::CoreIpcClient::commandReceived, this, &CoreProcess::onCoreIpcMessageReceived,
               Qt::QueuedConnection
           );
-          connect(m_coreIpcClient, &ipc::CoreIpcClient::connected, this, [] {
+          connect(m_coreIpcClient, &ipc::CoreIpcClient::connected, this, [this] {
             qDebug("connected to core ipc server");
+            announceUserShell();
           });
           connect(m_coreIpcClient, &ipc::CoreIpcClient::connectionFailed, this, [] {
             qWarning("failed to establish core ipc connection");
@@ -639,8 +641,82 @@ void CoreProcess::setProcessState(ProcessState state)
   Q_EMIT processStateChanged(state);
 }
 
+void CoreProcess::announceUserShell()
+{
+#ifdef Q_OS_WIN
+  // a core running as SYSTEM can't reach the user's Explorer windows or folders, so this window does it
+  if (m_coreIpcClient != nullptr) {
+    std::error_code ec;
+    const auto temp = std::filesystem::temp_directory_path(ec);
+    m_coreIpcClient->sendCommand(QStringLiteral("shellHelper"), deskflow::shell::encodePaths({temp}));
+  }
+#endif
+}
+
+bool CoreProcess::handleUserShellCommand(const QString &command, const QString &args)
+{
+#ifdef Q_OS_WIN
+  if (command == "shellDragProbe") {
+    if (args == "show") {
+      if (deskflow::shell::showDropProbe() && !m_dropProbeTimer.isActive()) {
+        m_dropProbeFiles.clear();
+        m_dropProbeTimer.setInterval(30);
+        connect(&m_dropProbeTimer, &QTimer::timeout, this, &CoreProcess::reportDropProbeFiles, Qt::UniqueConnection);
+        m_dropProbeTimer.start();
+      }
+    } else if (args == "release") {
+      deskflow::shell::releaseOverDropProbe();
+    } else if (args == "hide") {
+      m_dropProbeTimer.stop();
+      m_dropProbeFiles.clear();
+      deskflow::shell::hideDropProbe();
+    }
+    return true;
+  }
+  if (command == "shellDropFolder") {
+    // answered with the request's id|folder|1 to open it afterwards
+    const auto folder = deskflow::shell::dropFolderAtCursor();
+    if (m_coreIpcClient != nullptr) {
+      m_coreIpcClient->sendCommand(
+          QStringLiteral("shellDropFolder"), QStringLiteral("%1|%2|%3")
+                                                 .arg(args, deskflow::shell::encodePaths({folder.path}))
+                                                 .arg(folder.reveal ? 1 : 0)
+      );
+    }
+    return true;
+  }
+  if (command == "shellReveal") {
+    deskflow::shell::revealInFileManager(deskflow::shell::decodePaths(args));
+    return true;
+  }
+#else
+  Q_UNUSED(command)
+  Q_UNUSED(args)
+#endif
+  return false;
+}
+
+void CoreProcess::reportDropProbeFiles()
+{
+#ifdef Q_OS_WIN
+  const auto files = deskflow::shell::encodePaths(deskflow::shell::dropProbeFiles());
+  if (files == m_dropProbeFiles || m_coreIpcClient == nullptr)
+    return;
+  m_dropProbeFiles = files;
+  m_coreIpcClient->sendCommand(QStringLiteral("shellDragFiles"), files);
+
+  // the core looks again when the cursor moves, by when it has the files
+  if (!files.isEmpty())
+    QTimer::singleShot(30, this, [] { deskflow::shell::nudgeCursor(); });
+#endif
+}
+
 void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString &args)
 {
+  if (handleUserShellCommand(command, args)) {
+    return;
+  }
+
   if (command == "connectionState") {
     const auto metaEnum = QMetaEnum::fromType<ConnectionState>();
     bool ok = false;

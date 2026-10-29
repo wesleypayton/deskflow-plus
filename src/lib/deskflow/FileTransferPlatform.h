@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "common/ShellIntegration.h"
+
 #include <filesystem>
 #include <vector>
 
@@ -49,11 +51,7 @@ void stopDragProbe();
 //@}
 
 //! Where files dropped at the cursor should go
-struct DropFolder
-{
-  std::filesystem::path path; //!< empty if files can't be dropped here
-  bool reveal = false;        //!< not a folder the user can see, so open it once the files arrive
-};
+using DropFolder = deskflow::shell::DropFolder;
 
 //! The folder window or desktop under the cursor, otherwise a Deskflow folder in Downloads
 DropFolder dropFolderAtCursor();

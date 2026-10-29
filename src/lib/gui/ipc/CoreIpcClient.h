@@ -24,6 +24,9 @@ public:
   //! Ask a running server to reload its config without restarting
   void sendReloadConfig();
 
+  //! Send the core any command
+  void sendCommand(const QString &command, const QString &args);
+
 Q_SIGNALS:
   void commandReceived(const QString &command, const QString &args);
 

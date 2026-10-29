@@ -763,6 +763,16 @@ BaseClientProxy *Server::mapToNeighbor(BaseClientProxy *src, Direction srcSide, 
   // move inwards because that side can't provoke a jump.
   avoidJumpZone(dst, srcSide, x, y);
 
+  // a computer's outline can have gaps no monitor fills, such as beside a shorter monitor. landing in one puts
+  // the cursor wherever the system pulls it back onto a monitor, so only cross where there's a monitor
+  const auto monitors = dst->getMonitors();
+  if (!monitors.empty() && std::ranges::none_of(monitors, [x, y](const deskflow::MonitorRect &monitor) {
+        return x >= monitor.x && x < monitor.x + monitor.width && y >= monitor.y && y < monitor.y + monitor.height;
+      })) {
+    LOG_DEBUG("no monitor on \"%s\" at %d,%d, not crossing", getName(dst).c_str(), x, y);
+    return nullptr;
+  }
+
   return dst;
 }
 
@@ -1216,9 +1226,12 @@ void Server::handleClipboardGrabbed(const Event &event, BaseClientProxy *grabber
   const auto *info = static_cast<const IComputer::ClipboardInfo *>(event.getData());
 
   // ignore grab if sequence number is old.  always allow primary
-  // computer to grab.
+  // computer to grab, and a Deskflow Plus client whose own mouse and
+  // keyboard are used: its user copies things while the cursor is on
+  // another computer, so its sequence number is old but its grab isn't.
   ClipboardInfo &clipboard = m_clipboards[info->m_id];
-  if (grabber != m_primaryClient && info->m_sequenceNumber < clipboard.m_clipboardSeqNum) {
+  if (grabber != m_primaryClient && !grabber->supportsRemoteInput() &&
+      info->m_sequenceNumber < clipboard.m_clipboardSeqNum) {
     LOG_DEBUG("ignored computer \"%s\" grab of clipboard %d", getName(grabber).c_str(), info->m_id);
     return;
   }

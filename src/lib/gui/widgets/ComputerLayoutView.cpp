@@ -147,6 +147,15 @@ public:
     painter->restore();
   }
 
+  //! The computer's monitors where they are on the canvas
+  QList<QRectF> sceneMonitors() const
+  {
+    QList<QRectF> rects;
+    for (const auto &monitor : computer().monitors())
+      rects.append(mapRectToScene(QRectF(monitor)));
+    return rects;
+  }
+
 protected:
   QVariant itemChange(GraphicsItemChange change, const QVariant &value) override
   {
@@ -376,12 +385,15 @@ void ComputerLayoutView::contextMenuEvent(QContextMenuEvent *event)
 
 void ComputerLayoutView::drawForeground(QPainter *painter, const QRectF &)
 {
-  // mark where the cursor crosses, from where the items are now so a drag shows it live
-  QList<QRectF> rects;
-  for (const auto *item : m_scene.items())
-    rects.append(item->sceneBoundingRect());
+  // mark where the cursor crosses, from where the items are now so a drag shows it live. the server only crosses
+  // where there's a monitor on both sides, so a gap beside a shorter monitor isn't marked
+  QList<QList<QRectF>> computers;
+  for (const auto *item : m_scene.items()) {
+    if (const auto *computer = dynamic_cast<const ComputerLayoutItem *>(item))
+      computers.append(computer->sceneMonitors());
+  }
 
-  const auto edges = deskflow::gui::layout::sharedEdges(rects);
+  const auto edges = deskflow::gui::layout::sharedEdges(computers);
 
   // a dark casing under a bright line keeps it visible on any computer's colour
   QPen casing(QColor(0, 0, 0, 120), 7, Qt::SolidLine, Qt::RoundCap);

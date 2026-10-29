@@ -16,6 +16,7 @@ private Q_SLOTS:
   void snap_picksClosest();
   void overlap_touchingIsFine();
   void sharedEdges_spansWhereRectsTouch();
+  void sharedEdges_onlyWhereMonitorsTouch();
   void placeBeside_prefersRightOfAnchor();
   void placeBeside_triesOtherSides();
   void grid_neighboursTouchServer();

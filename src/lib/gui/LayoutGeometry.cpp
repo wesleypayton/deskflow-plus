@@ -49,30 +49,49 @@ QPointF snapPosition(const QRectF &moving, const QList<QRectF> &others, qreal th
   return position;
 }
 
+namespace {
+
+void addSharedEdges(const QRectF &a, const QRectF &b, QList<QLineF> &edges)
+{
+  // a vertical edge: one's right is the other's left. positions are whole pixels so exact compares are safe
+  if (a.right() == b.left() || b.right() == a.left()) {
+    const auto x = a.right() == b.left() ? a.right() : a.left();
+    const auto top = std::max(a.top(), b.top());
+    const auto bottom = std::min(a.bottom(), b.bottom());
+    if (bottom > top)
+      edges.append(QLineF(x, top, x, bottom));
+  }
+
+  // a horizontal edge: one's bottom is the other's top
+  if (a.bottom() == b.top() || b.bottom() == a.top()) {
+    const auto y = a.bottom() == b.top() ? a.bottom() : a.top();
+    const auto left = std::max(a.left(), b.left());
+    const auto right = std::min(a.right(), b.right());
+    if (right > left)
+      edges.append(QLineF(left, y, right, y));
+  }
+}
+
+} // namespace
+
 QList<QLineF> sharedEdges(const QList<QRectF> &rects)
 {
   QList<QLineF> edges;
   for (qsizetype i = 0; i < rects.size(); ++i) {
-    for (qsizetype j = i + 1; j < rects.size(); ++j) {
-      const auto &a = rects.at(i);
-      const auto &b = rects.at(j);
+    for (qsizetype j = i + 1; j < rects.size(); ++j)
+      addSharedEdges(rects.at(i), rects.at(j), edges);
+  }
+  return edges;
+}
 
-      // a vertical edge: one's right is the other's left. positions are whole pixels so exact compares are safe
-      if (a.right() == b.left() || b.right() == a.left()) {
-        const auto x = a.right() == b.left() ? a.right() : a.left();
-        const auto top = std::max(a.top(), b.top());
-        const auto bottom = std::min(a.bottom(), b.bottom());
-        if (bottom > top)
-          edges.append(QLineF(x, top, x, bottom));
-      }
-
-      // a horizontal edge: one's bottom is the other's top
-      if (a.bottom() == b.top() || b.bottom() == a.top()) {
-        const auto y = a.bottom() == b.top() ? a.bottom() : a.top();
-        const auto left = std::max(a.left(), b.left());
-        const auto right = std::min(a.right(), b.right());
-        if (right > left)
-          edges.append(QLineF(left, y, right, y));
+QList<QLineF> sharedEdges(const QList<QList<QRectF>> &computers)
+{
+  QList<QLineF> edges;
+  for (qsizetype i = 0; i < computers.size(); ++i) {
+    for (qsizetype j = i + 1; j < computers.size(); ++j) {
+      for (const auto &a : computers.at(i)) {
+        for (const auto &b : computers.at(j))
+          addSharedEdges(a, b, edges);
       }
     }
   }
