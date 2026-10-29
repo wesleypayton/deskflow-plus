@@ -39,9 +39,12 @@ fractional mapping scales onto the real shape.
 
 ### 2. Monitor geometry over the wire
 
-* New message (client to server) with the client's monitor rectangles, sent
-  after `DINF` and whenever displays change. Old clients never send it and are
-  treated as one rectangle.
+* Done: protocol 1.9 adds `DMON`, the client's monitor rectangles, sent
+  straight after every `DINF` (so also whenever displays change).
+  `IComputer::getMonitors()` defaults to the whole shape; Windows enumerates
+  real monitors. Old clients negotiate 1.8 and are treated as one rectangle.
+  Risk: if upstream Deskflow ever ships its own 1.9, the two would disagree,
+  and the version number would need to move.
 * Server publishes known computer shapes and monitor rectangles to the GUI over
   IPC; the GUI caches the last known shapes in settings for offline computers.
 * `layout` entries gain optional per-monitor rectangles. The server detects

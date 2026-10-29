@@ -156,6 +156,7 @@ This table lists all protocol messages in alphabetical order. For a typical sequ
 | [**DDRG**](@ref kMsgDDragInfo) | @ref kMsgDDragInfo | Data | Server→Client | Drag file info | [MsgSize](#constraint-protocol-max-message-length), [ListSize](#constraint-max-list) | 1.5+ |
 | [**DFTR**](@ref kMsgDFileTransfer) | @ref kMsgDFileTransfer | Data | Both | File transfer data | [MsgSize](#constraint-protocol-max-message-length) | 1.5+ |
 | [**DINF**](@ref kMsgDInfo) | @ref kMsgDInfo | Data | Client→Server | Computer information | [MsgSize](#constraint-protocol-max-message-length) | 1.0+ |
+| [**DMON**](@ref kMsgDMonitors) | @ref kMsgDMonitors | Data | Client→Server | Monitor rectangles (deskflow-plus) | [MsgSize](#constraint-protocol-max-message-length) | 1.9+ |
 | [**DKDL**](@ref kMsgDKeyDown) | @ref kMsgDKeyDown | Data | Server→Client | Key down with language | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.8+ |
 | [**DKDN**](@ref kMsgDKeyDown1_1) | @ref kMsgDKeyDown1_1 | Data | Server→Client | Key down | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.1+ |
 | [**DKDN**](@ref kMsgDKeyDown1_0) | @ref kMsgDKeyDown1_0 | Data | Server→Client | Key down (legacy) | [MsgSize](#constraint-protocol-max-message-length), [KeyMap](#constraint-keymap) | 1.0 |
@@ -188,7 +189,7 @@ This table lists all protocol messages in alphabetical order. For a typical sequ
 
 A typical control flow is as follows:
 1.  **Handshake**: The server and client exchange `Hello` and `HelloBack` messages to agree on a protocol version.
-2.  **Information Exchange**: The server requests client information with `QINF`, and the client responds with `DINF`.
+2.  **Information Exchange**: The server requests client information with `QINF`, and the client responds with `DINF`. From 1.9 the client follows every `DINF` with `DMON`.
 3.  **Options**: The server sends `DSOP` to configure client options.
 4.  **Keep-Alive**: The server and client periodically exchange `CALV` messages to maintain the connection.
 5.  **Computer Entry**: The server sends `CINN` to grant control to the client.
@@ -292,6 +293,7 @@ A modifier (modifier mask) represents the state of modifier keys (like Shift, Co
 | **1.6** | Jan 2014 | Synergy | Clipboard streaming | 1.6+ |
 | **1.7** | Sep 2021 | Synergy | Secure input notifications | 1.7+ |
 | **1.8** | Nov 2021 | Synergy | Language synchronization | 1.8+ |
+| **1.9** | Oct 2026 | deskflow-plus | Monitor rectangles (@ref kMsgDMonitors) | 1.9+ |
 
 ### Version Migration Guide
 
