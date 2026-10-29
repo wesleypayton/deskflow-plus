@@ -37,6 +37,7 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
 - **Real monitor arrangements.** Each computer is drawn as its own monitors, arranged as Windows has them,
   portrait screens included, in its own colour so you can tell computers apart.
 - **Copy and paste files.** Copy files or folders in Explorer, move to another computer and paste them there.
+  Progress shows in the app's status bar, and a notification says when files arrive.
 - **Drag files across.** Drag files in Explorer to the edge of the screen and keep holding: the cursor
   crosses to the next computer, and releasing drops the files into the folder or desktop under the cursor.
 
@@ -95,35 +96,26 @@ Install or unpack Deskflow Plus on each computer, then:
    desk, check the green lines are where you expect the cursor to cross, and click **Save**.
 
 Dragging files works as soon as both computers are connected. Copying and pasting files also needs
-clipboard sharing left on (**Configure Server → Advanced**).
+clipboard sharing left on (**Configure Server → Advanced**), where **Copied files limit** sets how much can
+be copied at once (512 MB by default, 0 turns it off).
 
 ## Known limitations
 
 - **Windows only.** The new features have only been built and tested on Windows.
+- **Only the server's mouse and keyboard travel.** As in Deskflow, a client's own mouse and keyboard only
+  control that client. Moving a client's mouse onto the server, as Mouse Without Borders allows, is planned.
 - **Crossing follows each computer's outline, not its monitors.** With two monitors of different heights,
   the cursor can only cross where the computer's overall outline touches the next computer.
-- **Layout changes need a server restart.** If a client's monitors change while the server is running,
-  the new shape shows on the canvas straight away but only affects crossing after a restart. Saving the
-  server settings while that happens can keep the old shape until the client next connects.
-- **Copied files are limited to 512 MB at a time**, and the limit can't be changed yet.
-- **No progress shown.** Transfers don't show progress or errors in the app yet; they're only in the log.
-- **Empty folders aren't copied**, only the files inside folders.
-- **Explorer tabs.** Dropping onto a Windows 11 Explorer window with several tabs may put the files in a
-  different tab's folder.
-- **Not yet tried on two separate computers**: dropping into an open folder or onto the desktop, and
-  dragging files that start on a client.
+- **Not yet tried on two separate computers**: dropping into an open folder or onto the desktop, dropping
+  into the right tab of an Explorer window with several, and dragging files that start on a client.
 - **The portable copy can't control the login screen or UAC prompts**, as it doesn't include the
   background service.
 - **Not code signed**, so Windows warns before running the downloads.
-- **Its own protocol version.** The new features use protocol version 1.9, which is specific to this fork.
-  If Deskflow ever releases its own 1.9, the two could disagree and this fork's version will have to change.
 
 ## Roadmap
 
-- A setting for the copy size limit, and transfer progress and errors in the app
-- Applying layout changes without restarting the server
+- Using a client's own mouse and keyboard on the server and other computers
 - Crossing between individual monitors rather than each computer's outline
-- Copying empty folders, and picking the right Explorer tab when dropping
 - Untested macOS and Linux builds, once the features are in good shape
 
 ## Troubleshooting
@@ -134,7 +126,8 @@ clipboard sharing left on (**Configure Server → Advanced**).
 - **Windows blocks the download.** Choose **More info**, then **Run anyway**. The files aren't code signed.
 - **A missing DLL error.** Install the Visual C++ Redistributable linked under [Download](#download).
 - **Files don't copy or drop.** Make sure both computers run Deskflow Plus. For copy and paste, clipboard
-  sharing must be on, and copies over 512 MB are skipped.
+  sharing must be on, and copies over the copied files limit are skipped. The status bar and a
+  notification say when a transfer fails, and why.
 
 To report a problem, turn up the logging first: in **Settings**, set the log level to **Debug**, try again,
 then [open an issue](https://github.com/wesleypayton/deskflow-plus/issues) with what you did, which

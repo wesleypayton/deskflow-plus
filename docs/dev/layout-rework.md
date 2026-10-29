@@ -39,12 +39,15 @@ fractional mapping scales onto the real shape.
 
 ### 2. Monitor geometry over the wire
 
-* Done: protocol 1.9 adds `DMON`, the client's monitor rectangles, sent
-  straight after every `DINF` (so also whenever displays change).
+* Done: Deskflow Plus computers find each other without changing the protocol
+  version, which stays at upstream's 1.8. The server adds a `DPLF` option with
+  its feature bits to the options it sends every client (stock clients ignore
+  unknown options) and a Deskflow Plus client answers with `DPLS`. Only then
+  does either side use the new messages, so stock peers never see one.
+* Done: `DMON`, the client's monitor rectangles, follows every `DINF` once the
+  handshake is done (so also whenever displays change).
   `IComputer::getMonitors()` defaults to the whole shape; Windows enumerates
-  real monitors. Old clients negotiate 1.8 and are treated as one rectangle.
-  Risk: if upstream Deskflow ever ships its own 1.9, the two would disagree,
-  and the version number would need to move.
+  real monitors. Stock clients are treated as one rectangle.
 * Done: the server sends the GUI `computerShape=<name>|x,y,w,h;...` over the
   core IPC when a client connects and whenever its monitors change. The GUI
   saves them with the computer, so offline computers keep their last known
@@ -94,15 +97,16 @@ Done:
   renames them when complete, never overwrites (it picks "name (2).ext"),
   enforces a size limit, and refuses relative paths that could leave its folder
   or that Windows would quietly rename.
-* Protocol 1.9 messages `DFOF` offer, `DFRQ` request, `DFST` start, `DFHD`
-  header, `DFDT` data, `DFEN` end, `DFAK` ack and `DFCN` cancel. Every file goes
+* Messages `DFOF` offer, `DFRQ` request, `DFST` start (with the total size),
+  `DFHD` header (a file, or an empty folder), `DFDT` data, `DFEN` end, `DFAK`
+  ack, `DFCN` cancel and `DFPB` probe, used once the Plus handshake is done. Every file goes
   source -> server -> destination. Each computer's `TransferAgent` offers files
   and only ever sends its own offers, referenced by id, so the server can't ask
   a client for arbitrary paths. The server's `TransferRouter` only relays a
   message from the right end of a transfer.
 * Copy/paste: copying files in Explorer offers them; copying anything else
   withdraws the offer. When the cursor enters another computer, the clipboard
-  owner's files (up to 512 MB) are copied to `%TEMP%\Deskflow\Clipboard\...`
+  owner's files (up to the "Copied files limit" setting, 512 MB by default) are copied to `%TEMP%\Deskflow\Clipboard\...`
   there and put on its clipboard, marked as Deskflow's so the sync doesn't bounce
   them back.
 
@@ -121,6 +125,19 @@ items client to server, and dragging them server to client into the fallback
 folder. Not yet verified live: dropping into an open Explorer folder or onto the
 desktop, drags starting on a client, and two real machines.
 
+Since then:
+
+* Empty folders are copied, the copied files limit is a setting, and transfers
+  report progress and errors to the GUI (status bar and tray notifications).
+* A running server reloads its config (new `reloadConfig` core IPC command) when
+  a client's reported monitors change the layout, and reported shapes survive
+  the server settings dialog being saved.
+* Drops onto a Windows 11 Explorer window go into its visible tab.
+
 Still to do:
 
-* Settings for the clipboard size limit, and progress and errors in the GUI.
+* Two-way control: a client's own mouse and keyboard crossing to the server
+  and on to other computers, as in Mouse Without Borders. Needs input capture
+  that can be switched on and off in a client process, and messages carrying
+  input from client to server.
+* Crossing between individual monitors rather than each computer's outline.
