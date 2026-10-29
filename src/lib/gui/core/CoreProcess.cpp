@@ -662,6 +662,19 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
     Q_EMIT peerFingerprint(args);
   } else if (command == "missingKeyboardLayouts") {
     Q_EMIT missingKeyboardLayouts(args);
+  } else if (command == "computerShape") {
+    // name|x,y,width,height;x,y,width,height...
+    const auto name = args.section(QLatin1Char('|'), 0, 0);
+    QList<QRect> monitors;
+    for (const auto &monitor : args.section(QLatin1Char('|'), 1).split(QLatin1Char(';'), Qt::SkipEmptyParts)) {
+      const auto values = monitor.split(QLatin1Char(','));
+      if (values.size() == 4)
+        monitors.append(QRect(values[0].toInt(), values[1].toInt(), values[2].toInt(), values[3].toInt()));
+    }
+    if (!name.isEmpty() && !monitors.isEmpty())
+      Q_EMIT computerShape(name, monitors);
+    else
+      qWarning("core ipc got invalid computer shape: %s", args.toUtf8().constData());
   }
 }
 

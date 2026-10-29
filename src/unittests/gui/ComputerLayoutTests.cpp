@@ -175,4 +175,39 @@ void ComputerLayoutTests::dragOntoAnotherSpringsBack()
   QCOMPARE(laptop->pos(), before);
 }
 
+void ComputerLayoutTests::reportedMonitorsGrowAwayFromServer()
+{
+  ServerConfig config;
+  const auto server = find(config, "server")->layoutRect();
+  const auto before = find(config, "laptop")->layoutRect();
+
+  // the laptop, left of the server, turns out to have a portrait monitor left of its main one
+  const QList<QRect> monitors = {QRect(-1080, -400, 1080, 1920), QRect(0, 0, 1920, 1080)};
+  QVERIFY(config.updateComputerMonitors("laptop", monitors));
+
+  const auto *laptop = find(config, "laptop");
+  const auto after = laptop->layoutRect();
+  QCOMPARE(after.size(), QSize(3000, 1920));
+
+  // it grew leftwards, so it still touches the server
+  QCOMPARE(after.x() + after.width(), server.x());
+  QCOMPARE(after.x() + after.width(), before.x() + before.width());
+  QCOMPARE(laptop->monitors().at(0), QRect(0, 0, 1080, 1920));
+  QCOMPARE(laptop->monitors().at(1), QRect(1080, 400, 1920, 1080));
+
+  // the same report again changes nothing
+  QVERIFY(!config.updateComputerMonitors("laptop", monitors));
+}
+
+void ComputerLayoutTests::reportedMonitorsIgnoredForServerAndUnknown()
+{
+  ServerConfig config;
+  const auto server = find(config, "server")->layoutRect();
+  QVERIFY(!config.updateComputerMonitors("server", {QRect(0, 0, 640, 480)}));
+  QCOMPARE(find(config, "server")->layoutRect(), server);
+
+  QVERIFY(!config.updateComputerMonitors("nobody", {QRect(0, 0, 640, 480)}));
+  QVERIFY(!config.updateComputerMonitors("laptop", {}));
+}
+
 QTEST_MAIN(ComputerLayoutTests)

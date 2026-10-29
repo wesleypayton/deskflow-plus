@@ -326,6 +326,23 @@ void Server::sendConnectedClientsIpc() const
   ipcSendToClient("connectedClients", clientList.join(","));
 }
 
+void Server::sendComputerShapeIpc(const BaseClientProxy *client) const
+{
+  // the GUI reads this computer's monitors itself, and the primary is added before ipc is up
+  if (client == m_primaryClient) {
+    return;
+  }
+
+  // name|x,y,width,height;... in the computer's own desktop coordinates
+  QStringList monitors;
+  for (const auto &monitor : client->getMonitors()) {
+    monitors.append(QStringLiteral("%1,%2,%3,%4").arg(monitor.x).arg(monitor.y).arg(monitor.width).arg(monitor.height));
+  }
+  ipcSendToClient(
+      "computerShape", QStringLiteral("%1|%2").arg(QString::fromStdString(getName(client)), monitors.join(';'))
+  );
+}
+
 std::string Server::getName(const BaseClientProxy *client) const
 {
   std::string name = m_config->getCanonicalName(client->getName());
@@ -1138,6 +1155,7 @@ void Server::handleShapeChanged(BaseClientProxy *client)
   }
 
   LOG_DEBUG("computer \"%s\" shape changed", getName(client).c_str());
+  sendComputerShapeIpc(client);
 
   // update jump coordinate
   int32_t x;
@@ -1917,6 +1935,7 @@ bool Server::addClient(BaseClientProxy *client)
   // tell primary client about the active sides
   m_primaryClient->reconfigure(getActivePrimarySides());
 
+  sendComputerShapeIpc(client);
   return true;
 }
 

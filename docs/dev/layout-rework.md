@@ -45,8 +45,11 @@ fractional mapping scales onto the real shape.
   real monitors. Old clients negotiate 1.8 and are treated as one rectangle.
   Risk: if upstream Deskflow ever ships its own 1.9, the two would disagree,
   and the version number would need to move.
-* Server publishes known computer shapes and monitor rectangles to the GUI over
-  IPC; the GUI caches the last known shapes in settings for offline computers.
+* Done: the server sends the GUI `computerShape=<name>|x,y,w,h;...` over the
+  core IPC when a client connects and whenever its monitors change. The GUI
+  saves them with the computer, so offline computers keep their last known
+  shape. A computer that grows is anchored on whichever corner keeps it clear
+  of its neighbours. The server's own monitors are read by the GUI directly.
 * `layout` entries gain optional per-monitor rectangles. The server detects
   *exposed* monitor edges (edges inside the bounding box, e.g. a short monitor
   next to a tall one) using hook deltas when the cursor is pinned at a monitor
@@ -58,7 +61,10 @@ Done:
 
 * `ComputerLayoutView` (a `QGraphicsView`) replaces the `ComputerSetupView`
   grid; `ComputerSetupModel` stays as the owner of the computer list.
-* Each computer is drawn as its monitors and dragged as one piece. Edges and
+* Each computer is drawn as its monitors, in its own colour from a fixed
+  palette that works in light and dark themes (the server is always blue and
+  marked "This computer"). Several monitors share a tinted outline, are
+  numbered, and carry the name on the largest. It is dragged as one piece. Edges and
   centres snap to other computers within 12 screen pixels, a drop that overlaps
   another computer springs back, and the edges the cursor can cross are drawn
   in green, live while dragging.
@@ -69,16 +75,14 @@ Done:
   `internalConfig/screens` entry. Settings from before the canvas are converted
   once from the grid, pushing cells toward the server so its grid neighbours
   touch it; computers added later are placed touching the server.
-* The server's own monitors come from `EnumDisplayMonitors` in the GUI. Clients
-  are 1920x1080 until phase 2's IPC tells the GUI their real shapes.
+* The server's own monitors come from `EnumDisplayMonitors` in the GUI. A
+  client is 1920x1080 until it first connects and the server reports its shape.
 * `ServerConfig` writes `section: layout` instead of `section: links`, leaving
   out (with a warning) any computer that overlaps one already written so the
   server still starts.
 
-Open: the core isn't DPI aware, so on a scaled display it sees a uniformly
-scaled desktop while the GUI sees real pixels. Links are proportional so this
-doesn't break crossing, but sizes drawn for clients (reported by the core) and
-for the server (read by the GUI) won't match until both use the same units.
+Both the core and the GUI are `QApplication`s, which Qt makes per-monitor DPI
+aware on Windows, so monitor sizes from either are in the same real pixels.
 
 ### 4. File transfer (Windows)
 

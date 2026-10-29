@@ -57,6 +57,15 @@ public:
   bool useExternalConfig() const;
   void addClient(const QString &clientName);
 
+  /**
+   * @brief Apply the monitors a connected client reported, keeping where it sits in the layout.
+   * A client that has grown into another computer is moved to a free spot touching the server.
+   * @param computerName the client's name
+   * @param monitors its monitors in its own desktop coordinates
+   * @return true if anything changed
+   */
+  bool updateComputerMonitors(const QString &computerName, const QList<QRect> &monitors);
+
 private:
   void recall();
   void setupComputers();

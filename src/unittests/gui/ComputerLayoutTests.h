@@ -17,6 +17,8 @@ private Q_SLOTS:
   void dialogShowsEveryComputer();
   void dragMovesComputer();
   void dragOntoAnotherSpringsBack();
+  void reportedMonitorsGrowAwayFromServer();
+  void reportedMonitorsIgnoredForServerAndUnknown();
 
 private:
   inline static const QString m_settingsPath = QStringLiteral("tmp/layout");

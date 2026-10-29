@@ -18,6 +18,7 @@
 #include <QRectF>
 
 #include <algorithm>
+#include <array>
 
 using enum ComputerConfig::SwitchCorner;
 using enum ComputerConfig::Fix;
@@ -288,6 +289,48 @@ void ServerConfig::addClient(const QString &clientName)
   }
 
   m_computers.addComputerByPriority(Computer(clientName));
+}
+
+bool ServerConfig::updateComputerMonitors(const QString &computerName, const QList<QRect> &monitors)
+{
+  if (monitors.isEmpty())
+    return false;
+
+  for (auto &computer : computers()) {
+    // the server's own monitors are read locally
+    if (computer.isNull() || computer.isServer() || computer.name() != computerName)
+      continue;
+
+    Computer updated(computer);
+    updated.setMonitors(monitors);
+    if (updated == computer)
+      return false;
+
+    // grow or shrink away from the neighbours: keep each corner in turn and take the first that fits
+    QList<QRectF> others;
+    for (const auto &other : std::as_const(m_computers)) {
+      if (&other != &computer && !other.isNull() && other.hasLayout())
+        others.append(QRectF(other.layoutRect()));
+    }
+    const auto old = computer.layoutRect();
+    const auto size = updated.layoutRect().size();
+    const std::array corners = {
+        old.topLeft(), QPoint(old.x() + old.width() - size.width(), old.y()),
+        QPoint(old.x(), old.y() + old.height() - size.height()),
+        QPoint(old.x() + old.width() - size.width(), old.y() + old.height() - size.height())
+    };
+    for (const auto &corner : corners) {
+      if (!deskflow::gui::layout::overlapsAny(QRectF(QRect(corner, size)), others)) {
+        updated.moveLayoutTo(corner);
+        break;
+      }
+    }
+
+    computer = updated;
+    m_computers.placeInLayout(computer);
+    return true;
+  }
+  return false;
 }
 
 void ServerConfig::setConfigFile(const QString &configFile) const

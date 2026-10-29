@@ -198,6 +198,9 @@ public:
   */
   void getClients(std::vector<std::string> &list) const;
   void sendConnectedClientsIpc() const;
+
+  //! Tell the GUI a computer's monitors, so its layout shows the real arrangement
+  void sendComputerShapeIpc(const BaseClientProxy *client) const;
   size_t getMaximumClipboardSizeBytes() const;
 
   //@}
