@@ -81,6 +81,7 @@ void ServerConfigDialog::save()
   Settings::setValue(Settings::Server::Protocol, networkProtocolToOption(m_protocol));
   Settings::setValue(Settings::Server::EnableClipboard, m_enableClipboard);
   Settings::setValue(Settings::Server::ClipboardSize, m_clipboardSize);
+  Settings::setValue(Settings::Server::FileCopyLimit, m_fileCopyLimit);
   Settings::setValue(Settings::Server::EnableHeartbeat, m_enableHeartbeat);
   Settings::setValue(Settings::Server::Heartbeat, m_heartbeatRate);
   Settings::setValue(Settings::Server::EnableSwitchDelay, m_enableSwitchDelay);
@@ -242,10 +243,20 @@ void ServerConfigDialog::toggleClipboard(bool enabled)
   m_enableClipboard = enabled;
 
   ui->sbClipboardSizeLimit->setEnabled(enabled);
+  ui->sbFileCopyLimit->setEnabled(enabled);
   if (enabled && !ui->sbClipboardSizeLimit->value()) {
     m_clipboardSize = Settings::defaultValue(Settings::Server::ClipboardSize).toUInt();
     ui->sbClipboardSizeLimit->setValue(m_clipboardSize ? m_clipboardSize : 1);
   }
+  setButtonBoxEnabledButtons();
+}
+
+void ServerConfigDialog::setFileCopyLimit(int limit)
+{
+  if (m_fileCopyLimit == limit)
+    return;
+
+  m_fileCopyLimit = limit;
   setButtonBoxEnabledButtons();
 }
 
@@ -401,6 +412,7 @@ void ServerConfigDialog::loadFromConfig()
   m_disableLockToComputer = Settings::value(Settings::Server::DisableLockToComputer).toBool();
   m_enableClipboard = Settings::value(Settings::Server::EnableClipboard).toBool();
   m_clipboardSize = Settings::value(Settings::Server::ClipboardSize).toUInt();
+  m_fileCopyLimit = Settings::value(Settings::Server::FileCopyLimit).toInt();
 
   ui->lineConfigFile->setText(serverConfig().configFile());
   ui->groupExternalConfig->setChecked(serverConfig().useExternalConfig());
@@ -464,6 +476,8 @@ void ServerConfigDialog::refreshControls()
   ui->cbEnableClipboard->setChecked(m_enableClipboard);
   ui->sbClipboardSizeLimit->setEnabled(m_enableClipboard);
   ui->sbClipboardSizeLimit->setValue(m_clipboardSize);
+  ui->sbFileCopyLimit->setEnabled(m_enableClipboard);
+  ui->sbFileCopyLimit->setValue(m_fileCopyLimit);
 }
 
 void ServerConfigDialog::initConnections() const
@@ -514,6 +528,9 @@ void ServerConfigDialog::initConnections() const
       &ServerConfigDialog::setClipboardLimit
   );
   connect(
+      ui->sbFileCopyLimit, QOverload<int>::of(&QSpinBox::valueChanged), this, &ServerConfigDialog::setFileCopyLimit
+  );
+  connect(
       ui->cbDefaultLockToComputerState, &QCheckBox::toggled, this, &ServerConfigDialog::toggleDefaultLockToComputerState
   );
   connect(ui->cbDisableLockToComputer, &QCheckBox::toggled, this, &ServerConfigDialog::toggleLockToComputer);
@@ -534,6 +551,7 @@ void ServerConfigDialog::updateControls() const
   ui->cbDisableLockToComputer->setEnabled(writable);
   ui->cbEnableClipboard->setEnabled(writable);
   ui->sbClipboardSizeLimit->setEnabled(writable);
+  ui->sbFileCopyLimit->setEnabled(writable && m_enableClipboard);
   ui->rbProtocolBarrier->setEnabled(writable);
   ui->rbProtocolSynergy->setEnabled(writable);
   ui->cbHeartbeat->setEnabled(writable);
@@ -562,6 +580,7 @@ void ServerConfigDialog::restoreFromDefaults()
   m_disableLockToComputer = Settings::defaultValue(Settings::Server::DisableLockToComputer).toBool();
   m_enableClipboard = Settings::defaultValue(Settings::Server::EnableClipboard).toBool();
   m_clipboardSize = Settings::defaultValue(Settings::Server::ClipboardSize).toUInt();
+  m_fileCopyLimit = Settings::defaultValue(Settings::Server::FileCopyLimit).toInt();
 
   ui->groupExternalConfig->setChecked(Settings::defaultValue(Settings::Server::ExternalConfig).toBool());
   ui->lineConfigFile->setText(Settings::defaultValue(Settings::Server::ExternalConfigFile).toString());
@@ -603,6 +622,7 @@ bool ServerConfigDialog::isGeneralConfigModified() const
          m_protocol != Settings::networkProtocol() ||
          m_enableClipboard != Settings::value(Settings::Server::EnableClipboard).toBool() ||
          m_clipboardSize != Settings::value(Settings::Server::ClipboardSize).toUInt() ||
+         m_fileCopyLimit != Settings::value(Settings::Server::FileCopyLimit).toInt() ||
          m_enableHeartbeat != Settings::value(Settings::Server::EnableHeartbeat).toBool() ||
          m_heartbeatRate != Settings::value(Settings::Server::Heartbeat).toInt() ||
          m_enableSwitchDelay != Settings::value(Settings::Server::EnableSwitchDelay).toBool() ||
@@ -622,6 +642,7 @@ bool ServerConfigDialog::isGeneralConfigDefault() const
          m_protocol == networkProtocolFromString(Settings::defaultValue(Settings::Server::Protocol).toString()) &&
          m_enableClipboard == Settings::defaultValue(Settings::Server::EnableClipboard).toBool() &&
          m_clipboardSize == Settings::defaultValue(Settings::Server::ClipboardSize).toUInt() &&
+         m_fileCopyLimit == Settings::defaultValue(Settings::Server::FileCopyLimit).toInt() &&
          m_enableHeartbeat == Settings::defaultValue(Settings::Server::EnableHeartbeat).toBool() &&
          m_heartbeatRate == Settings::defaultValue(Settings::Server::Heartbeat).toInt() &&
          m_enableSwitchDelay == Settings::defaultValue(Settings::Server::EnableSwitchDelay).toBool() &&

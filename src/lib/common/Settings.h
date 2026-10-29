@@ -103,6 +103,7 @@ public:
   struct Server
   {
     inline static const auto ClipboardSize = QStringLiteral("server/clipboardSize");
+    inline static const auto FileCopyLimit = QStringLiteral("server/fileCopyLimit");
     inline static const auto DefaultLockToComputerState = QStringLiteral("server/defaultLockToComputerState");
     inline static const auto DisableLockToComputer = QStringLiteral("server/disableLockToComputer");
     inline static const auto EnableClipboard = QStringLiteral("server/enableClipboard");
@@ -319,6 +320,7 @@ private:
     , Security::KeySize
     , Security::TlsEnabled
     , Server::ClipboardSize
+    , Server::FileCopyLimit
     , Server::DefaultLockToComputerState
     , Server::DisableLockToComputer
     , Server::EnableClipboard

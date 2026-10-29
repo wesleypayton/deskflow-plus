@@ -1138,6 +1138,11 @@ void Server::processOptions()
       if (!m_enableClipboard) {
         LOG_INFO("clipboard sharing is disabled");
       }
+    } else if (id == kOptionFileCopyLimit) {
+      m_fileCopyLimit = static_cast<uint64_t>(std::max(value, 0)) * 1024 * 1024;
+      if (m_fileCopyLimit == 0) {
+        LOG_INFO("copying files between computers is disabled");
+      }
     } else if (id == kOptionClipboardSharingSize) {
       if (value <= 0) {
         m_maximumClipboardSize = 0;
@@ -2113,9 +2118,6 @@ void Server::forceLeaveClient(const BaseClientProxy *client)
 
 namespace {
 
-// copied files bigger than this aren't sent along with the cursor
-constexpr uint64_t kClipboardFileLimit = uint64_t{512} * 1024 * 1024;
-
 // how often a client is asked to look for a drag while a held button is pushed against an edge, in seconds
 constexpr double kDragProbeInterval = 0.1;
 
@@ -2244,7 +2246,7 @@ void Server::offerPrimaryClipboardFiles()
 void Server::startClipboardTransfer(BaseClientProxy *destination)
 {
   using deskflow::transfer::TransferKind;
-  if (!m_transferRouter)
+  if (!m_transferRouter || m_fileCopyLimit == 0)
     return;
 
   const auto &owner = m_clipboards[kClipboardClipboard].m_clipboardOwner;
@@ -2257,10 +2259,10 @@ void Server::startClipboardTransfer(BaseClientProxy *destination)
   const auto offer = m_transferRouter->latestOffer(TransferKind::Clipboard, owner);
   if (!offer)
     return;
-  if (offer->size > kClipboardFileLimit) {
+  if (offer->size > m_fileCopyLimit) {
     LOG_INFO(
-        "not sending copied files to \"%s\", they're larger than %llu MB", name.c_str(),
-        static_cast<unsigned long long>(kClipboardFileLimit / 1024 / 1024)
+        "not sending copied files to \"%s\", they're larger than the %llu MB limit", name.c_str(),
+        static_cast<unsigned long long>(m_fileCopyLimit / 1024 / 1024)
     );
     return;
   }

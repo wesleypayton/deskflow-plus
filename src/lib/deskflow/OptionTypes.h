@@ -57,6 +57,8 @@ static const OptionID kOptionDefaultLockToComputerState = OPTION_CODE("LTSS");
 static const OptionID kOptionDisableLockToComputer = OPTION_CODE("DLTS");
 static const OptionID kOptionClipboardSharing = OPTION_CODE("CLPS");
 static const OptionID kOptionClipboardSharingSize = OPTION_CODE("CLSZ");
+//! Most MiB of copied files sent along with the cursor, 0 for none (deskflow-plus)
+static const OptionID kOptionFileCopyLimit = OPTION_CODE("DPFL");
 //@}
 
 //! @name Computer switch corner masks

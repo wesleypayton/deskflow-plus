@@ -494,6 +494,7 @@ private:
   bool m_disableLockToComputer = false;
   bool m_enableClipboard = true;
 
+  uint64_t m_fileCopyLimit = uint64_t{512} * 1024 * 1024; //!< bytes of copied files sent with the cursor
   std::unique_ptr<deskflow::server::TransferRouter> m_transferRouter;
   std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
   std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;

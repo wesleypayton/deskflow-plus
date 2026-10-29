@@ -659,6 +659,7 @@ void Config::readSectionOptions(ConfigReadContext &s)
   addOption("", kOptionWin32KeepForeground, Settings::value(Settings::Server::Win32KeepForeground).toBool());
   addOption("", kOptionClipboardSharing, Settings::value(Settings::Server::EnableClipboard).toBool());
   addOption("", kOptionClipboardSharingSize, Settings::value(Settings::Server::ClipboardSize).toUInt() * 1024);
+  addOption("", kOptionFileCopyLimit, Settings::value(Settings::Server::FileCopyLimit).toInt());
 
   if (const auto address = Settings::value(Settings::Core::Interface).toString(); !address.isEmpty()) {
     m_deskflowAddress = NetworkAddress(address.toStdString(), Settings::value(Settings::Core::Port).toInt());

@@ -455,6 +455,52 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="layoutFileCopy">
+            <item>
+             <widget class="QLabel" name="labelFileCopyLimit">
+              <property name="text">
+               <string>Copied files limit:</string>
+              </property>
+              <property name="toolTip">
+               <string>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbFileCopyLimit">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="suffix">
+               <string>MB</string>
+              </property>
+              <property name="maximum">
+               <number>100000</number>
+              </property>
+              <property name="value">
+               <number>512</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacerFileCopy">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -917,6 +963,7 @@ Enabling this setting will disable the server config GUI.</string>
   <tabstop>sbSwitchDoubleTap</tabstop>
   <tabstop>cbEnableClipboard</tabstop>
   <tabstop>sbClipboardSizeLimit</tabstop>
+  <tabstop>sbFileCopyLimit</tabstop>
   <tabstop>cbHeartbeat</tabstop>
   <tabstop>sbHeartbeat</tabstop>
   <tabstop>cbRelativeMouseMoves</tabstop>
