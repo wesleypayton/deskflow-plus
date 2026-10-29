@@ -230,6 +230,7 @@ private:
   void handleSuspend();
   void handleResume();
   void sendClipboardThread(void *);
+  void enablePlusFeatures(uint32_t serverFeatures);
   void setupFileTransfer();
   void offerClipboardFiles();
   void bindNetworkInterface(IDataSocket *socket) const;

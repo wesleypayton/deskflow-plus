@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-only WITH LicenseRef-OpenSSL-Exception
  */
 
-#include "server/ClientProxy1_9.h"
+#include "server/ClientProxyPlus.h"
 
 #include "base/IEventQueue.h"
 #include "base/Log.h"
@@ -15,7 +15,7 @@
 
 #include <cstring>
 
-ClientProxy1_9::ClientProxy1_9(
+ClientProxyPlus::ClientProxyPlus(
     const std::string &name, deskflow::IStream *adoptedStream, Server *server, IEventQueue *events
 )
     : ClientProxy1_8(name, adoptedStream, server, events),
@@ -24,7 +24,7 @@ ClientProxy1_9::ClientProxy1_9(
   // do nothing
 }
 
-deskflow::MonitorList ClientProxy1_9::getMonitors() const
+deskflow::MonitorList ClientProxyPlus::getMonitors() const
 {
   // the monitors are checked against the shape when they arrive, but a newer
   // shape may have arrived since without a monitor list to go with it
@@ -39,12 +39,15 @@ deskflow::MonitorList ClientProxy1_9::getMonitors() const
   return m_monitors;
 }
 
-bool ClientProxy1_9::parseMessage(const uint8_t *code)
+bool ClientProxyPlus::parseMessage(const uint8_t *code)
 {
-  if (memcmp(code, kMsgDMonitors, 4) == 0) {
+  if (memcmp(code, kMsgDPlusFeatures, 4) == 0) {
+    return recvPlusFeatures();
+  }
+  if (memcmp(code, kMsgDMonitors, 4) == 0 && (m_features & deskflow::plus::kFeatureMonitors)) {
     return recvMonitors();
   }
-  if (deskflow::transfer::isTransferMessage(code)) {
+  if ((m_features & deskflow::plus::kFeatureFileTransfer) && deskflow::transfer::isTransferMessage(code)) {
     deskflow::transfer::TransferMessage message;
     if (!deskflow::transfer::readTransferMessage(getStream(), code, message))
       return false;
@@ -54,12 +57,24 @@ bool ClientProxy1_9::parseMessage(const uint8_t *code)
   return ClientProxy1_8::parseMessage(code);
 }
 
-void ClientProxy1_9::sendTransfer(const deskflow::transfer::TransferMessage &message)
+void ClientProxyPlus::sendTransfer(const deskflow::transfer::TransferMessage &message)
 {
   deskflow::transfer::writeTransferMessage(getStream(), message);
 }
 
-bool ClientProxy1_9::recvMonitors()
+bool ClientProxyPlus::recvPlusFeatures()
+{
+  uint32_t features = 0;
+  if (!ProtocolUtil::readf(getStream(), kMsgDPlusFeatures + 4, &features)) {
+    return false;
+  }
+
+  m_features = features & deskflow::plus::kFeatures;
+  LOG_INFO("client \"%s\" is Deskflow Plus, using features 0x%x", getName().c_str(), m_features);
+  return true;
+}
+
+bool ClientProxyPlus::recvMonitors()
 {
   std::vector<uint32_t> data;
   if (!ProtocolUtil::readf(getStream(), kMsgDMonitors + 4, &data)) {

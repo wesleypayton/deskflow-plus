@@ -9,17 +9,17 @@
 #include "deskflow/Monitors.h"
 #include "server/ClientProxy1_8.h"
 
-//! Proxy for client implementing protocol version 1.9
-class ClientProxy1_9 : public ClientProxy1_8
+//! Proxy for a protocol 1.8 client, with the Deskflow Plus features once the client says it has them
+class ClientProxyPlus : public ClientProxy1_8
 {
 public:
-  ClientProxy1_9(const std::string &name, deskflow::IStream *adoptedStream, Server *server, IEventQueue *events);
-  ~ClientProxy1_9() override = default;
+  ClientProxyPlus(const std::string &name, deskflow::IStream *adoptedStream, Server *server, IEventQueue *events);
+  ~ClientProxyPlus() override = default;
 
   deskflow::MonitorList getMonitors() const override;
   bool supportsFileTransfer() const override
   {
-    return true;
+    return (m_features & deskflow::plus::kFeatureFileTransfer) != 0;
   }
   void sendTransfer(const deskflow::transfer::TransferMessage &message) override;
 
@@ -28,6 +28,9 @@ protected:
 
 private:
   bool recvMonitors();
+  bool recvPlusFeatures();
+
+  uint32_t m_features = 0;
 
   deskflow::MonitorList m_monitors;
   IEventQueue *m_events = nullptr;

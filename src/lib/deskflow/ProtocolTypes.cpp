@@ -49,6 +49,7 @@ const char *const kMsgDDragInfo = "DDRG%2i%s";
 const char *const kMsgDSecureInputNotification = "SECN%s";
 const char *const kMsgDLanguageSynchronisation = "LSYN%s";
 const char *const kMsgDMonitors = "DMON%4I";
+const char *const kMsgDPlusFeatures = "DPLS%4i";
 const char *const kMsgDFileOffer = "DFOF%4i%1i%4i%4i%4i%s";
 const char *const kMsgDFileRequest = "DFRQ%4i%4i";
 const char *const kMsgDFileStart = "DFST%4i%1i%4i%4i";

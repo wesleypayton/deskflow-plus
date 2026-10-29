@@ -22,7 +22,7 @@ enum class TransferKind : uint8_t
   Drag = 2       //!< files dragged across an edge, dropped where the button is released
 };
 
-//! One file transfer message, as sent over the wire (protocol 1.9)
+//! One file transfer message, as sent over the wire between Deskflow Plus computers
 /*!
 Every computer announces what it can send with an Offer. The server starts a
 transfer by sending Start to the destination and Request to the source, then

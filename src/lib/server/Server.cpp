@@ -1099,6 +1099,10 @@ void Server::sendOptions(BaseClientProxy *client) const
     }
   }
 
+  // say this is Deskflow Plus; stock clients ignore options they don't know
+  optionsList.push_back(kOptionPlusFeatures);
+  optionsList.push_back(deskflow::plus::kFeatures);
+
   // send the options
   client->resetOptions();
   client->setOptions(optionsList);

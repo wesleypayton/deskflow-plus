@@ -14,7 +14,7 @@
 #include "client/ServerProxy.h"
 #include "client/ServerProxy1_7.h"
 #include "client/ServerProxy1_8.h"
-#include "client/ServerProxy1_9.h"
+#include "client/ServerProxyPlus.h"
 #include "common/NetworkProtocol.h"
 #include "common/Settings.h"
 #include "deskflow/Clipboard.h"
@@ -338,6 +338,14 @@ void Client::setOptions(const OptionsList &options)
 
   for (auto index = options.begin(); index != options.end(); ++index) {
     const OptionID id = *index;
+    if (id == kOptionPlusFeatures) {
+      index++;
+      if (index != options.end())
+        enablePlusFeatures(*index);
+      if (index == options.end())
+        break;
+      continue;
+    }
     if (id == kOptionClipboardSharing) {
       index++;
       if (index != options.end()) {
@@ -490,11 +498,8 @@ bool Client::setupComputer(int16_t protocolMinor)
     m_server = new ServerProxy1_7(this, m_stream, m_events);
     break;
   case 8:
-    m_server = new ServerProxy1_8(this, m_stream, m_events);
-    break;
-  case 9:
-    m_server = new ServerProxy1_9(this, m_stream, m_events);
-    setupFileTransfer();
+    // the Deskflow Plus features stay off until the server announces them, see setOptions()
+    m_server = new ServerProxyPlus(this, m_stream, m_events);
     break;
   default:
     break;
@@ -563,6 +568,17 @@ void Client::cleanupComputer()
     m_server = nullptr;
   }
   m_transferAgent.reset();
+}
+
+void Client::enablePlusFeatures(uint32_t serverFeatures)
+{
+  auto *plus = dynamic_cast<ServerProxyPlus *>(m_server);
+  if (plus == nullptr || plus->isPlus())
+    return;
+
+  plus->enablePlus(serverFeatures);
+  if (plus->features() & deskflow::plus::kFeatureFileTransfer)
+    setupFileTransfer();
 }
 
 void Client::setupFileTransfer()

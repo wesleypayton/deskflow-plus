@@ -80,7 +80,7 @@ public:
   virtual void sendDragInfo(uint32_t fileCount, const char *info, size_t size) = 0;
   virtual void fileChunkSending(uint8_t mark, char *data, size_t dataSize) = 0;
 
-  //! True if the client takes part in file transfers (protocol 1.9 and later)
+  //! True if the client is Deskflow Plus and takes part in file transfers
   virtual bool supportsFileTransfer() const
   {
     return false;

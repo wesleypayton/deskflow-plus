@@ -45,7 +45,7 @@ static const int16_t kProtocolMajorVersion = 1;
  * @note When incrementing the minor version, the Deskflow application version should also increment
  * @since Protocol version 1.0
  */
-static const int16_t kProtocolMinorVersion = 9;
+static const int16_t kProtocolMinorVersion = 8;
 
 /**
  * @brief Default TCP port for Deskflow connections
@@ -1162,6 +1162,13 @@ extern const char *const kMsgDSecureInputNotification;
  */
 extern const char *const kMsgDLanguageSynchronisation;
 
+//! Deskflow Plus feature bits, exchanged through kOptionPlusFeatures and kMsgDPlusFeatures
+namespace deskflow::plus {
+inline constexpr uint32_t kFeatureMonitors = 1;     //!< kMsgDMonitors
+inline constexpr uint32_t kFeatureFileTransfer = 2; //!< the file transfer messages
+inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer;
+} // namespace deskflow::plus
+
 /**
  * @brief Client monitor layout
  *
@@ -1180,7 +1187,8 @@ extern const char *const kMsgDLanguageSynchronisation;
  *            8"
  * ```
  *
- * Sent straight after every kMsgDInfo so the primary can draw and link the
+ * Sent straight after every kMsgDInfo, once the primary is known to be Deskflow Plus (see
+ * kMsgDPlusFeatures), so the primary can draw and link the
  * secondary's individual monitors rather than only its bounding box. Signed
  * coordinates are sent as their two's complement. The primary ignores a list
  * that is empty, has more than 16 monitors, or reaches outside the shape from
@@ -1188,9 +1196,29 @@ extern const char *const kMsgDLanguageSynchronisation;
  * monitor.
  *
  * @see kMsgDInfo
- * @since Protocol version 1.9 (deskflow-plus)
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
  */
 extern const char *const kMsgDMonitors;
+
+/**
+ * @brief Deskflow Plus features
+ *
+ * **Message Code**: `"DPLS"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DPLS%4i"`
+ * **Parameters**:
+ * - `$1`: Feature bits the secondary supports, see deskflow::plus
+ *
+ * Deskflow Plus finds other Deskflow Plus computers without changing the protocol version, so it
+ * never sends a message a stock peer doesn't understand. The primary includes the
+ * kOptionPlusFeatures option, with its feature bits, in the options it sends every secondary; stock
+ * secondaries ignore options they don't know. A Deskflow Plus secondary that receives it answers with
+ * this message. From then on, and only then, both sides use the features they have in common:
+ * kMsgDMonitors and the file transfer messages.
+ *
+ * @since deskflow-plus, on protocol version 1.8
+ */
+extern const char *const kMsgDPlusFeatures;
 
 /**
  * @brief File transfer messages
@@ -1220,7 +1248,7 @@ extern const char *const kMsgDMonitors;
  * could leave its destination folder.
  *
  * @see deskflow::transfer::TransferMessage
- * @since Protocol version 1.9 (deskflow-plus)
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
  */
 extern const char *const kMsgDFileOffer;
 extern const char *const kMsgDFileRequest;

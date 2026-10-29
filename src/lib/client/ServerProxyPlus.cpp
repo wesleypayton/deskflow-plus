@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-only WITH LicenseRef-OpenSSL-Exception
  */
 
-#include "client/ServerProxy1_9.h"
+#include "client/ServerProxyPlus.h"
 
 #include "base/Log.h"
 #include "client/Client.h"
@@ -13,15 +13,28 @@
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/TransferProtocol.h"
 
-ServerProxy1_9::ServerProxy1_9(Client *client, deskflow::IStream *stream, IEventQueue *events)
+ServerProxyPlus::ServerProxyPlus(Client *client, deskflow::IStream *stream, IEventQueue *events)
     : ServerProxy1_8(client, stream, events)
 {
 }
 
-ServerProxy::ConnectionResult ServerProxy1_9::parseMessage(const uint8_t *code)
+void ServerProxyPlus::enablePlus(uint32_t serverFeatures)
+{
+  if (isPlus())
+    return;
+
+  m_features = serverFeatures & deskflow::plus::kFeatures;
+  LOG_INFO("server is Deskflow Plus, using features 0x%x", m_features);
+  ProtocolUtil::writef(getStream(), kMsgDPlusFeatures, deskflow::plus::kFeatures);
+
+  // the computer info went before we knew, so send the monitors now
+  sendExtraInfo();
+}
+
+ServerProxy::ConnectionResult ServerProxyPlus::parseMessage(const uint8_t *code)
 {
   using namespace deskflow::transfer;
-  if (!isTransferMessage(code))
+  if (!(m_features & deskflow::plus::kFeatureFileTransfer) || !isTransferMessage(code))
     return ServerProxy1_8::parseMessage(code);
 
   TransferMessage message;
@@ -31,8 +44,12 @@ ServerProxy::ConnectionResult ServerProxy1_9::parseMessage(const uint8_t *code)
   return ConnectionResult::Okay;
 }
 
-void ServerProxy1_9::sendExtraInfo()
+void ServerProxyPlus::sendExtraInfo()
 {
+  // a stock server wouldn't understand
+  if (!(m_features & deskflow::plus::kFeatureMonitors))
+    return;
+
   auto monitors = getClient()->getMonitors();
   if (monitors.size() > deskflow::kMaxMonitors) {
     monitors.resize(deskflow::kMaxMonitors);
