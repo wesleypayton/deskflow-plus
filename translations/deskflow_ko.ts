@@ -175,6 +175,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ComputerLayoutView</name>
+    <message>
+        <source>This computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag a new computer here to add it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
@@ -579,6 +598,42 @@ Do you want to connect to the server?
         <translation type="unfinished">도움말 보기(&amp;H)</translation>
     </message>
     <message>
+        <source>Receiving files: %1% (%2 of %3 MB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sending files: %1% (%2 of %3 MB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Received %n dropped item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Received %n copied item(s), ready to paste</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Files received</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfer failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfer failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid Computer Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -953,15 +1008,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Drag a computer from the grid to the trashcan to remove it.</source>
-        <translation>컴퓨터를 삭제하려면 휴지통으로 드래그하세요.</translation>
+        <translation type="vanished">컴퓨터를 삭제하려면 휴지통으로 드래그하세요.</translation>
     </message>
     <message>
         <source>Configure the layout of your computer displays by dragging to where you want.</source>
-        <translation>원하는 위치로 드래그하여 컴퓨터 화면 배치를 설정하세요.</translation>
+        <translation type="vanished">원하는 위치로 드래그하여 컴퓨터 화면 배치를 설정하세요.</translation>
     </message>
     <message>
         <source>Drag to the grid to add a new computer.</source>
-        <translation>새 컴퓨터를 추가하려면 격자로 드래그하세요.</translation>
+        <translation type="vanished">새 컴퓨터를 추가하려면 격자로 드래그하세요.</translation>
     </message>
     <message>
         <source>Hotkeys</source>
@@ -1095,6 +1150,26 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Enable lock to computer at startup</source>
         <translation>시작 시 컴퓨터 잠금 사용</translation>
+    </message>
+    <message>
+        <source>Drag a computer off the layout onto the trashcan to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag onto the layout to add a new computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copied files limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

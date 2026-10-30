@@ -66,7 +66,8 @@ public:
   {
     return m_coreProcess.mode();
   }
-  void open();
+  //! Shows the window, or with background set starts in the tray
+  void open(bool background = false);
   ServerConfig &serverConfig()
   {
     return m_serverConfig;
@@ -128,6 +129,10 @@ private:
   void updateFingerprintButton();
   void updateComputerName();
   void saveSettings() const;
+  void applyReportedShapes();
+  void showFileTransferStatus(
+      const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
+  );
   void showConfigureServer(const QString &message);
   void showConfigureClient();
   void restoreWindow();
@@ -171,6 +176,9 @@ private:
   bool m_saveOnExit = true;
   bool m_clientErrorVisible = false;
   ServerConfig m_serverConfig;
+
+  // the latest monitors each client reported, re-applied after the server settings are saved
+  QMap<QString, QList<QRect>> m_reportedShapes;
   deskflow::gui::CoreProcess m_coreProcess;
   QSet<QString> m_ignoredClients;
   bool m_newClientPromptShowing = false;

@@ -10,13 +10,64 @@
 #include "config/ComputerConfig.h"
 #include <common/Settings.h>
 
+#include <array>
+
 using enum KeyboardModifier;
 using enum ComputerConfig::SwitchCorner;
 using enum ComputerConfig::Fix;
 
+namespace {
+
+// rectangles are stored as "x,y,width,height" so the settings file stays readable
+QString rectToString(const QRect &rect)
+{
+  return QStringLiteral("%1,%2,%3,%4").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+QRect rectFromString(const QString &text)
+{
+  const auto parts = text.split(QLatin1Char(','));
+  if (parts.size() != 4)
+    return {};
+
+  std::array<int, 4> values{};
+  for (qsizetype i = 0; i < parts.size(); ++i) {
+    bool ok = false;
+    values[static_cast<size_t>(i)] = parts.at(i).trimmed().toInt(&ok);
+    if (!ok)
+      return {};
+  }
+  return QRect(values[0], values[1], values[2], values[3]);
+}
+
+} // namespace
+
 Computer::Computer(const QString &name)
 {
   setName(name);
+}
+
+QList<QRect> Computer::monitors() const
+{
+  if (m_monitors.isEmpty())
+    return {QRect(QPoint(0, 0), m_layoutRect.size())};
+  return m_monitors;
+}
+
+void Computer::setMonitors(const QList<QRect> &monitors)
+{
+  if (monitors.isEmpty())
+    return;
+
+  QRect bounds;
+  for (const auto &monitor : monitors)
+    bounds = bounds.united(monitor);
+
+  m_monitors.clear();
+  for (const auto &monitor : monitors)
+    m_monitors.append(monitor.translated(-bounds.topLeft()));
+
+  m_layoutRect.setSize(bounds.size());
 }
 
 void Computer::loadSettings(QSettingsProxy &settings)
@@ -26,6 +77,14 @@ void Computer::loadSettings(QSettingsProxy &settings)
 
   if (name.isEmpty())
     return;
+
+  m_layoutRect = rectFromString(settings.value("layout").toString());
+  m_monitors.clear();
+  const auto monitors = settings.value("monitors").toString().split(QLatin1Char(';'), Qt::SkipEmptyParts);
+  for (const auto &monitor : monitors) {
+    if (const auto rect = rectFromString(monitor); !rect.isEmpty())
+      m_monitors.append(rect);
+  }
 
   setModifier(Alt, modifierValueFromString(Settings::value(Settings::Computer::ModifierAlt.arg(name)).toString()));
   setModifier(AltGr, modifierValueFromString(Settings::value(Settings::Computer::ModifierAltGr.arg(name)).toString()));
@@ -60,6 +119,15 @@ void Computer::saveSettings(QSettingsProxy &settings) const
 
   if (computerName.isEmpty())
     return;
+
+  if (hasLayout())
+    settings.setValue("layout", rectToString(m_layoutRect));
+  if (!m_monitors.isEmpty()) {
+    QStringList monitors;
+    for (const auto &monitor : m_monitors)
+      monitors.append(rectToString(monitor));
+    settings.setValue("monitors", monitors.join(QLatin1Char(';')));
+  }
 
   Settings::setValue(Settings::Computer::Name.arg(computerName), computerName);
   Settings::setValue(Settings::Computer::Aliases.arg(computerName), m_Aliases);
@@ -116,5 +184,6 @@ bool Computer::operator==(const Computer &computer) const
 {
   return m_Name == computer.m_Name && m_Aliases == computer.m_Aliases && m_Modifiers == computer.m_Modifiers &&
          m_SwitchCorners == computer.m_SwitchCorners && m_SwitchCornerSize == computer.m_SwitchCornerSize &&
-         m_Fixes == computer.m_Fixes && m_Swapped == computer.m_Swapped && m_isServer == computer.m_isServer;
+         m_Fixes == computer.m_Fixes && m_Swapped == computer.m_Swapped && m_isServer == computer.m_isServer &&
+         m_layoutRect == computer.m_layoutRect && m_monitors == computer.m_monitors;
 }

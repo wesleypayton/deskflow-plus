@@ -71,6 +71,17 @@ protected:
     return m_stream;
   }
 
+  Client *getClient() const
+  {
+    return m_client;
+  }
+
+  //! Called straight after the computer info is sent; newer protocols send more about the computer here
+  virtual void sendExtraInfo()
+  {
+    // do nothing
+  }
+
 private:
   // if compressing mouse motion then send the last motion now
   void flushCompressedMouse();

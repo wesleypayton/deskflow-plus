@@ -7,6 +7,8 @@
 
 #include "ComputerList.h"
 
+#include "LayoutGeometry.h"
+
 #include <array>
 
 namespace {
@@ -71,8 +73,34 @@ ComputerList::ComputerList(int width) : QList<Computer>(), m_width(width)
 {
 }
 
+void ComputerList::placeInLayout(Computer &computer) const
+{
+  QRect anchor;
+  QList<QRect> taken;
+  QList<QRectF> takenF;
+  for (const auto &other : *this) {
+    if (&other == &computer || other.isNull() || !other.hasLayout())
+      continue;
+    taken.append(other.layoutRect());
+    takenF.append(QRectF(other.layoutRect()));
+    if (other.isServer())
+      anchor = other.layoutRect();
+  }
+
+  if (computer.hasLayout() && !deskflow::gui::layout::overlapsAny(QRectF(computer.layoutRect()), takenF))
+    return;
+
+  const auto size = computer.layoutRect().size().isEmpty() ? deskflow::gui::layout::kDefaultComputerSize
+                                                           : computer.layoutRect().size();
+  computer.setLayoutRect(QRect(deskflow::gui::layout::placeBeside(size, anchor, taken), size));
+}
+
 void ComputerList::addComputerByPriority(const Computer &newComputer)
 {
+  // the grid slot only decides where the computer is stored, the layout decides where it is
+  Computer placed(newComputer);
+  placeInLayout(placed);
+
   int serverIndex = getServerIndex(*this);
   auto indexes = getNeighborsIndexes(serverIndex, m_width, static_cast<int>(size()));
 
@@ -81,7 +109,7 @@ void ComputerList::addComputerByPriority(const Computer &newComputer)
     if (index >= 0 && index < size()) {
       auto &computer = operator[](index);
       if (computer.isNull()) {
-        computer = newComputer;
+        computer = placed;
         isAdded = true;
         break;
       }
@@ -89,7 +117,7 @@ void ComputerList::addComputerByPriority(const Computer &newComputer)
   }
 
   if (!isAdded) {
-    addComputerToFirstEmpty(newComputer);
+    addComputerToFirstEmpty(placed);
   }
 }
 

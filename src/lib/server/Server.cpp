@@ -13,17 +13,22 @@
 #include "deskflow/AppUtil.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileTransferPlatform.h"
 #include "deskflow/IPlatformComputer.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
+#include "deskflow/RemoteInput.h"
 #include "deskflow/StreamChunker.h"
+#include "deskflow/TransferAgent.h"
+#include "deskflow/TransferHooks.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/TCPSocket.h"
 #include "server/ClientListener.h"
 #include "server/ClientProxy.h"
 #include "server/ClientProxyUnknown.h"
 #include "server/PrimaryClient.h"
+#include "server/TransferRouter.h"
 
 #ifdef _WIN32
 #include <algorithm>
@@ -122,6 +127,7 @@ Server::Server(ServerConfig &config, PrimaryClient *primaryClient, deskflow::Com
 
   // add connection
   addClient(m_primaryClient);
+  setupFileTransfer();
 
   // set initial configuration
   setConfig(config);
@@ -326,6 +332,23 @@ void Server::sendConnectedClientsIpc() const
   ipcSendToClient("connectedClients", clientList.join(","));
 }
 
+void Server::sendComputerShapeIpc(const BaseClientProxy *client) const
+{
+  // the GUI reads this computer's monitors itself, and the primary is added before ipc is up
+  if (client == m_primaryClient) {
+    return;
+  }
+
+  // name|x,y,width,height;... in the computer's own desktop coordinates
+  QStringList monitors;
+  for (const auto &monitor : client->getMonitors()) {
+    monitors.append(QStringLiteral("%1,%2,%3,%4").arg(monitor.x).arg(monitor.y).arg(monitor.width).arg(monitor.height));
+  }
+  ipcSendToClient(
+      "computerShape", QStringLiteral("%1|%2").arg(QString::fromStdString(getName(client)), monitors.join(';'))
+  );
+}
+
 std::string Server::getName(const BaseClientProxy *client) const
 {
   std::string name = m_config->getCanonicalName(client->getName());
@@ -441,6 +464,11 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
   // stop waiting to switch
   stopSwitch();
 
+  // the cursor is back on the computer whose own mouse was driving it, so that mouse works there again
+  if (dst == m_remoteSource) {
+    stopRemoteControl();
+  }
+
   // record new position
   m_x = x;
   m_y = y;
@@ -501,6 +529,9 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
         }
         m_active->setClipboard(id, &m_clipboards[id].m_clipboard);
       }
+
+      // copied files follow the cursor too
+      startClipboardTransfer(m_active);
     }
 
     auto *info = new Server::SwitchToComputerInfo(m_active->getName());
@@ -732,6 +763,16 @@ BaseClientProxy *Server::mapToNeighbor(BaseClientProxy *src, Direction srcSide, 
   // move inwards because that side can't provoke a jump.
   avoidJumpZone(dst, srcSide, x, y);
 
+  // a computer's outline can have gaps no monitor fills, such as beside a shorter monitor. landing in one puts
+  // the cursor wherever the system pulls it back onto a monitor, so only cross where there's a monitor
+  const auto monitors = dst->getMonitors();
+  if (!monitors.empty() && std::ranges::none_of(monitors, [x, y](const deskflow::MonitorRect &monitor) {
+        return x >= monitor.x && x < monitor.x + monitor.width && y >= monitor.y && y < monitor.y + monitor.height;
+      })) {
+    LOG_DEBUG("no monitor on \"%s\" at %d,%d, not crossing", getName(dst).c_str(), x, y);
+    return nullptr;
+  }
+
   return dst;
 }
 
@@ -853,8 +894,9 @@ bool Server::isSwitchOkay(
     }
   }
 
-  // ignore if mouse is locked to computer and don't try to switch later
-  if (!preventSwitch && isLockedToComputer()) {
+  // ignore if mouse is locked to computer and don't try to switch later, unless the held button is
+  // dragging files, which may be carried across
+  if (!preventSwitch && isLockedToComputer() && (isLockedToComputerServer() || !fileDragAllowsSwitch())) {
     LOG_VERBOSE("locked to computer");
     preventSwitch = true;
     stopSwitch();
@@ -1073,6 +1115,10 @@ void Server::sendOptions(BaseClientProxy *client) const
     }
   }
 
+  // say this is Deskflow Plus; stock clients ignore options they don't know
+  optionsList.push_back(kOptionPlusFeatures);
+  optionsList.push_back(deskflow::plus::kFeatures);
+
   // send the options
   client->resetOptions();
   client->setOptions(optionsList);
@@ -1112,6 +1158,11 @@ void Server::processOptions()
       if (!m_enableClipboard) {
         LOG_INFO("clipboard sharing is disabled");
       }
+    } else if (id == kOptionFileCopyLimit) {
+      m_fileCopyLimit = static_cast<uint64_t>(std::max(value, 0)) * 1024 * 1024;
+      if (m_fileCopyLimit == 0) {
+        LOG_INFO("copying files between computers is disabled");
+      }
     } else if (id == kOptionClipboardSharingSize) {
       if (value <= 0) {
         m_maximumClipboardSize = 0;
@@ -1138,6 +1189,7 @@ void Server::handleShapeChanged(BaseClientProxy *client)
   }
 
   LOG_DEBUG("computer \"%s\" shape changed", getName(client).c_str());
+  sendComputerShapeIpc(client);
 
   // update jump coordinate
   int32_t x;
@@ -1174,12 +1226,18 @@ void Server::handleClipboardGrabbed(const Event &event, BaseClientProxy *grabber
   const auto *info = static_cast<const IComputer::ClipboardInfo *>(event.getData());
 
   // ignore grab if sequence number is old.  always allow primary
-  // computer to grab.
+  // computer to grab, and a Deskflow Plus client whose own mouse and
+  // keyboard are used: its user copies things while the cursor is on
+  // another computer, so its sequence number is old but its grab isn't.
   ClipboardInfo &clipboard = m_clipboards[info->m_id];
-  if (grabber != m_primaryClient && info->m_sequenceNumber < clipboard.m_clipboardSeqNum) {
+  if (grabber != m_primaryClient && !grabber->supportsRemoteInput() &&
+      info->m_sequenceNumber < clipboard.m_clipboardSeqNum) {
     LOG_DEBUG("ignored computer \"%s\" grab of clipboard %d", getName(grabber).c_str(), info->m_id);
     return;
   }
+
+  if (grabber == m_primaryClient && info->m_id == kClipboardClipboard)
+    offerPrimaryClipboardFiles();
 
   // mark computer as owning clipboard
   LOG_DEBUG(
@@ -1604,8 +1662,17 @@ void Server::onMouseUp(ButtonID id)
   LOG_VERBOSE("onMouseUp id=%d", id);
   assert(m_active != nullptr);
 
+  // the release we made to end a drag on this computer, while the user still holds the button
+  if (id == kButtonLeft && m_endingLocalDrag) {
+    m_endingLocalDrag = false;
+    return;
+  }
+
   // relay
   m_active->mouseUp(id);
+
+  if (id == kButtonLeft)
+    finishFileDrag();
 }
 
 bool Server::onMouseMovePrimary(int32_t x, int32_t y)
@@ -1917,6 +1984,7 @@ bool Server::addClient(BaseClientProxy *client)
   // tell primary client about the active sides
   m_primaryClient->reconfigure(getActivePrimarySides());
 
+  sendComputerShapeIpc(client);
   return true;
 }
 
@@ -1935,8 +2003,16 @@ bool Server::removeClient(BaseClientProxy *client)
   m_events->removeHandler(ClipboardChanged, client->getEventTarget());
 
   // remove from list
-  m_clients.erase(getName(client));
+  const auto name = getName(client);
+  m_clients.erase(name);
   m_clientSet.erase(i);
+
+  if (m_transferRouter)
+    m_transferRouter->disconnected(name);
+
+  if (client == m_remoteSource) {
+    m_remoteSource = nullptr;
+  }
 
   return true;
 }
@@ -2061,4 +2137,242 @@ void Server::forceLeaveClient(const BaseClientProxy *client)
 
   // tell primary client about the active sides
   m_primaryClient->reconfigure(getActivePrimarySides());
+}
+
+//
+// file transfer
+//
+
+namespace {
+
+// how often a client is asked to look for a drag while a held button is pushed against an edge, in seconds
+constexpr double kDragProbeInterval = 0.1;
+
+} // namespace
+
+bool Server::fileDragAllowsSwitch()
+{
+  using namespace deskflow::transfer;
+  if (!m_transferRouter)
+    return false;
+
+  // already carrying dragged files: the cursor may go anywhere with the button held
+  if (!m_dragSource.empty())
+    return !m_endingLocalDrag;
+
+  const auto active = getName(m_active);
+  const bool starting = !m_lookingForDrag;
+  if (starting) {
+    m_lookingForDrag = true;
+    const auto before = m_transferRouter->latestOffer(TransferKind::Drag, active);
+    m_dragOfferBefore = before ? before->id : 0;
+    m_dragProbeTimer.reset();
+  }
+
+  if (m_active == m_primaryClient) {
+    if (!probeForDrag(*m_transferAgent, *m_transferState, true))
+      return false;
+
+    // the drag here has been ended with a release of our own; once that has gone through, the button
+    // no longer holds the cursor here and it crosses as usual
+    m_dragSource = active;
+    m_endingLocalDrag = true;
+    return false;
+  }
+
+  if (!m_active->supportsFileTransfer())
+    return false;
+
+  // ask the client to look; it offers the files once it finds them
+  if (starting || m_dragProbeTimer.getTime() > kDragProbeInterval) {
+    m_dragProbeTimer.reset();
+    m_probedClient = active;
+    TransferMessage probe;
+    probe.type = TransferMessage::Type::Probe;
+    probe.value = 1;
+    deliverTransfer(active, probe);
+  }
+
+  if (const auto offer = m_transferRouter->latestOffer(TransferKind::Drag, active);
+      offer && offer->id != m_dragOfferBefore) {
+    m_dragSource = active;
+    return true;
+  }
+  return false;
+}
+
+void Server::finishFileDrag()
+{
+  using namespace deskflow::transfer;
+  if (!m_lookingForDrag)
+    return;
+
+  // dropped on another computer: send it the files
+  const auto destination = getName(m_active);
+  if (!m_dragSource.empty() && destination != m_dragSource &&
+      (m_active == m_primaryClient || m_active->supportsFileTransfer())) {
+    m_transferRouter->start(TransferKind::Drag, m_dragSource, destination);
+  }
+
+  // stop looking everywhere we looked
+  probeForDrag(*m_transferAgent, *m_transferState, false);
+  if (!m_probedClient.empty()) {
+    TransferMessage stop;
+    stop.type = TransferMessage::Type::Probe;
+    stop.value = 0;
+    deliverTransfer(m_probedClient, stop);
+  }
+
+  m_lookingForDrag = false;
+  m_dragSource.clear();
+  m_probedClient.clear();
+  m_endingLocalDrag = false;
+}
+
+void Server::setupFileTransfer()
+{
+  using namespace deskflow::transfer;
+
+  m_transferRouter = std::make_unique<deskflow::server::TransferRouter>(
+      [this](const std::string &computer, const TransferMessage &message) { deliverTransfer(computer, message); }
+  );
+
+  // this computer takes part like any client, with its messages going straight to the router
+  m_transferState = std::make_shared<LocalTransferState>();
+  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
+      [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); },
+      m_transferState
+  ));
+}
+
+void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::RemoteInput &input)
+{
+  using enum deskflow::remote::InputType;
+  namespace platform = deskflow::remote::platform;
+  if (!m_clientSet.contains(client) || client == m_primaryClient) {
+    return;
+  }
+
+  if (input.type == Edge) {
+    if (input.a >= static_cast<int32_t>(Direction::FirstDirection) &&
+        input.a <= static_cast<int32_t>(Direction::LastDirection)) {
+      startRemoteControl(client, static_cast<Direction>(input.a), input.b, input.c);
+    }
+    return;
+  }
+
+  // a release still counts after the cursor has gone back, so nothing stays held down here
+  if (client != m_remoteSource && !input.isRelease()) {
+    return;
+  }
+
+  if (input.type != Move) {
+    // played back here as if from this computer's own mouse and keyboard, so it reaches the active computer the
+    // same way, hotkeys included
+    platform::playBack(input);
+  } else if (m_active != m_primaryClient) {
+    onMouseMoveSecondary(input.a, input.b);
+  } else if (int32_t x = 0, y = 0; platform::moveCursorBy(input.a, input.b, x, y)) {
+    onMouseMovePrimary(x, y);
+  }
+}
+
+void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y)
+{
+  if (client == m_remoteSource || !client->supportsRemoteInput() || isLockedToComputer()) {
+    return;
+  }
+
+  // the client reports where its cursor is against the edge; the neighbor search starts just past it
+  using enum Direction;
+  switch (side) {
+  case Left:
+    --x;
+    break;
+  case Right:
+    ++x;
+    break;
+  case Top:
+    --y;
+    break;
+  case Bottom:
+    ++y;
+    break;
+  default:
+    return;
+  }
+
+  BaseClientProxy *dst = mapToNeighbor(client, side, x, y);
+  if (dst == nullptr || dst == client) {
+    return;
+  }
+
+  // one client's mouse at a time: whoever reached an edge last takes over
+  stopRemoteControl();
+  LOG_INFO("\"%s\" is using its own mouse and keyboard on \"%s\"", getName(client).c_str(), getName(dst).c_str());
+  m_remoteSource = client;
+  client->setRemoteCapture(true);
+  switchComputer(dst, x, y, false);
+}
+
+void Server::stopRemoteControl()
+{
+  if (m_remoteSource == nullptr) {
+    return;
+  }
+  LOG_INFO("\"%s\" is using its own mouse and keyboard locally again", getName(m_remoteSource).c_str());
+  m_remoteSource->setRemoteCapture(false);
+  m_remoteSource = nullptr;
+}
+
+void Server::handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message)
+{
+  if (m_transferRouter && m_clientSet.contains(const_cast<BaseClientProxy *>(client)))
+    m_transferRouter->receive(getName(client), message);
+}
+
+void Server::deliverTransfer(const std::string &computer, const deskflow::transfer::TransferMessage &message)
+{
+  if (computer == getName(m_primaryClient)) {
+    m_transferAgent->handle(message);
+    return;
+  }
+
+  if (const auto client = m_clients.find(computer);
+      client != m_clients.end() && client->second->supportsFileTransfer()) {
+    client->second->sendTransfer(message);
+  }
+}
+
+void Server::offerPrimaryClipboardFiles()
+{
+  if (m_transferAgent)
+    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
+}
+
+void Server::startClipboardTransfer(BaseClientProxy *destination)
+{
+  using deskflow::transfer::TransferKind;
+  if (!m_transferRouter || m_fileCopyLimit == 0)
+    return;
+
+  const auto &owner = m_clipboards[kClipboardClipboard].m_clipboardOwner;
+  const auto name = getName(destination);
+  if (owner.empty() || owner == name)
+    return;
+  if (destination != m_primaryClient && !destination->supportsFileTransfer())
+    return;
+
+  const auto offer = m_transferRouter->latestOffer(TransferKind::Clipboard, owner);
+  if (!offer)
+    return;
+  if (offer->size > m_fileCopyLimit) {
+    LOG_INFO(
+        "not sending copied files to \"%s\", they're larger than the %llu MB limit", name.c_str(),
+        static_cast<unsigned long long>(m_fileCopyLimit / 1024 / 1024)
+    );
+    return;
+  }
+
+  m_transferRouter->start(TransferKind::Clipboard, owner, name);
 }

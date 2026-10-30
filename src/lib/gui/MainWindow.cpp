@@ -142,7 +142,7 @@ MainWindow::MainWindow()
   if (TlsUtility::isEnabled()) {
     if (Settings::value(Settings::Security::KeySize).toInt() < 2048) {
       QMessageBox::information(
-          this, kAppName,
+          this, kDisplayName,
           tr("Your current TLS key is smaller than the minimum allowed size, A new key 2048-bit key will be generated.")
       );
       Settings::setValue(Settings::Security::KeySize, 2048);
@@ -278,6 +278,16 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::retryIn, this, &MainWindow::updateTimeoutDelay);
   connect(&m_coreProcess, &CoreProcess::peerFingerprint, this, &MainWindow::handlePeerFingerprint);
   connect(&m_coreProcess, &CoreProcess::missingKeyboardLayouts, this, &MainWindow::handleMissingKeyboardLayouts);
+  connect(&m_coreProcess, &CoreProcess::fileTransferStatus, this, &MainWindow::showFileTransferStatus);
+  connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
+    // remember the client's real arrangement so the layout shows it, even once it has disconnected
+    m_reportedShapes.insert(name, monitors);
+    if (m_serverConfig.updateComputerMonitors(name, monitors)) {
+      m_serverConfig.commit();
+      // the layout may now link differently, so the running server picks it up straight away
+      m_coreProcess.reloadServerConfig();
+    }
+  });
 
   if (Settings::value(Settings::Gui::AutoStartCore).toBool()) {
     connect(ui->btnToggleCore, &QPushButton::clicked, m_actionStopCore, &QAction::trigger, Qt::UniqueConnection);
@@ -399,7 +409,7 @@ void MainWindow::coreProcessError(CoreProcess::Error error)
       message.append(tr("\nAdditionally, check you are able to %1 the server config file: %2")
                          .arg(mode, Settings::serverConfigFile()));
     }
-    QMessageBox::warning(this, kAppName, message);
+    QMessageBox::warning(this, kDisplayName, message);
   }
 }
 
@@ -611,6 +621,7 @@ void MainWindow::serverConnectionConfigureClient(const QString &clientName)
   m_serverConfigDialogVisible = true;
   ServerConfigDialog dialog(this, m_serverConfig);
   if (dialog.addClient(clientName) && dialog.exec() == QDialog::Accepted) {
+    applyReportedShapes();
     m_coreProcess.restart();
   }
   m_serverConfigDialogVisible = false;
@@ -620,9 +631,9 @@ void MainWindow::serverConnectionConfigureClient(const QString &clientName)
 // End slots
 //////////////////////////////////////////////////////////////////////////////
 
-void MainWindow::open()
+void MainWindow::open(bool background)
 {
-  if (!Settings::value(Settings::Gui::Autohide).toBool())
+  if (!background && !Settings::value(Settings::Gui::Autohide).toBool())
     showAndActivate();
   else if (deskflow::platform::isMac())
     // macOS to call hide after this function ends
@@ -690,6 +701,7 @@ void MainWindow::setupTrayIcon()
   trayMenu->insertSeparator(m_actionMinimize);
   trayMenu->insertSeparator(m_actionTrayQuit);
   m_trayIcon->setContextMenu(trayMenu);
+  m_trayIcon->setToolTip(kDisplayName);
 
   setTrayIcon();
   m_trayIcon->show();
@@ -698,9 +710,9 @@ void MainWindow::setupTrayIcon()
 void MainWindow::applyConfig()
 {
   if (Settings::value(Settings::Gui::ShowVersionInTitle).toBool()) {
-    setWindowTitle(QStringLiteral("%1 - %2").arg(kAppName, kDisplayVersion));
+    setWindowTitle(QStringLiteral("%1 - %2").arg(kDisplayName, kDisplayVersion));
   } else {
-    setWindowTitle(kAppName);
+    setWindowTitle(kDisplayName);
   }
 
   if (const auto host = Settings::value(Settings::Client::RemoteHost).toString(); !host.isEmpty())
@@ -807,7 +819,7 @@ void MainWindow::handleConnectionRefused(deskflow::core::ConnectionRefusal reaso
 
   const auto address = Settings::value(Settings::Client::RemoteHost).toString();
   QMessageBox::warning(
-      this, tr("%1 Connection Error").arg(kAppName),
+      this, tr("%1 Connection Error").arg(kDisplayName),
       tr("<p>Failed to connect to the server '%1'.</p>"
          "<p>A Client with your name is already connected to the server.</p>"
          "Please ensure that you're using a unique name and that only a "
@@ -1058,13 +1070,13 @@ void MainWindow::updateText()
   m_actionQuit->setText(tr("&Quit"));
   m_actionTrayQuit->setText(tr("&Quit"));
   //: %1 will be the replaced with the appname
-  m_actionRestore->setText(tr("&Open %1").arg(kAppName));
+  m_actionRestore->setText(tr("&Open %1").arg(kDisplayName));
   m_actionSettings->setText(tr("&Preferences"));
   m_actionStartCore->setText(tr("&Start"));
   m_actionRestartCore->setText(tr("Rest&art"));
   m_actionStopCore->setText(tr("S&top"));
   //: %1 will be the replaced with the appname
-  m_actionAbout->setText(tr("About %1...").arg(kAppName));
+  m_actionAbout->setText(tr("About %1...").arg(kDisplayName));
 
   m_actionShowHelp->setText(tr("View &Help"));
 
@@ -1086,9 +1098,58 @@ void MainWindow::showConfigureServer(const QString &message)
 {
   ServerConfigDialog dialog(this, serverConfig());
   dialog.message(message);
-  if ((dialog.exec() == QDialog::Accepted) && m_coreProcess.isStarted()) {
-    m_coreProcess.restart();
+  if (dialog.exec() == QDialog::Accepted) {
+    applyReportedShapes();
+    if (m_coreProcess.isStarted())
+      m_coreProcess.restart();
   }
+}
+
+void MainWindow::showFileTransferStatus(
+    const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
+)
+{
+  // how long finished and failed transfers stay in the status bar
+  constexpr int kResultTimeout = 8000;
+
+  const auto megabytes = [](qulonglong bytes) { return QString::number(bytes / (1024.0 * 1024.0), 'f', 1); };
+
+  if (phase == QStringLiteral("started") || phase == QStringLiteral("progress")) {
+    const auto percent = total > 0 ? done * 100 / total : 0;
+    const auto text = incoming ? tr("Receiving files: %1% (%2 of %3 MB)") : tr("Sending files: %1% (%2 of %3 MB)");
+    m_statusBar->showMessage(text.arg(percent).arg(megabytes(done), megabytes(total)));
+    return;
+  }
+
+  if (phase == QStringLiteral("finished")) {
+    if (!incoming) {
+      m_statusBar->showMessage(tr("Files sent"), kResultTimeout);
+      return;
+    }
+    const auto items = detail.toInt();
+    const auto text = dragged ? tr("Received %n dropped item(s)", "", items)
+                              : tr("Received %n copied item(s), ready to paste", "", items);
+    m_statusBar->showMessage(text, kResultTimeout);
+    m_trayIcon->showMessage(tr("Files received"), text, QSystemTrayIcon::Information, kResultTimeout);
+    return;
+  }
+
+  if (phase == QStringLiteral("failed")) {
+    const auto text = tr("File transfer failed: %1").arg(detail);
+    m_statusBar->showMessage(text, kResultTimeout);
+    m_trayIcon->showMessage(tr("File transfer failed"), detail, QSystemTrayIcon::Warning, kResultTimeout);
+  }
+}
+
+void MainWindow::applyReportedShapes()
+{
+  // saving the dialog copies back the layout as it was when the dialog opened, which may predate
+  // a client reporting new monitors
+  bool changed = false;
+  for (auto shape = m_reportedShapes.cbegin(); shape != m_reportedShapes.cend(); ++shape)
+    changed |= m_serverConfig.updateComputerMonitors(shape.key(), shape.value());
+  if (changed)
+    m_serverConfig.commit();
 }
 
 void MainWindow::showConfigureClient()

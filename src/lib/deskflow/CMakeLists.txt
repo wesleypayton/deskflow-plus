@@ -11,11 +11,16 @@ if(WIN32)
   set(PLATFORM_CODE
     win32/AppUtilWindows.cpp
     win32/AppUtilWindows.h
+    win32/DragProbeWindows.cpp
+    win32/FileTransferPlatformWindows.cpp
+    win32/RemoteInputWindows.cpp
   )
 elseif(UNIX)
   set(PLATFORM_CODE
     unix/AppUtilUnix.cpp
     unix/AppUtilUnix.h
+    unix/FileTransferPlatformUnix.cpp
+    unix/RemoteInputUnix.cpp
     unix/DeskflowXkbKeyboard.cpp
     unix/DeskflowXkbKeyboard.h
     unix/ISO639Table.h
@@ -63,6 +68,11 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   KeyMap.h
   KeyState.cpp
   KeyState.h
+  FileTransfer.cpp
+  FileTransfer.h
+  FileTransferPlatform.h
+  Monitors.cpp
+  Monitors.h
   MouseTypes.h
   OptionTypes.h
   PacketStreamFilter.cpp
@@ -73,10 +83,17 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ProtocolTypes.h
   ProtocolUtil.cpp
   ProtocolUtil.h
+  RemoteInput.h
   ServerApp.cpp
   ServerApp.h
   StreamChunker.cpp
   StreamChunker.h
+  TransferAgent.cpp
+  TransferAgent.h
+  TransferHooks.cpp
+  TransferHooks.h
+  TransferProtocol.cpp
+  TransferProtocol.h
   KeyboardLayoutManager.cpp
   KeyboardLayoutManager.h
   ipc/IpcServer.cpp
@@ -87,6 +104,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ipc/CoreIpc.h
   ipc/CoreIpcServer.cpp
   ipc/CoreIpcServer.h
+  ipc/UserShell.cpp
+  ipc/UserShell.h
 )
 
 target_link_libraries(${lib_name}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: (C) 2026 Deskflow Developers
+  SPDX-License-Identifier: MIT
+
+  The setup .exe: installs the Visual C++ runtime if it's missing or too old,
+  then the Deskflow Plus MSI. Built by make-release.ps1.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+  <Bundle
+      Name="Deskflow Plus"
+      Version="$(Version)"
+      Manufacturer="Deskflow Plus"
+      UpgradeCode="{3B8E5C71-2A4F-4D96-B0E3-7C1F9A6D2E45}"
+      IconSourceFile="$(Icon)">
+
+    <BootstrapperApplication>
+      <!-- the standard hyperlink theme, plus a box to start the app when setup finishes -->
+      <bal:WixStandardBootstrapperApplication
+          Theme="hyperlinkLicense"
+          ThemeFile="$(sys.SOURCEFILEDIR)theme\SetupTheme.xml"
+          LocalizationFile="$(sys.SOURCEFILEDIR)theme\SetupTheme.wxl"
+          LogoFile="$(Logo)"
+          LicenseUrl="https://github.com/wesleypayton/deskflow-plus/blob/master/LICENSE"
+          ShowVersion="yes" />
+    </BootstrapperApplication>
+
+    <Variable Name="LaunchAfterSetup" Type="numeric" Value="1" />
+
+    <!-- the MSI needs at least this runtime, see wix-custom.cpp -->
+    <util:RegistrySearch
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64"
+        Value="Minor"
+        Variable="VCRedistMinor"
+        Result="value"
+        Bitness="always64" />
+
+    <Chain>
+      <ExePackage
+          Id="VCRedist"
+          DisplayName="Microsoft Visual C++ Redistributable"
+          SourceFile="$(VcRedist)"
+          Permanent="yes"
+          Vital="yes"
+          DetectCondition="VCRedistMinor &gt;= $(RuntimeMinor)"
+          InstallArguments="/install /quiet /norestart">
+        <ExitCode Value="1638" Behavior="success" />
+        <ExitCode Value="3010" Behavior="scheduleReboot" />
+      </ExePackage>
+      <MsiPackage SourceFile="$(Msi)">
+        <MsiProperty Name="LAUNCHAPP" Value="[LaunchAfterSetup]" />
+      </MsiPackage>
+    </Chain>
+  </Bundle>
+</Wix>

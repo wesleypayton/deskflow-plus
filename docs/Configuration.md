@@ -235,10 +235,27 @@ end
 
 Comments are introduced by ''#'' and continue to the end of the line. ''name'' must be one of the following:
 
+* ''layout''
 * ''links''
 * ''options''
 
 The file is parsed top to bottom and names cannot be used before they've been defined in the general config or as an alias in the general config.
+
+### layout section
+
+''args'' is a list of lines of the form <code>name = x,y,width,height</code>, placing each computer as a rectangle in one shared coordinate space (in pixels). Wherever an edge of one rectangle touches an edge of another, the cursor can cross between them, and it crosses 1:1 along the shared part of the edge. Computers that only touch at a corner are not connected. Rectangles must not overlap.
+
+```
+section: layout
+	moe   = 0,0,1920,1080
+	larry = 1920,180,1440,900
+	curly = -320,-1440,2560,1440
+end
+```
+
+Here ''larry'' is to the right of ''moe'' and lines up with the lower 900 pixels of the right edge of ''moe''. ''curly'' sits above ''moe'' and overhangs it by 320 pixels on each side.
+
+A configuration can contain a layout section or a links section, not both. Computers left out of the layout have no links.
 
 ### links secion
 

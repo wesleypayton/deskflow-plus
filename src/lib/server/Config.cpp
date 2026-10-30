@@ -16,10 +16,13 @@
 #include "net/SocketException.h"
 #include "server/Server.h"
 
+#include <algorithm>
+#include <array>
 #include <assert.h>
 #include <cstdlib>
 #include <istream>
 #include <ostream>
+#include <ranges>
 
 using namespace deskflow::string;
 
@@ -186,6 +189,79 @@ bool Config::disconnect(const std::string &srcName, Direction srcSide, float pos
 
   // disconnect side
   index->second.remove(srcSide, position);
+
+  return true;
+}
+
+bool Config::setLayoutRect(const std::string &name, const LayoutRect &rect)
+{
+  if (!isComputer(name) || rect.width <= 0 || rect.height <= 0) {
+    return false;
+  }
+
+  m_layout.insert_or_assign(getCanonicalName(name), rect);
+  return true;
+}
+
+bool Config::applyLayout()
+{
+  // overlapping computers have no sensible edge between them
+  for (auto a = m_layout.cbegin(); a != m_layout.cend(); ++a) {
+    for (auto b = std::next(a); b != m_layout.cend(); ++b) {
+      if (a->second.overlaps(b->second)) {
+        return false;
+      }
+    }
+  }
+
+  using enum Direction;
+  for (auto &cell : m_map | std::views::values) {
+    for (const auto side : {Left, Right, Top, Bottom}) {
+      cell.remove(side);
+    }
+  }
+
+  // link the span shared by an edge of src and the opposite edge of dst.  start
+  // and length describe each edge along its own axis in layout coordinates.
+  const auto linkSpan = [this](
+                            const std::string &srcName, Direction side, int32_t srcStart, int32_t srcLength,
+                            const std::string &dstName, int32_t dstStart, int32_t dstLength
+                        ) {
+    const auto low = std::max(srcStart, dstStart);
+    const auto high = std::min(srcStart + srcLength, dstStart + dstLength);
+    if (high <= low) {
+      // only the corners touch
+      return;
+    }
+
+    const auto fraction = [](int32_t value, int32_t start, int32_t length) {
+      return static_cast<float>(static_cast<double>(value - start) / length);
+    };
+    connect(
+        srcName, side, fraction(low, srcStart, srcLength), fraction(high, srcStart, srcLength), dstName,
+        fraction(low, dstStart, dstLength), fraction(high, dstStart, dstLength)
+    );
+  };
+
+  for (const auto &[srcName, src] : m_layout) {
+    for (const auto &[dstName, dst] : m_layout) {
+      if (&src == &dst) {
+        continue;
+      }
+
+      if (dst.x == src.x + src.width) {
+        linkSpan(srcName, Right, src.y, src.height, dstName, dst.y, dst.height);
+      } else if (dst.x + dst.width == src.x) {
+        linkSpan(srcName, Left, src.y, src.height, dstName, dst.y, dst.height);
+      }
+
+      if (dst.y == src.y + src.height) {
+        linkSpan(srcName, Bottom, src.x, src.width, dstName, dst.x, dst.width);
+      } else if (dst.y + dst.height == src.y) {
+        linkSpan(srcName, Top, src.x, src.width, dstName, dst.x, dst.width);
+      }
+    }
+  }
 
   return true;
 }
@@ -365,6 +441,16 @@ Config::link_const_iterator Config::endNeighbor(const std::string &srcName) cons
   return index->second.end();
 }
 
+bool Config::hasLayout() const
+{
+  return !m_layout.empty();
+}
+
+const Config::LayoutMap &Config::getLayout() const
+{
+  return m_layout;
+}
+
 const NetworkAddress &Config::getDeskflowAddress() const
 {
   return m_deskflowAddress;
@@ -406,6 +492,10 @@ bool Config::operator==(const Config &x) const
 
   // compare global options
   if (m_globalOptions != x.m_globalOptions) {
+    return false;
+  }
+
+  if (m_layout != x.m_layout) {
     return false;
   }
 
@@ -463,6 +553,18 @@ void Config::read(ConfigReadContext &context)
   while (context.getStream()) {
     tmp.readSection(context);
   }
+
+  if (tmp.hasLayout()) {
+    for (const auto &cell : tmp.m_map | std::views::values) {
+      if (cell.begin() != cell.end()) {
+        throw ServerConfigReadException(context, "cannot use both layout and links sections");
+      }
+    }
+    if (!tmp.applyLayout()) {
+      throw ServerConfigReadException(context, "computers overlap in the layout");
+    }
+  }
+
   *this = tmp;
 }
 
@@ -495,6 +597,7 @@ void Config::readSection(ConfigReadContext &s)
   static const char s_screens[] = "screens";
   static const char s_links[] = "links";
   static const char s_aliases[] = "aliases";
+  static const char s_layout[] = "layout";
 
   std::string line;
   if (!s.readLine(line)) {
@@ -527,6 +630,8 @@ void Config::readSection(ConfigReadContext &s)
     readSectionAliases(s);
   } else if (name == s_links) {
     readSectionLinks(s);
+  } else if (name == s_layout) {
+    readSectionLayout(s);
   } else {
     throw ServerConfigReadException(s, "unknown section name \"%{1}\"", name);
   }
@@ -554,6 +659,7 @@ void Config::readSectionOptions(ConfigReadContext &s)
   addOption("", kOptionWin32KeepForeground, Settings::value(Settings::Server::Win32KeepForeground).toBool());
   addOption("", kOptionClipboardSharing, Settings::value(Settings::Server::EnableClipboard).toBool());
   addOption("", kOptionClipboardSharingSize, Settings::value(Settings::Server::ClipboardSize).toUInt() * 1024);
+  addOption("", kOptionFileCopyLimit, Settings::value(Settings::Server::FileCopyLimit).toInt());
 
   if (const auto address = Settings::value(Settings::Core::Interface).toString(); !address.isEmpty()) {
     m_deskflowAddress = NetworkAddress(address.toStdString(), Settings::value(Settings::Core::Port).toInt());
@@ -711,6 +817,50 @@ void Config::readSectionLinks(ConfigReadContext &s)
     }
   }
   throw ServerConfigReadException(s, "unexpected end of links section");
+}
+
+void Config::readSectionLayout(ConfigReadContext &s)
+{
+  std::string line;
+  while (s.readLine(line)) {
+    // check for end of section
+    if (line == "end") {
+      return;
+    }
+
+    // parse argument:  `<name> = <x>,<y>,<width>,<height>'
+    const auto parts = QString::fromStdString(line).split(QLatin1Char('='));
+    if (parts.size() != 2) {
+      throw ServerConfigReadException(s, "invalid layout \"%{1}\"", line);
+    }
+
+    const auto computer = parts.at(0).trimmed().toStdString();
+    if (!isComputer(computer)) {
+      throw ServerConfigReadException(s, "unknown computer name \"%{1}\"", computer);
+    }
+    if (!isCanonicalName(computer)) {
+      throw ServerConfigReadException(s, "cannot use computer name alias here");
+    }
+
+    const auto values = parts.at(1).split(QLatin1Char(','));
+    if (values.size() != 4) {
+      throw ServerConfigReadException(s, "invalid layout rectangle \"%{1}\"", line);
+    }
+
+    std::array<int32_t, 4> numbers{};
+    for (size_t i = 0; i < numbers.size(); ++i) {
+      bool ok = false;
+      numbers[i] = values.at(static_cast<qsizetype>(i)).trimmed().toInt(&ok);
+      if (!ok) {
+        throw ServerConfigReadException(s, "invalid layout rectangle \"%{1}\"", line);
+      }
+    }
+
+    if (!setLayoutRect(computer, {numbers[0], numbers[1], numbers[2], numbers[3]})) {
+      throw ServerConfigReadException(s, "invalid layout rectangle \"%{1}\"", line);
+    }
+  }
+  throw ServerConfigReadException(s, "unexpected end of layout section");
 }
 
 void Config::readSectionAliases(ConfigReadContext &s)
@@ -1109,6 +1259,16 @@ bool Config::CellEdge::operator==(const CellEdge &x) const
 }
 
 //
+// Config::LayoutRect
+//
+
+bool Config::LayoutRect::overlaps(const LayoutRect &other) const
+{
+  // touching edges don't count as overlapping
+  return x < other.x + other.width && other.x < x + width && y < other.y + other.height && other.y < y + height;
+}
+
+//
 // Config::Cell
 //
 
@@ -1254,19 +1414,28 @@ std::istream &operator>>(std::istream &s, Config &config)
 
 std::ostream &operator<<(std::ostream &s, const Config &config)
 {
-  // links section
-  std::string neighbor;
-  s << "section: links" << std::endl;
-  for (const auto &computer : config) {
-    s << "\t" << computer.c_str() << ":" << std::endl;
-
-    for (Config::link_const_iterator link = config.beginNeighbor(computer), nend = config.endNeighbor(computer);
-         link != nend; ++link) {
-      s << "\t\t" << Config::dirName(link->first.getSide()) << Config::formatInterval(link->first.getInterval())
-        << " = " << link->second.getName().c_str() << Config::formatInterval(link->second.getInterval()) << std::endl;
+  if (config.hasLayout()) {
+    // links are derived from the layout so only the layout is written
+    s << "section: layout" << std::endl;
+    for (const auto &[computer, rect] : config.getLayout()) {
+      s << "\t" << computer.c_str() << " = " << rect.x << "," << rect.y << "," << rect.width << "," << rect.height
+        << std::endl;
     }
+    s << "end" << std::endl;
+  } else {
+    // links section
+    s << "section: links" << std::endl;
+    for (const auto &computer : config) {
+      s << "\t" << computer.c_str() << ":" << std::endl;
+
+      for (Config::link_const_iterator link = config.beginNeighbor(computer), nend = config.endNeighbor(computer);
+           link != nend; ++link) {
+        s << "\t\t" << Config::dirName(link->first.getSide()) << Config::formatInterval(link->first.getInterval())
+          << " = " << link->second.getName().c_str() << Config::formatInterval(link->second.getInterval()) << std::endl;
+      }
+    }
+    s << "end" << std::endl;
   }
-  s << "end" << std::endl;
 
   // options section
   s << "section: options" << std::endl;

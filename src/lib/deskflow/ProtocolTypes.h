@@ -1162,6 +1162,149 @@ extern const char *const kMsgDSecureInputNotification;
  */
 extern const char *const kMsgDLanguageSynchronisation;
 
+//! Deskflow Plus feature bits, exchanged through kOptionPlusFeatures and kMsgDPlusFeatures
+namespace deskflow::plus {
+inline constexpr uint32_t kFeatureMonitors = 1;     //!< kMsgDMonitors
+inline constexpr uint32_t kFeatureFileTransfer = 2; //!< the file transfer messages
+inline constexpr uint32_t kFeatureRemoteInput = 4;  //!< kMsgDRemoteInput and kMsgDRemoteCapture
+inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput;
+} // namespace deskflow::plus
+
+/**
+ * @brief Client monitor layout
+ *
+ * **Message Code**: `"DMON"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DMON%4I"`
+ * **Parameters**:
+ * - `$1`: Monitor rectangles (list of 4-byte integers) - x, y, width, height
+ *   for each monitor, in the same coordinate space as kMsgDInfo
+ *
+ * **Example**:
+ *
+ * Two 1920x1080 monitors side by side
+ * ```
+ * "DMON               8
+ *            8"
+ * ```
+ *
+ * Sent straight after every kMsgDInfo, once the primary is known to be Deskflow Plus (see
+ * kMsgDPlusFeatures), so the primary can draw and link the
+ * secondary's individual monitors rather than only its bounding box. Signed
+ * coordinates are sent as their two's complement. The primary ignores a list
+ * that is empty, has more than 16 monitors, or reaches outside the shape from
+ * the preceding kMsgDInfo, and falls back to treating the whole shape as one
+ * monitor.
+ *
+ * @see kMsgDInfo
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDMonitors;
+
+/**
+ * @brief Deskflow Plus features
+ *
+ * **Message Code**: `"DPLS"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DPLS%4i"`
+ * **Parameters**:
+ * - `$1`: Feature bits the secondary supports, see deskflow::plus
+ *
+ * Deskflow Plus finds other Deskflow Plus computers without changing the protocol version, so it
+ * never sends a message a stock peer doesn't understand. The primary includes the
+ * kOptionPlusFeatures option, with its feature bits, in the options it sends every secondary; stock
+ * secondaries ignore options they don't know. A Deskflow Plus secondary that receives it answers with
+ * this message. From then on, and only then, both sides use the features they have in common:
+ * kMsgDMonitors and the file transfer messages.
+ *
+ * @since deskflow-plus, on protocol version 1.8
+ */
+extern const char *const kMsgDPlusFeatures;
+
+/**
+ * @brief File transfer messages
+ *
+ * **Message Codes**: `"DFOF"`, `"DFRQ"`, `"DFST"`, `"DFHD"`, `"DFDT"`, `"DFEN"`, `"DFAK"`, `"DFCN"`
+ * **Direction**: Primary ↔ Secondary
+ * **Formats**:
+ * - Offer `"DFOF%4i%1i%4i%4i%4i%s"`: offer id, kind (1 clipboard, 2 drag), file count,
+ *   total size high and low halves, top level names separated by newlines
+ * - Request `"DFRQ%4i%4i"` (primary to source): transfer id, offer id
+ * - Start `"DFST%4i%1i%4i%4i"` (primary to destination): transfer id, kind, total size high and low halves
+ * - Header `"DFHD%4i%1i%4i%4i%s"`: transfer id, 1 if it's an empty folder rather than a file,
+ *   file size high and low halves, relative path
+ * - Data `"DFDT%4i%s"`: transfer id, up to 64 KB of the current file
+ * - End `"DFEN%4i"`: transfer id, every file has been sent
+ * - Ack `"DFAK%4i%4i"` (destination to source): transfer id, messages handled so far
+ * - Cancel `"DFCN%4i%s"`: transfer id, reason
+ * - Probe `"DFPB%4i%4i"` (primary to secondary): unused, 1 to look for a file drag under the
+ *   cursor or 0 to stop. A secondary that finds one offers it as a drag and ends the drag locally.
+ *
+ * A computer announces files it can send with an Offer when files are copied
+ * or dragged, and withdraws it with an Offer of no files. The primary starts a transfer by sending Start to the
+ * destination and Request to the source, then relays Header, Data and End from the source to the destination and Ack
+ * the other way. The source keeps at most 16 messages unacknowledged so file data never queues up in front of input. A
+ * source only sends files from its own offers, never a path it is asked for.
+ * Relative paths are UTF-8 and '/' separated; the destination refuses any that
+ * could leave its destination folder.
+ *
+ * @see deskflow::transfer::TransferMessage
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDFileOffer;
+extern const char *const kMsgDFileRequest;
+extern const char *const kMsgDFileStart;
+extern const char *const kMsgDFileHeader;
+extern const char *const kMsgDFileData;
+extern const char *const kMsgDFileEnd;
+extern const char *const kMsgDFileAck;
+extern const char *const kMsgDFileCancel;
+extern const char *const kMsgDFileProbe;
+
+/**
+ * @brief Input from the secondary's own mouse and keyboard
+ *
+ * **Message Code**: `"DRIN"`
+ * **Direction**: Secondary → Primary
+ * **Format**: `"DRIN%1i%4i%4i%4i%4i"`
+ * **Parameters**:
+ * - `$1`: Type, see deskflow::remote::InputType
+ * - `$2` to `$5`: Depending on the type
+ *   - Edge (1): side (a Direction), x, y, unused. The secondary's cursor was pushed against the edge of its
+ *     computer by its own mouse
+ *   - Move (2): dx, dy, unused, unused
+ *   - Button (3): button (1 left, 2 right, 3 middle, 4 and 5 the side buttons), 1 for a press or 0 for a release,
+ *     unused, unused
+ *   - Wheel (4): horizontal, vertical (120 is one notch), unused, unused
+ *   - Key (5): virtual key, scan code, flags (1 extended key, 2 release), unused
+ *
+ * Lets someone sitting at a secondary use its mouse and keyboard on the other computers, as if they were
+ * plugged into the primary. When the secondary's own mouse reaches an edge that leads to another computer, the
+ * primary switches there and tells the secondary to capture its input with kMsgDRemoteCapture. The primary
+ * plays the captured input back on itself, so its own edges, hotkeys and links to other computers all apply,
+ * until the cursor comes back to the secondary. Signed values are sent as their two's complement. Move, Wheel
+ * and presses are only sent while captured; a release follows wherever its press went.
+ *
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDRemoteInput;
+
+/**
+ * @brief Capture the secondary's own mouse and keyboard
+ *
+ * **Message Code**: `"DRCP"`
+ * **Direction**: Primary → Secondary
+ * **Format**: `"DRCP%1i"`
+ * **Parameters**:
+ * - `$1`: 1 to start capturing, 0 to stop
+ *
+ * While capturing, the secondary keeps its own mouse and keyboard input from its applications and sends it to the
+ * primary with kMsgDRemoteInput. A secondary stops capturing when it disconnects.
+ *
+ * @since deskflow-plus, once both sides have exchanged kMsgDPlusFeatures
+ */
+extern const char *const kMsgDRemoteCapture;
+
 /** @} */ // end of protocol_system group
 
 /** @} */ // end of protocol_data group

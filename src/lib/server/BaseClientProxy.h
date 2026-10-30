@@ -8,6 +8,7 @@
 #pragma once
 
 #include "deskflow/IClient.h"
+#include "deskflow/TransferProtocol.h"
 
 namespace deskflow {
 class IStream;
@@ -78,6 +79,30 @@ public:
   void setOptions(const OptionsList &options) override = 0;
   virtual void sendDragInfo(uint32_t fileCount, const char *info, size_t size) = 0;
   virtual void fileChunkSending(uint8_t mark, char *data, size_t dataSize) = 0;
+
+  //! True if the client is Deskflow Plus and takes part in file transfers
+  virtual bool supportsFileTransfer() const
+  {
+    return false;
+  }
+
+  //! Send the client a file transfer message
+  virtual void sendTransfer(const deskflow::transfer::TransferMessage &)
+  {
+    // only clients that support file transfer get messages
+  }
+
+  //! True if the client is Deskflow Plus and can use its own mouse and keyboard on other computers
+  virtual bool supportsRemoteInput() const
+  {
+    return false;
+  }
+
+  //! Tell the client to start or stop capturing its own mouse and keyboard and sending them here
+  virtual void setRemoteCapture(bool)
+  {
+    // only clients that support remote input capture
+  }
   virtual std::string getSecureInputApp() const = 0;
   virtual void secureInputNotification(const std::string &app) const = 0;
   std::string getName() const override;

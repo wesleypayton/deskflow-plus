@@ -79,6 +79,7 @@ public:
     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
+    inline static const auto StartOnLogin = QStringLiteral("gui/startOnLogin");
     inline static const auto SymbolicTrayIcon = QStringLiteral("gui/symbolicTrayIcon");
     inline static const auto WindowGeometry = QStringLiteral("gui/windowGeometry");
     inline static const auto ShownFirstConnectedMessage = QStringLiteral("gui/shownFirstConnectedMessage");
@@ -103,6 +104,7 @@ public:
   struct Server
   {
     inline static const auto ClipboardSize = QStringLiteral("server/clipboardSize");
+    inline static const auto FileCopyLimit = QStringLiteral("server/fileCopyLimit");
     inline static const auto DefaultLockToComputerState = QStringLiteral("server/defaultLockToComputerState");
     inline static const auto DisableLockToComputer = QStringLiteral("server/disableLockToComputer");
     inline static const auto EnableClipboard = QStringLiteral("server/enableClipboard");
@@ -309,6 +311,7 @@ private:
     , Gui::CloseReminder
     , Gui::CloseToTray
     , Gui::LogExpanded
+    , Gui::StartOnLogin
     , Gui::SymbolicTrayIcon
     , Gui::ShownFirstConnectedMessage
     , Gui::ShownServerFirstStartMessage
@@ -319,6 +322,7 @@ private:
     , Security::KeySize
     , Security::TlsEnabled
     , Server::ClipboardSize
+    , Server::FileCopyLimit
     , Server::DefaultLockToComputerState
     , Server::DisableLockToComputer
     , Server::EnableClipboard

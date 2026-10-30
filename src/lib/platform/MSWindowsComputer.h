@@ -59,6 +59,7 @@ public:
   bool getClipboard(ClipboardID id, IClipboard *) const override;
   void getShape(int32_t &x, int32_t &y, int32_t &width, int32_t &height) const override;
   void getCursorPos(int32_t &x, int32_t &y) const override;
+  deskflow::MonitorList getMonitors() const override;
 
   /**
    * \brief Get the position of the cursor on the current machine
@@ -272,6 +273,9 @@ private:
 
   // true if system appears to have multiple monitors
   bool m_multimon = false;
+
+  // each monitor, in the same coordinates as the shape
+  deskflow::MonitorList m_monitors;
 
   // last mouse position
   int32_t m_xCursor = 0;

@@ -14,16 +14,21 @@
 #include "client/ServerProxy.h"
 #include "client/ServerProxy1_7.h"
 #include "client/ServerProxy1_8.h"
+#include "client/ServerProxyPlus.h"
 #include "common/NetworkProtocol.h"
 #include "common/Settings.h"
 #include "deskflow/Clipboard.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DeskflowException.h"
+#include "deskflow/FileTransferPlatform.h"
 #include "deskflow/IPlatformComputer.h"
 #include "deskflow/PacketStreamFilter.h"
 #include "deskflow/ProtocolTypes.h"
 #include "deskflow/ProtocolUtil.h"
+#include "deskflow/RemoteInput.h"
 #include "deskflow/StreamChunker.h"
+#include "deskflow/TransferAgent.h"
+#include "deskflow/TransferHooks.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/IDataSocket.h"
 #include "net/ISocketFactory.h"
@@ -216,6 +221,11 @@ void Client::getCursorPos(int32_t &x, int32_t &y) const
   m_computer->getCursorPos(x, y);
 }
 
+deskflow::MonitorList Client::getMonitors() const
+{
+  return m_computer->getMonitors();
+}
+
 void Client::enter(int32_t xAbs, int32_t yAbs, uint32_t, KeyModifierMask mask, bool)
 {
   m_active = true;
@@ -329,6 +339,14 @@ void Client::setOptions(const OptionsList &options)
 
   for (auto index = options.begin(); index != options.end(); ++index) {
     const OptionID id = *index;
+    if (id == kOptionPlusFeatures) {
+      index++;
+      if (index != options.end())
+        enablePlusFeatures(*index);
+      if (index == options.end())
+        break;
+      continue;
+    }
     if (id == kOptionClipboardSharing) {
       index++;
       if (index != options.end()) {
@@ -481,7 +499,8 @@ bool Client::setupComputer(int16_t protocolMinor)
     m_server = new ServerProxy1_7(this, m_stream, m_events);
     break;
   case 8:
-    m_server = new ServerProxy1_8(this, m_stream, m_events);
+    // the Deskflow Plus features stay off until the server announces them, see setOptions()
+    m_server = new ServerProxyPlus(this, m_stream, m_events);
     break;
   default:
     break;
@@ -549,6 +568,83 @@ void Client::cleanupComputer()
     delete m_server;
     m_server = nullptr;
   }
+  m_transferAgent.reset();
+
+  // never leave this computer's mouse and keyboard captured for a server that's gone
+  if (m_watchingInput) {
+    deskflow::remote::platform::stopWatching();
+    m_events->removeHandler(EventTypes::ClientRemoteInput, getEventTarget());
+    m_watchingInput = false;
+  }
+}
+
+void Client::enablePlusFeatures(uint32_t serverFeatures)
+{
+  auto *plus = dynamic_cast<ServerProxyPlus *>(m_server);
+  if (plus == nullptr || plus->isPlus())
+    return;
+
+  plus->enablePlus(serverFeatures);
+  if (plus->features() & deskflow::plus::kFeatureFileTransfer)
+    setupFileTransfer();
+  if (plus->features() & deskflow::plus::kFeatureRemoteInput)
+    setupRemoteInput();
+}
+
+void Client::setupFileTransfer()
+{
+  using namespace deskflow::transfer;
+  m_transferState = std::make_shared<LocalTransferState>();
+  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
+      [this](const TransferMessage &message) { writeTransferMessage(m_stream, message); }, m_transferState
+  ));
+}
+
+void Client::handleTransferMessage(const deskflow::transfer::TransferMessage &message)
+{
+  using namespace deskflow::transfer;
+  if (!m_transferAgent)
+    return;
+
+  // the server asks while a held button is pushed against an edge
+  if (message.type == TransferMessage::Type::Probe)
+    probeForDrag(*m_transferAgent, *m_transferState, message.value != 0);
+  else
+    m_transferAgent->handle(message);
+}
+
+void Client::offerClipboardFiles()
+{
+  if (m_transferAgent)
+    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
+}
+
+void Client::setupRemoteInput()
+{
+  // the input is watched on a thread of its own, which wakes this one to send it
+  m_events->addHandler(EventTypes::ClientRemoteInput, getEventTarget(), [this](const auto &) { sendRemoteInput(); });
+  m_watchingInput = deskflow::remote::platform::startWatching([events = m_events, target = getEventTarget()] {
+    events->addEvent(Event(EventTypes::ClientRemoteInput, target));
+  });
+  if (!m_watchingInput)
+    m_events->removeHandler(EventTypes::ClientRemoteInput, getEventTarget());
+}
+
+void Client::sendRemoteInput()
+{
+  for (const auto &input : deskflow::remote::platform::takeInput()) {
+    if (m_stream == nullptr)
+      return;
+    ProtocolUtil::writef(
+        m_stream, kMsgDRemoteInput, static_cast<uint32_t>(input.type), input.a, input.b, input.c, input.d
+    );
+  }
+}
+
+void Client::setRemoteCapture(bool capture)
+{
+  if (m_watchingInput)
+    deskflow::remote::platform::setCapture(capture);
 }
 
 void Client::cleanupTimer()
@@ -651,6 +747,8 @@ void Client::handleClipboardGrabbed(const Event &event)
 
   // grab ownership
   m_server->onGrabClipboard(info->m_id);
+  if (info->m_id == kClipboardClipboard)
+    offerClipboardFiles();
 
   // we now own the clipboard and it has not been sent to the server
   m_ownClipboard[info->m_id] = true;

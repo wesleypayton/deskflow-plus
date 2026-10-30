@@ -18,4 +18,13 @@ private Q_SLOTS:
   void equalityCheck_diff_neighbours1();
   void equalityCheck_diff_neighbours2();
   void equalityCheck_diff_neighbours3();
+  void equalityCheck_diff_layout();
+  void layout_invalidRect();
+  void layout_sideBySide();
+  void layout_partialSpan();
+  void layout_twoNeighboursOnOneEdge();
+  void layout_stacked();
+  void layout_cornerOnly();
+  void layout_overlap();
+  void layout_replacesLinks();
 };

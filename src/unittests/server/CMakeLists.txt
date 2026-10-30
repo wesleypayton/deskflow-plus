@@ -22,6 +22,14 @@ create_test(
 )
 
 create_test(
+  NAME TransferRouterTests
+  DEPENDS server
+  LIBS base arch ${extra_libs}
+  SOURCE TransferRouterTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/server"
+)
+
+create_test(
   NAME ClientProxyTests
   DEPENDS server
   LIBS base arch io mt net platform app ${extra_libs}

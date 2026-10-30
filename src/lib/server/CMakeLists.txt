@@ -28,6 +28,8 @@ add_library(server STATIC
   ClientProxy1_7.h
   ClientProxy1_8.cpp
   ClientProxy1_8.h
+  ClientProxyPlus.cpp
+  ClientProxyPlus.h
   ClientProxyUnknown.cpp
   ClientProxyUnknown.h
   Config.cpp
@@ -38,6 +40,8 @@ add_library(server STATIC
   PrimaryClient.h
   Server.cpp
   Server.h
+  TransferRouter.cpp
+  TransferRouter.h
 )
 
 target_link_libraries(server PUBLIC common)

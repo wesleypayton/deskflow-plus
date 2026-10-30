@@ -60,6 +60,7 @@ protected:
   void toggleWin32Foreground(bool enabled);
 
   void toggleClipboard(bool enabled);
+  void setFileCopyLimit(int limit);
   void setClipboardLimit(int limit);
 
   void toggleHeartbeat(bool enabled);
@@ -109,6 +110,7 @@ private:
   int m_switchDelay;
   int m_switchDoubleTap;
   uint m_clipboardSize;
+  int m_fileCopyLimit = 0;
   bool m_relativeMouseMoves;
   bool m_enableSwitchDelay;
   bool m_enableSwitchDoubleTap;
