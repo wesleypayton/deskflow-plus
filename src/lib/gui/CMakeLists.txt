@@ -25,6 +25,8 @@ add_library(${target} STATIC
   LayoutGeometry.h
   LocalMonitors.cpp
   LocalMonitors.h
+  LoginStartup.cpp
+  LoginStartup.h
   Logger.cpp
   Logger.h
   MainWindow.cpp

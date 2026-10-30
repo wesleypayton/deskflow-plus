@@ -167,6 +167,18 @@ Since the first two-machine test:
   finishes. The MSI starts it through Explorer, so it runs as the user and not
   elevated.
 
+Starting with Windows:
+
+* The service already started the core at boot with the last settings, so a
+  client reconnects at the login screen. The GUI, which dragging needs, now
+  starts at sign-in too: `gui/startOnLogin` (on by default for an installed
+  copy) keeps an entry under the user's `Run` key, made by
+  `gui/LoginStartup.h` each time the GUI starts so it follows the app if it
+  moves. The entry passes `--background`, which starts in the tray, and the
+  GUI then starts the core if it was running when it last quit
+  (`gui/startCoreWithGui`). Uninstalling removes the entry for the user who
+  uninstalls (`RemoveLoginStartup` in `wix-patch.xml.in`).
+
 Still to do:
 
 * Crossing between individual monitors rather than each computer's outline.

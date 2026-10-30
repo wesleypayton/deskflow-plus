@@ -8,6 +8,7 @@
 
 #include "LogLevel.h"
 #include "NetworkProtocol.h"
+#include "PlatformInfo.h"
 #include "UrlConstants.h"
 #include "common/KeyboardModifier.h"
 
@@ -345,6 +346,10 @@ QVariant Settings::defaultValue(const QString &key)
 
   if (key == Daemon::Elevate)
     return !Settings::isPortableMode();
+
+  // an installed copy starts when the user signs in, so it's there to reconnect; a portable one only if asked
+  if (key == Gui::StartOnLogin)
+    return deskflow::platform::isWindows() && !Settings::isPortableMode();
 
   if (key == Gui::UpdateCheckUrl)
     return kUrlUpdateCheck;

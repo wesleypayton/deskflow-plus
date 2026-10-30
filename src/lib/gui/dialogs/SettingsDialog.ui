@@ -230,6 +230,16 @@
         </layout>
        </item>
        <item>
+        <widget class="QCheckBox" name="cbStartOnLogin">
+         <property name="text">
+          <string>Start when I sign in, and reconnect</string>
+         </property>
+         <property name="toolTip">
+          <string>Starts in the background each time you sign in and, if it was running before, connects again</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="cbShowVersion">
          <property name="text">
           <string>Include version in the window title</string>

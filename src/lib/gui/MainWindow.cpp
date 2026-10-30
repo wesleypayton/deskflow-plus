@@ -631,9 +631,9 @@ void MainWindow::serverConnectionConfigureClient(const QString &clientName)
 // End slots
 //////////////////////////////////////////////////////////////////////////////
 
-void MainWindow::open()
+void MainWindow::open(bool background)
 {
-  if (!Settings::value(Settings::Gui::Autohide).toBool())
+  if (!background && !Settings::value(Settings::Gui::Autohide).toBool())
     showAndActivate();
   else if (deskflow::platform::isMac())
     // macOS to call hide after this function ends

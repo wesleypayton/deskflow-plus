@@ -66,7 +66,8 @@ public:
   {
     return m_coreProcess.mode();
   }
-  void open();
+  //! Shows the window, or with background set starts in the tray
+  void open(bool background = false);
   ServerConfig &serverConfig()
   {
     return m_serverConfig;

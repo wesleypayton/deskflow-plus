@@ -43,6 +43,9 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
 - **Use any computer's mouse and keyboard.** A client's own mouse crosses to the server and on to the other
   computers, as in Mouse Without Borders, and its keyboard follows. Bring the cursor back to the client and
   its mouse and keyboard work there again.
+- **Starts with Windows and reconnects.** The installed version starts in the tray when you sign in and
+  reconnects to the computers it was connected to; its background service already reconnects at the login
+  screen, before anyone signs in. Turn this off under **Settings → Start when I sign in, and reconnect**.
 
 Files are sent through the server, encrypted with the rest of the connection, and are never written
 outside the folder they're dropped in. More detail is in the [design notes](../docs/dev/layout-rework.md).
@@ -98,6 +101,10 @@ Install or unpack Deskflow Plus on each computer, then:
 6. **Arrange the computers** in **Configure Server → Computers**: drag each one to where it sits on your
    desk, check the green lines are where you expect the cursor to cross, and click **Save**.
 
+From then on both computers reconnect by themselves after a restart, as long as Deskflow Plus was running
+when they shut down. A client keeps trying every second until the server is back. To give a client more
+than one way to reach the server, such as its name and its IP address, enter them separated by commas.
+
 Dragging files works as soon as both computers are connected. Copying and pasting files also needs
 clipboard sharing left on (**Configure Server → Advanced**), where **Copied files limit** sets how much can
 be copied at once (512 MB by default, 0 turns it off).
@@ -148,7 +155,7 @@ computer was the server, and the log lines from around that time. Lines mentioni
 ## Uninstalling
 
 - **Installed copy:** open **Settings → Apps → Installed apps**, find **Deskflow Plus**, and choose
-  **Uninstall**. This removes the background service and firewall rules too.
+  **Uninstall**. This removes the background service, firewall rules and your sign-in startup entry too.
 - **Portable copy:** quit it and delete its folder. Its settings are in that folder and go with it.
 
 Files received through copy and paste are kept in a temporary folder, `%TEMP%\Deskflow\Clipboard`; ones

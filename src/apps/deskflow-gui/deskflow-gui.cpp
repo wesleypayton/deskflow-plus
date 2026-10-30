@@ -10,9 +10,11 @@
 #include "common/ExitCodes.h"
 #include "common/I18N.h"
 #include "common/PlatformInfo.h"
+#include "common/Settings.h"
 #include "common/UrlConstants.h"
 #include "common/VersionInfo.h"
 #include "gui/Diagnostic.h"
+#include "gui/LoginStartup.h"
 #include "gui/MainWindow.h"
 #include "gui/Messages.h"
 #include "gui/StyleUtils.h"
@@ -72,12 +74,14 @@ int main(int argc, char *argv[])
   auto helpOption = QCommandLineOption({"h", "help"}, "Display Help on the command line");
   auto versionOption = QCommandLineOption({"v", "version"}, "Display version information");
   auto resetOption = QCommandLineOption("reset", "Reset all settings");
+  auto backgroundOption = QCommandLineOption(loginStartup::kBackgroundOption, "Start in the background");
 
   QCommandLineParser parser;
   parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
   parser.addOption(helpOption);
   parser.addOption(versionOption);
   parser.addOption(resetOption);
+  parser.addOption(backgroundOption);
   parser.parse(QCoreApplication::arguments());
 
   if (!parser.errorText().isEmpty()) {
@@ -151,8 +155,11 @@ int main(int argc, char *argv[])
     diagnostic::clearSettings(false);
   }
 
+  // keeps the sign-in entry pointing at this copy, which may have moved since it was made
+  loginStartup::apply(Settings::value(Settings::Gui::StartOnLogin).toBool());
+
   MainWindow mainWindow;
-  mainWindow.open();
+  mainWindow.open(parser.isSet(backgroundOption));
 
   return QApplication::exec();
 }

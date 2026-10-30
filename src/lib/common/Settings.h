@@ -79,6 +79,7 @@ public:
     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
+    inline static const auto StartOnLogin = QStringLiteral("gui/startOnLogin");
     inline static const auto SymbolicTrayIcon = QStringLiteral("gui/symbolicTrayIcon");
     inline static const auto WindowGeometry = QStringLiteral("gui/windowGeometry");
     inline static const auto ShownFirstConnectedMessage = QStringLiteral("gui/shownFirstConnectedMessage");
@@ -310,6 +311,7 @@ private:
     , Gui::CloseReminder
     , Gui::CloseToTray
     , Gui::LogExpanded
+    , Gui::StartOnLogin
     , Gui::SymbolicTrayIcon
     , Gui::ShownFirstConnectedMessage
     , Gui::ShownServerFirstStartMessage

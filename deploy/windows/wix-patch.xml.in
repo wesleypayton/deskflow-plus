@@ -109,7 +109,25 @@
       Impersonate="yes"
       Return="asyncNoWait" />
 
+    <!--
+      The app adds itself to the user's Run key to start at sign-in (Settings, "Start when
+      I sign in"). Uninstalling removes that entry for the user who uninstalls; it isn't
+      removed on an upgrade, where the new version's app keeps it up to date. It runs before
+      InstallFinalize, while the install folder it starts in still exists.
+    -->
+    <CustomAction
+      Id="RemoveLoginStartup"
+      ExeCommand="&quot;[SystemFolder]reg.exe&quot; delete &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Run&quot; /v &quot;@PACKAGE_DISPLAY_NAME@&quot; /f"
+      Directory="INSTALL_ROOT"
+      Execute="immediate"
+      Impersonate="yes"
+      Return="ignore" />
+
     <InstallExecuteSequence>
+      <Custom
+        Action="RemoveLoginStartup"
+        Before="InstallFinalize"
+        Condition="REMOVE = &quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE" />
       <Custom
         Action="LaunchForUser"
         After="InstallFinalize"
