@@ -8,6 +8,8 @@
 #pragma once
 
 const auto kAppName = "@CMAKE_PROJECT_PROPER_NAME@";
+//! The name people see; kAppName also names where settings are kept, so it stays Deskflow's
+const auto kDisplayName = "@CMAKE_PROJECT_DISPLAY_NAME@";
 const auto kAppId = "@CMAKE_PROJECT_NAME@";
 const auto kAppDescription = "@CMAKE_PROJECT_DESCRIPTION@";
 const auto kDaemonBinName = "@CMAKE_PROJECT_NAME@-daemon";

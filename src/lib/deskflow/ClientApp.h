@@ -57,6 +57,8 @@ public:
   void handleClientRestart(const Event &, EventQueueTimer *vtimer);
   void scheduleClientRestart(double retryTime);
   void handleClientConnected();
+  //! Keeps the address the server connected at, to try if its name can't be found next time
+  void rememberServerAddress() const;
   void handleClientFailed(const Event &e);
   void handleClientRefused(const Event &e);
   void handleClientDisconnected();

@@ -35,6 +35,14 @@ public:
   void addComputerToFirstEmpty(const Computer &newComputer);
 
   /**
+   * @brief placeInLayout gives a computer that has no layout position, or that
+   * overlaps another computer, a free spot touching the server, so it can be
+   * reached as soon as it is added. A computer that already fits is left alone.
+   * @param computer
+   */
+  void placeInLayout(Computer &computer) const;
+
+  /**
    * @brief Returns true if computers are equal
    * @param sc
    */

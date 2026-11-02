@@ -79,11 +79,34 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="cbAutoUpdate">
-         <property name="text">
-          <string>Check for updates on startup</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="layoutUpdates">
+         <item>
+          <widget class="QLabel" name="lblUpdates">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>New versions</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboUpdates</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboUpdates"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnCheckUpdates">
+           <property name="text">
+            <string>Check now</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QCheckBox" name="cbPreventSleep">
@@ -228,6 +251,16 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbStartOnLogin">
+         <property name="text">
+          <string>Start when I sign in, and reconnect</string>
+         </property>
+         <property name="toolTip">
+          <string>Starts in the background each time you sign in and, if it was running before, connects again</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="cbShowVersion">

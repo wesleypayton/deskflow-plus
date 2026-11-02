@@ -8,6 +8,7 @@
 
 #include "deskflow/ClientApp.h"
 
+#include "arch/Arch.h"
 #include "base/Event.h"
 #include "base/IEventQueue.h"
 #include "base/Log.h"
@@ -17,6 +18,7 @@
 #include "common/Settings.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DisplayException.h"
+#include "deskflow/RememberedServers.h"
 #include "deskflow/ipc/CoreIpc.h"
 #include "net/NetworkAddress.h"
 #include "net/SocketException.h"
@@ -79,6 +81,24 @@ void ClientApp::parseArgs()
           m_serverAddresses.append(netAddr);
           LOG_WARN("could not resolve address '%s': %s (will retry later)", qPrintable(trimmedAddr), e.what());
         }
+      }
+    }
+
+    // a name that has connected before is also tried, after the rest, at the address it last connected at
+    const auto remembered = Settings::value(Settings::Client::RememberedServers).toStringList();
+    for (const QString &addr : addresses) {
+      const auto lastAddress = deskflow::rememberedServers::lookup(remembered, addr);
+      if (lastAddress.isEmpty() || addresses.contains(lastAddress, Qt::CaseInsensitive)) {
+        continue;
+      }
+      try {
+        NetworkAddress netAddr(lastAddress.toStdString(), port);
+        netAddr.resolve();
+        m_serverAddresses.append(netAddr);
+        LOG_INFO("if '%s' can't be found, will try %s, where it last connected", qPrintable(addr.trimmed()),
+                 qPrintable(lastAddress));
+      } catch (SocketAddressException &e) {
+        LOG_DEBUG("not using the last address of '%s': %s", qPrintable(addr.trimmed()), e.what());
       }
     }
 
@@ -171,9 +191,29 @@ void ClientApp::handleClientConnected()
 {
   LOG_DEBUG("connected to server");
   ipcSendConnectionState(deskflow::core::ConnectionState::Connected);
+  rememberServerAddress();
   // Reset server index on successful connection
   m_currentServerIndex = 0;
   m_lastServerAddressIndex = 0;
+}
+
+void ClientApp::rememberServerAddress() const
+{
+  if (m_client == nullptr) {
+    return;
+  }
+  const auto server = m_client->getServerAddress();
+  if (server.getAddress() == nullptr) {
+    return;
+  }
+
+  const auto name = QString::fromStdString(server.getHostname());
+  const auto address = QString::fromStdString(ARCH->addrToString(server.getAddress()));
+  const auto entries = Settings::value(Settings::Client::RememberedServers).toStringList();
+  if (const auto updated = deskflow::rememberedServers::remember(entries, name, address); updated != entries) {
+    LOG_DEBUG("remembering that '%s' is at %s", qPrintable(name), qPrintable(address));
+    Settings::setValue(Settings::Client::RememberedServers, updated);
+  }
 }
 
 void ClientApp::handleClientFailed(const Event &e)

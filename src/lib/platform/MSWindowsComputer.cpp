@@ -440,6 +440,14 @@ void MSWindowsComputer::getCursorPos(int32_t &x, int32_t &y) const
   m_desks->getCursorPos(x, y);
 }
 
+deskflow::MonitorList MSWindowsComputer::getMonitors() const
+{
+  if (m_monitors.empty()) {
+    return PlatformComputer::getMonitors();
+  }
+  return m_monitors;
+}
+
 /*
  * getThisCursorPos and setThisCursorPos will attempt to negotiate with the
  * system to try get the and set the mouse position, however on the logon screen
@@ -1317,12 +1325,13 @@ bool MSWindowsComputer::onDisplayChange()
 {
   // computer resolution may have changed.  save old shape.
   int32_t xOld = m_x, yOld = m_y, wOld = m_w, hOld = m_h;
+  const auto monitorsOld = m_monitors;
 
   // update shape
   updateComputerShape();
 
-  // do nothing if resolution hasn't changed
-  if (xOld != m_x || yOld != m_y || wOld != m_w || hOld != m_h) {
+  // do nothing if neither the resolution nor the monitor arrangement has changed
+  if (xOld != m_x || yOld != m_y || wOld != m_w || hOld != m_h || monitorsOld != m_monitors) {
     if (m_isPrimary) {
       if (!m_isOnComputer) {
         LOG_VERBOSE("centering cursor on display change: %+d, %+d", m_xCenter, m_yCenter);
@@ -1440,6 +1449,18 @@ void MSWindowsComputer::updateComputerShape()
 
   // check for multiple monitors
   m_multimon = (m_w != GetSystemMetrics(SM_CXSCREEN) || m_h != GetSystemMetrics(SM_CYSCREEN));
+
+  // with no device context the rectangles are in virtual screen coordinates, the same as the shape
+  m_monitors.clear();
+  EnumDisplayMonitors(
+      nullptr, nullptr,
+      [](HMONITOR, HDC, LPRECT rect, LPARAM data) -> BOOL {
+        auto *monitors = reinterpret_cast<deskflow::MonitorList *>(data);
+        monitors->push_back({rect->left, rect->top, rect->right - rect->left, rect->bottom - rect->top});
+        return TRUE;
+      },
+      reinterpret_cast<LPARAM>(&m_monitors)
+  );
 
   // tell the desks
   m_desks->setShape(m_x, m_y, m_w, m_h, m_xCenter, m_yCenter, m_multimon);

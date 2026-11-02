@@ -13,6 +13,7 @@
 #include "client/Client.h"
 #include "deskflow/Clipboard.h"
 #include "deskflow/ClipboardChunk.h"
+#include "deskflow/ClipboardCompression.h"
 #include "deskflow/DeskflowException.h"
 #include "deskflow/OptionTypes.h"
 #include "deskflow/ProtocolTypes.h"
@@ -365,6 +366,8 @@ bool ServerProxy::onGrabClipboard(ClipboardID id)
 void ServerProxy::onClipboardChanged(ClipboardID id, const IClipboard *clipboard)
 {
   std::string data = IClipboard::marshall(clipboard);
+  if (compressesClipboard())
+    data = deskflow::clipboardCompression::compress(data);
   LOG_DEBUG("sending clipboard %d seqnum=%d", id, m_seqNum);
 
   StreamChunker::sendClipboard(data, data.size(), id, m_seqNum, m_events, this);
@@ -544,12 +547,22 @@ void ServerProxy::setClipboard()
   } else if (r == TransferState::Finished) {
     LOG_DEBUG("received clipboard %d size=%zu", id, m_clipboardDataCached.size());
 
-    // forward
-    Clipboard clipboard;
-    clipboard.unmarshall(m_clipboardDataCached, 0);
-    m_client->setClipboard(id, &clipboard);
+    std::string data;
+    const bool unpacked =
+        !compressesClipboard() || deskflow::clipboardCompression::decompress(m_clipboardDataCached, data);
+    if (!compressesClipboard())
+      data = std::move(m_clipboardDataCached);
     m_clipboardDataCached.clear();
     m_clipboardDataCached.shrink_to_fit();
+    if (!unpacked) {
+      LOG_WARN("ignored clipboard %d from the server, it couldn't be unpacked", id);
+      return;
+    }
+
+    // forward
+    Clipboard clipboard;
+    clipboard.unmarshall(data, 0);
+    m_client->setClipboard(id, &clipboard);
 
     LOG_INFO("clipboard was updated");
   } else if (r == TransferState::Error) {
@@ -802,6 +815,7 @@ void ServerProxy::queryInfo()
   m_client->getShape(info.m_x, info.m_y, info.m_w, info.m_h);
   m_client->getCursorPos(info.m_mx, info.m_my);
   sendInfo(info);
+  sendExtraInfo();
 }
 
 void ServerProxy::infoAcknowledgment()

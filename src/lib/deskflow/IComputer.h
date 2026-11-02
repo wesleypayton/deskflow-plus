@@ -9,6 +9,7 @@
 #pragma once
 
 #include "deskflow/ClipboardTypes.h"
+#include "deskflow/Monitors.h"
 
 class IClipboard;
 
@@ -55,6 +56,19 @@ public:
   Return the current position of the cursor in \c x and \c y.
   */
   virtual void getCursorPos(int32_t &x, int32_t &y) const = 0;
+
+  //! Get monitors
+  /*!
+  Return the rectangle of each monitor, in the same coordinate space as
+  getShape().  Computers that can't tell report one monitor covering the
+  whole shape.
+  */
+  virtual deskflow::MonitorList getMonitors() const
+  {
+    deskflow::MonitorRect shape;
+    getShape(shape.x, shape.y, shape.width, shape.height);
+    return {shape};
+  }
 
   //@}
 };

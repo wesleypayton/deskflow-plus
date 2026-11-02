@@ -37,7 +37,7 @@ StatusBar::StatusBar(QWidget *parent)
   m_lblSecurityIcon->setScaledContents(true);
   insertPermanentWidget(1, m_lblSecurityIcon);
 
-  m_lblStatus->setText(tr("%1 is not running").arg(kAppName));
+  m_lblStatus->setText(tr("%1 is not running").arg(kDisplayName));
   insertPermanentWidget(2, m_lblStatus, 1);
 
   m_btnUpdate->setVisible(false);
@@ -67,22 +67,22 @@ void StatusBar::setStatus(ConnectionState connectionState, ProcessState processS
     using enum ProcessState;
     case Starting:
       m_connectionInterval = -1;
-      m_lblStatus->setText(tr("%1 is starting...").arg(kAppName));
+      m_lblStatus->setText(tr("%1 is starting...").arg(kDisplayName));
       break;
 
     case RetryPending:
       m_connectionInterval = -1;
-      m_lblStatus->setText(tr("%1 will retry in a moment...").arg(kAppName));
+      m_lblStatus->setText(tr("%1 will retry in a moment...").arg(kDisplayName));
       break;
 
     case Stopping:
         m_connectionInterval = -1;
-      m_lblStatus->setText(tr("%1 is stopping...").arg(kAppName));
+      m_lblStatus->setText(tr("%1 is stopping...").arg(kDisplayName));
       break;
 
     case Stopped:
       m_connectionInterval = -1;
-      m_lblStatus->setText(tr("%1 is not running").arg(kAppName));
+      m_lblStatus->setText(tr("%1 is not running").arg(kDisplayName));
       break;
 
     case Started: {
@@ -92,7 +92,7 @@ void StatusBar::setStatus(ConnectionState connectionState, ProcessState processS
         case Listening: {
           if (isServer) {
             setSecurityIconVisible(true);
-            m_lblStatus->setText(tr("%1 is waiting for clients").arg(kAppName));
+            m_lblStatus->setText(tr("%1 is waiting for clients").arg(kDisplayName));
           }
           break;
         }
@@ -108,13 +108,13 @@ void StatusBar::setStatus(ConnectionState connectionState, ProcessState processS
           m_connectionInterval = -1;
           if (!isServer) {
             m_lblStatus->setText(tr("%1 is connected as client of %2")
-                                     .arg(kAppName, Settings::value(Settings::Client::RemoteHost).toString()));
+                                     .arg(kDisplayName, Settings::value(Settings::Client::RemoteHost).toString()));
           }
           break;
         }
 
         case Disconnected:
-          m_lblStatus->setText(tr("%1 is disconnected").arg(kAppName));
+          m_lblStatus->setText(tr("%1 is disconnected").arg(kDisplayName));
           m_connectionInterval = -1;
           break;
       }
@@ -125,7 +125,7 @@ void StatusBar::setStatus(ConnectionState connectionState, ProcessState processS
 void StatusBar::setServerClients(const QStringList &clients)
 {
   if (clients.isEmpty()) {
-    m_lblStatus->setText(tr("%1 is waiting for clients").arg(kAppName));
+    m_lblStatus->setText(tr("%1 is waiting for clients").arg(kDisplayName));
     m_lblStatus->setToolTip("");
     return;
   }
@@ -136,7 +136,7 @@ void StatusBar::setServerClients(const QStringList &clients)
   //: %1 is replaced by the app name
   //: %2 will be a list of at least one client
   //: %n will be replaced by the number of clients (n is >=1), it is not requried to be in the translation
-  const auto text = tr("%1 is connected, with %n client(s): %2", "", clientCount).arg(kAppName, clients.join(comma));
+  const auto text = tr("%1 is connected, with %n client(s): %2", "", clientCount).arg(kDisplayName, clients.join(comma));
   m_lblStatus->setText(text);
 
   const auto toolTipString = clientCount == 1 ? "" : tr("Clients:\n %1").arg(clients.join(newLine));
@@ -187,9 +187,9 @@ void StatusBar::updateTimerLabel()
 {
   QString text;
   if (m_connectionInterval < 2 || !Settings::value(Settings::Client::DynamicConnectionRetry).toBool()) {
-    text = tr("%1 is connecting...").arg(kAppName);
+    text = tr("%1 is connecting...").arg(kDisplayName);
   } else {
-    text = tr("%1 is waiting %2 seconds before the next retry").arg(kAppName, QString::number(m_connectionInterval));
+    text = tr("%1 is waiting %2 seconds before the next retry").arg(kDisplayName, QString::number(m_connectionInterval));
     m_connectionInterval--;
   }
   m_lblStatus->setText(text);

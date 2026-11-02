@@ -35,16 +35,24 @@ set(WIN32_PRE_EXCLUDE_REGEXES
   "^icu.*\\.dll$"
 )
 
-set(WIN32_POST_EXCLUDE_REGEXES ".*system32.*")
+# match any capitalisation, so Windows' own DLLs are never packaged however their path is spelled
+set(WIN32_POST_EXCLUDE_REGEXES ".*[Ss][Yy][Ss][Tt][Ee][Mm]32.*" ".*[Ss][Yy][Ss][Nn][Aa][Tt][Ii][Vv][Ee].*")
 
 set(WIN32_RUNTIME_DEPENDENCY_SET_ARGS)
 if(WIN32)
-# Runtime DLL fallback for layouts like vcpkg
+  set(_runtime_dirs)
+  # Runtime DLL fallback for layouts like vcpkg
   if(DEFINED OPENSSL_EXE_DIR AND EXISTS "${OPENSSL_EXE_DIR}")
-    list(APPEND WIN32_RUNTIME_DEPENDENCY_SET_ARGS DIRECTORIES "${OPENSSL_EXE_DIR}")
+    list(APPEND _runtime_dirs "${OPENSSL_EXE_DIR}")
   elseif(DEFINED OPENSSL_ROOT_DIR AND EXISTS "${OPENSSL_ROOT_DIR}/bin")
-    list(APPEND WIN32_RUNTIME_DEPENDENCY_SET_ARGS DIRECTORIES "${OPENSSL_ROOT_DIR}/bin")
+    list(APPEND _runtime_dirs "${OPENSSL_ROOT_DIR}/bin")
   endif()
+  # the Visual C++ runtime is found in the system folder, and then left out by the exclusion above;
+  # without this it can't be resolved at all and packaging fails. a 32-bit CMake (such as the one
+  # Visual Studio ships) sees the 32-bit SysWOW64 under the name System32, so look in Sysnative too
+  file(TO_CMAKE_PATH "$ENV{SystemRoot}" _windows_dir)
+  list(APPEND _runtime_dirs "${_windows_dir}/Sysnative" "${_windows_dir}/System32")
+  set(WIN32_RUNTIME_DEPENDENCY_SET_ARGS DIRECTORIES ${_runtime_dirs})
 endif()
 
 add_subdirectory(deskflow-core)

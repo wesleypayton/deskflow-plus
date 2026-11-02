@@ -21,6 +21,12 @@ add_library(${target} STATIC
   Diagnostic.h
   FileTail.cpp
   FileTail.h
+  LayoutGeometry.cpp
+  LayoutGeometry.h
+  LocalMonitors.cpp
+  LocalMonitors.h
+  LoginStartup.cpp
+  LoginStartup.h
   Logger.cpp
   Logger.h
   MainWindow.cpp
@@ -31,8 +37,12 @@ add_library(${target} STATIC
   StyleUtils.h
   TlsUtility.cpp
   TlsUtility.h
-  VersionChecker.cpp
-  VersionChecker.h
+  UpdateDownload.cpp
+  UpdateDownload.h
+  UpdateRelease.cpp
+  UpdateRelease.h
+  Updater.cpp
+  Updater.h
   config/ComputerConfig.h
   config/Computer.cpp
   config/Computer.h
@@ -95,8 +105,8 @@ add_library(${target} STATIC
   validators/ValidationError.h
   validators/IpAddressValidator.cpp
   validators/IpAddressValidator.h
-  widgets/ComputerSetupView.cpp
-  widgets/ComputerSetupView.h
+  widgets/ComputerLayoutView.cpp
+  widgets/ComputerLayoutView.h
   widgets/FingerprintPreview.cpp
   widgets/FingerprintPreview.h
   widgets/KeySequenceWidget.cpp

@@ -51,6 +51,12 @@ public:
   bool onGrabClipboard(ClipboardID);
   void onClipboardChanged(ClipboardID, const IClipboard *);
 
+  //! True if clipboard data to and from the server is compressed
+  virtual bool compressesClipboard() const
+  {
+    return false;
+  }
+
   //@}
 
 protected:
@@ -69,6 +75,17 @@ protected:
   deskflow::IStream *getStream() const
   {
     return m_stream;
+  }
+
+  Client *getClient() const
+  {
+    return m_client;
+  }
+
+  //! Called straight after the computer info is sent; newer protocols send more about the computer here
+  virtual void sendExtraInfo()
+  {
+    // do nothing
   }
 
 private:

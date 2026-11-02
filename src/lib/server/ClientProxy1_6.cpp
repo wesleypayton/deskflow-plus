@@ -8,6 +8,7 @@
 
 #include "base/Log.h"
 #include "deskflow/ClipboardChunk.h"
+#include "deskflow/ClipboardCompression.h"
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/StreamChunker.h"
 #include "io/IStream.h"
@@ -40,6 +41,8 @@ void ClientProxy1_6::setClipboard(ClipboardID id, const IClipboard *clipboard)
     Clipboard::copy(&m_clipboard[id].m_clipboard, clipboard);
 
     std::string data = m_clipboard[id].m_clipboard.marshall();
+    if (compressesClipboard())
+      data = deskflow::clipboardCompression::compress(data);
 
     size_t size = data.size();
     LOG_DEBUG("sending clipboard %d to \"%s\"", id, getName().c_str());
@@ -66,11 +69,21 @@ bool ClientProxy1_6::recvClipboard()
         (CLOG_DEBUG "received client \"%s\" clipboard %d seqnum=%d, size=%zu", getName().c_str(), id, seq,
          m_clipboardDataCached.size())
     );
-    // save clipboard
-    m_clipboard[id].m_clipboard.unmarshall(m_clipboardDataCached, 0);
-    m_clipboard[id].m_sequenceNumber = seq;
+    std::string data;
+    const bool unpacked =
+        !compressesClipboard() || deskflow::clipboardCompression::decompress(m_clipboardDataCached, data);
+    if (!compressesClipboard())
+      data = std::move(m_clipboardDataCached);
     m_clipboardDataCached.clear();
     m_clipboardDataCached.shrink_to_fit();
+    if (!unpacked) {
+      LOG_WARN("ignored clipboard %d from \"%s\", it couldn't be unpacked", id, getName().c_str());
+      return true;
+    }
+
+    // save clipboard
+    m_clipboard[id].m_clipboard.unmarshall(data, 0);
+    m_clipboard[id].m_sequenceNumber = seq;
 
     // notify
     auto *info = new ClipboardInfo;

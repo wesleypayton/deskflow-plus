@@ -55,6 +55,19 @@ public:
   using ScreenOptions = std::map<OptionID, OptionValue>;
   using Interval = std::pair<float, float>;
 
+  //! A computer's rectangle in the shared layout coordinate space
+  struct LayoutRect
+  {
+    int32_t x = 0;
+    int32_t y = 0;
+    int32_t width = 0;
+    int32_t height = 0;
+
+    bool overlaps(const LayoutRect &other) const;
+    bool operator==(const LayoutRect &) const = default;
+  };
+  using LayoutMap = std::map<std::string, LayoutRect, deskflow::string::CaselessCmp>;
+
   class CellEdge
   {
   public:
@@ -250,6 +263,24 @@ public:
   */
   bool disconnect(const std::string &srcName, Direction srcSide, float position);
 
+  //! Set layout rectangle
+  /*!
+  Places computer \c name at \c rect in the shared layout coordinate
+  space.  Returns false if \c name is unknown or the rectangle is
+  empty.  Links are not changed until applyLayout() is called.
+  */
+  bool setLayoutRect(const std::string &name, const LayoutRect &rect);
+
+  //! Apply layout
+  /*!
+  Replaces every link with links derived from the layout rectangles:
+  wherever an edge of one rectangle touches an edge of another, the
+  shared span becomes a link in both directions, mapping 1:1 along
+  the span.  Returns false (and leaves links unchanged) if any two
+  rectangles overlap.
+  */
+  bool applyLayout();
+
   //! Set server address
   /*!
   Set the deskflow listen addresses.  There is no default address so
@@ -340,6 +371,15 @@ public:
   //! Get ending neighbor iterator
   link_const_iterator endNeighbor(const std::string &) const;
 
+  //! Check for layout
+  /*!
+  Returns \c true if any computer has a layout rectangle.
+  */
+  bool hasLayout() const;
+
+  //! Get layout rectangles
+  const LayoutMap &getLayout() const;
+
   //! Get the server address
   const NetworkAddress &getDeskflowAddress() const;
 
@@ -399,6 +439,7 @@ private:
   void readSectionScreens(ConfigReadContext &);
   void readSectionLinks(ConfigReadContext &);
   void readSectionAliases(ConfigReadContext &);
+  void readSectionLayout(ConfigReadContext &);
 
   InputFilter::Condition *
   parseCondition(const ConfigReadContext &, const std::string &condition, const std::vector<std::string> &args);
@@ -411,6 +452,7 @@ private:
 
 private:
   CellMap m_map;
+  LayoutMap m_layout;
   NameMap m_nameToCanonicalName;
   NetworkAddress m_deskflowAddress;
   ScreenOptions m_globalOptions;

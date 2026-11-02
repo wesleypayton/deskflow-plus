@@ -10,25 +10,18 @@
 
 #include "common/Hotkey.h"
 #include "common/Settings.h"
+#include "gui/LayoutGeometry.h"
+#include "gui/LocalMonitors.h"
 
 #include <QAbstractButton>
 #include <QPushButton>
+#include <QRectF>
+
+#include <algorithm>
+#include <array>
 
 using enum ComputerConfig::SwitchCorner;
 using enum ComputerConfig::Fix;
-
-static const struct
-{
-  int x;
-  int y;
-  const char *name;
-} neighbourDirs[] = {
-    {1, 0, "right"},
-    {-1, 0, "left"},
-    {0, -1, "up"},
-    {0, 1, "down"},
-
-};
 
 const int serverDefaultIndex = 7;
 
@@ -125,6 +118,8 @@ void ServerConfig::recall()
   }
   settings().endArray();
 
+  ensureLayout();
+
   int numHotkeys = settings().beginReadArray("hotkeys");
   for (int i = 0; i < numHotkeys; i++) {
     settings().setArrayIndex(i);
@@ -137,38 +132,72 @@ void ServerConfig::recall()
   settings().endGroup();
 }
 
-int ServerConfig::adjacentComputerIndex(int idx, int deltaColumn, int deltaRow) const
+void ServerConfig::ensureLayout()
 {
-  if (computers()[idx].isNull())
-    return -1;
+  using namespace deskflow::gui;
 
-  // if we're at the left or right end of the table, don't find results going
-  // further left or right
-  if ((deltaColumn > 0 && (idx + 1) % m_columns == 0) || (deltaColumn < 0 && idx % m_columns == 0))
-    return -1;
+  const auto local = localMonitors();
+  QRect localBounds;
+  for (const auto &monitor : local)
+    localBounds = localBounds.united(monitor);
 
-  int arrayPos = idx + deltaColumn + deltaRow * m_columns;
+  // settings from before the free-form layout only have grid cells, so lay the grid out once
+  const bool anyPlaced = std::ranges::any_of(computers(), [](const Computer &computer) {
+    return !computer.isNull() && computer.hasLayout();
+  });
+  if (!anyPlaced) {
+    QList<QSize> sizes;
+    qsizetype anchor = -1;
+    for (qsizetype i = 0; i < computers().size(); ++i) {
+      const auto &computer = computers().at(i);
+      if (computer.isNull()) {
+        sizes.append(QSize());
+      } else if (computer.isServer() && !localBounds.isEmpty()) {
+        sizes.append(localBounds.size());
+        anchor = i;
+      } else {
+        sizes.append(layout::kDefaultComputerSize);
+      }
+    }
 
-  if (arrayPos >= computers().size() || arrayPos < 0)
-    return -1;
+    const auto rects = layout::gridToLayout(sizes, m_columns, anchor);
+    for (qsizetype i = 0; i < rects.size(); ++i) {
+      if (!rects.at(i).isNull())
+        computers()[i].setLayoutRect(rects.at(i));
+    }
+  }
 
-  return arrayPos;
+  // the server's own monitors are always known, the clients' are kept from when they were last seen
+  for (auto &computer : computers()) {
+    if (!computer.isNull() && computer.isServer() && !local.isEmpty())
+      computer.setMonitors(local);
+  }
+
+  for (auto &computer : computers()) {
+    if (!computer.isNull())
+      m_computers.placeInLayout(computer);
+  }
 }
 
 QTextStream &operator<<(QTextStream &outStream, const ServerConfig &config)
 {
-  outStream << "section: links" << Qt::endl;
+  outStream << "section: layout" << Qt::endl;
 
-  for (int i = 0; const auto &computer : config.computers()) {
-    if (!computer.isNull()) {
-      outStream << "\t" << computer.name() << ":\n";
-      for (const auto &neighbour : std::as_const(neighbourDirs)) {
-        int idx = config.adjacentComputerIndex(i, neighbour.x, neighbour.y);
-        if (idx != -1 && !config.computers()[idx].isNull())
-          outStream << "\t\t" << neighbour.name << " = " << config.computers()[idx].name() << Qt::endl;
-      }
+  // the server rejects overlapping computers, so leave out any that would stop it starting
+  QList<QRectF> written;
+  for (const auto &computer : config.computers()) {
+    if (computer.isNull() || !computer.hasLayout())
+      continue;
+
+    const auto &rect = computer.layoutRect();
+    if (deskflow::gui::layout::overlapsAny(QRectF(rect), written)) {
+      qWarning() << "leaving" << computer.name() << "out of the layout because it overlaps another computer";
+      continue;
     }
-    i++;
+    written.append(QRectF(rect));
+
+    outStream << "\t" << computer.name() << " = " << rect.x() << "," << rect.y() << "," << rect.width() << ","
+              << rect.height() << Qt::endl;
   }
 
   outStream << "end" << Qt::endl << Qt::endl;
@@ -260,6 +289,48 @@ void ServerConfig::addClient(const QString &clientName)
   }
 
   m_computers.addComputerByPriority(Computer(clientName));
+}
+
+bool ServerConfig::updateComputerMonitors(const QString &computerName, const QList<QRect> &monitors)
+{
+  if (monitors.isEmpty())
+    return false;
+
+  for (auto &computer : computers()) {
+    // the server's own monitors are read locally
+    if (computer.isNull() || computer.isServer() || computer.name() != computerName)
+      continue;
+
+    Computer updated(computer);
+    updated.setMonitors(monitors);
+    if (updated == computer)
+      return false;
+
+    // grow or shrink away from the neighbours: keep each corner in turn and take the first that fits
+    QList<QRectF> others;
+    for (const auto &other : std::as_const(m_computers)) {
+      if (&other != &computer && !other.isNull() && other.hasLayout())
+        others.append(QRectF(other.layoutRect()));
+    }
+    const auto old = computer.layoutRect();
+    const auto size = updated.layoutRect().size();
+    const std::array corners = {
+        old.topLeft(), QPoint(old.x() + old.width() - size.width(), old.y()),
+        QPoint(old.x(), old.y() + old.height() - size.height()),
+        QPoint(old.x() + old.width() - size.width(), old.y() + old.height() - size.height())
+    };
+    for (const auto &corner : corners) {
+      if (!deskflow::gui::layout::overlapsAny(QRectF(QRect(corner, size)), others)) {
+        updated.moveLayoutTo(corner);
+        break;
+      }
+    }
+
+    computer = updated;
+    m_computers.placeInLayout(computer);
+    return true;
+  }
+  return false;
 }
 
 void ServerConfig::setConfigFile(const QString &configFile) const

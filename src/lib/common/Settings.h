@@ -43,6 +43,8 @@ public:
     inline static const auto XScrollScale = QStringLiteral("client/xScrollScale");
     inline static const auto LanguageSync = QStringLiteral("client/languageSync");
     inline static const auto RemoteHost = QStringLiteral("client/remoteHost");
+    //! Where each server name last connected, see deskflow/RememberedServers.h
+    inline static const auto RememberedServers = QStringLiteral("client/rememberedServers");
     inline static const auto XdpClipboardRetried = QStringLiteral("client/xdpClipboardRetried");
     inline static const auto XdpRestoreToken = QStringLiteral("client/xdpRestoreToken");
   };
@@ -74,11 +76,15 @@ public:
   {
     inline static const auto Autohide = QStringLiteral("gui/autoHide");
     inline static const auto AutoStartCore = QStringLiteral("gui/startCoreWithGui");
-    inline static const auto AutoUpdateCheck = QStringLiteral("gui/enableUpdateCheck");
-    inline static const auto UpdateCheckUrl = QStringLiteral("gui/updateCheckUrl");
+    //! Ask, always or never, see gui/UpdateRelease.h
+    inline static const auto UpdateMode = QStringLiteral("gui/updateMode");
+    //! After Yes or No, when to ask about a new version again
+    inline static const auto UpdateAskAfter = QStringLiteral("gui/updateAskAfter");
+    inline static const auto UpdateReleasesUrl = QStringLiteral("gui/updateReleasesUrl");
     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
+    inline static const auto StartOnLogin = QStringLiteral("gui/startOnLogin");
     inline static const auto SymbolicTrayIcon = QStringLiteral("gui/symbolicTrayIcon");
     inline static const auto WindowGeometry = QStringLiteral("gui/windowGeometry");
     inline static const auto ShownFirstConnectedMessage = QStringLiteral("gui/shownFirstConnectedMessage");
@@ -102,7 +108,10 @@ public:
   };
   struct Server
   {
+    inline static const auto BlockCorners = QStringLiteral("server/blockCorners");
+    inline static const auto BlockCornerSize = QStringLiteral("server/blockCornerSize");
     inline static const auto ClipboardSize = QStringLiteral("server/clipboardSize");
+    inline static const auto FileCopyLimit = QStringLiteral("server/fileCopyLimit");
     inline static const auto DefaultLockToComputerState = QStringLiteral("server/defaultLockToComputerState");
     inline static const auto DisableLockToComputer = QStringLiteral("server/disableLockToComputer");
     inline static const auto EnableClipboard = QStringLiteral("server/enableClipboard");
@@ -278,6 +287,7 @@ private:
     , Client::InvertXScroll
     , Client::LanguageSync
     , Client::RemoteHost
+    , Client::RememberedServers
     , Client::YScrollScale
     , Client::XScrollScale
     , Core::CoreMode
@@ -304,11 +314,13 @@ private:
     , Log::GuiDebug
     , Gui::Autohide
     , Gui::AutoStartCore
-    , Gui::AutoUpdateCheck
-    , Gui::UpdateCheckUrl
+    , Gui::UpdateMode
+    , Gui::UpdateAskAfter
+    , Gui::UpdateReleasesUrl
     , Gui::CloseReminder
     , Gui::CloseToTray
     , Gui::LogExpanded
+    , Gui::StartOnLogin
     , Gui::SymbolicTrayIcon
     , Gui::ShownFirstConnectedMessage
     , Gui::ShownServerFirstStartMessage
@@ -318,7 +330,10 @@ private:
     , Security::CheckPeers
     , Security::KeySize
     , Security::TlsEnabled
+    , Server::BlockCorners
+    , Server::BlockCornerSize
     , Server::ClipboardSize
+    , Server::FileCopyLimit
     , Server::DefaultLockToComputerState
     , Server::DisableLockToComputer
     , Server::EnableClipboard
@@ -355,6 +370,7 @@ private:
     , Client::XdpClipboardRetried
     , Log::ToFile
     , Log::GuiDebug
+    , Server::BlockCorners
     , Server::DefaultLockToComputerState
     , Server::DisableLockToComputer
     , Server::EnableHeartbeat

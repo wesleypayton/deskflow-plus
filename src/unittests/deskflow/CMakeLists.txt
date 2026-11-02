@@ -14,6 +14,14 @@ create_test(
 )
 
 create_test(
+  NAME ClipboardCompressionTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE ClipboardCompressionTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
+create_test(
   NAME ClipboardChunksTests
   DEPENDS app
   LIBS arch base io ${extra_libs}
@@ -50,6 +58,30 @@ create_test(
   DEPENDS app
   LIBS arch base ${extra_libs}
   SOURCE KeyboardLayoutManagerTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
+create_test(
+  NAME FileTransferTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE FileTransferTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
+create_test(
+  NAME RememberedServersTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE RememberedServersTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
+create_test(
+  NAME MonitorsTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE MonitorsTests.cpp
   WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
 )
 

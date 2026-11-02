@@ -2,6 +2,23 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>MainWindow</name>
+    <message numerus="yes">
+        <source>Received %n dropped item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Received %n copied item(s), ready to paste</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>StatusBar</name>
     <message numerus="yes">
         <source>%1 is connected, with %n client(s): %2</source>

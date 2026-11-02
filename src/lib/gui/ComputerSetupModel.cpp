@@ -140,7 +140,7 @@ bool ComputerSetupModel::dropMimeData(
   if (auto oldComputer = Computer(computer(pColumn, pRow));
       !oldComputer.isNull() && sourceColumn != -1 && sourceRow != -1) {
     // mark the computer so it isn't deleted after the dragndrop succeeded
-    // see ComputerSetupView::startDrag()
+    // the source cell is cleared once the drag succeeds
     oldComputer.setSwapped(true);
     computer(sourceColumn, sourceRow) = oldComputer;
   }

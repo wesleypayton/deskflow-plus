@@ -8,6 +8,7 @@
 
 #include "LogLevel.h"
 #include "NetworkProtocol.h"
+#include "PlatformInfo.h"
 #include "UrlConstants.h"
 #include "common/KeyboardModifier.h"
 
@@ -346,8 +347,15 @@ QVariant Settings::defaultValue(const QString &key)
   if (key == Daemon::Elevate)
     return !Settings::isPortableMode();
 
-  if (key == Gui::UpdateCheckUrl)
-    return kUrlUpdateCheck;
+  // an installed copy starts when the user signs in, so it's there to reconnect; a portable one only if asked
+  if (key == Gui::StartOnLogin)
+    return deskflow::platform::isWindows() && !Settings::isPortableMode();
+
+  if (key == Gui::UpdateReleasesUrl)
+    return kUrlReleases;
+
+  if (key == Gui::UpdateMode)
+    return QStringLiteral("ask");
 
   if (key == Server::ExternalConfigFile)
     return QStringLiteral("%1/%2-server.conf").arg(Settings::settingsPath(), kAppId);
@@ -386,6 +394,13 @@ QVariant Settings::defaultValue(const QString &key)
 
   if (key == Server::ClipboardSize)
     return 3; // 3 MiB
+
+  // as in Mouse Without Borders
+  if (key == Server::BlockCornerSize)
+    return 100; // pixels
+
+  if (key == Server::FileCopyLimit)
+    return 512; // MiB
 
   return QVariant();
 }

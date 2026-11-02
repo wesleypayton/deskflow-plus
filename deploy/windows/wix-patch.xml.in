@@ -2,8 +2,8 @@
   <CPackWiXFragment Id="CM_CP_deskflow_daemon.exe">
     <ServiceInstall
       Id="ServiceInstall"
-      Name="Deskflow"
-      DisplayName="Deskflow"
+      Name="@PACKAGE_SERVICE_NAME@"
+      DisplayName="@PACKAGE_DISPLAY_NAME@"
       Description="Runs the Core process on secure desktops (UAC prompts, login screen, etc)."
       ErrorControl="normal"
       Start="auto"
@@ -16,13 +16,13 @@
         ThirdFailureActionType="none"
       />
     </ServiceInstall>
-    <ServiceControl Id="ServiceControl" Name="Deskflow" Remove="uninstall" Start="install" Stop="both"/>
+    <ServiceControl Id="ServiceControl" Name="@PACKAGE_SERVICE_NAME@" Remove="uninstall" Start="install" Stop="both"/>
     <RemoveFile Id="RmOldLog" On="install" Name="deskflow-daemon.log"/>
   </CPackWiXFragment>
 
   <CPackWiXFragment Id="CM_CP_deskflow_core.exe">
-    <firewall:FirewallException Id="ServerFirewallException" Name="Deskflow Server" Program="[INSTALL_ROOT]deskflow-core.exe" Scope="any"/>
-    <firewall:FirewallException Id="ClientFirewallException" Name="Deskflow Client" Program="[INSTALL_ROOT]deskflow-core.exe" Scope="any"/>
+    <firewall:FirewallException Id="ServerFirewallException" Name="@PACKAGE_DISPLAY_NAME@ Server" Program="[INSTALL_ROOT]deskflow-core.exe" Scope="any"/>
+    <firewall:FirewallException Id="ClientFirewallException" Name="@PACKAGE_DISPLAY_NAME@ Client" Program="[INSTALL_ROOT]deskflow-core.exe" Scope="any"/>
   </CPackWiXFragment>
 
   <CPackWiXFragment Id="#PRODUCT">
@@ -76,7 +76,7 @@
            Value="RunDeskflow"
            Condition= "WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed" />
        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
-       <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Run Deskflow when finished" />
+       <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Run @PACKAGE_DISPLAY_NAME@ when finished" />
     </UI>
     <CustomAction
       Id="CheckVCRedist"
@@ -96,7 +96,42 @@
       Impersonate="yes"
       Return="asyncNoWait" />
 
+    <!--
+      Started by setup.exe when its "start when setup finishes" box is ticked. The install
+      runs elevated, and the app must not, or Explorer can't drag files to it: Explorer
+      started this way hands the program to the user's own Explorer, which starts it as them.
+    -->
+    <CustomAction
+      Id="LaunchForUser"
+      ExeCommand="&quot;[WindowsFolder]explorer.exe&quot; &quot;[INSTALL_ROOT]deskflow.exe&quot;"
+      Directory="INSTALL_ROOT"
+      Execute="immediate"
+      Impersonate="yes"
+      Return="asyncNoWait" />
+
+    <!--
+      The app adds itself to the user's Run key to start at sign-in (Settings, "Start when
+      I sign in"). Uninstalling removes that entry for the user who uninstalls; it isn't
+      removed on an upgrade, where the new version's app keeps it up to date. It runs before
+      InstallFinalize, while the install folder it starts in still exists.
+    -->
+    <CustomAction
+      Id="RemoveLoginStartup"
+      ExeCommand="&quot;[SystemFolder]reg.exe&quot; delete &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Run&quot; /v &quot;@PACKAGE_DISPLAY_NAME@&quot; /f"
+      Directory="INSTALL_ROOT"
+      Execute="immediate"
+      Impersonate="yes"
+      Return="ignore" />
+
     <InstallExecuteSequence>
+      <Custom
+        Action="RemoveLoginStartup"
+        Before="InstallFinalize"
+        Condition="REMOVE = &quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE" />
+      <Custom
+        Action="LaunchForUser"
+        After="InstallFinalize"
+        Condition="LAUNCHAPP = 1 AND NOT (REMOVE = &quot;ALL&quot;)" />
       <Custom
         Action="CheckVCRedist"
         Before="InstallInitialize"

@@ -41,6 +41,12 @@ protected:
    */
   void writeToClientSocket(QLocalSocket *&clientSocket, const QString &message) const;
 
+  //! A client has gone, just before its socket is let go
+  virtual void clientDisconnected(QLocalSocket *clientSocket)
+  {
+    Q_UNUSED(clientSocket)
+  }
+
 private:
   void processMessage(QLocalSocket *clientSocket, const QString &message);
   virtual void processCommand(QLocalSocket *clientSocket, const QString &command, const QStringList &parts) = 0;

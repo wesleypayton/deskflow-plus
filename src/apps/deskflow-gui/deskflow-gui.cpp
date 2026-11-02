@@ -10,9 +10,11 @@
 #include "common/ExitCodes.h"
 #include "common/I18N.h"
 #include "common/PlatformInfo.h"
+#include "common/Settings.h"
 #include "common/UrlConstants.h"
 #include "common/VersionInfo.h"
 #include "gui/Diagnostic.h"
+#include "gui/LoginStartup.h"
 #include "gui/MainWindow.h"
 #include "gui/Messages.h"
 #include "gui/StyleUtils.h"
@@ -42,7 +44,7 @@ using namespace deskflow::gui;
 bool checkMacAssistiveDevices();
 #endif
 
-const static auto kHeader = QStringLiteral("%1: %2\n").arg(kAppName, kDisplayVersion);
+const static auto kHeader = QStringLiteral("%1: %2\n").arg(kDisplayName, kDisplayVersion);
 
 int main(int argc, char *argv[])
 {
@@ -58,6 +60,7 @@ int main(int argc, char *argv[])
 
   QCoreApplication::setApplicationName(kAppName);
   QCoreApplication::setOrganizationName(kAppName);
+  QGuiApplication::setApplicationDisplayName(kDisplayName);
   QCoreApplication::setApplicationVersion(kVersion);
   QCoreApplication::setOrganizationDomain(kOrgDomain); // used in prefix, can't be a url
   QGuiApplication::setDesktopFileName(kRevFqdnName);
@@ -71,12 +74,14 @@ int main(int argc, char *argv[])
   auto helpOption = QCommandLineOption({"h", "help"}, "Display Help on the command line");
   auto versionOption = QCommandLineOption({"v", "version"}, "Display version information");
   auto resetOption = QCommandLineOption("reset", "Reset all settings");
+  auto backgroundOption = QCommandLineOption(loginStartup::kBackgroundOption, "Start in the background");
 
   QCommandLineParser parser;
   parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
   parser.addOption(helpOption);
   parser.addOption(versionOption);
   parser.addOption(resetOption);
+  parser.addOption(backgroundOption);
   parser.parse(QCoreApplication::arguments());
 
   if (!parser.errorText().isEmpty()) {
@@ -113,7 +118,7 @@ int main(int argc, char *argv[])
     if (!socket.waitForConnected()) {
       // If we can't connect to the other instance tell the user its running.
       // This should never happen but just incase we should show something
-      QMessageBox::information(nullptr, kAppName, QObject::tr("%1 is already running").arg(kAppName));
+      QMessageBox::information(nullptr, kDisplayName, QObject::tr("%1 is already running").arg(kDisplayName));
     }
     socket.disconnectFromServer();
     return s_exitDuplicate;
@@ -136,7 +141,7 @@ int main(int argc, char *argv[])
         "Please drag %1 to the Applications folder, "
         "and open it from there."
     );
-    QMessageBox::information(nullptr, kAppName, msgBody.arg(kAppName));
+    QMessageBox::information(nullptr, kDisplayName, msgBody.arg(kDisplayName));
     return 1;
   }
 
@@ -150,8 +155,11 @@ int main(int argc, char *argv[])
     diagnostic::clearSettings(false);
   }
 
+  // keeps the sign-in entry pointing at this copy, which may have moved since it was made
+  loginStartup::apply(Settings::value(Settings::Gui::StartOnLogin).toBool());
+
   MainWindow mainWindow;
-  mainWindow.open();
+  mainWindow.open(parser.isSet(backgroundOption));
 
   return QApplication::exec();
 }

@@ -17,7 +17,16 @@
 #include "net/NetworkAddress.h"
 
 #include <climits>
+#include <filesystem>
+#include <memory>
 #include <string>
+#include <vector>
+
+namespace deskflow::transfer {
+class TransferAgent;
+struct TransferMessage;
+struct LocalTransferState;
+} // namespace deskflow::transfer
 
 class Event;
 class EventQueueTimer;
@@ -163,6 +172,12 @@ public:
   }
   size_t getMaximumClipboardReceiveSizeBytes() const;
 
+  //! A file transfer message from the server
+  void handleTransferMessage(const deskflow::transfer::TransferMessage &message);
+
+  //! The server wants this computer's own mouse and keyboard captured and sent to it, or no longer
+  void setRemoteCapture(bool capture);
+
   //@}
 
   // IComputer overrides
@@ -170,6 +185,7 @@ public:
   bool getClipboard(ClipboardID id, IClipboard *) const override;
   void getShape(int32_t &x, int32_t &y, int32_t &width, int32_t &height) const override;
   void getCursorPos(int32_t &x, int32_t &y) const override;
+  deskflow::MonitorList getMonitors() const override;
 
   // IClient overrides
   void enter(int32_t xAbs, int32_t yAbs, uint32_t seqNum, KeyModifierMask mask, bool forScreensaver) override;
@@ -217,6 +233,11 @@ private:
   void handleSuspend();
   void handleResume();
   void sendClipboardThread(void *);
+  void enablePlusFeatures(uint32_t serverFeatures);
+  void setupFileTransfer();
+  void offerClipboardFiles();
+  void setupRemoteInput();
+  void sendRemoteInput();
   void bindNetworkInterface(IDataSocket *socket) const;
 
 private:
@@ -237,6 +258,9 @@ private:
   std::string m_dataClipboard[kClipboardEnd];
   IEventQueue *m_events = nullptr;
   bool m_useSecureNetwork = false;
+  std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
+  std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;
+  bool m_watchingInput = false;
   bool m_enableClipboard = true;
   bool m_relativeMouseMoves = false;
   bool m_hasRelativeRestorePosition = false;

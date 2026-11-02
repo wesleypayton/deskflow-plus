@@ -57,6 +57,12 @@ static const OptionID kOptionDefaultLockToComputerState = OPTION_CODE("LTSS");
 static const OptionID kOptionDisableLockToComputer = OPTION_CODE("DLTS");
 static const OptionID kOptionClipboardSharing = OPTION_CODE("CLPS");
 static const OptionID kOptionClipboardSharingSize = OPTION_CODE("CLSZ");
+//! Deskflow Plus feature bits a primary supports, see kMsgDPlusFeatures (deskflow-plus)
+static const OptionID kOptionPlusFeatures = OPTION_CODE("DPLF");
+//! Most MiB of copied files sent along with the cursor, 0 for none (deskflow-plus)
+static const OptionID kOptionFileCopyLimit = OPTION_CODE("DPFL");
+//! Deskflow Plus: no crossing within this many pixels of a monitor's corner, 0 for anywhere
+static const OptionID kOptionMonitorCornerSize = OPTION_CODE("DPMC");
 //@}
 
 //! @name Computer switch corner masks

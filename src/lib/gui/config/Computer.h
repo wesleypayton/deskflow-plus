@@ -16,6 +16,7 @@
 #include <QIcon>
 #include <QList>
 #include <QPixmap>
+#include <QRect>
 #include <QString>
 #include <QStringList>
 
@@ -27,18 +28,19 @@ class Computer : public ComputerConfig
 {
   friend class ComputerSettingsDialog;
   friend class ComputerSetupModel;
-  friend class ComputerSetupView;
 
   friend QDataStream &operator<<(QDataStream &outStream, const Computer &computer)
   {
     return outStream << computer.name() << computer.switchCornerSize() << computer.aliases() << computer.modifiers()
-                     << computer.switchCorners() << computer.fixes() << computer.isServer();
+                     << computer.switchCorners() << computer.fixes() << computer.isServer() << computer.m_layoutRect
+                     << computer.m_monitors;
   }
 
   friend QDataStream &operator>>(QDataStream &inStream, Computer &computer)
   {
     return inStream >> computer.m_Name >> computer.m_SwitchCornerSize >> computer.m_Aliases >> computer.m_Modifiers >>
-           computer.m_SwitchCorners >> computer.m_Fixes >> computer.m_isServer;
+           computer.m_SwitchCorners >> computer.m_Fixes >> computer.m_isServer >> computer.m_layoutRect >>
+           computer.m_monitors;
   }
 
 public:
@@ -112,6 +114,30 @@ public:
     m_isServer = true;
   }
 
+  //! Where the computer sits in the shared layout space, or a null rect if it hasn't been placed
+  [[nodiscard]] const QRect &layoutRect() const
+  {
+    return m_layoutRect;
+  }
+  [[nodiscard]] bool hasLayout() const
+  {
+    return !m_layoutRect.isEmpty();
+  }
+  void setLayoutRect(const QRect &rect)
+  {
+    m_layoutRect = rect;
+  }
+  void moveLayoutTo(const QPoint &topLeft)
+  {
+    m_layoutRect.moveTopLeft(topLeft);
+  }
+
+  //! Monitor rectangles relative to the top left of layoutRect(), one covering it all if unknown
+  [[nodiscard]] QList<QRect> monitors() const;
+
+  //! Set the computer's size and monitors from absolute monitor rectangles, keeping its layout position
+  void setMonitors(const QList<QRect> &monitors);
+
   bool operator==(const Computer &computer) const;
 
 protected:
@@ -166,4 +192,6 @@ private:
   QList<bool> m_Fixes{false, false, false, false};
   bool m_Swapped = false;
   bool m_isServer = false;
+  QRect m_layoutRect;
+  QList<QRect> m_monitors;
 };
