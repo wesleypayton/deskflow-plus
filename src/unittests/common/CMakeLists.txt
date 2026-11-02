@@ -35,3 +35,10 @@ create_test(
   SOURCE SettingsMigrationTests.cpp
   WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/common"
 )
+
+create_test(
+  NAME DiscoveryTests
+  DEPENDS common
+  SOURCE DiscoveryTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/common"
+)

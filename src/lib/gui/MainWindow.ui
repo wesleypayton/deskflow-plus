@@ -411,6 +411,16 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QToolButton" name="btnFindServers">
+               <property name="toolTip">
+                <string>Look for Deskflow Plus servers on this network</string>
+               </property>
+               <property name="text">
+                <string>Find...</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>

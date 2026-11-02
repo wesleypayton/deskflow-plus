@@ -20,6 +20,7 @@
 #include "dialogs/ServerConfigDialog.h"
 #include "dialogs/SettingsDialog.h"
 
+#include "common/Discovery.h"
 #include "common/PlatformInfo.h"
 #include "common/Settings.h"
 #include "common/UrlConstants.h"
@@ -48,6 +49,7 @@
 #include <QRegularExpressionValidator>
 #include <QScreen>
 #include <QScrollBar>
+#include <QToolTip>
 
 #include <memory>
 
@@ -306,6 +308,7 @@ void MainWindow::connectSlots()
 
   connect(ui->lineHostname, &QLineEdit::returnPressed, ui->btnRestartCore, &QPushButton::click);
   connect(ui->lineHostname, &QLineEdit::textChanged, this, &MainWindow::remoteHostChanged);
+  connect(ui->btnFindServers, &QToolButton::clicked, this, &MainWindow::findServers);
 
   connect(ui->btnSaveServerConfig, &QPushButton::clicked, this, &MainWindow::saveServerConfig);
   connect(ui->btnConfigureServer, &QPushButton::clicked, this, [this] { showConfigureServer(""); });
@@ -478,6 +481,42 @@ void MainWindow::openAboutDialog()
 {
   AboutDialog about(this);
   about.exec();
+}
+
+void MainWindow::findServers()
+{
+  using deskflow::discovery::Server;
+  ui->btnFindServers->setEnabled(false);
+  ui->btnFindServers->setText(tr("Looking..."));
+
+  const auto port = static_cast<quint16>(Settings::value(Settings::Core::Port).toInt());
+  auto *finder = new deskflow::discovery::Finder(this);
+  connect(finder, &deskflow::discovery::Finder::finished, this, [this, finder, port](const QList<Server> &servers) {
+    finder->deleteLater();
+    ui->btnFindServers->setEnabled(true);
+    ui->btnFindServers->setText(tr("Find..."));
+
+    const auto below = ui->btnFindServers->mapToGlobal(QPoint(0, ui->btnFindServers->height()));
+    if (servers.isEmpty()) {
+      QToolTip::showText(
+          below, tr("No %1 servers answered on this network. Check that the server is running.").arg(kDisplayName),
+          ui->btnFindServers
+      );
+      return;
+    }
+
+    QMenu menu(this);
+    for (const auto &server : servers) {
+      // the name, and the address in case the name can't be looked up
+      auto connectTo = QStringLiteral("%1, %2").arg(server.name, server.address.toString());
+      if (server.port != port)
+        connectTo = QStringLiteral("%1:%3, %2:%3").arg(server.name, server.address.toString()).arg(server.port);
+      const auto *action = menu.addAction(QStringLiteral("%1 (%2)").arg(server.name, server.address.toString()));
+      connect(action, &QAction::triggered, this, [this, connectTo] { ui->lineHostname->setText(connectTo); });
+    }
+    menu.exec(below);
+  });
+  finder->find(port);
 }
 
 void MainWindow::openSettings()

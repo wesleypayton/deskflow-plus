@@ -99,6 +99,7 @@ private:
   void clearSettings();
   void openAboutDialog();
   void openSettings();
+  void findServers();
   void startCore();
   void stopCore();
   bool saveServerConfig();

@@ -12,7 +12,9 @@
 #include "base/EventQueue.h"
 #include "base/Log.h"
 #include "common/Constants.h"
+#include "common/Discovery.h"
 #include "common/ExitCodes.h"
+#include "common/Settings.h"
 #include "deskflow/ClientApp.h"
 #include "deskflow/ServerApp.h"
 #include "deskflow/ipc/CoreIpcServer.h"
@@ -102,7 +104,7 @@ int main(int argc, char **argv)
   // Before we check any more args we need to check for a duplicate process.
   // Create a shared memory segment with a unique key
   // This is to prevent a new instance from running if one is already running
-  QSharedMemory sharedMemory(kCoreBinName);
+  QSharedMemory sharedMemory(QString::fromLatin1(kCoreIpcName));
 
   // Attempt to attach first and detach in order to clean up stale shm chunks
   // This can happen if the previous instance was killed or crashed
@@ -126,6 +128,14 @@ int main(int argc, char **argv)
       ipcServer, &deskflow::core::ipc::IpcServer::stopProcessRequested, coreApp, &App::quit, Qt::DirectConnection
   );
   ipcServer->listen();
+
+  // a server lets clients on the network find it
+  if (parser.serverMode()) {
+    new deskflow::discovery::Responder( // NOSONAR - Qt managed
+        Settings::value(Settings::Core::ComputerName).toString(),
+        static_cast<quint16>(Settings::value(Settings::Core::Port).toInt()), &app
+    );
+  }
 
   QThread coreThread;
   QObject::connect(&coreThread, &QThread::finished, &app, &QApplication::quit);
