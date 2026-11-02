@@ -87,12 +87,12 @@ bool probeForDrag(TransferAgent &agent, LocalTransferState &state, bool look)
 {
   if (!look) {
     platform::stopDragProbe();
-    state.dragOffered = false;
+    state.dragOffer = 0;
     state.lastProbe = {};
     return false;
   }
 
-  if (state.dragOffered)
+  if (state.dragOffer != 0)
     return true;
 
   // showing the drop target nudges the cursor, which comes back here as a move, so don't do it every time
@@ -102,11 +102,13 @@ bool probeForDrag(TransferAgent &agent, LocalTransferState &state, bool look)
   }
 
   const auto files = platform::dragProbeFiles();
-  if (files.empty() || agent.offer(TransferKind::Drag, files) == 0)
+  if (files.empty())
+    return false;
+  state.dragOffer = agent.offer(TransferKind::Drag, files);
+  if (state.dragOffer == 0)
     return false;
 
   LOG_INFO("carrying %d dragged items to another computer", static_cast<int>(files.size()));
-  state.dragOffered = true;
   platform::endLocalDrag();
   return true;
 }

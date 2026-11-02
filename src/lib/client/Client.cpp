@@ -572,6 +572,7 @@ void Client::cleanupComputer()
     m_server = nullptr;
   }
   m_transferAgent.reset();
+  m_events->removeHandler(EventTypes::TransferFilesListed, getEventTarget());
 
   // never leave this computer's mouse and keyboard captured for a server that's gone
   if (m_watchingInput) {
@@ -598,9 +599,17 @@ void Client::setupFileTransfer()
 {
   using namespace deskflow::transfer;
   m_transferState = std::make_shared<LocalTransferState>();
-  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
+  auto hooks = platformHooks(
       [this](const TransferMessage &message) { writeTransferMessage(m_stream, message); }, m_transferState
-  ));
+  );
+  hooks.wake = [events = m_events, target = getEventTarget()] {
+    events->addEvent(Event(EventTypes::TransferFilesListed, target));
+  };
+  m_events->addHandler(EventTypes::TransferFilesListed, getEventTarget(), [this](const auto &) {
+    if (m_transferAgent)
+      m_transferAgent->finishOffers();
+  });
+  m_transferAgent = std::make_unique<TransferAgent>(std::move(hooks));
 }
 
 void Client::handleTransferMessage(const deskflow::transfer::TransferMessage &message)

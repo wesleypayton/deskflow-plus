@@ -25,8 +25,8 @@ struct LocalTransferState
   //! the incoming drag lands in a folder the user can't see, so show it when done
   bool revealDrop = false;
 
-  //! files found in the current drag have been offered
-  bool dragOffered = false;
+  //! the offer of the files found in the current drag, or 0 before they're found
+  uint32_t dragOffer = 0;
 
   //! when the drop target was last shown, which nudges the cursor; see probeForDrag()
   std::chrono::steady_clock::time_point lastProbe;
@@ -48,7 +48,9 @@ void offerClipboardFiles(TransferAgent &agent, const LocalTransferState &state);
 /*!
 Once the drag is found its files are offered and the drag is ended locally, on
 a drop target that accepts nothing, so the source program neither moves nor
-copies anything. Returns true once the files have been offered.
+copies anything. Returns true once the files have been found and offered; the
+offer of a large folder is sent once it has been listed, see
+TransferAgent::offered().
 */
 bool probeForDrag(TransferAgent &agent, LocalTransferState &state, bool look);
 

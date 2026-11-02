@@ -7,29 +7,93 @@
 #include "deskflow/TransferAgent.h"
 
 #include <algorithm>
+#include <atomic>
+#include <mutex>
+#include <thread>
 
 namespace deskflow::transfer {
 
 using enum TransferMessage::Type;
 
+struct TransferAgent::Listing
+{
+  struct Listed
+  {
+    uint32_t id;
+    TransferKind kind;
+    std::vector<std::filesystem::path> items;
+    std::vector<FileEntry> files;
+  };
+
+  std::atomic<bool> stopped = false;
+  std::mutex mutex;
+  std::function<void()> wake;
+  std::vector<Listed> listed;
+};
+
 TransferAgent::TransferAgent(Hooks hooks, uint64_t maxReceiveBytes)
     : m_hooks(std::move(hooks)),
-      m_maxReceiveBytes(maxReceiveBytes)
+      m_maxReceiveBytes(maxReceiveBytes),
+      m_listing{std::make_shared<Listing>()}
 {
-  // nothing to do
+  m_listing->wake = m_hooks.wake;
 }
 
-TransferAgent::~TransferAgent() = default;
+TransferAgent::~TransferAgent()
+{
+  // a listing still going gives up, and nothing is woken once this returns
+  std::scoped_lock lock(m_listing->mutex);
+  m_listing->stopped = true;
+}
 
 uint32_t TransferAgent::offer(TransferKind kind, const std::vector<std::filesystem::path> &items)
 {
-  auto files = collectFiles(items);
-  if (files.empty())
+  if (items.empty())
     return 0;
+
+  const auto id = m_nextOffer++;
+  m_latestOffer[kind] = id;
+  if (!m_hooks.wake) {
+    finishOffer(id, kind, items, collectFiles(items));
+    return offered(id) ? id : 0;
+  }
+
+  // on the thread that moves the mouse, a large folder would hold it up for as long as the listing takes
+  std::thread([listing = m_listing, id, kind, items] {
+    auto files = collectFiles(items, [&listing] { return listing->stopped.load(); });
+    std::scoped_lock lock(listing->mutex);
+    if (listing->stopped)
+      return;
+    const bool wake = listing->listed.empty();
+    listing->listed.push_back({id, kind, items, std::move(files)});
+    if (wake)
+      listing->wake();
+  }).detach();
+  return id;
+}
+
+void TransferAgent::finishOffers()
+{
+  std::vector<Listing::Listed> listed;
+  {
+    std::scoped_lock lock(m_listing->mutex);
+    listed = std::exchange(m_listing->listed, {});
+  }
+  for (auto &offer : listed)
+    finishOffer(offer.id, offer.kind, offer.items, std::move(offer.files));
+}
+
+void TransferAgent::finishOffer(
+    uint32_t id, TransferKind kind, const std::vector<std::filesystem::path> &items, std::vector<FileEntry> files
+)
+{
+  // replaced by a newer offer, or withdrawn, while the files were listed
+  if (files.empty() || m_latestOffer[kind] != id)
+    return;
 
   TransferMessage message;
   message.type = Offer;
-  message.id = m_nextOffer++;
+  message.id = id;
   message.kind = kind;
   message.value = static_cast<uint32_t>(files.size());
   for (const auto &file : files)
@@ -45,11 +109,12 @@ uint32_t TransferAgent::offer(TransferKind kind, const std::vector<std::filesyst
     m_offers.erase(m_offers.begin());
 
   m_hooks.send(message);
-  return message.id;
 }
 
 void TransferAgent::withdraw(TransferKind kind)
 {
+  m_latestOffer[kind] = 0;
+
   // an offer of nothing replaces whatever was offered before
   TransferMessage message;
   message.type = Offer;

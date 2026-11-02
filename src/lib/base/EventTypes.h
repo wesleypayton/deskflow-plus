@@ -49,6 +49,10 @@ enum class EventTypes : uint32_t
    */
   ClientRemoteInput,
 
+  /** Files a computer offers to send have been listed on another thread, see TransferAgent::Hooks::wake.
+   */
+  TransferFilesListed,
+
   /// A stream sends this event when \c read() will return with data.
   StreamInputReady,
 

@@ -179,6 +179,14 @@ Also from Mouse Without Borders:
   `Server::startRemoteControl`. Deskflow's dead corners only cover the corners
   of each computer's outline, and are set per computer.
 
+Copied and dragged folders are listed on a thread of their own
+(`TransferAgent::Hooks::wake`, `TransferAgent::finishOffers`). Listing a large
+folder took as long as it took on the thread that moves the mouse, freezing it.
+The offer is sent once the listing is done, unless something newer was copied
+meanwhile; a drag from the server only crosses once its files are listed, and
+copied files offered after the cursor has moved on follow it
+(`Server::receiveTransfer`).
+
 Updates (`gui/Updater.h`):
 
 * The app checks this fork's GitHub releases, test builds included, 30

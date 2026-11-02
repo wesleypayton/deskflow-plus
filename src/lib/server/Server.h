@@ -222,6 +222,8 @@ public:
 
   //! A file transfer message from a client
   void handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message);
+  //! Passes a computer's file transfer message to the router
+  void receiveTransfer(const std::string &from, const deskflow::transfer::TransferMessage &message);
 
   //! Input from a client's own mouse and keyboard
   void handleRemoteInput(BaseClientProxy *client, const deskflow::remote::RemoteInput &input);

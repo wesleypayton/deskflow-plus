@@ -60,7 +60,7 @@ std::string pathToUtf8(const std::filesystem::path &path)
   return std::string(reinterpret_cast<const char *>(text.data()), text.size());
 }
 
-std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &items)
+std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &items, const std::function<bool()> &stop)
 {
   namespace fs = std::filesystem;
 
@@ -86,6 +86,8 @@ std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &it
 
     for (auto it = fs::recursive_directory_iterator(item, fs::directory_options::skip_permission_denied, ec);
          !ec && it != fs::recursive_directory_iterator(); it.increment(ec)) {
+      if (stop && stop())
+        return files;
       const auto entryStatus = it->symlink_status(ec);
       if (ec)
         continue;

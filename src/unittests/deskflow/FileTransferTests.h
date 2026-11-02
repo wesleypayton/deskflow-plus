@@ -14,6 +14,10 @@ private Q_SLOTS:
   void safePath_rejectsEscapes();
   void safePath_rejectsNamesWindowsWouldMangle();
   void collect_walksFolders();
+  void collect_stopsWhenAsked();
+  void agent_listsOnAnotherThread();
+  void agent_dropsReplacedListing();
+  void agent_listsAtOnceWithoutWake();
   void roundTrip_copiesEverything();
   void sender_waitsForAcknowledgement();
   void sender_reportsShrunkFile();

@@ -63,6 +63,10 @@ public:
 
     //! how a transfer is going: when it starts, every few percent, and when it ends
     std::function<void(const TransferStatus &)> status;
+
+    //! called on another thread once offered files have been listed there, to wake the agent's own
+    //! thread, which then calls finishOffers(). Without it, files are listed as they're offered.
+    std::function<void()> wake;
   };
 
   explicit TransferAgent(Hooks hooks, uint64_t maxReceiveBytes = UINT64_MAX);
@@ -72,8 +76,22 @@ public:
   /*!
   Returns the offer id, or 0 if there were no files to offer. Only the most
   recent offers are kept; a request for an older one is refused.
+
+  Listing a large folder can take seconds, so with a Hooks::wake the files are
+  listed on another thread and the offer is sent from finishOffers(); until then
+  offered() is false, and it stays false if no files were found. An offer that
+  a newer one or a withdrawal replaced while its files were listed isn't sent.
   */
   uint32_t offer(TransferKind kind, const std::vector<std::filesystem::path> &items);
+
+  //! True once offer \p id has been sent, and while it's one of the offers kept
+  bool offered(uint32_t id) const
+  {
+    return m_offers.contains(id);
+  }
+
+  //! Send the offers whose files have been listed, see Hooks::wake
+  void finishOffers();
 
   //! Tell the server this computer no longer offers files of this kind, e.g. after copying text
   void withdraw(TransferKind kind);
@@ -97,6 +115,12 @@ private:
     std::unique_ptr<FileReceiver> receiver;
   };
 
+  // shared with the threads listing offered files, which may outlive the agent
+  struct Listing;
+
+  void finishOffer(
+      uint32_t id, TransferKind kind, const std::vector<std::filesystem::path> &items, std::vector<FileEntry> files
+  );
   void pump(uint32_t id);
   void report(uint32_t id, TransferStatus::Phase phase, const std::string &detail = {});
   void addProgress(uint32_t id, uint64_t bytes);
@@ -107,6 +131,9 @@ private:
   uint64_t m_maxReceiveBytes;
   uint32_t m_nextOffer = 1;
   std::map<uint32_t, std::vector<FileEntry>> m_offers;
+  // the newest offer of each kind, or 0 after a withdrawal
+  std::map<TransferKind, uint32_t> m_latestOffer;
+  std::shared_ptr<Listing> m_listing;
   // shared so a send that loops straight back into the agent can't free a sender mid pump
   std::map<uint32_t, std::shared_ptr<FileSender>> m_outgoing;
   std::set<uint32_t> m_pumping;

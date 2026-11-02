@@ -7,10 +7,13 @@
 #include "FileTransferTests.h"
 
 #include "deskflow/FileTransfer.h"
+#include "deskflow/TransferAgent.h"
 
 #include <QTemporaryDir>
 
+#include <condition_variable>
 #include <fstream>
+#include <mutex>
 
 using namespace deskflow::transfer;
 namespace fs = std::filesystem;
@@ -74,6 +77,41 @@ bool transfer(FileSender &sender, FileReceiver &receiver, std::string &error)
   return true;
 }
 
+// an agent whose messages are kept, and which can be waited on to be woken
+struct WatchedAgent
+{
+  std::mutex mutex;
+  std::condition_variable woken;
+  bool wake = false;
+  std::vector<TransferMessage> sent;
+  TransferAgent agent;
+
+  explicit WatchedAgent(bool withWake) : agent(hooks(withWake))
+  {
+    // nothing else
+  }
+
+  TransferAgent::Hooks hooks(bool withWake)
+  {
+    TransferAgent::Hooks result;
+    result.send = [this](const TransferMessage &message) { sent.push_back(message); };
+    if (withWake) {
+      result.wake = [this] {
+        std::scoped_lock lock(mutex);
+        wake = true;
+        woken.notify_all();
+      };
+    }
+    return result;
+  }
+
+  bool waitForWake()
+  {
+    std::unique_lock lock(mutex);
+    return woken.wait_for(lock, std::chrono::seconds(10), [this] { return wake; });
+  }
+};
+
 } // namespace
 
 void FileTransferTests::safePath_acceptsNormalNames()
@@ -114,6 +152,75 @@ void FileTransferTests::safePath_rejectsNamesWindowsWouldMangle()
   // only the exact device names are reserved
   QVERIFY(safeRelativePath("console.txt"));
   QVERIFY(safeRelativePath("COM10"));
+}
+
+void FileTransferTests::collect_stopsWhenAsked()
+{
+  QTemporaryDir dir;
+  const auto base = root(dir);
+  for (int i = 0; i < 20; ++i)
+    writeFile(base / "Folder" / (std::to_string(i) + ".txt"), "x");
+
+  int asked = 0;
+  const auto files = collectFiles({base / "Folder"}, [&asked] { return ++asked > 5; });
+  QCOMPARE(asked, 6);
+  QCOMPARE(files.size(), size_t{5});
+}
+
+void FileTransferTests::agent_listsOnAnotherThread()
+{
+  QTemporaryDir dir;
+  const auto base = root(dir);
+  writeFile(base / "Photos" / "a.jpg", "aa");
+  writeFile(base / "Photos" / "2026" / "b.jpg", "bbb");
+
+  WatchedAgent watched(true);
+  const auto id = watched.agent.offer(TransferKind::Clipboard, {base / "Photos"});
+  QVERIFY(id != 0);
+  QVERIFY(watched.waitForWake());
+
+  // nothing is sent from the listing thread
+  QVERIFY(!watched.agent.offered(id));
+  QVERIFY(watched.sent.empty());
+
+  watched.agent.finishOffers();
+  QVERIFY(watched.agent.offered(id));
+  QCOMPARE(watched.sent.size(), size_t{1});
+  QCOMPARE(watched.sent[0].id, id);
+  QCOMPARE(watched.sent[0].value, uint32_t{2});
+  QCOMPARE(watched.sent[0].size, uint64_t{5});
+  QCOMPARE(watched.sent[0].text, std::string("Photos"));
+}
+
+void FileTransferTests::agent_dropsReplacedListing()
+{
+  QTemporaryDir dir;
+  const auto base = root(dir);
+  writeFile(base / "Photos" / "a.jpg", "aa");
+
+  // copying something else while the files are listed withdraws them, and they aren't offered after
+  WatchedAgent watched(true);
+  const auto id = watched.agent.offer(TransferKind::Clipboard, {base / "Photos"});
+  watched.agent.withdraw(TransferKind::Clipboard);
+  QVERIFY(watched.waitForWake());
+  watched.agent.finishOffers();
+
+  QVERIFY(!watched.agent.offered(id));
+  QCOMPARE(watched.sent.size(), size_t{1});
+  QCOMPARE(watched.sent[0].value, uint32_t{0});
+}
+
+void FileTransferTests::agent_listsAtOnceWithoutWake()
+{
+  QTemporaryDir dir;
+  const auto base = root(dir);
+  writeFile(base / "single.txt", "one");
+
+  WatchedAgent watched(false);
+  const auto id = watched.agent.offer(TransferKind::Drag, {base / "single.txt"});
+  QVERIFY(watched.agent.offered(id));
+  QCOMPARE(watched.sent.size(), size_t{1});
+  QCOMPARE(watched.agent.offer(TransferKind::Drag, {base / "missing.txt"}), uint32_t{0});
 }
 
 void FileTransferTests::collect_walksFolders()

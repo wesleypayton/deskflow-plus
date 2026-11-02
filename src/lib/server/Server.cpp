@@ -174,6 +174,7 @@ Server::~Server()
   m_events->removeHandler(PrimaryComputerFakeInputBegin, m_inputFilter);
   m_events->removeHandler(PrimaryComputerFakeInputEnd, m_inputFilter);
   m_events->removeHandler(Timer, this);
+  m_events->removeHandler(TransferFilesListed, this);
   stopSwitch();
 
   try {
@@ -2227,9 +2228,11 @@ bool Server::fileDragAllowsSwitch()
   if (!m_transferRouter)
     return false;
 
-  // already carrying dragged files: the cursor may go anywhere with the button held
+  // already carrying dragged files: the cursor may go anywhere with the button held, once files dragged from
+  // here have been listed, which for a large folder takes a moment
   if (!m_dragSource.empty())
-    return !m_endingLocalDrag;
+    return !m_endingLocalDrag &&
+           (m_dragSource != getName(m_primaryClient) || m_transferAgent->offered(m_transferState->dragOffer));
 
   const auto active = getName(m_active);
   const bool starting = !m_lookingForDrag;
@@ -2310,10 +2313,15 @@ void Server::setupFileTransfer()
 
   // this computer takes part like any client, with its messages going straight to the router
   m_transferState = std::make_shared<LocalTransferState>();
-  m_transferAgent = std::make_unique<TransferAgent>(platformHooks(
-      [this](const TransferMessage &message) { m_transferRouter->receive(getName(m_primaryClient), message); },
-      m_transferState
-  ));
+  auto hooks = platformHooks(
+      [this](const TransferMessage &message) { receiveTransfer(getName(m_primaryClient), message); }, m_transferState
+  );
+  hooks.wake = [events = m_events, target = this] { events->addEvent(Event(EventTypes::TransferFilesListed, target)); };
+  m_events->addHandler(EventTypes::TransferFilesListed, this, [this](const auto &) {
+    if (m_transferAgent)
+      m_transferAgent->finishOffers();
+  });
+  m_transferAgent = std::make_unique<TransferAgent>(std::move(hooks));
 }
 
 void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::RemoteInput &input)
@@ -2400,7 +2408,18 @@ void Server::stopRemoteControl()
 void Server::handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message)
 {
   if (m_transferRouter && m_clientSet.contains(const_cast<BaseClientProxy *>(client)))
-    m_transferRouter->receive(getName(client), message);
+    receiveTransfer(getName(client), message);
+}
+
+void Server::receiveTransfer(const std::string &from, const deskflow::transfer::TransferMessage &message)
+{
+  using namespace deskflow::transfer;
+  m_transferRouter->receive(from, message);
+
+  // copied files still being listed when the cursor moved on follow it once they're offered
+  if (message.type == TransferMessage::Type::Offer && message.kind == TransferKind::Clipboard && message.value != 0 &&
+      m_enableClipboard && m_active != nullptr && getName(m_active) != from)
+    startClipboardTransfer(m_active);
 }
 
 void Server::deliverTransfer(const std::string &computer, const deskflow::transfer::TransferMessage &message)

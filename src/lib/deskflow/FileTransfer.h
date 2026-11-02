@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <map>
 #include <optional>
 #include <string>
@@ -57,9 +58,11 @@ std::string pathToUtf8(const std::filesystem::path &path);
 Files are taken as they are and directories are walked, with each file's
 relative path starting at the name of the item it came from. Empty folders
 are listed too, so they are recreated. Symbolic links and anything that isn't
-a regular file or directory are skipped.
+a regular file or directory are skipped. A large folder can take seconds, so
+\p stop is asked as it goes whether to give up, which returns what was found.
 */
-std::vector<FileEntry> collectFiles(const std::vector<std::filesystem::path> &items);
+std::vector<FileEntry>
+collectFiles(const std::vector<std::filesystem::path> &items, const std::function<bool()> &stop = {});
 
 //! Turn a relative path from the network into a safe local one, or nothing if it isn't safe
 std::optional<std::filesystem::path> safeRelativePath(const std::string &relative);
