@@ -326,6 +326,9 @@ private:
 
   // returns the corner (ScreenSwitchCornerMasks) where x,y is on the
   // given client.  corners have the given size.
+  //! True if crossing near monitor corners is blocked and \p x,\p y is near a corner of one of \p client's monitors
+  bool nearMonitorCorner(const BaseClientProxy *client, int32_t x, int32_t y) const;
+
   uint32_t getCorner(const BaseClientProxy *, int32_t x, int32_t y, int32_t size) const;
 
   // stop relative mouse moves
@@ -504,6 +507,7 @@ private:
   bool m_enableClipboard = true;
 
   uint64_t m_fileCopyLimit = uint64_t{512} * 1024 * 1024; //!< bytes of copied files sent with the cursor
+  int32_t m_monitorCornerSize = 0; //!< no crossing within this many pixels of a monitor's corner
   std::unique_ptr<deskflow::server::TransferRouter> m_transferRouter;
   std::unique_ptr<deskflow::transfer::TransferAgent> m_transferAgent;
   std::shared_ptr<deskflow::transfer::LocalTransferState> m_transferState;

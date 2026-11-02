@@ -672,6 +672,77 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="layoutBlockCorners">
+            <item>
+             <widget class="QCheckBox" name="cbBlockCorners">
+              <property name="text">
+               <string>Don't cross near a monitor's &amp;corners, within</string>
+              </property>
+              <property name="toolTip">
+               <string>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacerBlockCorners">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbBlockCornerSize">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="suffix">
+               <string> px</string>
+              </property>
+              <property name="minimum">
+               <number>5</number>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="singleStep">
+               <number>10</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacerBlockCorners_2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>50</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -961,6 +1032,8 @@ Enabling this setting will disable the server config GUI.</string>
   <tabstop>sbSwitchDelay</tabstop>
   <tabstop>cbSwitchDoubleTap</tabstop>
   <tabstop>sbSwitchDoubleTap</tabstop>
+  <tabstop>cbBlockCorners</tabstop>
+  <tabstop>sbBlockCornerSize</tabstop>
   <tabstop>cbEnableClipboard</tabstop>
   <tabstop>sbClipboardSizeLimit</tabstop>
   <tabstop>sbFileCopyLimit</tabstop>

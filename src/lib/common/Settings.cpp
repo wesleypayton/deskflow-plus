@@ -392,6 +392,10 @@ QVariant Settings::defaultValue(const QString &key)
   if (key == Server::ClipboardSize)
     return 3; // 3 MiB
 
+  // as in Mouse Without Borders
+  if (key == Server::BlockCornerSize)
+    return 100; // pixels
+
   if (key == Server::FileCopyLimit)
     return 512; // MiB
 

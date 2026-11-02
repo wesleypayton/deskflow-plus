@@ -90,6 +90,8 @@ void ServerConfigDialog::save()
   Settings::setValue(Settings::Server::DisableLockToComputer, m_disableLockToComputer);
   Settings::setValue(Settings::Server::EnableSwitchDoubleTap, m_enableSwitchDoubleTap);
   Settings::setValue(Settings::Server::SwitchDoubleTap, m_switchDoubleTap);
+  Settings::setValue(Settings::Server::BlockCorners, m_blockCorners);
+  Settings::setValue(Settings::Server::BlockCornerSize, m_blockCornerSize);
   Settings::setValue(Settings::Server::RelativeMouseMoves, m_relativeMouseMoves);
   Settings::setValue(Settings::Server::Win32KeepForeground, m_win32keepForeground);
   Settings::setValue(Settings::Server::ExternalConfig, ui->groupExternalConfig->isChecked());
@@ -320,6 +322,21 @@ void ServerConfigDialog::setSwitchDoubleTap(int within)
   setButtonBoxEnabledButtons();
 }
 
+void ServerConfigDialog::toggleBlockCorners(bool enable)
+{
+  m_blockCorners = enable;
+  ui->sbBlockCornerSize->setEnabled(enable);
+  setButtonBoxEnabledButtons();
+}
+
+void ServerConfigDialog::setBlockCornerSize(int size)
+{
+  if (m_blockCornerSize == size)
+    return;
+  m_blockCornerSize = size;
+  setButtonBoxEnabledButtons();
+}
+
 void ServerConfigDialog::toggleSwitchDelay(bool enable)
 {
   m_enableSwitchDelay = enable;
@@ -408,6 +425,8 @@ void ServerConfigDialog::loadFromConfig()
   m_switchDelay = Settings::value(Settings::Server::SwitchDelay).toInt();
   m_enableSwitchDoubleTap = Settings::value(Settings::Server::EnableSwitchDoubleTap).toBool();
   m_switchDoubleTap = Settings::value(Settings::Server::SwitchDoubleTap).toInt();
+  m_blockCorners = Settings::value(Settings::Server::BlockCorners).toBool();
+  m_blockCornerSize = Settings::value(Settings::Server::BlockCornerSize).toInt();
   m_defaultLockToComputerState = Settings::value(Settings::Server::DefaultLockToComputerState).toBool();
   m_disableLockToComputer = Settings::value(Settings::Server::DisableLockToComputer).toBool();
   m_enableClipboard = Settings::value(Settings::Server::EnableClipboard).toBool();
@@ -469,6 +488,9 @@ void ServerConfigDialog::refreshControls()
   ui->cbSwitchDoubleTap->setChecked(m_enableSwitchDoubleTap);
   ui->sbSwitchDoubleTap->setEnabled(ui->cbSwitchDoubleTap->isChecked());
   ui->sbSwitchDoubleTap->setValue(m_switchDoubleTap);
+  ui->cbBlockCorners->setChecked(m_blockCorners);
+  ui->sbBlockCornerSize->setEnabled(ui->cbBlockCorners->isChecked());
+  ui->sbBlockCornerSize->setValue(m_blockCornerSize);
   ui->widgetExternalConfigControls->setEnabled(ui->groupExternalConfig->isChecked());
   toggleExternalConfig(ui->groupExternalConfig->isChecked());
   ui->cbDefaultLockToComputerState->setChecked(m_defaultLockToComputerState);
@@ -513,6 +535,10 @@ void ServerConfigDialog::initConnections() const
   connect(ui->cbSwitchDelay, &QCheckBox::toggled, this, &ServerConfigDialog::toggleSwitchDelay);
   connect(ui->sbSwitchDelay, QOverload<int>::of(&QSpinBox::valueChanged), this, &ServerConfigDialog::setSwitchDelay);
   connect(ui->cbSwitchDoubleTap, &QCheckBox::toggled, this, &ServerConfigDialog::toggleSwitchDoubleTap);
+  connect(ui->cbBlockCorners, &QCheckBox::toggled, this, &ServerConfigDialog::toggleBlockCorners);
+  connect(
+      ui->sbBlockCornerSize, QOverload<int>::of(&QSpinBox::valueChanged), this, &ServerConfigDialog::setBlockCornerSize
+  );
   connect(
       ui->sbSwitchDoubleTap, QOverload<int>::of(&QSpinBox::valueChanged), this, &ServerConfigDialog::setSwitchDoubleTap
   );
@@ -560,6 +586,8 @@ void ServerConfigDialog::updateControls() const
   ui->cbWin32KeepForeground->setEnabled(writable);
   ui->cbSwitchDoubleTap->setEnabled(writable);
   ui->sbSwitchDoubleTap->setEnabled(writable && ui->cbSwitchDoubleTap->isChecked());
+  ui->cbBlockCorners->setEnabled(writable);
+  ui->sbBlockCornerSize->setEnabled(writable && ui->cbBlockCorners->isChecked());
   ui->sbSwitchDelay->setEnabled(writable && ui->cbSwitchDelay->isChecked());
   ui->groupExternalConfig->setEnabled(writable);
   setButtonBoxEnabledButtons();
@@ -576,6 +604,8 @@ void ServerConfigDialog::restoreFromDefaults()
   m_switchDelay = Settings::defaultValue(Settings::Server::SwitchDelay).toInt();
   m_enableSwitchDoubleTap = Settings::defaultValue(Settings::Server::EnableSwitchDoubleTap).toBool();
   m_switchDoubleTap = Settings::defaultValue(Settings::Server::SwitchDoubleTap).toInt();
+  m_blockCorners = Settings::defaultValue(Settings::Server::BlockCorners).toBool();
+  m_blockCornerSize = Settings::defaultValue(Settings::Server::BlockCornerSize).toInt();
   m_defaultLockToComputerState = Settings::defaultValue(Settings::Server::DefaultLockToComputerState).toBool();
   m_disableLockToComputer = Settings::defaultValue(Settings::Server::DisableLockToComputer).toBool();
   m_enableClipboard = Settings::defaultValue(Settings::Server::EnableClipboard).toBool();
@@ -629,6 +659,8 @@ bool ServerConfigDialog::isGeneralConfigModified() const
          m_switchDelay != Settings::value(Settings::Server::SwitchDelay).toInt() ||
          m_enableSwitchDoubleTap != Settings::value(Settings::Server::EnableSwitchDoubleTap).toBool() ||
          m_switchDoubleTap != Settings::value(Settings::Server::SwitchDoubleTap).toInt() ||
+         m_blockCorners != Settings::value(Settings::Server::BlockCorners).toBool() ||
+         m_blockCornerSize != Settings::value(Settings::Server::BlockCornerSize).toInt() ||
          m_relativeMouseMoves != Settings::value(Settings::Server::RelativeMouseMoves).toBool() ||
          m_win32keepForeground != Settings::value(Settings::Server::Win32KeepForeground).toBool() ||
          m_disableLockToComputer != Settings::value(Settings::Server::DisableLockToComputer).toBool() ||
@@ -649,6 +681,8 @@ bool ServerConfigDialog::isGeneralConfigDefault() const
          m_switchDelay == Settings::defaultValue(Settings::Server::SwitchDelay).toInt() &&
          m_enableSwitchDoubleTap == Settings::defaultValue(Settings::Server::EnableSwitchDoubleTap).toBool() &&
          m_switchDoubleTap == Settings::defaultValue(Settings::Server::SwitchDoubleTap).toInt() &&
+         m_blockCorners == Settings::defaultValue(Settings::Server::BlockCorners).toBool() &&
+         m_blockCornerSize == Settings::defaultValue(Settings::Server::BlockCornerSize).toInt() &&
          m_relativeMouseMoves == Settings::defaultValue(Settings::Server::RelativeMouseMoves).toBool() &&
          m_win32keepForeground == Settings::defaultValue(Settings::Server::Win32KeepForeground).toBool() &&
          m_disableLockToComputer == Settings::defaultValue(Settings::Server::DisableLockToComputer).toBool() &&

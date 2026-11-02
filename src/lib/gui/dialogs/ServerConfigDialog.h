@@ -51,6 +51,8 @@ protected:
 
   void toggleSwitchDoubleTap(bool enable);
   void setSwitchDoubleTap(int within);
+  void toggleBlockCorners(bool enable);
+  void setBlockCornerSize(int size);
 
   void toggleSwitchDelay(bool enable);
   void setSwitchDelay(int delay);
@@ -114,6 +116,8 @@ private:
   bool m_relativeMouseMoves;
   bool m_enableSwitchDelay;
   bool m_enableSwitchDoubleTap;
+  bool m_blockCorners = false;
+  int m_blockCornerSize = 100;
   bool m_originalServerConfigIsExternal;
   bool m_win32keepForeground;
   bool m_disableLockToComputer;

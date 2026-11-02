@@ -49,6 +49,11 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
 - **Starts with Windows and reconnects.** The installed version starts in the tray when you sign in and
   reconnects to the computers it was connected to; its background service already reconnects at the login
   screen, before anyone signs in. Turn this off under **Settings → Start when I sign in, and reconnect**.
+  A client remembers the address it last reached the server at, and tries it if the server's name can't
+  be found.
+- **Corners that don't cross.** Optionally, the cursor won't cross to another computer within 100 pixels of
+  a monitor's corner, so reaching for the Start button or a window's close button doesn't send it across.
+  Turn it on in **Configure Server → Advanced → Don't cross near a monitor's corners**.
 
 Files are sent through the server, encrypted with the rest of the connection, and are never written
 outside the folder they're dropped in. More detail is in the [design notes](../docs/dev/layout-rework.md).
@@ -105,8 +110,9 @@ Install or unpack Deskflow Plus on each computer, then:
    desk, check the green lines are where you expect the cursor to cross, and click **Save**.
 
 From then on both computers reconnect by themselves after a restart, as long as Deskflow Plus was running
-when they shut down. A client keeps trying every second until the server is back. To give a client more
-than one way to reach the server, such as its name and its IP address, enter them separated by commas.
+when they shut down. A client keeps trying every second until the server is back, and if the server's name
+can't be found it also tries the address it last connected at. To give a client more than one way to reach
+the server, such as its name and its IP address, enter them separated by commas.
 
 Dragging files works as soon as both computers are connected. Copying and pasting files also needs
 clipboard sharing left on (**Configure Server → Advanced**), where **Copied files limit** sets how much can

@@ -43,6 +43,8 @@ public:
     inline static const auto XScrollScale = QStringLiteral("client/xScrollScale");
     inline static const auto LanguageSync = QStringLiteral("client/languageSync");
     inline static const auto RemoteHost = QStringLiteral("client/remoteHost");
+    //! Where each server name last connected, see deskflow/RememberedServers.h
+    inline static const auto RememberedServers = QStringLiteral("client/rememberedServers");
     inline static const auto XdpClipboardRetried = QStringLiteral("client/xdpClipboardRetried");
     inline static const auto XdpRestoreToken = QStringLiteral("client/xdpRestoreToken");
   };
@@ -103,6 +105,8 @@ public:
   };
   struct Server
   {
+    inline static const auto BlockCorners = QStringLiteral("server/blockCorners");
+    inline static const auto BlockCornerSize = QStringLiteral("server/blockCornerSize");
     inline static const auto ClipboardSize = QStringLiteral("server/clipboardSize");
     inline static const auto FileCopyLimit = QStringLiteral("server/fileCopyLimit");
     inline static const auto DefaultLockToComputerState = QStringLiteral("server/defaultLockToComputerState");
@@ -280,6 +284,7 @@ private:
     , Client::InvertXScroll
     , Client::LanguageSync
     , Client::RemoteHost
+    , Client::RememberedServers
     , Client::YScrollScale
     , Client::XScrollScale
     , Core::CoreMode
@@ -321,6 +326,8 @@ private:
     , Security::CheckPeers
     , Security::KeySize
     , Security::TlsEnabled
+    , Server::BlockCorners
+    , Server::BlockCornerSize
     , Server::ClipboardSize
     , Server::FileCopyLimit
     , Server::DefaultLockToComputerState
@@ -359,6 +366,7 @@ private:
     , Client::XdpClipboardRetried
     , Log::ToFile
     , Log::GuiDebug
+    , Server::BlockCorners
     , Server::DefaultLockToComputerState
     , Server::DisableLockToComputer
     , Server::EnableHeartbeat

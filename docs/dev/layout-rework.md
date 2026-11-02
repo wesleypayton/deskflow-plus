@@ -167,6 +167,18 @@ Since the first two-machine test:
   finishes. The MSI starts it through Explorer, so it runs as the user and not
   elevated.
 
+Also from Mouse Without Borders:
+
+* A client remembers the address each server name last connected at
+  (`client/rememberedServers`, `deskflow/RememberedServers.h`) and, after the
+  addresses typed in, tries it too, so it still reaches the server when the
+  name doesn't resolve, as the first test's logs showed for minutes at a time.
+* Crossing can be blocked within a number of pixels of any monitor's corner
+  (`server/blockCorners`, `server/blockCornerSize`, option `DPMC`), checked in
+  `Server::isSwitchOkay` and for a client's own mouse in
+  `Server::startRemoteControl`. Deskflow's dead corners only cover the corners
+  of each computer's outline, and are set per computer.
+
 Since the second two-machine test:
 
 * A cursor crossing from a client lands at the edge of the next computer

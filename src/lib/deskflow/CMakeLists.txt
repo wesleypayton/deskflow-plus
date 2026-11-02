@@ -85,6 +85,8 @@ add_library(${lib_name} STATIC ${PLATFORM_CODE}
   ProtocolTypes.h
   ProtocolUtil.cpp
   ProtocolUtil.h
+  RememberedServers.cpp
+  RememberedServers.h
   RemoteInput.h
   ServerApp.cpp
   ServerApp.h

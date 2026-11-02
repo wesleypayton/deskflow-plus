@@ -70,6 +70,14 @@ create_test(
 )
 
 create_test(
+  NAME RememberedServersTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE RememberedServersTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
+create_test(
   NAME MonitorsTests
   DEPENDS app
   LIBS arch base ${extra_libs}

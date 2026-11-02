@@ -929,6 +929,12 @@ bool Server::isSwitchOkay(
     }
   }
 
+  if (nearMonitorCorner(m_active, xActive, yActive)) {
+    LOG_VERBOSE("near a monitor's corner");
+    preventSwitch = true;
+    stopSwitch();
+  }
+
   // ignore if mouse is locked to computer and don't try to switch later, unless the held button is
   // dragging files, which may be carried across
   if (!preventSwitch && isLockedToComputer() && (isLockedToComputerServer() || !fileDragAllowsSwitch())) {
@@ -1050,6 +1056,32 @@ void Server::stopSwitchWait()
 bool Server::isSwitchWaitStarted() const
 {
   return (m_switchWaitTimer != nullptr);
+}
+
+bool Server::nearMonitorCorner(const BaseClientProxy *client, int32_t x, int32_t y) const
+{
+  if (m_monitorCornerSize <= 0) {
+    return false;
+  }
+
+  auto monitors = client->getMonitors();
+  if (monitors.empty()) {
+    int32_t ax;
+    int32_t ay;
+    int32_t aw;
+    int32_t ah;
+    client->getShape(ax, ay, aw, ah);
+    monitors.push_back({ax, ay, aw, ah});
+  }
+
+  const auto near = [this, x, y](int32_t cornerX, int32_t cornerY) {
+    return std::abs(x - cornerX) < m_monitorCornerSize && std::abs(y - cornerY) < m_monitorCornerSize;
+  };
+  return std::ranges::any_of(monitors, [&near](const deskflow::MonitorRect &monitor) {
+    const int32_t right = monitor.x + monitor.width - 1;
+    const int32_t bottom = monitor.y + monitor.height - 1;
+    return near(monitor.x, monitor.y) || near(right, monitor.y) || near(monitor.x, bottom) || near(right, bottom);
+  });
 }
 
 uint32_t Server::getCorner(const BaseClientProxy *client, int32_t x, int32_t y, int32_t size) const
@@ -1193,6 +1225,8 @@ void Server::processOptions()
       if (!m_enableClipboard) {
         LOG_INFO("clipboard sharing is disabled");
       }
+    } else if (id == kOptionMonitorCornerSize) {
+      m_monitorCornerSize = std::max(value, 0);
     } else if (id == kOptionFileCopyLimit) {
       m_fileCopyLimit = static_cast<uint64_t>(std::max(value, 0)) * 1024 * 1024;
       if (m_fileCopyLimit == 0) {
@@ -2316,7 +2350,8 @@ void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::
 
 void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y)
 {
-  if (client == m_remoteSource || !client->supportsRemoteInput() || isLockedToComputer()) {
+  if (client == m_remoteSource || !client->supportsRemoteInput() || isLockedToComputer() ||
+      nearMonitorCorner(client, x, y)) {
     return;
   }
 

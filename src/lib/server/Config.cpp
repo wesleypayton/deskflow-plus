@@ -660,6 +660,11 @@ void Config::readSectionOptions(ConfigReadContext &s)
   addOption("", kOptionClipboardSharing, Settings::value(Settings::Server::EnableClipboard).toBool());
   addOption("", kOptionClipboardSharingSize, Settings::value(Settings::Server::ClipboardSize).toUInt() * 1024);
   addOption("", kOptionFileCopyLimit, Settings::value(Settings::Server::FileCopyLimit).toInt());
+  addOption(
+      "", kOptionMonitorCornerSize,
+      Settings::value(Settings::Server::BlockCorners).toBool() ? Settings::value(Settings::Server::BlockCornerSize).toInt()
+                                                               : 0
+  );
 
   if (const auto address = Settings::value(Settings::Core::Interface).toString(); !address.isEmpty()) {
     m_deskflowAddress = NetworkAddress(address.toStdString(), Settings::value(Settings::Core::Port).toInt());
