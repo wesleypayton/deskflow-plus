@@ -5,19 +5,19 @@
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>关于 Deskflow</translation>
+        <translation type="vanished">关于 Deskflow</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;许可证：GNU GPL 版本 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;许可证：GNU GPL 版本 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,20 +28,20 @@ p, li { white-space: pre-wrap; }
         <translation>复制版本信息</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;代码贡献者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;代码贡献者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图标来源： &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图标来源： &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -50,6 +50,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
+    </message>
+    <message>
+        <source>About Deskflow Plus</source>
+        <translation>关于 Deskflow Plus</translation>
+    </message>
+    <message>
+        <source>%1, based on Deskflow %2</source>
+        <translation>%1，基于 Deskflow %2</translation>
     </message>
 </context>
 <context>
@@ -139,216 +147,216 @@ p, li { white-space: pre-wrap; }
     <name>ClientConfigDialog</name>
     <message>
         <source>Client Configuration</source>
-        <translation type="unfinished">客户端配置</translation>
+        <translation>客户端配置</translation>
     </message>
     <message>
-        <source>Use server&apos;s keyboard language on this computer</source>
-        <translation type="unfinished">在此计算机上使用服务器的键盘语言</translation>
+        <source>Use server's keyboard language on this computer</source>
+        <translation>在此计算机上使用服务器的键盘语言</translation>
     </message>
     <message>
         <source>Scroll Modifiers</source>
-        <translation type="unfinished">滚动修饰符</translation>
+        <translation>滚动修饰键</translation>
     </message>
     <message>
         <source>Invert</source>
-        <translation type="unfinished">倒置</translation>
+        <translation>反转</translation>
     </message>
     <message>
         <source>Horizontal Scroll</source>
-        <translation type="unfinished">水平滚动</translation>
+        <translation>水平滚动</translation>
     </message>
     <message>
         <source>Vertical Scroll</source>
-        <translation type="unfinished">垂直滚动</translation>
+        <translation>垂直滚动</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished">规模</translation>
+        <translation>缩放</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allow the client to slow the rate it attempts to reconnect to the server when connections attempts are failing. The delay between connection attempts will  start at 1 second intervals and can be a maxium of 5 minutes between connection attempts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;允许客户端在连接尝试失败时，降低其重连服务器的频率。连接尝试之间的间隔将从 1 秒开始，最长可达 5 分钟。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;连接一直失败时，允许客户端放慢重新连接服务器的频率。两次尝试之间的等待从 1 秒开始，最长可达 5 分钟。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use dynamic reconnection time based on connection attempts</source>
-        <translation type="unfinished">根据连接尝试次数，采用动态重连时间</translation>
+        <translation>根据连接尝试次数调整重新连接时间</translation>
     </message>
 </context>
 <context>
     <name>ComputerLayoutView</name>
     <message>
         <source>This computer</source>
-        <translation type="unfinished"></translation>
+        <translation>此计算机</translation>
     </message>
     <message>
         <source>Edit…</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑…</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <source>Drag a new computer here to add it.</source>
-        <translation type="unfinished"></translation>
+        <translation>把新计算机拖到这里即可添加。</translation>
     </message>
 </context>
 <context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
-        <translation type="unfinished">计算机设置</translation>
+        <translation>计算机设置</translation>
     </message>
     <message>
         <source>Computer Info</source>
-        <translation type="unfinished">计算机信息</translation>
+        <translation>计算机信息</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>Modifier Keys</source>
-        <translation type="unfinished">修饰键</translation>
+        <translation>修饰键</translation>
     </message>
     <message>
         <source>M&amp;eta</source>
-        <translation type="unfinished">M&amp;eta</translation>
+        <translation>M&amp;eta</translation>
     </message>
     <message>
         <source>&amp;Ctrl</source>
-        <translation type="unfinished">&amp;Ctrl</translation>
+        <translation>&amp;Ctrl</translation>
     </message>
     <message>
         <source>S&amp;uper</source>
-        <translation type="unfinished">S&amp;uper</translation>
+        <translation>S&amp;uper</translation>
     </message>
     <message>
         <source>Al&amp;t</source>
-        <translation type="unfinished">Al&amp;t</translation>
+        <translation>Al&amp;t</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
     <message>
         <source>Alt Gr</source>
-        <translation type="unfinished">Alt Gr</translation>
+        <translation>Alt Gr</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">无</translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>&amp;Shift</source>
-        <translation type="unfinished">&amp;Shift</translation>
+        <translation>&amp;Shift</translation>
     </message>
     <message>
         <source>Alt &amp;Gr</source>
-        <translation type="unfinished">Alt &amp;Gr</translation>
+        <translation>Alt &amp;Gr</translation>
     </message>
     <message>
         <source>Dead Corners</source>
-        <translation type="unfinished">屏幕死角</translation>
+        <translation>死角</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">左上</translation>
+        <translation>左上</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">右上</translation>
+        <translation>右上</translation>
     </message>
     <message>
         <source>Corner si&amp;ze</source>
-        <translation type="unfinished">角落大小(&amp;Z)</translation>
+        <translation>角大小(&amp;Z)</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">左下</translation>
+        <translation>左下</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">右下</translation>
+        <translation>右下</translation>
     </message>
     <message>
         <source>Fixes</source>
-        <translation type="unfinished">修正</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <source>SCROLL LOCK key</source>
-        <translation type="unfinished">SCROLL LOCK 键</translation>
+        <translation>SCROLL LOCK 键</translation>
     </message>
     <message>
         <source>CAPS LOCK key</source>
-        <translation type="unfinished">CAPS LOCK 键</translation>
+        <translation>CAPS LOCK 键</translation>
     </message>
     <message>
         <source>NUM LOCK key</source>
-        <translation type="unfinished">NUM LOCK 键</translation>
+        <translation>NUM LOCK 键</translation>
     </message>
     <message>
         <source>XTest for Xinerama</source>
-        <translation type="unfinished">用于 Xinerama 的 XTest</translation>
+        <translation>用于 Xinerama 的 XTest</translation>
     </message>
     <message>
         <source>X11 computers Only, When enabled the client will not give focus to its focused window as soon as the client is switched to. This can help prevent unwanted focus stealing with some X11 setups.</source>
-        <translation type="unfinished">仅限 X11 系统：启用此选项后，当切换到该客户端时，其当前获得焦点的窗口不会立即获取焦点。这有助于在某些 X11 配置下防止意外的焦点抢占。</translation>
+        <translation>仅限 X11 计算机。启用后，切换到客户端时，客户端不会立即把焦点交给其活动窗口。在某些 X11 环境中可避免焦点被意外抢走。</translation>
     </message>
     <message>
         <source>Weaken X11 Focus</source>
-        <translation type="unfinished">弱化 X11 焦点</translation>
+        <translation>减弱 X11 焦点</translation>
     </message>
     <message>
         <source>Aliases</source>
-        <translation type="unfinished">别名</translation>
+        <translation>别名</translation>
     </message>
     <message>
         <source>&amp;Add</source>
-        <translation type="unfinished">添加(&amp;A)</translation>
+        <translation>添加(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation type="unfinished">移除(&amp;R)</translation>
+        <translation>移除(&amp;R)</translation>
     </message>
     <message>
         <source>Computer name is empty</source>
-        <translation type="unfinished">计算机名称为空</translation>
+        <translation>计算机名称为空</translation>
     </message>
     <message>
         <source>The computer name cannot be empty. Please either fill in a name or cancel the dialog.</source>
-        <translation type="unfinished">计算机名称不能为空。请填写名称或取消对话框。</translation>
+        <translation>计算机名称不能为空。请填写名称或取消对话框。</translation>
     </message>
     <message>
         <source>Computer name matches alias</source>
-        <translation type="unfinished">计算机名称与别名匹配</translation>
+        <translation>计算机名称与别名相同</translation>
     </message>
     <message>
         <source>The computer name cannot be the same as an alias. Please either remove the alias or change the computer name.</source>
-        <translation type="unfinished">计算机名称不能与别名相同。请删除别名或更改计算机名称。</translation>
+        <translation>计算机名称不能与别名相同。请移除该别名或更改计算机名称。</translation>
     </message>
 </context>
 <context>
     <name>ComputerSetupModel</name>
     <message>
         <source>&lt;center&gt;Computer: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag computer to the trashcan to remove it</source>
-        <translation type="unfinished">&lt;center&gt;计算机：&lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;双击以编辑设置&lt;br&gt;将计算机拖至废纸篓以将其移除</translation>
+        <translation>&lt;center&gt;计算机：&lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;双击可编辑设置&lt;br&gt;拖到废纸篓即可移除</translation>
     </message>
 </context>
 <context>
@@ -358,7 +366,7 @@ p, li { white-space: pre-wrap; }
         <translation>本地指纹</translation>
     </message>
     <message>
-        <source>Local computer&apos;s fingerprint</source>
+        <source>Local computer's fingerprint</source>
         <translation>本地计算机的指纹</translation>
     </message>
     <message>
@@ -435,11 +443,11 @@ Do you want to connect to the server?
     <name>HelpDialog</name>
     <message>
         <source>%1 Help</source>
-        <translation type="unfinished">%1 帮助</translation>
+        <translation>%1 帮助</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">关闭</translation>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
@@ -476,37 +484,37 @@ Do you want to connect to the server?
     <name>LogLevel</name>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">致命</translation>
+        <translation>致命</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">信息</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">调试</translation>
+        <translation>调试</translation>
     </message>
     <message>
         <source>Verbose</source>
-        <translation type="unfinished">冗长的</translation>
+        <translation>详细</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>This computer&apos;s name:</source>
+        <source>This computer's name:</source>
         <translation>此计算机名称：</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;名称不能包含空格或特殊字符&lt;/p&gt;&lt;p&gt;按 Enter 键保存更改。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -514,7 +522,7 @@ Do you want to connect to the server?
         <translation>编辑计算机名称</translation>
     </message>
     <message>
-        <source>Use this computer&apos;s keyboard and mouse
+        <source>Use this computer's keyboard and mouse
 (make this computer the server)</source>
         <translation>使用此计算机的键盘和鼠标
 (将此计算机设为服务器)</translation>
@@ -551,7 +559,7 @@ Do you want to connect to the server?
     </message>
     <message>
         <source>invalid certificate, generating a new one</source>
-        <translation type="unfinished">证书无效，正在生成新证书</translation>
+        <translation>证书无效，正在生成新证书</translation>
     </message>
     <message>
         <source>Address missing</source>
@@ -574,6 +582,42 @@ Do you want to connect to the server?
         <translation>无法将服务器配置保存到文件。</translation>
     </message>
     <message>
+        <source>Looking...</source>
+        <translation>正在查找...</translation>
+    </message>
+    <message>
+        <source>No %1 servers answered on this network. Check that the server is running.</source>
+        <translation>此网络上没有 %1 服务器响应。请检查服务器是否正在运行。</translation>
+    </message>
+    <message>
+        <source>Save Logs for a Bug Report</source>
+        <translation>保存日志以报告问题</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation>文本文件 (*.txt)</translation>
+    </message>
+    <message>
+        <source>Save Logs</source>
+        <translation>保存日志</translation>
+    </message>
+    <message>
+        <source>Couldn't save the logs: %1</source>
+        <translation>无法保存日志：%1</translation>
+    </message>
+    <message>
+        <source>The logs are saved in %1.</source>
+        <translation>日志已保存到 %1。</translation>
+    </message>
+    <message>
+        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <translation>其中包含此计算机的名称和设置，以及它所连接的计算机的名称和地址。请把该文件附加到问题报告中。</translation>
+    </message>
+    <message>
+        <source>Show in Folder</source>
+        <translation>在文件夹中显示</translation>
+    </message>
+    <message>
         <source>Start</source>
         <translation>启动</translation>
     </message>
@@ -590,56 +634,74 @@ Do you want to connect to the server?
         <translation>断开</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;连接到服务器“%1”失败。&lt;/p&gt;&lt;p&gt;一个同名的客户端已连接到服务器。&lt;/p&gt;请确保您使用的名称唯一，且只有一个客户端进程实例在运行。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>View &amp;Help</source>
-        <translation type="unfinished">查看帮助(&amp;H)</translation>
+        <translation>查看帮助(&amp;H)</translation>
+    </message>
+    <message>
+        <source>Save &amp;Logs for a Bug Report...</source>
+        <translation>保存日志以报告问题(&amp;L)...</translation>
     </message>
     <message>
         <source>Receiving files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>正在接收文件：%1%（%2 / %3 MB）</translation>
     </message>
     <message>
         <source>Sending files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>正在发送文件：%1%（%2 / %3 MB）</translation>
     </message>
     <message>
         <source>Files sent</source>
-        <translation type="unfinished"></translation>
+        <translation>文件已发送</translation>
     </message>
     <message numerus="yes">
         <source>Received %n dropped item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>已收到 %n 个拖放的项目</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Received %n copied item(s), ready to paste</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>已收到 %n 个复制的项目，可以粘贴</numerusform>
         </translation>
     </message>
     <message>
         <source>Files received</source>
-        <translation type="unfinished"></translation>
+        <translation>文件已收到</translation>
     </message>
     <message>
         <source>File transfer failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>文件传输失败：%1</translation>
     </message>
     <message>
         <source>File transfer failed</source>
-        <translation type="unfinished"></translation>
+        <translation>文件传输失败</translation>
     </message>
     <message>
         <source>Invalid Computer Name</source>
-        <translation type="unfinished"></translation>
+        <translation>计算机名称无效</translation>
     </message>
     <message>
         <source>Computer name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>计算机名称已存在</translation>
+    </message>
+    <message>
+        <source>The name you have chosen is invalid.
+
+Valid names:
+â€¢ Use letters and numbers
+â€¢ May also use _ or -
+â€¢ Are between 1 and 255 characters</source>
+        <translation type="vanished">你选择的名称无效。
+
+有效名称：
+• 使用字母和数字
+• 也可使用 _ 或 -
+• 长度为 1 到 255 个字符</translation>
     </message>
     <message>
         <source>No IP Detected</source>
@@ -651,7 +713,7 @@ Do you want to connect to the server?
     </message>
     <message>
         <source>Using IP: </source>
-        <translation type="unfinished">使用IP地址： </translation>
+        <translation>正在使用的 IP：</translation>
     </message>
     <message>
         <source>&lt;p&gt;If connecting via the hostname fails, try %1&lt;/p&gt;</source>
@@ -668,8 +730,8 @@ Do you want to connect to the server?
     <message>
         <source>
 A bound IP is now invalid, you may need to restart the server.</source>
-        <translation type="unfinished">
-绑定的IP地址现在无效，您可能需要重启服务器。</translation>
+        <translation>
+已绑定的 IP 已失效，可能需要重新启动服务器。</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -752,51 +814,59 @@ Valid names:
     </message>
     <message>
         <source>Suggested IP: </source>
-        <translation type="unfinished">建议 IP： </translation>
+        <translation>建议的 IP：</translation>
     </message>
     <message>
         <source>&amp;Configure Client</source>
-        <translation type="unfinished">配置客户端(&amp;C)</translation>
+        <translation>配置客户端(&amp;C)</translation>
     </message>
     <message>
         <source>Connect to:</source>
-        <translation type="unfinished">连接到：</translation>
+        <translation>连接到：</translation>
     </message>
     <message>
         <source>&lt;html&gt;Hostname or IP address of the server computer.&lt;br/&gt;May contain a comma seperated list.&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;服务器计算机的主机名或 IP 地址。&lt;br/&gt;可以包含以逗号分隔的列表。&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;服务器计算机的主机名或 IP 地址。&lt;br/&gt;可以是用逗号分隔的列表。&lt;/html&gt;</translation>
     </message>
     <message>
         <source>read</source>
-        <translation type="unfinished">读取</translation>
+        <translation>读取</translation>
     </message>
     <message>
         <source>read and write</source>
-        <translation type="unfinished">读取和写入</translation>
+        <translation>读取和写入</translation>
     </message>
     <message>
         <source>The Core executable could not be started.
 Please check if you have sufficient permissions to run %1.</source>
-        <translation type="unfinished">无法启动Core可执行文件。
-请检查您是否有足够的权限来运行%1。</translation>
+        <translation>无法启动核心程序。
+请检查你是否有足够的权限运行 %1。</translation>
     </message>
     <message>
         <source>
 Additionally, check you are able to %1 the server config file: %2</source>
-        <translation type="unfinished">
-另外，请检查您是否能够%1服务器配置文件：%2</translation>
+        <translation>
+另外，请检查你能否%1服务器配置文件：%2</translation>
     </message>
     <message>
-        <source>Don&apos;t show this again</source>
-        <translation type="unfinished"></translation>
+        <source>Don't show this again</source>
+        <translation>不再显示</translation>
     </message>
     <message>
         <source>Missing Keyboard Layouts</source>
-        <translation type="unfinished"></translation>
+        <translation>缺少键盘布局</translation>
     </message>
     <message>
         <source>&lt;p&gt;Keyboard layout support requires matching layouts on all computers. The following layouts from the other computer are not installed on this computer:&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Please install them to enable support for these layouts.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;键盘布局需要所有计算机上都相同。另一台计算机的以下布局未安装在此计算机上：&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;请安装它们以使用这些布局。&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Look for Deskflow Plus servers on this network</source>
+        <translation>在此网络上查找 Deskflow Plus 服务器</translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation>查找...</translation>
     </message>
 </context>
 <context>
@@ -804,7 +874,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation type="unfinished">未命名</translation>
+        <translation>未命名</translation>
     </message>
 </context>
 <context>
@@ -836,16 +906,16 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1 将在后台继续运行，可通过系统通知区域的 %1 图标访问。此设置可以禁用。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;请 &lt;a href=&quot;%1&quot;&gt;报告 Bug&lt;/a&gt; 并复制/粘贴以下错误：&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;请 &lt;a href="%1"&gt;报告 Bug&lt;/a&gt; 并复制/粘贴以下错误：&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;在使用 GNOME 3 的 Linux 系统上，通知区域可能被禁用。您可能需要 &lt;a href=&quot;%1&quot;&gt;启用扩展&lt;/a&gt; 才能看到 %2 托盘图标。&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;在使用 GNOME 3 的 Linux 系统上，通知区域可能被禁用。您可能需要 &lt;a href="%1"&gt;启用扩展&lt;/a&gt; 才能看到 %2 托盘图标。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -853,14 +923,14 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>&lt;p&gt;Great, the %1 server is now running.&lt;/p&gt;&lt;p&gt;Now you can connect your client computers to this server. You should see a prompt here on the server when a new client tries to connect.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;太好了，服务器 %1 已在运行。&lt;/p&gt;&lt;p&gt;现在您可以将客户端计算机连接到此服务器。当新客户端尝试连接时，您会在服务器端看到提示。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 服务器已在运行。&lt;/p&gt;&lt;p&gt;现在可以把客户端计算机连接到此服务器。有新客户端尝试连接时，服务器上会在这里显示提示。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;%1 is now connected!&lt;/p&gt;</source>
         <translation>&lt;p&gt;%1 已连接！&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
         <translation>&lt;p&gt;试着将鼠标移动到另一台计算机。移动过去后，尝试输入一些内容。&lt;/p&gt;&lt;p&gt;别忘了，您还可以在计算机之间进行复制和粘贴。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -868,7 +938,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;尝试远程控制此计算机。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;由于您未启用让 %1 在后台运行的设置，您需要保持此窗口打开或最小化以使 %1 保持运行。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -884,8 +954,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>%1 - 新客户端</translation>
     </message>
     <message>
-        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
-        <translation type="unfinished"></translation>
+        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
+        <translation>已接受名为“%1”的新客户端。请把它添加到服务器的计算机布局中。</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -896,20 +966,20 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>添加客户端</translation>
     </message>
     <message>
-        <source>A new client called &apos;%1&apos; wants to connect</source>
+        <source>A new client called '%1' wants to connect</source>
         <translation>名为“%1”的新客户端请求连接</translation>
     </message>
     <message>
         <source>No thanks</source>
-        <translation>不，谢谢</translation>
+        <translation type="vanished">不，谢谢</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>检查更新</translation>
+        <translation type="vanished">检查更新</translation>
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;您希望在 %1 启动时检查更新吗？&lt;/p&gt;&lt;p&gt;检查更新需要互联网连接。&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;您希望在 %1 启动时检查更新吗？&lt;/p&gt;&lt;p&gt;检查更新需要互联网连接。&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
@@ -924,27 +994,27 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;查找 %1 后台服务（守护进程）时出现问题。&lt;/p&gt;&lt;p&gt;%1 需后台服务来与 UAC 提示和登录屏幕配合工作。&lt;/p&gt;&lt;p&gt;如果您不想使用后台服务并已将其停止，可以通过禁用此功能来阻止使用它。&lt;/p&gt;&lt;p&gt;如果您并非有意停止后台服务，则可能存在问题。请重试，或尝试从 Windows 服务程序中重启 %1 服务。&lt;/p&gt;</translation>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;找不到 %1 后台服务（守护进程）。&lt;/p&gt;&lt;p&gt;有了后台服务，%1 才能在 UAC 提示和登录屏幕上工作。&lt;/p&gt;&lt;p&gt;如果你不想使用后台服务并特意停止了它，可以关闭此功能。&lt;/p&gt;&lt;p&gt;如果你没有特意停止它，它可能出了问题。请重试，或在 Windows 的“服务”程序中重新启动 %1 服务。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>failed to read key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">无法从证书文件中读取密钥：%1</translation>
+        <translation>无法从证书文件读取密钥：%1</translation>
     </message>
     <message>
         <source>failed to parse certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">解析证书文件失败：%1</translation>
+        <translation>无法解析证书文件：%1</translation>
     </message>
     <message>
         <source>key detected is the incorrect size</source>
-        <translation type="unfinished">检测到的密钥大小不正确</translation>
+        <translation>检测到的密钥大小不正确</translation>
     </message>
     <message>
         <source>failed to read RSA key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">无法从证书文件中读取 RSA 密钥：%1</translation>
+        <translation>无法从证书文件读取 RSA 密钥：%1</translation>
     </message>
     <message>
         <source>%1 is already running</source>
@@ -952,50 +1022,50 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>AltGr</source>
-        <translation type="unfinished">AltGr</translation>
+        <translation>AltGr</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">无</translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">搜索</translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>Find next</source>
-        <translation type="unfinished">查找下一个</translation>
+        <translation>查找下一个</translation>
     </message>
     <message>
         <source>Find previous</source>
-        <translation type="unfinished">查找上一个</translation>
+        <translation>查找上一个</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished">寻找...</translation>
+        <translation>查找...</translation>
     </message>
 </context>
 <context>
@@ -1073,7 +1143,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>使用相对鼠标移动(&amp;R)</translation>
     </message>
     <message>
-        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
+        <source>Don't take &amp;foreground window (Windows only)</source>
         <translation>不获取前台窗口焦点 (仅限 Windows)(&amp;F)</translation>
     </message>
     <message>
@@ -1093,8 +1163,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>网络(&amp;N)</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用网络心跳，每 &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; 秒 ping 一次客户端。如果客户端无响应，通过重试连接可能有助于诊断网络问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用网络心跳，每 &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; 秒 ping 一次客户端。如果客户端无响应，通过重试连接可能有助于诊断网络问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
@@ -1105,8 +1175,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>毫秒</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用与使用 Synergy 或 Barrier 协议的程序的兼容性：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 使用 Synergy 协议。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap 和 Synergy 1 使用 Barrier 协议。&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 客户端将根据服务器协议自动使用 Synergy 或 Barrier 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用与使用 Synergy 或 Barrier 协议的程序的兼容性：&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 使用 Synergy 协议。&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap 和 Synergy 1 使用 Barrier 协议。&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 客户端将根据服务器协议自动使用 Synergy 或 Barrier 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
@@ -1151,27 +1221,39 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>Enable lock to computer at startup</source>
-        <translation type="unfinished">启动时启用锁定到计算机</translation>
+        <translation>启动时开启计算机锁定</translation>
     </message>
     <message>
         <source>Drag a computer off the layout onto the trashcan to remove it.</source>
-        <translation type="unfinished"></translation>
+        <translation>把计算机从布局拖到废纸篓即可移除。</translation>
     </message>
     <message>
         <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
-        <translation type="unfinished"></translation>
+        <translation>可以把计算机拖到任意位置，它们会彼此吸附。两台计算机相接处，光标就能过去。双击计算机可编辑它。</translation>
     </message>
     <message>
         <source>Drag onto the layout to add a new computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>拖到布局中即可添加新计算机。</translation>
     </message>
     <message>
         <source>Copied files limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>复制文件的上限：</translation>
     </message>
     <message>
         <source>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</source>
-        <translation type="unfinished"></translation>
+        <translation>在资源管理器中复制的文件会跟随光标到另一台计算机，最大为此大小。设为 0 则关闭。</translation>
+    </message>
+    <message>
+        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <translation>不在显示器的角附近切换(&amp;C)，范围</translation>
+    </message>
+    <message>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <translation>在你移向开始按钮、窗口关闭按钮或热角时，防止光标跑到另一台计算机</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> 像素</translation>
     </message>
 </context>
 <context>
@@ -1182,7 +1264,7 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>启动时检查更新</translation>
+        <translation type="vanished">启动时检查更新</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
@@ -1250,7 +1332,7 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>Always run as system (work at login screen and UAC)</source>
-        <translation type="unfinished">始终以系统身份运行 (在登录屏幕和 UAC 下工作)</translation>
+        <translation>始终以系统身份运行（可在登录屏幕和 UAC 时工作）</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1274,11 +1356,11 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>%1 Clear Settings</source>
-        <translation type="unfinished">%1 清除设置</translation>
+        <translation>%1 清除设置</translation>
     </message>
     <message>
         <source>&lt;p&gt;Are you sure you want to clear all settings and restart %1?&lt;/p&gt; &lt;p&gt;This action cannot be undone.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;您确定要清除所有设置并重新启动 %1 吗？&lt;/p&gt; &lt;p&gt;此操作无法撤销。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;确定要清除所有设置并重新启动 %1 吗？&lt;/p&gt; &lt;p&gt;此操作无法撤销。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Required messages</source>
@@ -1305,12 +1387,40 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>详细调试输出</translation>
     </message>
     <message>
+        <source>Ask me</source>
+        <translation>询问我</translation>
+    </message>
+    <message>
+        <source>Ask when there's a new version</source>
+        <translation>有新版本时询问</translation>
+    </message>
+    <message>
+        <source>Install automatically</source>
+        <translation>自动安装</translation>
+    </message>
+    <message>
+        <source>Install new versions as soon as they're found</source>
+        <translation>一发现新版本就安装</translation>
+    </message>
+    <message>
+        <source>Don't check</source>
+        <translation>不检查</translation>
+    </message>
+    <message>
+        <source>Don't look for new versions</source>
+        <translation>不查找新版本</translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation>正在检查...</translation>
+    </message>
+    <message>
         <source>Automatic</source>
-        <translation type="unfinished">自动的</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Include version in the window title</source>
-        <translation type="unfinished">在窗口标题中包含版本信息</translation>
+        <translation>在窗口标题中显示版本</translation>
     </message>
     <message>
         <source>Log to file</source>
@@ -1318,7 +1428,7 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>&amp;Logs</source>
-        <translation type="unfinished">日志(&amp;L)</translation>
+        <translation>日志(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;General</source>
@@ -1330,70 +1440,94 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished">窗户(&amp;W)</translation>
+        <translation>窗口(&amp;W)</translation>
     </message>
     <message>
         <source>When the main window is closed</source>
-        <translation type="unfinished">主窗口关闭时</translation>
+        <translation>关闭主窗口时</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">出口</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>Send to background</source>
-        <translation type="unfinished">发送到后台</translation>
+        <translation>转到后台</translation>
     </message>
     <message>
         <source>When the application starts</source>
-        <translation type="unfinished">应用程序启动时</translation>
+        <translation>应用程序启动时</translation>
     </message>
     <message>
         <source>Show the main window</source>
-        <translation type="unfinished">显示主窗口</translation>
+        <translation>显示主窗口</translation>
     </message>
     <message>
         <source>Run command on enter</source>
-        <translation type="unfinished">按下回车键执行命令</translation>
+        <translation>进入时运行命令</translation>
     </message>
     <message>
         <source>Run command on exit</source>
-        <translation type="unfinished">退出时运行命令</translation>
+        <translation>离开时运行命令</translation>
     </message>
     <message>
         <source>Using a log level higher than Info may affect performance.</source>
-        <translation type="unfinished">使用高于 Info 级别的日志级别可能会影响性能。</translation>
+        <translation>使用高于“信息”的日志级别可能影响性能。</translation>
     </message>
     <message>
         <source>Remove all settings</source>
-        <translation type="unfinished">移除所有设置</translation>
+        <translation>移除所有设置</translation>
+    </message>
+    <message>
+        <source>New versions</source>
+        <translation>新版本</translation>
+    </message>
+    <message>
+        <source>Check now</source>
+        <translation>立即检查</translation>
+    </message>
+    <message>
+        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <translation>测试版包含最新的修复和功能，但经过的测试较少</translation>
+    </message>
+    <message>
+        <source>Include test builds</source>
+        <translation>包括测试版</translation>
+    </message>
+    <message>
+        <source>Start when I sign in, and reconnect</source>
+        <translation>登录时启动并重新连接</translation>
+    </message>
+    <message>
+        <source>Starts in the background each time you sign in and, if it was running before, connects again</source>
+        <translation>每次登录时在后台启动；如果之前在运行，会重新连接</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialogButtonBox</name>
     <message>
         <source>Settings are read only</source>
-        <translation type="unfinished">设置仅为只读</translation>
+        <translation>设置为只读</translation>
     </message>
     <message>
         <source>%1 is not writable</source>
-        <translation type="unfinished">%1 不可写入</translation>
+        <translation>%1 不可写入</translation>
     </message>
     <message>
         <source>Close and save changes</source>
-        <translation type="unfinished">关闭并保存更改</translation>
+        <translation>关闭并保存更改</translation>
     </message>
     <message>
         <source>Close and forget changes</source>
-        <translation type="unfinished">关闭并放弃修改</translation>
+        <translation>关闭并放弃更改</translation>
     </message>
     <message>
         <source>Reset to stored values</source>
-        <translation type="unfinished">重置为存储值</translation>
+        <translation>恢复为已保存的值</translation>
     </message>
     <message>
         <source>Reset to default values</source>
-        <translation type="unfinished">重置为默认值</translation>
+        <translation>恢复为默认值</translation>
     </message>
 </context>
 <context>
@@ -1452,12 +1586,28 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>有可用更新</translation>
     </message>
     <message>
+        <source>Slow connection to %1</source>
+        <translation>与 %1 的连接较慢</translation>
+    </message>
+    <message>
+        <source>Slow connections</source>
+        <translation>连接较慢</translation>
+    </message>
+    <message>
+        <source>%1: %2 ms there and back, which makes the mouse stutter</source>
+        <translation>%1：往返需要 %2 毫秒，导致鼠标卡顿</translation>
+    </message>
+    <message>
+        <source>A wired connection, or turning off Wi-Fi power saving, usually helps.</source>
+        <translation>改用有线连接或关闭 Wi-Fi 节能通常会有帮助。</translation>
+    </message>
+    <message>
         <source>%1 is connecting...</source>
         <translation>%1 正在连接...</translation>
     </message>
     <message>
         <source>%1 is waiting %2 seconds before the next retry</source>
-        <translation type="unfinished">%1 正在等待 %2 秒，然后进行下一次重试</translation>
+        <translation>%1 将在 %2 秒后再次尝试</translation>
     </message>
     <message>
         <source>%1 Encryption Enabled</source>
@@ -1466,6 +1616,130 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Encryption Disabled</source>
         <translation>加密已禁用</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDownload</name>
+    <message>
+        <source>The download was cancelled.</source>
+        <translation>下载已取消。</translation>
+    </message>
+    <message>
+        <source>The file is %1 bytes, but the release lists %2.</source>
+        <translation>文件大小为 %1 字节，但发布中列出的是 %2。</translation>
+    </message>
+    <message>
+        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <translation>文件与发布中列出的不同：SHA-256 不匹配。</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>新版本：%1（&lt;a href="%2"&gt;新内容&lt;/a&gt;）&lt;br&gt;你的版本：%3</translation>
+    </message>
+    <message>
+        <source>%1 closes for a moment while the update installs, then starts again.</source>
+        <translation>安装更新时 %1 会暂时关闭，然后重新启动。</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>检查更新</translation>
+    </message>
+    <message>
+        <source>Couldn't check for updates: %1</source>
+        <translation>无法检查更新：%1</translation>
+    </message>
+    <message>
+        <source>You have the newest version of %1, %2.</source>
+        <translation>你已在使用 %1 的最新版本 %2。</translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation>有可用更新</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available. Would you like to update?&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1 有新版本。要更新吗？&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>总是</translation>
+    </message>
+    <message>
+        <source>Update now, and install new versions automatically from now on</source>
+        <translation>立即更新，以后自动安装新版本</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <source>Open the download page</source>
+        <translation>打开下载页面</translation>
+    </message>
+    <message>
+        <source>Update this time</source>
+        <translation>仅这次更新</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>否</translation>
+    </message>
+    <message numerus="yes">
+        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <translation>
+            <numerusform>这次不更新。%n 天后会再次询问。</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>从不</translation>
+    </message>
+    <message>
+        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <translation>不更新，也不再询问。可以在设置中更改。</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available.&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1 有新版本。&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Open download page</source>
+        <translation>打开下载页面</translation>
+    </message>
+    <message>
+        <source>Update now</source>
+        <translation>立即更新</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>以后再说</translation>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation>正在下载 %1 %2...</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Updating %1</source>
+        <translation>正在更新 %1</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Couldn't install the update. %1</source>
+        <translation>无法安装更新。%1</translation>
+    </message>
+    <message>
+        <source>Couldn't download the update. %1</source>
+        <translation>无法下载更新。%1</translation>
     </message>
 </context>
 <context>
@@ -1495,19 +1769,19 @@ Enabling this setting will disable the server config GUI.</source>
     <name>validators::ComputerLineNameValidator</name>
     <message>
         <source>Computer name cannot be empty</source>
-        <translation type="unfinished">计算机名称不能为空</translation>
+        <translation>计算机名称不能为空</translation>
     </message>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation type="unfinished">计算机名称不能包含空格</translation>
+        <translation>计算机名称不能包含空格</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation type="unfinished">包含无效字符或过长</translation>
+        <translation>包含无效字符或太长</translation>
     </message>
     <message>
         <source>A computer with this name already exists</source>
-        <translation type="unfinished">一台同名的计算机已经存在</translation>
+        <translation>已有同名计算机</translation>
     </message>
 </context>
 </TS>

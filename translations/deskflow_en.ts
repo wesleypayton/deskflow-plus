@@ -5,16 +5,16 @@
     <name>MainWindow</name>
     <message numerus="yes">
         <source>Received %n dropped item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Received %n dropped item</numerusform>
+            <numerusform>Received %n dropped items</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Received %n copied item(s), ready to paste</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Received %n copied item, ready to paste</numerusform>
+            <numerusform>Received %n copied items, ready to paste</numerusform>
         </translation>
     </message>
 </context>
@@ -26,6 +26,16 @@
         <translation>
             <numerusform>%1 is connected, with a client: %2</numerusform>
             <numerusform>%1 is connected, with %n clients: %2</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message numerus="yes">
+        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <translation>
+            <numerusform>Don't update this time. You'll be asked again in %n day.</numerusform>
+            <numerusform>Don't update this time. You'll be asked again in %n days.</numerusform>
         </translation>
     </message>
 </context>

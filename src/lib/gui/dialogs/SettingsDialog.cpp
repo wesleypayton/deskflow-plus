@@ -242,7 +242,7 @@ void SettingsDialog::updateText()
   const QList<std::tuple<Mode, QString, QString>> updateModes = {
       {Mode::Ask, tr("Ask me"), tr("Ask when there's a new version")},
       {Mode::Always, tr("Install automatically"),
-       tr("Install new versions when they're found. Windows still asks for permission.")},
+       tr("Install new versions as soon as they're found")},
       {Mode::Never, tr("Don't check"), tr("Don't look for new versions")}
   };
   for (const auto &[mode, text, toolTip] : updateModes) {

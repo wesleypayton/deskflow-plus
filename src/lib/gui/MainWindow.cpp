@@ -1338,9 +1338,9 @@ void MainWindow::setHostName()
       body =
           tr("The name you have chosen is invalid.\n\n"
              "Valid names:\n"
-             "â€¢ Use letters and numbers\n"
-             "â€¢ May also use _ or -\n"
-             "â€¢ Are between 1 and 255 characters");
+             "• Use letters and numbers\n"
+             "• May also use _ or -\n"
+             "• Are between 1 and 255 characters");
     }
     QMessageBox::information(this, title, body);
     return;
