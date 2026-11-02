@@ -8,16 +8,16 @@
         <translation type="vanished">О Deskflow</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Лицензия: GNU GPL версии 2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Лицензия: GNU GPL версии 2&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,20 +28,20 @@ p, li { white-space: pre-wrap; }
         <translation>Скопировать сведения о версии</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Авторы кода&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Авторы кода&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Иконки &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Иконки &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -150,7 +150,7 @@ p, li { white-space: pre-wrap; }
         <translation>Настройки клиента</translation>
     </message>
     <message>
-        <source>Use server's keyboard language on this computer</source>
+        <source>Use server&apos;s keyboard language on this computer</source>
         <translation>Использовать на этом компьютере язык клавиатуры сервера</translation>
     </message>
     <message>
@@ -366,7 +366,7 @@ p, li { white-space: pre-wrap; }
         <translation>Локальные отпечатки</translation>
     </message>
     <message>
-        <source>Local computer's fingerprint</source>
+        <source>Local computer&apos;s fingerprint</source>
         <translation>Отпечаток локального компьютера</translation>
     </message>
     <message>
@@ -510,11 +510,11 @@ Do you want to connect to the server?
 <context>
     <name>MainWindow</name>
     <message>
-        <source>This computer's name:</source>
+        <source>This computer&apos;s name:</source>
         <translation>Имя этого компьютера:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Имя не может содержать пробелы или специальные символы.&lt;/p&gt;&lt;p&gt;Нажмите Enter, чтобы сохранить изменения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -522,7 +522,7 @@ Do you want to connect to the server?
         <translation>Изменить имя компьютера</translation>
     </message>
     <message>
-        <source>Use this computer's keyboard and mouse
+        <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
         <translation>Использовать мышь и клавиатуру этого компьютера
 (сделать этот компьютер сервером)</translation>
@@ -602,7 +602,7 @@ Do you want to connect to the server?
         <translation>Сохранить журналы</translation>
     </message>
     <message>
-        <source>Couldn't save the logs: %1</source>
+        <source>Couldn&apos;t save the logs: %1</source>
         <translation>Не удалось сохранить журналы: %1</translation>
     </message>
     <message>
@@ -610,7 +610,7 @@ Do you want to connect to the server?
         <translation>Журналы сохранены в %1.</translation>
     </message>
     <message>
-        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
         <translation>В них есть имя и настройки этого компьютера, а также имена и адреса компьютеров, к которым он подключается. Приложите файл к отчёту об ошибке.</translation>
     </message>
     <message>
@@ -634,8 +634,8 @@ Do you want to connect to the server?
         <translation>Отключиться</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Не удалось подключиться к серверу '%1'.&lt;/p&gt;&lt;p&gt;Клиент с таким именем уже подключен к серверу.&lt;/p&gt;Убедитесь, что вы используете уникальное имя и запущен только один процесс клиента.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Не удалось подключиться к серверу &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;Клиент с таким именем уже подключен к серверу.&lt;/p&gt;Убедитесь, что вы используете уникальное имя и запущен только один процесс клиента.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>View &amp;Help</source>
@@ -853,7 +853,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
 Также проверьте, можете ли вы %1 файл настроек сервера: %2</translation>
     </message>
     <message>
-        <source>Don't show this again</source>
+        <source>Don&apos;t show this again</source>
         <translation>Больше не показывать</translation>
     </message>
     <message>
@@ -908,16 +908,16 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1 продолжит работу в фоновом режиме. Доступ к нему можно получить через иконку в области уведомлений. Эту настройку можно отключить.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;Пожалуйста, &lt;a href="%1"&gt;сообщите об ошибке&lt;/a&gt; и приложите следующий текст:&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;Пожалуйста, &lt;a href=&quot;%1&quot;&gt;сообщите об ошибке&lt;/a&gt; и приложите следующий текст:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;В системах Linux с GNOME 3 область уведомлений может быть отключена. Возможно, потребуется &lt;a href="%1"&gt;включить расширение&lt;/a&gt;, чтобы видеть иконку %2.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;В системах Linux с GNOME 3 область уведомлений может быть отключена. Возможно, потребуется &lt;a href=&quot;%1&quot;&gt;включить расширение&lt;/a&gt;, чтобы видеть иконку %2.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -932,7 +932,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1 подключен!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Попробуйте переместить курсор на другой компьютер и что-нибудь напечатать.&lt;/p&gt;&lt;p&gt;Не забывайте, что вы также можете использовать общий буфер обмена.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -940,7 +940,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;Попробуйте управлять этим компьютером удаленно.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Так как работа в фоновом режиме отключена, необходимо держать это окно открытым или свернутым для работы %1.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -956,7 +956,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>%1 - Новый клиент</translation>
     </message>
     <message>
-        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
+        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
         <translation>Принят новый клиент «%1». Добавьте его в расположение компьютеров сервера.</translation>
     </message>
     <message>
@@ -968,8 +968,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>Добавить клиента</translation>
     </message>
     <message>
-        <source>A new client called '%1' wants to connect</source>
-        <translation>Новый клиент '%1' хочет подключиться</translation>
+        <source>A new client called &apos;%1&apos; wants to connect</source>
+        <translation>Новый клиент &apos;%1&apos; хочет подключиться</translation>
     </message>
     <message>
         <source>No thanks</source>
@@ -996,7 +996,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Возникла проблема с поиском фоновой службы (демона) %1.&lt;/p&gt;&lt;p&gt;Эта служба позволяет %1 работать с запросами UAC и на экране входа.&lt;/p&gt;&lt;p&gt;Если вы не хотите использовать службу, вы можете отключить эту функцию.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1145,7 +1145,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>Использовать &amp;относительные перемещения мыши</translation>
     </message>
     <message>
-        <source>Don't take &amp;foreground window (Windows only)</source>
+        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
         <translation>Не захватывать &amp;переднее окно (только для Windows)</translation>
     </message>
     <message>
@@ -1165,8 +1165,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&amp;Сеть</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает сетевой пульс для проверки клиентов каждые &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; секунд. Это помогает диагностировать проблемы сети.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает сетевой пульс для проверки клиентов каждые &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; секунд. Это помогает диагностировать проблемы сети.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
@@ -1177,7 +1177,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>мс</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включает совместимость с протоколами Synergy или Barrier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -1244,11 +1244,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Файлы, скопированные в Проводнике, переходят вслед за курсором на другой компьютер, если не больше этого размера. 0 отключает это.</translation>
     </message>
     <message>
-        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
         <translation>Не переходить у &amp;углов монитора, в пределах</translation>
     </message>
     <message>
-        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
         <translation>Не даёт курсору перейти на другой компьютер, когда вы тянетесь к кнопке «Пуск», кнопке закрытия окна или активному углу</translation>
     </message>
     <message>
@@ -1391,7 +1391,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Спрашивать</translation>
     </message>
     <message>
-        <source>Ask when there's a new version</source>
+        <source>Ask when there&apos;s a new version</source>
         <translation>Спрашивать, когда выходит новая версия</translation>
     </message>
     <message>
@@ -1399,16 +1399,24 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Устанавливать автоматически</translation>
     </message>
     <message>
-        <source>Install new versions as soon as they're found</source>
+        <source>Install new versions as soon as they&apos;re found</source>
         <translation>Устанавливать новые версии сразу, как только они найдены</translation>
     </message>
     <message>
-        <source>Don't check</source>
+        <source>Don&apos;t check</source>
         <translation>Не проверять</translation>
     </message>
     <message>
-        <source>Don't look for new versions</source>
+        <source>Don&apos;t look for new versions</source>
         <translation>Не искать новые версии</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Как в Windows</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>Как в системе</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -1487,7 +1495,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Проверить сейчас</translation>
     </message>
     <message>
-        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
         <translation>В тестовых сборках есть самые новые исправления и функции, но они меньше проверены</translation>
     </message>
     <message>
@@ -1631,15 +1639,15 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Размер файла %1 байт, а в выпуске указано %2.</translation>
     </message>
     <message>
-        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
         <translation>Это не тот файл, что указан в выпуске: SHA-256 не совпадает.</translation>
     </message>
 </context>
 <context>
     <name>Updater</name>
     <message>
-        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
-        <translation>Новая версия: %1 (&lt;a href="%2"&gt;что нового&lt;/a&gt;)&lt;br&gt;Ваша версия: %3</translation>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>Новая версия: %1 (&lt;a href=&quot;%2&quot;&gt;что нового&lt;/a&gt;)&lt;br&gt;Ваша версия: %3</translation>
     </message>
     <message>
         <source>%1 closes for a moment while the update installs, then starts again.</source>
@@ -1650,7 +1658,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
-        <source>Couldn't check for updates: %1</source>
+        <source>Couldn&apos;t check for updates: %1</source>
         <translation>Не удалось проверить обновления: %1</translation>
     </message>
     <message>
@@ -1690,7 +1698,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Нет</translation>
     </message>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
             <numerusform>Не обновлять в этот раз. Вопрос повторится через %n день.</numerusform>
             <numerusform>Не обновлять в этот раз. Вопрос повторится через %n дня.</numerusform>
@@ -1702,7 +1710,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Никогда</translation>
     </message>
     <message>
-        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
         <translation>Не обновлять и больше не спрашивать. Это можно изменить в настройках.</translation>
     </message>
     <message>
@@ -1738,11 +1746,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>Обновление</translation>
     </message>
     <message>
-        <source>Couldn't install the update. %1</source>
+        <source>Couldn&apos;t install the update. %1</source>
         <translation>Не удалось установить обновление. %1</translation>
     </message>
     <message>
-        <source>Couldn't download the update. %1</source>
+        <source>Couldn&apos;t download the update. %1</source>
         <translation>Не удалось загрузить обновление. %1</translation>
     </message>
 </context>

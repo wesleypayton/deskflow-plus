@@ -8,16 +8,16 @@
         <translation type="vanished">关于 Deskflow</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;许可证：GNU GPL 版本 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;许可证：GNU GPL 版本 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,20 +28,20 @@ p, li { white-space: pre-wrap; }
         <translation>复制版本信息</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;代码贡献者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;代码贡献者&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图标来源： &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图标来源： &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -150,7 +150,7 @@ p, li { white-space: pre-wrap; }
         <translation>客户端配置</translation>
     </message>
     <message>
-        <source>Use server's keyboard language on this computer</source>
+        <source>Use server&apos;s keyboard language on this computer</source>
         <translation>在此计算机上使用服务器的键盘语言</translation>
     </message>
     <message>
@@ -366,7 +366,7 @@ p, li { white-space: pre-wrap; }
         <translation>本地指纹</translation>
     </message>
     <message>
-        <source>Local computer's fingerprint</source>
+        <source>Local computer&apos;s fingerprint</source>
         <translation>本地计算机的指纹</translation>
     </message>
     <message>
@@ -510,11 +510,11 @@ Do you want to connect to the server?
 <context>
     <name>MainWindow</name>
     <message>
-        <source>This computer's name:</source>
+        <source>This computer&apos;s name:</source>
         <translation>此计算机名称：</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;名称不能包含空格或特殊字符&lt;/p&gt;&lt;p&gt;按 Enter 键保存更改。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -522,7 +522,7 @@ Do you want to connect to the server?
         <translation>编辑计算机名称</translation>
     </message>
     <message>
-        <source>Use this computer's keyboard and mouse
+        <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
         <translation>使用此计算机的键盘和鼠标
 (将此计算机设为服务器)</translation>
@@ -602,7 +602,7 @@ Do you want to connect to the server?
         <translation>保存日志</translation>
     </message>
     <message>
-        <source>Couldn't save the logs: %1</source>
+        <source>Couldn&apos;t save the logs: %1</source>
         <translation>无法保存日志：%1</translation>
     </message>
     <message>
@@ -610,7 +610,7 @@ Do you want to connect to the server?
         <translation>日志已保存到 %1。</translation>
     </message>
     <message>
-        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
         <translation>其中包含此计算机的名称和设置，以及它所连接的计算机的名称和地址。请把该文件附加到问题报告中。</translation>
     </message>
     <message>
@@ -634,7 +634,7 @@ Do you want to connect to the server?
         <translation>断开</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;连接到服务器“%1”失败。&lt;/p&gt;&lt;p&gt;一个同名的客户端已连接到服务器。&lt;/p&gt;请确保您使用的名称唯一，且只有一个客户端进程实例在运行。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -849,7 +849,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
 另外，请检查你能否%1服务器配置文件：%2</translation>
     </message>
     <message>
-        <source>Don't show this again</source>
+        <source>Don&apos;t show this again</source>
         <translation>不再显示</translation>
     </message>
     <message>
@@ -906,16 +906,16 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1 将在后台继续运行，可通过系统通知区域的 %1 图标访问。此设置可以禁用。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;请 &lt;a href="%1"&gt;报告 Bug&lt;/a&gt; 并复制/粘贴以下错误：&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;请 &lt;a href=&quot;%1&quot;&gt;报告 Bug&lt;/a&gt; 并复制/粘贴以下错误：&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;在使用 GNOME 3 的 Linux 系统上，通知区域可能被禁用。您可能需要 &lt;a href="%1"&gt;启用扩展&lt;/a&gt; 才能看到 %2 托盘图标。&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;在使用 GNOME 3 的 Linux 系统上，通知区域可能被禁用。您可能需要 &lt;a href=&quot;%1&quot;&gt;启用扩展&lt;/a&gt; 才能看到 %2 托盘图标。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -930,7 +930,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1 已连接！&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
         <translation>&lt;p&gt;试着将鼠标移动到另一台计算机。移动过去后，尝试输入一些内容。&lt;/p&gt;&lt;p&gt;别忘了，您还可以在计算机之间进行复制和粘贴。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -938,7 +938,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;尝试远程控制此计算机。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;由于您未启用让 %1 在后台运行的设置，您需要保持此窗口打开或最小化以使 %1 保持运行。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -954,7 +954,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>%1 - 新客户端</translation>
     </message>
     <message>
-        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
+        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
         <translation>已接受名为“%1”的新客户端。请把它添加到服务器的计算机布局中。</translation>
     </message>
     <message>
@@ -966,7 +966,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>添加客户端</translation>
     </message>
     <message>
-        <source>A new client called '%1' wants to connect</source>
+        <source>A new client called &apos;%1&apos; wants to connect</source>
         <translation>名为“%1”的新客户端请求连接</translation>
     </message>
     <message>
@@ -994,7 +994,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
         <translation>&lt;p&gt;找不到 %1 后台服务（守护进程）。&lt;/p&gt;&lt;p&gt;有了后台服务，%1 才能在 UAC 提示和登录屏幕上工作。&lt;/p&gt;&lt;p&gt;如果你不想使用后台服务并特意停止了它，可以关闭此功能。&lt;/p&gt;&lt;p&gt;如果你没有特意停止它，它可能出了问题。请重试，或在 Windows 的“服务”程序中重新启动 %1 服务。&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1143,7 +1143,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>使用相对鼠标移动(&amp;R)</translation>
     </message>
     <message>
-        <source>Don't take &amp;foreground window (Windows only)</source>
+        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
         <translation>不获取前台窗口焦点 (仅限 Windows)(&amp;F)</translation>
     </message>
     <message>
@@ -1163,8 +1163,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>网络(&amp;N)</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用网络心跳，每 &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; 秒 ping 一次客户端。如果客户端无响应，通过重试连接可能有助于诊断网络问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用网络心跳，每 &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; 秒 ping 一次客户端。如果客户端无响应，通过重试连接可能有助于诊断网络问题。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
@@ -1175,8 +1175,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>毫秒</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用与使用 Synergy 或 Barrier 协议的程序的兼容性：&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 使用 Synergy 协议。&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap 和 Synergy 1 使用 Barrier 协议。&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 客户端将根据服务器协议自动使用 Synergy 或 Barrier 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用与使用 Synergy 或 Barrier 协议的程序的兼容性：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 使用 Synergy 协议。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap 和 Synergy 1 使用 Barrier 协议。&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 客户端将根据服务器协议自动使用 Synergy 或 Barrier 协议。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
@@ -1244,11 +1244,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>在资源管理器中复制的文件会跟随光标到另一台计算机，最大为此大小。设为 0 则关闭。</translation>
     </message>
     <message>
-        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
         <translation>不在显示器的角附近切换(&amp;C)，范围</translation>
     </message>
     <message>
-        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
         <translation>在你移向开始按钮、窗口关闭按钮或热角时，防止光标跑到另一台计算机</translation>
     </message>
     <message>
@@ -1391,7 +1391,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>询问我</translation>
     </message>
     <message>
-        <source>Ask when there's a new version</source>
+        <source>Ask when there&apos;s a new version</source>
         <translation>有新版本时询问</translation>
     </message>
     <message>
@@ -1399,16 +1399,24 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>自动安装</translation>
     </message>
     <message>
-        <source>Install new versions as soon as they're found</source>
+        <source>Install new versions as soon as they&apos;re found</source>
         <translation>一发现新版本就安装</translation>
     </message>
     <message>
-        <source>Don't check</source>
+        <source>Don&apos;t check</source>
         <translation>不检查</translation>
     </message>
     <message>
-        <source>Don't look for new versions</source>
+        <source>Don&apos;t look for new versions</source>
         <translation>不查找新版本</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>与 Windows 相同</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>与系统相同</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -1487,7 +1495,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>立即检查</translation>
     </message>
     <message>
-        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
         <translation>测试版包含最新的修复和功能，但经过的测试较少</translation>
     </message>
     <message>
@@ -1629,15 +1637,15 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>文件大小为 %1 字节，但发布中列出的是 %2。</translation>
     </message>
     <message>
-        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
         <translation>文件与发布中列出的不同：SHA-256 不匹配。</translation>
     </message>
 </context>
 <context>
     <name>Updater</name>
     <message>
-        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
-        <translation>新版本：%1（&lt;a href="%2"&gt;新内容&lt;/a&gt;）&lt;br&gt;你的版本：%3</translation>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>新版本：%1（&lt;a href=&quot;%2&quot;&gt;新内容&lt;/a&gt;）&lt;br&gt;你的版本：%3</translation>
     </message>
     <message>
         <source>%1 closes for a moment while the update installs, then starts again.</source>
@@ -1648,7 +1656,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>检查更新</translation>
     </message>
     <message>
-        <source>Couldn't check for updates: %1</source>
+        <source>Couldn&apos;t check for updates: %1</source>
         <translation>无法检查更新：%1</translation>
     </message>
     <message>
@@ -1688,7 +1696,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>否</translation>
     </message>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
             <numerusform>这次不更新。%n 天后会再次询问。</numerusform>
         </translation>
@@ -1698,7 +1706,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>从不</translation>
     </message>
     <message>
-        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
         <translation>不更新，也不再询问。可以在设置中更改。</translation>
     </message>
     <message>
@@ -1734,11 +1742,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>更新</translation>
     </message>
     <message>
-        <source>Couldn't install the update. %1</source>
+        <source>Couldn&apos;t install the update. %1</source>
         <translation>无法安装更新。%1</translation>
     </message>
     <message>
-        <source>Couldn't download the update. %1</source>
+        <source>Couldn&apos;t download the update. %1</source>
         <translation>无法下载更新。%1</translation>
     </message>
 </context>

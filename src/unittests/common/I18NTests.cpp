@@ -97,6 +97,18 @@ void I18NTests::setLangTest_currentLang()
   QCOMPARE(spy.count(), 0);
 }
 
+void I18NTests::setLangTest_followSystem()
+{
+  I18N::setLanguage(QStringLiteral("de"));
+  QSignalSpy spy(I18N::instance(), &I18N::languageChanged);
+
+  // no language follows the system's, and isn't saved as one
+  I18N::setLanguage(QString());
+  QCOMPARE(spy.count(), 1);
+  QVERIFY(Settings::value(Settings::Core::Language).toString().isEmpty());
+  QVERIFY(m_langMap.values().contains(I18N::currentLanguage()));
+}
+
 void I18NTests::reDetectTest()
 {
   QSignalSpy spy(I18N::instance(), &I18N::languagesChanged);

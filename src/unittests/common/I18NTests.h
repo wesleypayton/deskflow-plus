@@ -20,6 +20,7 @@ private Q_SLOTS:
   void setLangTest_validLangs();
   void setLangTest_invalidLang();
   void setLangTest_currentLang();
+  void setLangTest_followSystem();
   void reDetectTest();
 
 private:
@@ -28,9 +29,15 @@ private:
   inline static const QString m_settingsFile = QStringLiteral("%1/Deskflow.conf").arg(m_settingsPathTemp);
   inline static const QString m_stateFile = QStringLiteral("%1/Deskflow.state").arg(m_settingsPathTemp);
   inline static const QMap<QString, QString> m_langMap = {
-      {QStringLiteral("English"), QStringLiteral("en")},    {QStringLiteral("Español"), QStringLiteral("es")},
-      {QStringLiteral("한국어"), QStringLiteral("ko")},     {QStringLiteral("Italiano"), QStringLiteral("it")},
-      {QStringLiteral("日本語"), QStringLiteral("ja")},     {QStringLiteral("Русский"), QStringLiteral("ru")},
-      {QStringLiteral("简体中文"), QStringLiteral("zh_CN")}
+      {QStringLiteral("English"), QStringLiteral("en")},
+      {QStringLiteral("Español"), QStringLiteral("es")},
+      {QStringLiteral("한국어"), QStringLiteral("ko")},
+      {QStringLiteral("Italiano"), QStringLiteral("it")},
+      {QStringLiteral("日本語"), QStringLiteral("ja")},
+      {QStringLiteral("Русский"), QStringLiteral("ru")},
+      {QStringLiteral("简体中文"), QStringLiteral("zh_CN")},
+      {QStringLiteral("Deutsch"), QStringLiteral("de")},
+      {QStringLiteral("Français"), QStringLiteral("fr")},
+      {QStringLiteral("Português (Brasil)"), QStringLiteral("pt_BR")}
   };
 };

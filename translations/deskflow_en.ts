@@ -32,10 +32,10 @@
 <context>
     <name>Updater</name>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
-            <numerusform>Don't update this time. You'll be asked again in %n day.</numerusform>
-            <numerusform>Don't update this time. You'll be asked again in %n days.</numerusform>
+            <numerusform>Don&apos;t update this time. You&apos;ll be asked again in %n day.</numerusform>
+            <numerusform>Don&apos;t update this time. You&apos;ll be asked again in %n days.</numerusform>
         </translation>
     </message>
 </context>

@@ -75,6 +75,9 @@ private:
   I18N(const I18N &other) = delete;
   ~I18N() override = default;
   void detectLanguages();
+  void loadTranslations(const QString &langName);
+  //! The system's language, or the closest there's a translation for
+  void loadSystemLanguage();
 
   QMap<QString, QStringList> m_translations;
   QMap<QString, QString> m_nameMap;

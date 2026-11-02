@@ -8,16 +8,16 @@
         <translation type="vanished">Deskflow 정보</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;라이선스: GNU GPL 버전 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;라이선스: GNU GPL 버전 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,20 +28,20 @@ p, li { white-space: pre-wrap; }
         <translation>버전 정보 복사</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;코드 기여자&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;코드 기여자&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;아이콘 제공: &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;아이콘 제공: &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -150,7 +150,7 @@ p, li { white-space: pre-wrap; }
         <translation>클라이언트 설정</translation>
     </message>
     <message>
-        <source>Use server's keyboard language on this computer</source>
+        <source>Use server&apos;s keyboard language on this computer</source>
         <translation>이 컴퓨터에서 서버의 키보드 언어 사용</translation>
     </message>
     <message>
@@ -366,7 +366,7 @@ p, li { white-space: pre-wrap; }
         <translation>로컬 핑거프린팅</translation>
     </message>
     <message>
-        <source>Local computer's fingerprint</source>
+        <source>Local computer&apos;s fingerprint</source>
         <translation>이 컴퓨터의 핑거프린팅</translation>
     </message>
     <message>
@@ -510,11 +510,11 @@ Do you want to connect to the server?
 <context>
     <name>MainWindow</name>
     <message>
-        <source>This computer's name:</source>
+        <source>This computer&apos;s name:</source>
         <translation>이 컴퓨터 이름:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이름에는 공백이나 특수문자를 사용할 수 없습니다&lt;/p&gt;&lt;p&gt;Enter 키로 이름 변경을 저장합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -522,7 +522,7 @@ Do you want to connect to the server?
         <translation>컴퓨터 이름 편집</translation>
     </message>
     <message>
-        <source>Use this computer's keyboard and mouse
+        <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
         <translation>이 컴퓨터의 키보드와 마우스를 사용
 (이 컴퓨터를 서버로 설정)</translation>
@@ -602,7 +602,7 @@ Do you want to connect to the server?
         <translation>로그 저장</translation>
     </message>
     <message>
-        <source>Couldn't save the logs: %1</source>
+        <source>Couldn&apos;t save the logs: %1</source>
         <translation>로그를 저장하지 못했습니다: %1</translation>
     </message>
     <message>
@@ -610,7 +610,7 @@ Do you want to connect to the server?
         <translation>로그를 %1에 저장했습니다.</translation>
     </message>
     <message>
-        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
         <translation>이 컴퓨터의 이름과 설정, 연결하는 컴퓨터의 이름과 주소가 들어 있습니다. 버그 보고에 파일을 첨부하세요.</translation>
     </message>
     <message>
@@ -634,8 +634,8 @@ Do you want to connect to the server?
         <translation>연결 해제</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;서버 '%1'에 연결하지 못했습니다.&lt;/p&gt;&lt;p&gt;같은 이름의 클라이언트가 이미 서버에 연결되어 있습니다.&lt;/p&gt;&lt;p&gt;고유한 이름을 사용하고, 클라이언트 프로세스가 하나만 실행 중인지 확인하세요.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;서버 &apos;%1&apos;에 연결하지 못했습니다.&lt;/p&gt;&lt;p&gt;같은 이름의 클라이언트가 이미 서버에 연결되어 있습니다.&lt;/p&gt;&lt;p&gt;고유한 이름을 사용하고, 클라이언트 프로세스가 하나만 실행 중인지 확인하세요.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>View &amp;Help</source>
@@ -849,7 +849,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
 또한 서버 설정 파일을 %1할 수 있는지 확인하세요: %2</translation>
     </message>
     <message>
-        <source>Don't show this again</source>
+        <source>Don&apos;t show this again</source>
         <translation>다시 표시 안 함</translation>
     </message>
     <message>
@@ -904,16 +904,16 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1은(는) 백그라운드에서 계속 실행되며, 시스템 알림 영역의 %1 아이콘을 통해 접근할 수 있습니다. 이 설정은 비활성화할 수 있습니다.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;&lt;a href="%1"&gt;버그를 신고&lt;/a&gt;하고 다음 오류를 복사/붙여넣기 해주세요:&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;&lt;a href=&quot;%1&quot;&gt;버그를 신고&lt;/a&gt;하고 다음 오류를 복사/붙여넣기 해주세요:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;GNOME 3을 사용하는 Linux 시스템에서는 알림 영역이 비활성화되어 있을 수 있습니다. %2 트레이 아이콘을 보려면 &lt;a href="%1"&gt;확장 기능을 활성화&lt;/a&gt;해야 합니다.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;GNOME 3을 사용하는 Linux 시스템에서는 알림 영역이 비활성화되어 있을 수 있습니다. %2 트레이 아이콘을 보려면 &lt;a href=&quot;%1&quot;&gt;확장 기능을 활성화&lt;/a&gt;해야 합니다.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -928,7 +928,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;%1이(가) 연결!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
         <translation>&lt;p&gt;마우스를 다른 컴퓨터로 이동시켜 보세요. 이동한 뒤 키보드로 아무 글자나 입력해 보세요.&lt;/p&gt;&lt;p&gt;컴퓨터 간 복사/붙여넣기도 가능합니다.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -936,7 +936,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>&lt;p&gt;이 컴퓨터를 원격으로 제어해 보세요.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;%1을(를) 백그라운드에서 실행하는 설정이 비활성화되어 있으므로, %1을(를) 계속 사용하려면 이 창을 열어 두거나 최소화해야 합니다.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -952,8 +952,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>%1 - 새 클라이언트</translation>
     </message>
     <message>
-        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
-        <translation>새 클라이언트 '%1'을(를) 허용했습니다. 서버의 컴퓨터 배치에 추가하세요.</translation>
+        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
+        <translation>새 클라이언트 &apos;%1&apos;을(를) 허용했습니다. 서버의 컴퓨터 배치에 추가하세요.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -964,8 +964,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>클라이언트 추가</translation>
     </message>
     <message>
-        <source>A new client called '%1' wants to connect</source>
-        <translation>새 클라이언트 '%1'이(가) 연결을 요청합니다</translation>
+        <source>A new client called &apos;%1&apos; wants to connect</source>
+        <translation>새 클라이언트 &apos;%1&apos;이(가) 연결을 요청합니다</translation>
     </message>
     <message>
         <source>No thanks</source>
@@ -992,7 +992,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>비활성화</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
         <translation>&lt;p&gt;%1 백그라운드 서비스(daemon)를 찾는 중 문제가 발생했습니다.&lt;/p&gt;&lt;p&gt;백그라운드 서비스는 %1이(가) UAC 프롬프트 및 로그인 화면에서 동작됩니다.&lt;/p&gt;&lt;p&gt;백그라운드 서비스를 사용하지 않으려고 의도적으로 중지한 경우, 이 기능을 비활성화하여 사용을 막을 수 있습니다.&lt;/p&gt;&lt;p&gt;의도적으로 중지한 것이 아니라면 서비스에 문제가 있을 수 있습니다. 재시도하거나 Windows 서비스 관리 프로그램에서 %1 서비스를 재시작해 보세요.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1141,7 +1141,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>상대 좌표 마우스 이동 사용(&amp;R)</translation>
     </message>
     <message>
-        <source>Don't take &amp;foreground window (Windows only)</source>
+        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
         <translation>전면 창 포커스 유지(&amp;F) (Windows 전용)</translation>
     </message>
     <message>
@@ -1161,7 +1161,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>네트워크(&amp;N)</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;지정한 초마다 클라이언트에 핑을 보내 네트워크 하트비트를 활성화합니다. 클라이언트가 응답하지 않을 때 연결을 재시도하여 네트워크 문제 진단에 도움이 될 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -1173,8 +1173,8 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <translation>ms</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Synergy 또는 Barrier 프로토콜을 사용하는 프로그램과의 호환성을 활성화합니다:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3는 Synergy 프로토콜을 사용합니다.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap, Synergy 1은 Barrier 프로토콜을 사용합니다.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 클라이언트는 서버 프로토콜에 따라 Synergy 또는 Barrier 프로토콜을 자동으로 사용합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Synergy 또는 Barrier 프로토콜을 사용하는 프로그램과의 호환성을 활성화합니다:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3는 Synergy 프로토콜을 사용합니다.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap, Synergy 1은 Barrier 프로토콜을 사용합니다.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Deskflow 클라이언트는 서버 프로토콜에 따라 Synergy 또는 Barrier 프로토콜을 자동으로 사용합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
@@ -1242,11 +1242,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>탐색기에서 복사한 파일은 이 크기까지 커서를 따라 다른 컴퓨터로 갑니다. 0이면 꺼집니다.</translation>
     </message>
     <message>
-        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
         <translation>모니터 모서리 근처에서는 넘어가지 않기(&amp;C), 범위</translation>
     </message>
     <message>
-        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
         <translation>시작 단추, 창의 닫기 단추, 핫 코너로 갈 때 커서가 다른 컴퓨터로 넘어가지 않게 합니다</translation>
     </message>
     <message>
@@ -1389,7 +1389,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>물어보기</translation>
     </message>
     <message>
-        <source>Ask when there's a new version</source>
+        <source>Ask when there&apos;s a new version</source>
         <translation>새 버전이 있으면 물어보기</translation>
     </message>
     <message>
@@ -1397,16 +1397,24 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>자동으로 설치</translation>
     </message>
     <message>
-        <source>Install new versions as soon as they're found</source>
+        <source>Install new versions as soon as they&apos;re found</source>
         <translation>새 버전을 찾으면 바로 설치</translation>
     </message>
     <message>
-        <source>Don't check</source>
+        <source>Don&apos;t check</source>
         <translation>확인 안 함</translation>
     </message>
     <message>
-        <source>Don't look for new versions</source>
+        <source>Don&apos;t look for new versions</source>
         <translation>새 버전을 찾지 않음</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Windows와 같게</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>시스템과 같게</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -1485,7 +1493,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>지금 확인</translation>
     </message>
     <message>
-        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
         <translation>테스트 빌드에는 최신 수정과 기능이 있지만, 덜 검증되었습니다</translation>
     </message>
     <message>
@@ -1627,15 +1635,15 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>파일이 %1바이트인데 릴리스에는 %2로 나와 있습니다.</translation>
     </message>
     <message>
-        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
         <translation>파일이 릴리스에 나온 것과 다릅니다: SHA-256이 일치하지 않습니다.</translation>
     </message>
 </context>
 <context>
     <name>Updater</name>
     <message>
-        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
-        <translation>새 버전: %1 (&lt;a href="%2"&gt;새 기능&lt;/a&gt;)&lt;br&gt;현재 버전: %3</translation>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>새 버전: %1 (&lt;a href=&quot;%2&quot;&gt;새 기능&lt;/a&gt;)&lt;br&gt;현재 버전: %3</translation>
     </message>
     <message>
         <source>%1 closes for a moment while the update installs, then starts again.</source>
@@ -1646,7 +1654,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>업데이트 확인</translation>
     </message>
     <message>
-        <source>Couldn't check for updates: %1</source>
+        <source>Couldn&apos;t check for updates: %1</source>
         <translation>업데이트를 확인하지 못했습니다: %1</translation>
     </message>
     <message>
@@ -1686,7 +1694,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>아니요</translation>
     </message>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
             <numerusform>이번에는 업데이트하지 않습니다. %n일 뒤에 다시 물어봅니다.</numerusform>
         </translation>
@@ -1696,7 +1704,7 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>안 함</translation>
     </message>
     <message>
-        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
         <translation>업데이트하지 않고 다시 묻지 않습니다. 설정에서 바꿀 수 있습니다.</translation>
     </message>
     <message>
@@ -1732,11 +1740,11 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>업데이트</translation>
     </message>
     <message>
-        <source>Couldn't install the update. %1</source>
+        <source>Couldn&apos;t install the update. %1</source>
         <translation>업데이트를 설치하지 못했습니다. %1</translation>
     </message>
     <message>
-        <source>Couldn't download the update. %1</source>
+        <source>Couldn&apos;t download the update. %1</source>
         <translation>업데이트를 다운로드하지 못했습니다. %1</translation>
     </message>
 </context>

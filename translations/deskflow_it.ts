@@ -16,8 +16,8 @@
         <translation>Copia informazioni sulla versione</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icone da &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icone da &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -28,28 +28,28 @@
         <translation>&amp;Chiudi</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;  
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;  
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;  
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;  
 p, li { white-space: pre-wrap; }  
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;  
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Licenza: GNU GPL Versione 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;  
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Licenza: GNU GPL Versione 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;  
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;  
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;  
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;  
 p, li { white-space: pre-wrap; }  
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;  
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Collaboratori al codice&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;  
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Collaboratori al codice&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>About Deskflow Plus</source>
@@ -150,7 +150,7 @@ p, li { white-space: pre-wrap; }
         <translation>Configurazione del client</translation>
     </message>
     <message>
-        <source>Use server's keyboard language on this computer</source>
+        <source>Use server&apos;s keyboard language on this computer</source>
         <translation>Usa la lingua della tastiera del server su questo computer</translation>
     </message>
     <message>
@@ -366,7 +366,7 @@ p, li { white-space: pre-wrap; }
         <translation>Impronte digitali locali</translation>
     </message>
     <message>
-        <source>Local computer's fingerprint</source>
+        <source>Local computer&apos;s fingerprint</source>
         <translation>Impronta digitale del computer locale</translation>
     </message>
     <message>
@@ -425,11 +425,11 @@ Vuoi connetterti al server?
     </message>
     <message>
         <source>Display the fingerprint as an image</source>
-        <translation>Visualizza l'impronta digitale come immagine</translation>
+        <translation>Visualizza l&apos;impronta digitale come immagine</translation>
     </message>
     <message>
         <source>Display the fingerprint as a hash</source>
-        <translation>Visualizza l'impronta digitale come hash</translation>
+        <translation>Visualizza l&apos;impronta digitale come hash</translation>
     </message>
 </context>
 <context>
@@ -510,7 +510,7 @@ Vuoi connetterti al server?
 <context>
     <name>MainWindow</name>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il nome non può contenere spazi o caratteri speciali&lt;/p&gt;&lt;p&gt;Usa Invio per salvare la modifica del nome.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -582,8 +582,8 @@ Vuoi connetterti al server?
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Impossibile connettersi al server "%1".&lt;/p&gt;&lt;p&gt;Un client con il tuo nome è già connesso al server.&lt;/p&gt;Assicurati di utilizzare un nome univoco e che sia in esecuzione una sola istanza del processo client.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Impossibile connettersi al server &quot;%1&quot;.&lt;/p&gt;&lt;p&gt;Un client con il tuo nome è già connesso al server.&lt;/p&gt;Assicurati di utilizzare un nome univoco e che sia in esecuzione una sola istanza del processo client.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Your current TLS key is smaller than the minimum allowed size, A new key 2048-bit key will be generated.</source>
@@ -595,7 +595,7 @@ Vuoi connetterti al server?
     </message>
     <message>
         <source>Please enter the hostname or IP address of the other computer.</source>
-        <translation>Inserisci l'hostname o l'indirizzo IP dell'altro computer.</translation>
+        <translation>Inserisci l&apos;hostname o l&apos;indirizzo IP dell&apos;altro computer.</translation>
     </message>
     <message>
         <source>Save server configuration as...</source>
@@ -630,7 +630,7 @@ Vuoi connetterti al server?
         <translation>Salva i log</translation>
     </message>
     <message>
-        <source>Couldn't save the logs: %1</source>
+        <source>Couldn&apos;t save the logs: %1</source>
         <translation>Impossibile salvare i log: %1</translation>
     </message>
     <message>
@@ -638,7 +638,7 @@ Vuoi connetterti al server?
         <translation>I log sono stati salvati in %1.</translation>
     </message>
     <message>
-        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
         <translation>Contengono il nome e le impostazioni di questo computer, e i nomi e gli indirizzi dei computer a cui si collega. Allega il file alla segnalazione di bug.</translation>
     </message>
     <message>
@@ -751,7 +751,7 @@ I nomi validi:
     </message>
     <message>
         <source>the suggested IP.</source>
-        <translation>l'IP suggerito.</translation>
+        <translation>l&apos;IP suggerito.</translation>
     </message>
     <message>
         <source>one of the following IPs:&lt;br/&gt;%1</source>
@@ -803,11 +803,11 @@ Nomi validi:
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <source>This computer's name:</source>
+        <source>This computer&apos;s name:</source>
         <translation>Nome di questo computer:</translation>
     </message>
     <message>
-        <source>Use this computer's keyboard and mouse
+        <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
         <translation>Usa tastiera e mouse di questo computer
 (imposta questo computer come server)</translation>
@@ -851,7 +851,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
 Controlla anche di poter %1 il file di configurazione del server: %2</translation>
     </message>
     <message>
-        <source>Don't show this again</source>
+        <source>Don&apos;t show this again</source>
         <translation>Non mostrare più</translation>
     </message>
     <message>
@@ -892,7 +892,7 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
     <message>
         <source>&lt;p&gt;Sorry, a fatal error has occurred and the application must now exit.&lt;/p&gt;
 </source>
-        <translation>&lt;p&gt;Siamo spiacenti, si è verificato un errore fatale e l'applicazione deve ora uscire.&lt;/p&gt;
+        <translation>&lt;p&gt;Siamo spiacenti, si è verificato un errore fatale e l&apos;applicazione deve ora uscire.&lt;/p&gt;
 </translation>
     </message>
     <message>
@@ -903,19 +903,19 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
     </message>
     <message>
         <source>&lt;p&gt;%1 will continue to run in the background and can be accessed via the %1 icon in your system notifications area. This setting can be disabled.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 continuerà a essere eseguito in background e sarà accessibile tramite l'icona %1 nell'area di notifica del sistema. Questa impostazione può essere disabilitata.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1 continuerà a essere eseguito in background e sarà accessibile tramite l&apos;icona %1 nell&apos;area di notifica del sistema. Questa impostazione può essere disabilitata.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;Per favore &lt;a href="%1"&gt;segnala un bug&lt;/a&gt; e copia/incolla il seguente errore:&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;Per favore &lt;a href=&quot;%1&quot;&gt;segnala un bug&lt;/a&gt; e copia/incolla il seguente errore:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Sui sistemi Linux che utilizzano GNOME 3, l'area di notifica potrebbe essere disabilitata. Potrebbe essere necessario &lt;a href="%1"&gt;abilitare un'estensione&lt;/a&gt; per visualizzare l'icona del vassoio %2.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Sui sistemi Linux che utilizzano GNOME 3, l&apos;area di notifica potrebbe essere disabilitata. Potrebbe essere necessario &lt;a href=&quot;%1&quot;&gt;abilitare un&apos;estensione&lt;/a&gt; per visualizzare l&apos;icona del vassoio %2.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -930,16 +930,16 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>&lt;p&gt;%1 è ora connesso!&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Prova a spostare il mouse sull'altro computer. Una volta lì, prova a digitare qualcosa.&lt;/p&gt;&lt;p&gt;Non dimenticare, puoi anche copiare e incollare tra computer.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Prova a spostare il mouse sull&apos;altro computer. Una volta lì, prova a digitare qualcosa.&lt;/p&gt;&lt;p&gt;Non dimenticare, puoi anche copiare e incollare tra computer.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;Try controlling this computer remotely.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Prova a controllare questo computer da remoto.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Poiché non hai abilitato l'impostazione per mantenere %1 in esecuzione in background, dovrai tenere questa finestra aperta o minimizzata per mantenere %1 in esecuzione.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Poiché non hai abilitato l&apos;impostazione per mantenere %1 in esecuzione in background, dovrai tenere questa finestra aperta o minimizzata per mantenere %1 in esecuzione.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can now close this window and %1 will continue to run in the background. This setting can be disabled.&lt;/p&gt;</source>
@@ -954,7 +954,7 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>%1 - Nuovo Client</translation>
     </message>
     <message>
-        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
+        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
         <translation>È stato accettato un nuovo client chiamato «%1». Aggiungilo alla disposizione dei computer del server.</translation>
     </message>
     <message>
@@ -966,8 +966,8 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>Aggiungi client</translation>
     </message>
     <message>
-        <source>A new client called '%1' wants to connect</source>
-        <translation>Un nuovo client chiamato "%1" vuole connettersi</translation>
+        <source>A new client called &apos;%1&apos; wants to connect</source>
+        <translation>Un nuovo client chiamato &quot;%1&quot; vuole connettersi</translation>
     </message>
     <message>
         <source>No thanks</source>
@@ -979,7 +979,7 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;Vuoi controllare gli aggiornamenti all'avvio di %1?&lt;/p&gt;&lt;p&gt;Il controllo degli aggiornamenti richiede una connessione Internet.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;Vuoi controllare gli aggiornamenti all&apos;avvio di %1?&lt;/p&gt;&lt;p&gt;Il controllo degli aggiornamenti richiede una connessione Internet.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
@@ -994,8 +994,8 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>Disabilita</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Si è verificato un problema durante la ricerca del servizio in background %1 (daemon).&lt;/p&gt;&lt;p&gt;Il servizio in background consente a %1 di funzionare con i prompt UAC e la schermata di accesso.&lt;/p&gt;&lt;p&gt;Se non desideri utilizzare il servizio in background e lo hai interrotto intenzionalmente, puoi impedirne l'uso disabilitando questa funzionalità.&lt;/p&gt;&lt;p&gt;Se non hai interrotto intenzionalmente il servizio in background, potrebbe esserci un problema. Riprova o prova a riavviare il servizio %1 dal programma dei servizi di Windows.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Si è verificato un problema durante la ricerca del servizio in background %1 (daemon).&lt;/p&gt;&lt;p&gt;Il servizio in background consente a %1 di funzionare con i prompt UAC e la schermata di accesso.&lt;/p&gt;&lt;p&gt;Se non desideri utilizzare il servizio in background e lo hai interrotto intenzionalmente, puoi impedirne l&apos;uso disabilitando questa funzionalità.&lt;/p&gt;&lt;p&gt;Se non hai interrotto intenzionalmente il servizio in background, potrebbe esserci un problema. Riprova o prova a riavviare il servizio %1 dal programma dei servizi di Windows.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>failed to read key from certificate file: %1</source>
@@ -1143,7 +1143,7 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>Usa movimenti del mouse &amp;relativi</translation>
     </message>
     <message>
-        <source>Don't take &amp;foreground window (Windows only)</source>
+        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
         <translation>Non acquisire la finestra &amp;in primo piano (solo Windows)</translation>
     </message>
     <message>
@@ -1163,8 +1163,8 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>&amp;Rete</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l'heartbeat di rete per inviare ping ai client ogni &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; secondi. Questo può aiutare a diagnosticare i problemi di rete riprovando la connessione se il client smette di rispondere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;heartbeat di rete per inviare ping ai client ogni &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; secondi. Questo può aiutare a diagnosticare i problemi di rete riprovando la connessione se il client smette di rispondere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
@@ -1175,8 +1175,8 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
         <translation>ms</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita la compatibilità con programmi che utilizzano i protocolli Synergy o Barrier:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 usa il protocollo Synergy.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap e Synergy 1 usano il protocollo Barrier.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Un client Deskflow utilizzerà automaticamente il protocollo Synergy o Barrier a seconda del protocollo del server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita la compatibilità con programmi che utilizzano i protocolli Synergy o Barrier:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 usa il protocollo Synergy.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap e Synergy 1 usano il protocollo Barrier.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Un client Deskflow utilizzerà automaticamente il protocollo Synergy o Barrier a seconda del protocollo del server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
@@ -1208,7 +1208,7 @@ Controlla anche di poter %1 il file di configurazione del server: %2</translatio
 Enabling this setting will disable the server config GUI.</source>
         <translation>Utilizza un file di configurazione del server per creare layout di computer complessi che non sono possibili con il semplice editor di layout del computer basato su griglia.
 
-L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di configurazione del server.</translation>
+L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia grafica di configurazione del server.</translation>
     </message>
     <message>
         <source>%1 Configurations (*.conf);;All files (*.*)</source>
@@ -1244,11 +1244,11 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>I file copiati in Esplora file seguono il cursore su un altro computer, fino a questa dimensione. 0 disattiva la funzione.</translation>
     </message>
     <message>
-        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
         <translation>Non passare vicino agli &amp;angoli di un monitor, entro</translation>
     </message>
     <message>
-        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
         <translation>Impedisce al cursore di passare a un altro computer quando vai al pulsante Start, al pulsante di chiusura di una finestra o a un angolo attivo</translation>
     </message>
     <message>
@@ -1264,7 +1264,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation type="vanished">Controlla aggiornamenti all'avvio</translation>
+        <translation type="vanished">Controlla aggiornamenti all&apos;avvio</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
@@ -1367,7 +1367,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Chiedimelo</translation>
     </message>
     <message>
-        <source>Ask when there's a new version</source>
+        <source>Ask when there&apos;s a new version</source>
         <translation>Chiedi quando c’è una nuova versione</translation>
     </message>
     <message>
@@ -1375,16 +1375,24 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Installa automaticamente</translation>
     </message>
     <message>
-        <source>Install new versions as soon as they're found</source>
+        <source>Install new versions as soon as they&apos;re found</source>
         <translation>Installa le nuove versioni appena vengono trovate</translation>
     </message>
     <message>
-        <source>Don't check</source>
+        <source>Don&apos;t check</source>
         <translation>Non controllare</translation>
     </message>
     <message>
-        <source>Don't look for new versions</source>
+        <source>Don&apos;t look for new versions</source>
         <translation>Non cercare nuove versioni</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Come Windows</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>Come il sistema</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -1487,7 +1495,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Controlla ora</translation>
     </message>
     <message>
-        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
         <translation>Le versioni di prova hanno le correzioni e le funzioni più recenti, e sono state provate meno</translation>
     </message>
     <message>
@@ -1630,15 +1638,15 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Il file è di %1 byte, ma la versione ne indica %2.</translation>
     </message>
     <message>
-        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
         <translation>Il file non è quello indicato dalla versione: il suo SHA-256 non corrisponde.</translation>
     </message>
 </context>
 <context>
     <name>Updater</name>
     <message>
-        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
-        <translation>Nuova versione: %1 (&lt;a href="%2"&gt;novità&lt;/a&gt;)&lt;br&gt;La tua versione: %3</translation>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>Nuova versione: %1 (&lt;a href=&quot;%2&quot;&gt;novità&lt;/a&gt;)&lt;br&gt;La tua versione: %3</translation>
     </message>
     <message>
         <source>%1 closes for a moment while the update installs, then starts again.</source>
@@ -1649,7 +1657,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Cerca aggiornamenti</translation>
     </message>
     <message>
-        <source>Couldn't check for updates: %1</source>
+        <source>Couldn&apos;t check for updates: %1</source>
         <translation>Impossibile cercare aggiornamenti: %1</translation>
     </message>
     <message>
@@ -1689,7 +1697,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>No</translation>
     </message>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
             <numerusform>Non aggiornare questa volta. Te lo chiederemo di nuovo tra %n giorno.</numerusform>
             <numerusform>Non aggiornare questa volta. Te lo chiederemo di nuovo tra %n giorni.</numerusform>
@@ -1700,7 +1708,7 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Mai</translation>
     </message>
     <message>
-        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
         <translation>Non aggiornare e non chiedere più. Puoi cambiarlo nelle impostazioni.</translation>
     </message>
     <message>
@@ -1736,11 +1744,11 @@ L'abilitazione di questa impostazione disabiliterà l'interfaccia grafica di con
         <translation>Aggiornamento</translation>
     </message>
     <message>
-        <source>Couldn't install the update. %1</source>
+        <source>Couldn&apos;t install the update. %1</source>
         <translation>Impossibile installare l’aggiornamento. %1</translation>
     </message>
     <message>
-        <source>Couldn't download the update. %1</source>
+        <source>Couldn&apos;t download the update. %1</source>
         <translation>Impossibile scaricare l’aggiornamento. %1</translation>
     </message>
 </context>

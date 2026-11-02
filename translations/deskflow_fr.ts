@@ -8,16 +8,16 @@
         <translation>À propos de Deskflow Plus</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;License: GNU GPL Version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Licence : GNU GPL version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Licence : GNU GPL version 2&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -28,20 +28,20 @@ p, li { white-space: pre-wrap; }
         <translation>Copier les informations de version</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Code Contributors&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="https://github.com/deskflow/deskflow/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#508ed8;"&gt;Contributeurs au code&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Contributeurs au code&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icônes de &lt;a href="https://develop.kde.org/frameworks/breeze-icons/"&gt;&lt;span style=" text-decoration: underline; color:#007af4;"&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons from &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icônes de &lt;a href=&quot;https://develop.kde.org/frameworks/breeze-icons/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;KDE Breeze&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Important Developers</source>
@@ -154,7 +154,7 @@ p, li { white-space: pre-wrap; }
         <translation>Adapter le délai de reconnexion au nombre de tentatives</translation>
     </message>
     <message>
-        <source>Use server's keyboard language on this computer</source>
+        <source>Use server&apos;s keyboard language on this computer</source>
         <translation>Utiliser la langue du clavier du serveur sur cet ordinateur</translation>
     </message>
     <message>
@@ -362,7 +362,7 @@ p, li { white-space: pre-wrap; }
         <translation>Empreintes locales</translation>
     </message>
     <message>
-        <source>Local computer's fingerprint</source>
+        <source>Local computer&apos;s fingerprint</source>
         <translation>Empreinte de cet ordinateur</translation>
     </message>
     <message>
@@ -506,11 +506,11 @@ Voulez-vous vous connecter au serveur ?
 <context>
     <name>MainWindow</name>
     <message>
-        <source>This computer's name:</source>
+        <source>This computer&apos;s name:</source>
         <translation>Nom de cet ordinateur :</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can't have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name can&apos;t have have spaces or special characters&lt;/p&gt;&lt;p&gt;Use Enter to save the name change.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le nom ne peut contenir ni espaces ni caractères spéciaux&lt;/p&gt;&lt;p&gt;Appuyez sur Entrée pour enregistrer le nouveau nom.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -518,7 +518,7 @@ Voulez-vous vous connecter au serveur ?
         <translation>Modifier le nom de l’ordinateur</translation>
     </message>
     <message>
-        <source>Use this computer's keyboard and mouse
+        <source>Use this computer&apos;s keyboard and mouse
 (make this computer the server)</source>
         <translation>Utiliser le clavier et la souris de cet ordinateur
 (cet ordinateur devient le serveur)</translation>
@@ -638,7 +638,7 @@ Vérifiez aussi que vous pouvez %1 le fichier de configuration du serveur : %2</
         <translation>Enregistrer les journaux</translation>
     </message>
     <message>
-        <source>Couldn't save the logs: %1</source>
+        <source>Couldn&apos;t save the logs: %1</source>
         <translation>Impossible d’enregistrer les journaux : %1</translation>
     </message>
     <message>
@@ -646,7 +646,7 @@ Vérifiez aussi que vous pouvez %1 le fichier de configuration du serveur : %2</
         <translation>Les journaux sont enregistrés dans %1.</translation>
     </message>
     <message>
-        <source>They include this computer's name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
         <translation>Ils contiennent le nom et les réglages de cet ordinateur, ainsi que les noms et adresses des ordinateurs auxquels il se connecte. Joignez le fichier à votre rapport de bogue.</translation>
     </message>
     <message>
@@ -674,7 +674,7 @@ Vérifiez aussi que vous pouvez %1 le fichier de configuration du serveur : %2</
         <translation>Erreur de connexion de %1</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Failed to connect to the server '%1'.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you're using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Failed to connect to the server &apos;%1&apos;.&lt;/p&gt;&lt;p&gt;A Client with your name is already connected to the server.&lt;/p&gt;Please ensure that you&apos;re using a unique name and that only a single instance of the client process is running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Échec de la connexion au serveur « %1 ».&lt;/p&gt;&lt;p&gt;Un client portant votre nom est déjà connecté au serveur.&lt;/p&gt;Vérifiez que vous utilisez un nom unique et qu’une seule instance du client est lancée.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -686,7 +686,7 @@ Vérifiez aussi que vous pouvez %1 le fichier de configuration du serveur : %2</
         <translation>&lt;p&gt;Les dispositions de clavier doivent être les mêmes sur tous les ordinateurs. Ces dispositions de l’autre ordinateur ne sont pas installées sur celui-ci :&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Installez-les pour pouvoir les utiliser.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Don't show this again</source>
+        <source>Don&apos;t show this again</source>
         <translation>Ne plus afficher</translation>
     </message>
     <message>
@@ -904,10 +904,10 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>erreur</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Please &lt;a href="%1"&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
+        <source>&lt;p&gt;Please &lt;a href=&quot;%1&quot;&gt;report a bug&lt;/a&gt; and copy/paste the following error:&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</source>
-        <translation>&lt;p&gt;Veuillez &lt;a href="%1"&gt;signaler un bogue&lt;/a&gt; et y copier l’erreur suivante :&lt;/p&gt;&lt;pre&gt;v%2
+        <translation>&lt;p&gt;Veuillez &lt;a href=&quot;%1&quot;&gt;signaler un bogue&lt;/a&gt; et y copier l’erreur suivante :&lt;/p&gt;&lt;pre&gt;v%2
 %3
 %4&lt;/pre&gt;</translation>
     </message>
@@ -928,8 +928,8 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>&lt;p&gt;%1 continuera de fonctionner en arrière-plan ; vous pouvez y accéder avec l’icône %1 dans la zone de notification. Ce réglage peut être désactivé.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href="%1"&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Sur les systèmes Linux avec GNOME 3, la zone de notification peut être désactivée. Vous devrez peut-être &lt;a href="%1"&gt;activer une extension&lt;/a&gt; pour voir l’icône de %2.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;On Linux systems using GNOME 3, the notification area might be disabled. You may need to &lt;a href=&quot;%1&quot;&gt;enable an extension&lt;/a&gt; to see the %2 tray icon.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Sur les systèmes Linux avec GNOME 3, la zone de notification peut être désactivée. Vous devrez peut-être &lt;a href=&quot;%1&quot;&gt;activer une extension&lt;/a&gt; pour voir l’icône de %2.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>%1 Server</source>
@@ -944,7 +944,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>&lt;p&gt;%1 est connecté !&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don't forget, you can copy and paste between computers too.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Try moving your mouse to your other computer. Once there, go ahead and type something.&lt;/p&gt;&lt;p&gt;Don&apos;t forget, you can copy and paste between computers too.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Essayez de déplacer la souris vers votre autre ordinateur. Une fois dessus, tapez quelque chose.&lt;/p&gt;&lt;p&gt;N’oubliez pas que vous pouvez aussi copier-coller entre ordinateurs.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -952,7 +952,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>&lt;p&gt;Essayez de contrôler cet ordinateur à distance.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you'll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
+        <source>&lt;p&gt;As you do not have the setting enabled to keep %1 running in the background, you&apos;ll need to keep this window open or minimized to keep %1 running.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Comme le réglage pour garder %1 en arrière-plan n’est pas activé, vous devez laisser cette fenêtre ouverte ou réduite pour que %1 continue de fonctionner.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -968,7 +968,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>%1 - Nouveau client</translation>
     </message>
     <message>
-        <source>A new client called '%1' has been accepted. You'll need to add it to your server's computer layout.</source>
+        <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
         <translation>Un nouveau client nommé « %1 » a été accepté. Ajoutez-le à la disposition des ordinateurs du serveur.</translation>
     </message>
     <message>
@@ -980,7 +980,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>Ajouter le client</translation>
     </message>
     <message>
-        <source>A new client called '%1' wants to connect</source>
+        <source>A new client called &apos;%1&apos; wants to connect</source>
         <translation>Un nouveau client nommé « %1 » veut se connecter</translation>
     </message>
     <message>
@@ -996,7 +996,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>Désactiver</translation>
     </message>
     <message>
-        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don't want to use the background service and intentionally stopped it, you can prevent it's use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
+        <source>&lt;p&gt;There was a problem finding the %1 background service (daemon).&lt;/p&gt;&lt;p&gt;The background service makes %1 work with UAC prompts and the login screen.&lt;/p&gt;&lt;p&gt;If don&apos;t want to use the background service and intentionally stopped it, you can prevent it&apos;s use by disabling this feature.&lt;/p&gt;&lt;p&gt;If you did not stop the background service intentionally, there may be a problem with it. Please retry or try restarting the %1 service from the Windows services program.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Le service d’arrière-plan (daemon) de %1 est introuvable.&lt;/p&gt;&lt;p&gt;Ce service permet à %1 de fonctionner avec les invites UAC et l’écran de connexion.&lt;/p&gt;&lt;p&gt;Si vous ne voulez pas utiliser le service d’arrière-plan et l’avez arrêté volontairement, vous pouvez désactiver cette fonction.&lt;/p&gt;&lt;p&gt;Si vous ne l’avez pas arrêté volontairement, il y a peut-être un problème. Réessayez ou redémarrez le service %1 depuis le programme Services de Windows.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1117,7 +1117,7 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>Utiliser des mouvements de souris &amp;relatifs</translation>
     </message>
     <message>
-        <source>Don't take &amp;foreground window (Windows only)</source>
+        <source>Don&apos;t take &amp;foreground window (Windows only)</source>
         <translation>Ne pas prendre la fenêtre au &amp;premier plan (Windows uniquement)</translation>
     </message>
     <message>
@@ -1157,11 +1157,11 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>Changer sur double &amp;tape en</translation>
     </message>
     <message>
-        <source>Don't cross near a monitor's &amp;corners, within</source>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
         <translation>Ne pas passer près des &amp;coins d’un écran, à moins de</translation>
     </message>
     <message>
-        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window's close button or a hot corner</source>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
         <translation>Empêche le curseur de passer à un autre ordinateur quand vous visez le bouton Démarrer, le bouton de fermeture d’une fenêtre ou un coin actif</translation>
     </message>
     <message>
@@ -1173,16 +1173,16 @@ Une IP liée n’est plus valide, vous devrez peut-être redémarrer le serveur.
         <translation>&amp;Réseau</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Active le battement de cœur réseau, qui interroge les clients toutes les &lt;span style=" font-style:italic;"&gt;n&lt;/span&gt; secondes. Cela peut aider à diagnostiquer les problèmes réseau en relançant la connexion si le client ne répond plus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables the network heartbeat to ping clients every &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; seconds. This may help to diagnose network problems by retrying the connection if the client becomes unresponsive.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Active le battement de cœur réseau, qui interroge les clients toutes les &lt;span style=&quot; font-style:italic;&quot;&gt;n&lt;/span&gt; secondes. Cela peut aider à diagnostiquer les problèmes réseau en relançant la connexion si le client ne répond plus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Check clients every</source>
         <translation>&amp;Vérifier les clients toutes les</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permet la compatibilité avec les programmes qui utilisent le protocole Synergy ou Barrier :&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Synergy 3 utilise le protocole Synergy.&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Barrier, Input-Leap et Synergy 1 utilisent le protocole Barrier.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Un client Deskflow utilise automatiquement le protocole Synergy ou Barrier selon celui du serveur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables compatibility with programs that use either the Synergy or Barrier protocols:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 uses the Synergy protocol.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap and Synergy 1 uses the Barrier protocol.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A Deskflow client will automatically use either the Synergy or Barrier protocol depending on the server protocol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permet la compatibilité avec les programmes qui utilisent le protocole Synergy ou Barrier :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Synergy 3 utilise le protocole Synergy.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Barrier, Input-Leap et Synergy 1 utilisent le protocole Barrier.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Un client Deskflow utilise automatiquement le protocole Synergy ou Barrier selon celui du serveur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Network protocol</source>
@@ -1237,7 +1237,7 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Vérifier maintenant</translation>
     </message>
     <message>
-        <source>Test builds have the newest fixes and features, and haven't been tried as much</source>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
         <translation>Les versions de test ont les correctifs et fonctions les plus récents, et ont été moins éprouvées</translation>
     </message>
     <message>
@@ -1433,7 +1433,7 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Me demander</translation>
     </message>
     <message>
-        <source>Ask when there's a new version</source>
+        <source>Ask when there&apos;s a new version</source>
         <translation>Demander quand une nouvelle version est disponible</translation>
     </message>
     <message>
@@ -1441,16 +1441,24 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Installer automatiquement</translation>
     </message>
     <message>
-        <source>Install new versions as soon as they're found</source>
+        <source>Install new versions as soon as they&apos;re found</source>
         <translation>Installer les nouvelles versions dès qu’elles sont trouvées</translation>
     </message>
     <message>
-        <source>Don't check</source>
+        <source>Don&apos;t check</source>
         <translation>Ne pas vérifier</translation>
     </message>
     <message>
-        <source>Don't look for new versions</source>
+        <source>Don&apos;t look for new versions</source>
         <translation>Ne pas chercher de nouvelles versions</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Comme Windows</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>Comme le système</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -1584,15 +1592,15 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Le fichier fait %1 octets, mais la version indique %2.</translation>
     </message>
     <message>
-        <source>The file isn't the one the release lists: its SHA-256 doesn't match.</source>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
         <translation>Le fichier n’est pas celui indiqué par la version : son SHA-256 ne correspond pas.</translation>
     </message>
 </context>
 <context>
     <name>Updater</name>
     <message>
-        <source>New version: %1 (&lt;a href="%2"&gt;what's new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
-        <translation>Nouvelle version : %1 (&lt;a href="%2"&gt;nouveautés&lt;/a&gt;)&lt;br&gt;Votre version : %3</translation>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>Nouvelle version : %1 (&lt;a href=&quot;%2&quot;&gt;nouveautés&lt;/a&gt;)&lt;br&gt;Votre version : %3</translation>
     </message>
     <message>
         <source>%1 closes for a moment while the update installs, then starts again.</source>
@@ -1603,7 +1611,7 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Rechercher des mises à jour</translation>
     </message>
     <message>
-        <source>Couldn't check for updates: %1</source>
+        <source>Couldn&apos;t check for updates: %1</source>
         <translation>Impossible de rechercher des mises à jour : %1</translation>
     </message>
     <message>
@@ -1643,7 +1651,7 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Non</translation>
     </message>
     <message numerus="yes">
-        <source>Don't update this time. You'll be asked again in %n day(s).</source>
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
         <translation>
             <numerusform>Ne pas mettre à jour cette fois. La question reviendra dans %n jour.</numerusform>
             <numerusform>Ne pas mettre à jour cette fois. La question reviendra dans %n jours.</numerusform>
@@ -1654,7 +1662,7 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Jamais</translation>
     </message>
     <message>
-        <source>Don't update, and don't ask again. You can change this in Settings.</source>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
         <translation>Ne pas mettre à jour et ne plus demander. Vous pouvez changer cela dans les réglages.</translation>
     </message>
     <message>
@@ -1690,11 +1698,11 @@ Activer ce réglage désactive la configuration graphique du serveur.</translati
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <source>Couldn't install the update. %1</source>
+        <source>Couldn&apos;t install the update. %1</source>
         <translation>Impossible d’installer la mise à jour. %1</translation>
     </message>
     <message>
-        <source>Couldn't download the update. %1</source>
+        <source>Couldn&apos;t download the update. %1</source>
         <translation>Impossible de télécharger la mise à jour. %1</translation>
     </message>
 </context>

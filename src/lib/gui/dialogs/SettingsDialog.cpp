@@ -54,8 +54,13 @@ SettingsDialog::SettingsDialog(QWidget *parent, const ServerConfig &serverConfig
 
   // set up the language combo
   I18N::reDetectLanguages();
+  // first, following the system's language, which isn't one of the languages it detects
+  ui->comboLanguage->addItem(systemLanguageText());
   ui->comboLanguage->addItems(I18N::detectedLanguages());
-  ui->comboLanguage->setCurrentText(I18N::toNativeName(I18N::currentLanguage()));
+  if (Settings::value(Settings::Core::Language).toString().isEmpty())
+    ui->comboLanguage->setCurrentIndex(0);
+  else
+    ui->comboLanguage->setCurrentText(I18N::toNativeName(I18N::currentLanguage()));
 
   updateText();
 
@@ -131,9 +136,8 @@ void SettingsDialog::initConnections() const
   connect(ui->btnBrowseLog, &QPushButton::clicked, this, &SettingsDialog::browseLogPath);
   connect(ui->groupLogToFile, &QGroupBox::toggled, this, &SettingsDialog::setLogToFile);
   connect(ui->comboLogLevel, &QComboBox::currentIndexChanged, this, &SettingsDialog::logLevelChanged);
-  connect(ui->comboLanguage, &QComboBox::currentTextChanged, this, [](const QString &lang) {
-    const auto shortName = I18N::nativeTo639Name(lang);
-    I18N::setLanguage(shortName);
+  connect(ui->comboLanguage, &QComboBox::currentIndexChanged, this, [this](int index) {
+    I18N::setLanguage(index == 0 ? QString() : I18N::nativeTo639Name(ui->comboLanguage->itemText(index)));
   });
 
   // Connect modifiable controls
@@ -238,11 +242,13 @@ void SettingsDialog::updateText()
     }
   }
 
+  if (ui->comboLanguage->count() > 0)
+    ui->comboLanguage->setItemText(0, systemLanguageText());
+
   using updates::Mode;
   const QList<std::tuple<Mode, QString, QString>> updateModes = {
       {Mode::Ask, tr("Ask me"), tr("Ask when there's a new version")},
-      {Mode::Always, tr("Install automatically"),
-       tr("Install new versions as soon as they're found")},
+      {Mode::Always, tr("Install automatically"), tr("Install new versions as soon as they're found")},
       {Mode::Never, tr("Don't check"), tr("Don't look for new versions")}
   };
   for (const auto &[mode, text, toolTip] : updateModes) {
@@ -258,6 +264,17 @@ void SettingsDialog::updateText()
     ui->comboUpdates->setItemText(index, text);
     ui->comboUpdates->setItemData(index, toolTip, Qt::ToolTipRole);
   }
+}
+
+QString SettingsDialog::systemLanguageText() const
+{
+  return deskflow::platform::isWindows() ? tr("Same as Windows") : tr("Same as the system");
+}
+
+QString SettingsDialog::selectedLanguage() const
+{
+  // empty follows the system's language
+  return ui->comboLanguage->currentIndex() == 0 ? QString() : I18N::nativeTo639Name(ui->comboLanguage->currentText());
 }
 
 void SettingsDialog::checkForUpdates()
@@ -293,7 +310,7 @@ void SettingsDialog::accept()
   Settings::setValue(Settings::Gui::CloseToTray, ui->rbCloseToTray->isChecked());
   Settings::setValue(Settings::Gui::SymbolicTrayIcon, ui->rbIconMono->isChecked());
   Settings::setValue(Settings::Security::CheckPeers, ui->cbRequireClientCert->isChecked());
-  Settings::setValue(Settings::Core::Language, I18N::nativeTo639Name(ui->comboLanguage->currentText()));
+  Settings::setValue(Settings::Core::Language, selectedLanguage());
   Settings::setValue(Settings::Log::GuiDebug, ui->cbGuiDebug->isChecked());
   Settings::setValue(Settings::Gui::ShowVersionInTitle, ui->cbShowVersion->isChecked());
   if (loginStartup::isSupported()) {
@@ -513,7 +530,7 @@ bool SettingsDialog::isModified() const
       (ui->cbRunExitCommand->isChecked() != Settings::value(Settings::Core::EnableExitCommand).toBool()) ||
       (ui->lineCommandEnter->text() != Settings::value(Settings::Core::ComputerEnterCommand).toString()) ||
       (ui->lineCommandExit->text() != Settings::value(Settings::Core::ComputerExitCommand).toString()) ||
-      (I18N::nativeTo639Name(ui->comboLanguage->currentText()) != Settings::value(Settings::Core::Language).toString());
+      (selectedLanguage() != Settings::value(Settings::Core::Language).toString());
 
   if (!ignoreInterface)
     modified = modified || ui->comboInterface->currentText() != Settings::value(Settings::Core::Interface).toString();
@@ -551,12 +568,13 @@ bool SettingsDialog::isDefault() const
       (ui->lineCommandExit->text() == Settings::defaultValue(Settings::Core::ComputerExitCommand).toString()) &&
       (ui->cbRunEnterCommand->isChecked() == Settings::defaultValue(Settings::Core::EnableEnterCommand).toBool()) &&
       (ui->cbRunExitCommand->isChecked() == Settings::defaultValue(Settings::Core::EnableExitCommand).toBool()) &&
-      (ui->comboLanguage->currentText() == "English")
+      (ui->comboLanguage->currentIndex() == 0)
   );
 }
 
 void SettingsDialog::resetToDefault()
 {
+  ui->comboLanguage->setCurrentIndex(0);
   ui->sbPort->setValue(Settings::defaultValue(Settings::Core::Port).toInt());
   ui->comboLogLevel->setCurrentIndex(
       static_cast<int>(LogLevel::fromOption(Settings::defaultValue(Settings::Log::Level).toString()))
