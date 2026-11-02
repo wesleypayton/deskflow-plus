@@ -28,7 +28,7 @@ public:
   {
     return (m_features & deskflow::plus::kFeatureRemoteInput) != 0;
   }
-  void setRemoteCapture(bool capture) override;
+  void setRemoteCapture(bool capture, bool keepButtons = false) override;
   bool compressesClipboard() const override
   {
     return (m_features & deskflow::plus::kFeatureCompressedClipboard) != 0;

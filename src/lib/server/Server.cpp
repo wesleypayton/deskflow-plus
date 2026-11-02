@@ -2333,10 +2333,16 @@ void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::
   }
 
   if (input.type == Edge) {
-    if (input.a >= static_cast<int32_t>(Direction::FirstDirection) &&
-        input.a <= static_cast<int32_t>(Direction::LastDirection)) {
-      startRemoteControl(client, static_cast<Direction>(input.a), input.b, input.c);
+    if (input.a < static_cast<int32_t>(Direction::FirstDirection) ||
+        input.a > static_cast<int32_t>(Direction::LastDirection)) {
+      return;
     }
+    // carrying files dragged there, which it has just offered
+    const bool carryingDrag = input.d == deskflow::remote::kEdgeCarryingDrag && m_transferRouter &&
+                              client->supportsFileTransfer() &&
+                              m_transferRouter->latestOffer(deskflow::transfer::TransferKind::Drag, getName(client));
+    if (input.d == 0 || carryingDrag)
+      startRemoteControl(client, static_cast<Direction>(input.a), input.b, input.c, carryingDrag);
     return;
   }
 
@@ -2356,7 +2362,7 @@ void Server::handleRemoteInput(BaseClientProxy *client, const deskflow::remote::
   }
 }
 
-void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y)
+void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y, bool carryingDrag)
 {
   if (client == m_remoteSource || !client->supportsRemoteInput() || isLockedToComputer() ||
       nearMonitorCorner(client, x, y)) {
@@ -2391,7 +2397,15 @@ void Server::startRemoteControl(BaseClientProxy *client, Direction side, int32_t
   stopRemoteControl();
   LOG_INFO("\"%s\" is using its own mouse and keyboard on \"%s\"", getName(client).c_str(), getName(dst).c_str());
   m_remoteSource = client;
-  client->setRemoteCapture(true);
+  if (carryingDrag) {
+    // the files go where the client's button is let go, as for a drag from here, see finishFileDrag()
+    LOG_INFO("\"%s\" is carrying dragged files", getName(client).c_str());
+    m_lookingForDrag = true;
+    m_dragSource = getName(client);
+    m_probedClient = getName(client);
+    m_endingLocalDrag = false;
+  }
+  client->setRemoteCapture(true, carryingDrag);
   switchComputer(dst, x, y, false);
 }
 

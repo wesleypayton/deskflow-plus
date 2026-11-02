@@ -96,9 +96,10 @@ void ClientProxyPlus::sendTransfer(const deskflow::transfer::TransferMessage &me
   deskflow::transfer::writeTransferMessage(getStream(), message);
 }
 
-void ClientProxyPlus::setRemoteCapture(bool capture)
+void ClientProxyPlus::setRemoteCapture(bool capture, bool keepButtons)
 {
-  ProtocolUtil::writef(getStream(), kMsgDRemoteCapture, capture ? 1 : 0);
+  // 2 keeps the client's buttons held, carrying a drag; a client before 1.0 takes it as 1
+  ProtocolUtil::writef(getStream(), kMsgDRemoteCapture, capture ? (keepButtons ? 2 : 1) : 0);
 }
 
 bool ClientProxyPlus::recvRemoteInput()

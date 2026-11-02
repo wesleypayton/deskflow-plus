@@ -48,7 +48,6 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QScreen>
-#include <QDateTime>
 #include <QSaveFile>
 #include <QScrollBar>
 #include <QStandardPaths>
@@ -1339,9 +1338,9 @@ void MainWindow::setHostName()
       body =
           tr("The name you have chosen is invalid.\n\n"
              "Valid names:\n"
-             "• Use letters and numbers\n"
-             "• May also use _ or -\n"
-             "• Are between 1 and 255 characters");
+             "â€¢ Use letters and numbers\n"
+             "â€¢ May also use _ or -\n"
+             "â€¢ Are between 1 and 255 characters");
     }
     QMessageBox::information(this, title, body);
     return;

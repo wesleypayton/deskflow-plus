@@ -53,7 +53,8 @@ ServerProxy::ConnectionResult ServerProxyPlus::parseMessage(const uint8_t *code)
     uint8_t capture = 0;
     if (!ProtocolUtil::readf(getStream(), kMsgDRemoteCapture + 4, &capture))
       return ConnectionResult::Disconnect;
-    getClient()->setRemoteCapture(capture != 0);
+    // 2 keeps the buttons held, carrying a drag
+    getClient()->setRemoteCapture(capture != 0, capture == 2);
     return ConnectionResult::Okay;
   }
   if (!(m_features & deskflow::plus::kFeatureFileTransfer) || !isTransferMessage(code))

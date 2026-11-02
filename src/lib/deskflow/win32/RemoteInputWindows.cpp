@@ -59,6 +59,9 @@ std::array<bool, 6> g_buttonsLocal{};
 Direction g_lastEdge = Direction::NoDirection;
 ULONGLONG g_lastEdgeTime = 0;
 
+// the left button was held against an edge, so its release there is reported, see kEdgeButtonReleased
+bool g_heldAtEdge = false;
+
 void queue(const RemoteInput &input)
 {
   bool wake = false;
@@ -115,8 +118,13 @@ void checkEdge(POINT pt)
   else if (pt.y >= bottom - 1)
     side = Bottom;
 
-  // dragging a window against an edge snaps it, so leave that alone
-  if (side == NoDirection || anyButtonLocal()) {
+  // with the left button alone held it may be a file drag, which the client looks for; dragging a window against
+  // an edge snaps it, so that's left alone
+  const bool leftHeld = g_buttonsLocal.at(1);
+  bool otherHeld = false;
+  for (size_t button = 2; button < g_buttonsLocal.size(); ++button)
+    otherHeld = otherHeld || g_buttonsLocal.at(button);
+  if (side == NoDirection || otherHeld) {
     g_lastEdge = NoDirection;
     return;
   }
@@ -126,7 +134,8 @@ void checkEdge(POINT pt)
     return;
   g_lastEdge = side;
   g_lastEdgeTime = now;
-  queue({InputType::Edge, static_cast<int32_t>(side), pt.x, pt.y});
+  g_heldAtEdge = g_heldAtEdge || leftHeld;
+  queue({InputType::Edge, static_cast<int32_t>(side), pt.x, pt.y, leftHeld ? kEdgeButtonHeld : 0});
 }
 
 bool handleButton(size_t button, bool down)
@@ -147,6 +156,10 @@ bool handleButton(size_t button, bool down)
     return true;
   }
   g_buttonsLocal.at(button) = false;
+  if (button == 1 && g_heldAtEdge) {
+    g_heldAtEdge = false;
+    queue({InputType::Edge, static_cast<int32_t>(Direction::NoDirection), 0, 0, kEdgeButtonReleased});
+  }
   return false;
 }
 
@@ -277,8 +290,17 @@ HWND createHider()
   return hider;
 }
 
-void capture(bool on)
+void capture(bool on, bool keepButtons)
 {
+  // the buttons held here, carrying a drag, are let go on the computer the input goes to
+  if (on && keepButtons) {
+    for (size_t button = 0; button < g_buttonsLocal.size(); ++button) {
+      g_buttonsSent.at(button) = g_buttonsSent.at(button) || g_buttonsLocal.at(button);
+      g_buttonsLocal.at(button) = false;
+    }
+  }
+  g_heldAtEdge = false;
+
   if (on == g_capturing)
     return;
 
@@ -321,14 +343,14 @@ void threadMain(std::promise<bool> &started)
 
   while (hooked && GetMessageW(&msg, nullptr, 0, 0) > 0) {
     if (msg.hwnd == nullptr && msg.message == kCaptureMessage) {
-      capture(msg.wParam != 0);
+      capture(msg.wParam != 0, msg.wParam == 2);
       continue;
     }
     TranslateMessage(&msg);
     DispatchMessageW(&msg);
   }
 
-  capture(false);
+  capture(false, false);
   if (g_mouseHook != nullptr)
     UnhookWindowsHookEx(g_mouseHook);
   if (g_keyboardHook != nullptr)
@@ -379,10 +401,10 @@ void stopWatching()
   g_waiting.clear();
 }
 
-void setCapture(bool capture)
+void setCapture(bool capture, bool keepButtons)
 {
   if (g_threadId != 0)
-    PostThreadMessageW(g_threadId, kCaptureMessage, capture ? 1 : 0, 0);
+    PostThreadMessageW(g_threadId, kCaptureMessage, capture ? (keepButtons ? 2 : 1) : 0, 0);
 }
 
 std::vector<RemoteInput> takeInput()

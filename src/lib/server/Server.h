@@ -516,7 +516,7 @@ private:
 
   //! The client whose own mouse and keyboard are driving the cursor, until the cursor goes back to it
   BaseClientProxy *m_remoteSource = nullptr;
-  void startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y);
+  void startRemoteControl(BaseClientProxy *client, Direction side, int32_t x, int32_t y, bool carryingDrag = false);
   void stopRemoteControl();
 
   // a held drag of files being carried to another computer
