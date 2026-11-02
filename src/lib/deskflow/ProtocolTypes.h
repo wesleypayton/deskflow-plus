@@ -1167,7 +1167,9 @@ namespace deskflow::plus {
 inline constexpr uint32_t kFeatureMonitors = 1;     //!< kMsgDMonitors
 inline constexpr uint32_t kFeatureFileTransfer = 2; //!< the file transfer messages
 inline constexpr uint32_t kFeatureRemoteInput = 4;  //!< kMsgDRemoteInput and kMsgDRemoteCapture
-inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput;
+inline constexpr uint32_t kFeatureCompressedClipboard = 8; //!< clipboard data is compressed on the network
+inline constexpr uint32_t kFeatures =
+    kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput | kFeatureCompressedClipboard;
 } // namespace deskflow::plus
 
 /**

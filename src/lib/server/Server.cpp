@@ -11,6 +11,7 @@
 #include "base/IEventQueue.h"
 #include "base/Log.h"
 #include "deskflow/AppUtil.h"
+#include "deskflow/ClipboardCompression.h"
 #include "deskflow/Computer.h"
 #include "deskflow/DeskflowException.h"
 #include "deskflow/FileTransferPlatform.h"
@@ -206,6 +207,13 @@ Server::~Server()
 size_t Server::getMaximumClipboardSizeBytes() const
 {
   return m_maximumClipboardSize * 1024;
+}
+
+bool Server::clipboardFits(const BaseClientProxy *client, const std::string &data) const
+{
+  // this computer's own clipboard doesn't cross the network
+  return client->isPrimary() ||
+         deskflow::clipboardCompression::fitsLimit(data, getMaximumClipboardSizeBytes(), client->compressesClipboard());
 }
 
 bool Server::setConfig(const ServerConfig &config)
@@ -524,7 +532,7 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
       // send the clipboard data to new active computer
       for (ClipboardID id = 0; id < kClipboardEnd; ++id) {
         // Hackity hackity hack
-        if (m_clipboards[id].m_clipboard.marshall().size() > (m_maximumClipboardSize * 1024)) {
+        if (!clipboardFits(m_active, m_clipboards[id].m_clipboard.marshall())) {
           continue;
         }
         m_active->setClipboard(id, &m_clipboards[id].m_clipboard);
@@ -662,6 +670,33 @@ BaseClientProxy *Server::mapToNeighbor(BaseClientProxy *src, Direction srcSide, 
   // note -- must be locked on entry
 
   assert(src != nullptr);
+
+  // carry at most a pixel of the move past the edge onto the next computer, so the cursor lands at its edge
+  // however fast it was moving, as in Mouse Without Borders. a fast move used to land that far inside instead
+  {
+    int32_t sx;
+    int32_t sy;
+    int32_t sw;
+    int32_t sh;
+    src->getShape(sx, sy, sw, sh);
+    switch (srcSide) {
+      using enum Direction;
+    case Left:
+      x = std::max(x, sx - 1);
+      break;
+    case Right:
+      x = std::min(x, sx + sw);
+      break;
+    case Top:
+      y = std::max(y, sy - 1);
+      break;
+    case Bottom:
+      y = std::min(y, sy + sh);
+      break;
+    case NoDirection:
+      break;
+    }
+  }
 
   // get the first neighbor
   BaseClientProxy *dst = getNeighbor(src, srcSide, x, y);
@@ -1511,8 +1546,9 @@ void Server::onClipboardChanged(const BaseClientProxy *sender, ClipboardID id, u
   // get data
   sender->getClipboard(id, &clipboard.m_clipboard);
 
+  // kept if it could reach any computer, which for a Deskflow Plus computer is once it's compressed
   std::string data = clipboard.m_clipboard.marshall();
-  if (data.size() > m_maximumClipboardSize * 1024) {
+  if (!deskflow::clipboardCompression::fitsLimit(data, m_maximumClipboardSize * 1024, true)) {
     LOG_WARN("not sending clipboard data, exceeds limit: %i KB", m_maximumClipboardSize);
     return;
   }
@@ -1534,7 +1570,8 @@ void Server::onClipboardChanged(const BaseClientProxy *sender, ClipboardID id, u
   }
 
   // send the new clipboard to the active computer
-  m_active->setClipboard(id, &clipboard.m_clipboard);
+  if (clipboardFits(m_active, data))
+    m_active->setClipboard(id, &clipboard.m_clipboard);
 }
 
 void Server::onScreensaver(bool activated)

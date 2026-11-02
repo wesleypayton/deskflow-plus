@@ -36,6 +36,9 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
   where they actually touch.
 - **Real monitor arrangements.** Each computer is drawn as its own monitors, arranged as Windows has them,
   portrait screens included, in its own colour so you can tell computers apart.
+- **Larger copied images.** Clipboard data is compressed between Deskflow Plus computers, so screenshots
+  copied with tools like Lightshot or Snipping Tool get through the clipboard limit: a full 2560×1440
+  screenshot shrinks from 14 MB to under 1 MB.
 - **Copy and paste files.** Copy files or folders in Explorer, move to another computer and paste them there.
   Progress shows in the app's status bar, and a notification says when files arrive.
 - **Drag files across.** Drag files in Explorer to the edge of the screen and keep holding: the cursor
@@ -143,6 +146,9 @@ be copied at once (512 MB by default, 0 turns it off).
   Deskflow, Mouse Without Borders and ShareMouse aren't running.
 - **Windows blocks the download.** Choose **More info**, then **Run anyway**. The files aren't code signed.
 - **A missing DLL error.** Install the Visual C++ Redistributable linked under [Download](#download).
+- **A copied image doesn't arrive.** Deskflow Plus computers compress the clipboard, so this is rare
+  between them; with stock Deskflow on either side, images over the clipboard limit (3 MB by default,
+  **Configure Server → Advanced**) are skipped. The log says `exceeds limit` when this happens.
 - **Files don't copy or drop.** Make sure both computers run Deskflow Plus. For copy and paste, clipboard
   sharing must be on, and copies over the copied files limit are skipped. The status bar and a
   notification say when a transfer fails, and why.

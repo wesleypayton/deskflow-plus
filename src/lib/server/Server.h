@@ -217,6 +217,9 @@ public:
   void sendComputerShapeIpc(const BaseClientProxy *client) const;
   size_t getMaximumClipboardSizeBytes() const;
 
+  //! Whether \p data is within the clipboard limit on its way to \p client
+  bool clipboardFits(const BaseClientProxy *client, const std::string &data) const;
+
   //! A file transfer message from a client
   void handleTransferMessage(const BaseClientProxy *client, const deskflow::transfer::TransferMessage &message);
 

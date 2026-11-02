@@ -51,6 +51,12 @@ public:
   bool onGrabClipboard(ClipboardID);
   void onClipboardChanged(ClipboardID, const IClipboard *);
 
+  //! True if clipboard data to and from the server is compressed
+  virtual bool compressesClipboard() const
+  {
+    return false;
+  }
+
   //@}
 
 protected:

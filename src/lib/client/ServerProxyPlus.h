@@ -30,6 +30,11 @@ public:
     return m_features;
   }
 
+  bool compressesClipboard() const override
+  {
+    return (m_features & deskflow::plus::kFeatureCompressedClipboard) != 0;
+  }
+
 protected:
   void sendExtraInfo() override;
   ConnectionResult parseMessage(const uint8_t *code) override;

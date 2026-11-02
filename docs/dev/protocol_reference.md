@@ -192,7 +192,7 @@ This table lists all protocol messages in alphabetical order. For a typical sequ
 
 A typical control flow is as follows:
 1.  **Handshake**: The server and client exchange `Hello` and `HelloBack` messages to agree on a protocol version.
-2.  **Information Exchange**: The server requests client information with `QINF`, and the client responds with `DINF`. Between Deskflow Plus computers, which find each other through the `DPLF` option and the `DPLS` reply rather than a protocol version, the client also follows every `DINF` with `DMON`.
+2.  **Information Exchange**: The server requests client information with `QINF`, and the client responds with `DINF`. Between Deskflow Plus computers, which find each other through the `DPLF` option and the `DPLS` reply rather than a protocol version, the client also follows every `DINF` with `DMON`. Both carry a mask of features, and each side uses those in both masks: monitors (1), file transfer (2), remote input (4) and compressed clipboard (8). With compressed clipboard, the data in `DCLP` chunks is the marshalled clipboard compressed with zlib, after a 4 byte big-endian length (Qt's `qCompress`), and the clipboard limit applies to the compressed size.
 3.  **Options**: The server sends `DSOP` to configure client options.
 4.  **Keep-Alive**: The server and client periodically exchange `CALV` messages to maintain the connection.
 5.  **Computer Entry**: The server sends `CINN` to grant control to the client.

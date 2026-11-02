@@ -92,6 +92,12 @@ public:
     // only clients that support file transfer get messages
   }
 
+  //! True if clipboard data to and from the client is compressed
+  virtual bool compressesClipboard() const
+  {
+    return false;
+  }
+
   //! True if the client is Deskflow Plus and can use its own mouse and keyboard on other computers
   virtual bool supportsRemoteInput() const
   {

@@ -27,6 +27,10 @@ public:
     return (m_features & deskflow::plus::kFeatureRemoteInput) != 0;
   }
   void setRemoteCapture(bool capture) override;
+  bool compressesClipboard() const override
+  {
+    return (m_features & deskflow::plus::kFeatureCompressedClipboard) != 0;
+  }
 
 protected:
   bool parseMessage(const uint8_t *code) override;

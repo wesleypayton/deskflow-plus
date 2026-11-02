@@ -12,6 +12,7 @@
 #include <Windows.h>
 
 #include <array>
+#include <cstdint>
 #include <future>
 #include <mutex>
 #include <thread>
@@ -43,6 +44,12 @@ HCURSOR g_blankCursor = nullptr;
 bool g_capturing = false;
 POINT g_park{};
 
+// where the cursor was before it was parked. moves Windows worked out before the park still measure from there,
+// and measuring them from the park would read as a jump across half the monitor (Mouse Without Borders
+// likewise doesn't trust the first move after a switch)
+POINT g_beforePark{};
+bool g_movesMayPredatePark = false;
+
 // where each press went, so its release goes the same way
 std::array<bool, 256> g_keysSent{};
 std::array<bool, 256> g_keysLocal{};
@@ -71,6 +78,13 @@ void queue(const RemoteInput &input)
   }
   if (wake && g_wake)
     g_wake();
+}
+
+int64_t distanceSquared(POINT a, POINT b)
+{
+  const int64_t dx = a.x - b.x;
+  const int64_t dy = a.y - b.y;
+  return dx * dx + dy * dy;
 }
 
 bool anyButtonLocal()
@@ -144,7 +158,15 @@ bool handleMouse(WPARAM message, const MSLLHOOKSTRUCT &info)
   case WM_MOUSEMOVE:
     if (g_capturing) {
       // the move is kept from happening, so the cursor stays where it was parked
-      if (const auto dx = info.pt.x - g_park.x, dy = info.pt.y - g_park.y; dx != 0 || dy != 0)
+      auto from = g_park;
+      if (g_movesMayPredatePark) {
+        // until the first move from the parked cursor arrives, a move nearer where the cursor was is an old one
+        if (distanceSquared(info.pt, g_beforePark) < distanceSquared(info.pt, g_park))
+          from = g_beforePark;
+        else
+          g_movesMayPredatePark = false;
+      }
+      if (const auto dx = info.pt.x - from.x, dy = info.pt.y - from.y; dx != 0 || dy != 0)
         queue({InputType::Move, dx, dy});
       return true;
     }
@@ -271,6 +293,8 @@ void capture(bool on)
     const auto y = (monitor.rcMonitor.top + monitor.rcMonitor.bottom) / 2;
     if (g_hider != nullptr)
       SetWindowPos(g_hider, HWND_TOPMOST, x, y, 1, 1, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    g_beforePark = pt;
+    g_movesMayPredatePark = true;
     SetCursorPos(x, y);
     GetCursorPos(&g_park);
     LOG_DEBUG("capturing this computer's mouse and keyboard, cursor parked at %d,%d", g_park.x, g_park.y);

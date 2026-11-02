@@ -167,6 +167,23 @@ Since the first two-machine test:
   finishes. The MSI starts it through Explorer, so it runs as the user and not
   elevated.
 
+Since the second two-machine test:
+
+* A cursor crossing from a client lands at the edge of the next computer
+  rather than as far inside it as the last move overshot, as Mouse Without
+  Borders does (`Server::mapToNeighbor`).
+* When a client's own mouse crosses, its cursor is parked at the middle of its
+  monitor. Moves Windows worked out before the park still measured from the
+  edge, and measured from the park they read as a jump of half the monitor's
+  width; they're now measured from where the cursor was until the first move
+  from the park arrives (`RemoteInputWindows.cpp`). Mouse Without Borders
+  likewise ignores the first move after a switch.
+* Clipboard data between Plus computers is compressed (feature 8,
+  `deskflow/ClipboardCompression.h`), and the clipboard limit applies to the
+  compressed size. Copied screenshots are raw bitmaps, so a 1089x914 one
+  (3.9 MB) went over the default 3 MB limit and was never sent; a full
+  2560x1440 screenshot compresses to about 0.4 MB.
+
 Starting with Windows:
 
 * The service already started the core at boot with the last settings, so a
