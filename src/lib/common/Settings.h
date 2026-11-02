@@ -81,6 +81,8 @@ public:
     //! After Yes or No, when to ask about a new version again
     inline static const auto UpdateAskAfter = QStringLiteral("gui/updateAskAfter");
     inline static const auto UpdateReleasesUrl = QStringLiteral("gui/updateReleasesUrl");
+    //! Offer releases marked as test builds, see common/UpdateRelease.h
+    inline static const auto UpdateTestBuilds = QStringLiteral("gui/updateTestBuilds");
     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
@@ -317,6 +319,7 @@ private:
     , Gui::UpdateMode
     , Gui::UpdateAskAfter
     , Gui::UpdateReleasesUrl
+    , Gui::UpdateTestBuilds
     , Gui::CloseReminder
     , Gui::CloseToTray
     , Gui::LogExpanded

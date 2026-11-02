@@ -20,7 +20,12 @@ set(CPACK_PACKAGE_VERSION ${CMAKE_PROJECT_VERSION})
 
 #Prevent this override from being written in the package
 if(NOT PACKAGE_VERSION_LABEL)
-    set (PACKAGE_VERSION_LABEL "${CPACK_PACKAGE_VERSION}")
+    # a release, with no commits since its tag, is named by its three numbers alone
+    if(CMAKE_PROJECT_VERSION_TWEAK EQUAL 0)
+      set(PACKAGE_VERSION_LABEL "${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}")
+    else()
+      set(PACKAGE_VERSION_LABEL "${CPACK_PACKAGE_VERSION}")
+    endif()
 endif()
 
 if(WIN32)

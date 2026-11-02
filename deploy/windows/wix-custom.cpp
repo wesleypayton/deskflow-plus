@@ -12,8 +12,10 @@
 // Include after Windows.h
 #include <MsiQuery.h>
 
+#include <filesystem>
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 namespace {
 // Warning: DLL will crash with error code 1603 if we exceed this.
@@ -68,5 +70,58 @@ extern "C" __declspec(dllexport) UINT __stdcall CheckVCRedist(MSIHANDLE hInstall
   }
 
   MS_LOG_DEBUG("msvc redist version check successful");
+  return ERROR_SUCCESS;
+}
+
+// The test builds before 1.0, numbered 1.27.0.x, were installed by a setup .exe with this upgrade code. Setup
+// won't install over a higher number of itself, so 1.0's has a new code, and this removes the test build's own
+// entry in Apps once the MSI has replaced its files, along with the copy of its setup Windows kept.
+extern "C" __declspec(dllexport) UINT __stdcall RemoveTestBuilds(MSIHANDLE)
+{
+  const auto kUninstallKey = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+  const auto kTestBuildUpgradeCode = L"{3B8E5C71-2A4F-4D96-B0E3-7C1F9A6D2E45}";
+
+  HKEY uninstall = nullptr;
+  if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, kUninstallKey, 0, KEY_READ | KEY_WRITE, &uninstall) != ERROR_SUCCESS)
+    return ERROR_SUCCESS;
+
+  std::vector<std::wstring> bundles;
+  for (DWORD i = 0;; ++i) {
+    wchar_t name[256];
+    DWORD nameLength = 256;
+    if (RegEnumKeyExW(uninstall, i, name, &nameLength, nullptr, nullptr, nullptr, nullptr) != ERROR_SUCCESS)
+      break;
+
+    // a list of codes, each ended by a null, and the list by another
+    std::vector<wchar_t> codes(1024, L'\0');
+    DWORD bytes = static_cast<DWORD>((codes.size() - 2) * sizeof(wchar_t));
+    if (RegGetValueW(uninstall, name, L"BundleUpgradeCode", RRF_RT_REG_MULTI_SZ, nullptr, codes.data(), &bytes) !=
+        ERROR_SUCCESS)
+      continue;
+    for (const wchar_t *code = codes.data(); *code != L'\0'; code += wcslen(code) + 1) {
+      if (_wcsicmp(code, kTestBuildUpgradeCode) == 0) {
+        bundles.emplace_back(name);
+        break;
+      }
+    }
+  }
+
+  for (const auto &bundle : bundles) {
+    std::vector<wchar_t> cache(MAX_PATH * 2, L'\0');
+    DWORD bytes = static_cast<DWORD>((cache.size() - 1) * sizeof(wchar_t));
+    if (RegGetValueW(uninstall, bundle.c_str(), L"BundleCachePath", RRF_RT_REG_SZ, nullptr, cache.data(), &bytes) ==
+        ERROR_SUCCESS) {
+      // only the folder named for the bundle, in Windows' package cache
+      const auto folder = std::filesystem::path(cache.data()).parent_path();
+      std::error_code error;
+      if (folder.filename() == bundle && folder.parent_path().filename() == L"Package Cache")
+        std::filesystem::remove_all(folder, error);
+    }
+    RegDeleteTreeW(uninstall, bundle.c_str());
+    RegDeleteTreeW(HKEY_LOCAL_MACHINE, (L"SOFTWARE\\Classes\\Installer\\Dependencies\\" + bundle).c_str());
+    MS_LOG_DEBUG("removed the test build's entry %ls", bundle.c_str());
+  }
+
+  RegCloseKey(uninstall);
   return ERROR_SUCCESS;
 }

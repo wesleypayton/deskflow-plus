@@ -32,6 +32,10 @@ add_library(common STATIC
   QSettingsProxy.h
   ShellIntegration.cpp
   ShellIntegration.h
+  UpdateDownload.cpp
+  UpdateDownload.h
+  UpdateRelease.cpp
+  UpdateRelease.h
   UrlConstants.h
   ${CMAKE_CURRENT_BINARY_DIR}/Constants.h
   ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h
@@ -41,7 +45,7 @@ if(WIN32)
   target_sources(common PRIVATE win32/ShellIntegrationWindows.cpp)
 endif()
 
-target_link_libraries(common PUBLIC Qt6::Core)
+target_link_libraries(common PUBLIC Qt6::Core Qt6::Network)
 
 target_include_directories(common
   PUBLIC

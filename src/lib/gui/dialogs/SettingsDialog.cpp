@@ -13,9 +13,9 @@
 
 #include "common/I18N.h"
 #include "common/Settings.h"
+#include "common/UpdateRelease.h"
 #include "gui/LoginStartup.h"
 #include "gui/TlsUtility.h"
-#include "gui/UpdateRelease.h"
 #include "gui/core/NetworkMonitor.h"
 #include "gui/widgets/SettingsDialogButtonBox.h"
 
@@ -25,6 +25,7 @@
 #include <QMessageBox>
 
 using namespace deskflow::gui;
+namespace updates = deskflow::updates;
 
 namespace {
 
@@ -61,6 +62,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, const ServerConfig &serverConfig
   ui->lblUpdates->setVisible(updates::isSupported());
   ui->comboUpdates->setVisible(updates::isSupported());
   ui->btnCheckUpdates->setVisible(updates::isSupported());
+  ui->cbUpdateTestBuilds->setVisible(updates::isSupported());
 
   ui->btnClearAllSettings->setIcon(QIcon::fromTheme(QStringLiteral("edit-clear-all")));
 
@@ -146,6 +148,7 @@ void SettingsDialog::initConnections() const
   connect(ui->rbCloseToTray, &QRadioButton::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->cbElevateDaemon, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->comboUpdates, &QComboBox::currentIndexChanged, this, &SettingsDialog::setButtonBoxEnabledButtons);
+  connect(ui->cbUpdateTestBuilds, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->btnCheckUpdates, &QPushButton::clicked, this, &SettingsDialog::checkForUpdates);
   connect(ui->cbGuiDebug, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->cbShowVersion, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
@@ -279,8 +282,10 @@ void SettingsDialog::accept()
   Settings::setValue(Settings::Log::File, ui->lineLogFilename->text());
   Settings::setValue(Settings::Daemon::Elevate, ui->cbElevateDaemon->isChecked());
   Settings::setValue(Settings::Gui::Autohide, ui->rbAutoHide->isChecked());
-  if (updates::isSupported())
+  if (updates::isSupported()) {
     Settings::setValue(Settings::Gui::UpdateMode, ui->comboUpdates->currentData());
+    Settings::setValue(Settings::Gui::UpdateTestBuilds, ui->cbUpdateTestBuilds->isChecked());
+  }
   Settings::setValue(Settings::Core::PreventSleep, ui->cbPreventSleep->isChecked());
   Settings::setValue(Settings::Security::Certificate, ui->lineTlsCertPath->text());
   Settings::setValue(Settings::Security::KeySize, ui->comboTlsKeyLength->currentText().toInt());
@@ -321,6 +326,7 @@ void SettingsDialog::loadFromConfig()
   ui->cbPreventSleep->setChecked(Settings::value(Settings::Core::PreventSleep).toBool());
   ui->cbElevateDaemon->setChecked(Settings::value(Settings::Daemon::Elevate).toBool());
   ui->comboUpdates->setCurrentIndex(ui->comboUpdates->findData(updateModeSetting(Settings::value)));
+  ui->cbUpdateTestBuilds->setChecked(Settings::value(Settings::Gui::UpdateTestBuilds).toBool());
   ui->cbGuiDebug->setChecked(Settings::value(Settings::Log::GuiDebug).toBool());
   ui->cbShowVersion->setChecked(Settings::value(Settings::Gui::ShowVersionInTitle).toBool());
   ui->cbStartOnLogin->setChecked(Settings::value(Settings::Gui::StartOnLogin).toBool());
@@ -441,6 +447,7 @@ void SettingsDialog::updateControls()
   ui->rbShowOnStart->setEnabled(writable);
   ui->btnClearAllSettings->setEnabled(writable);
   ui->comboUpdates->setEnabled(writable);
+  ui->cbUpdateTestBuilds->setEnabled(writable);
   ui->cbPreventSleep->setEnabled(writable);
   ui->lineTlsCertPath->setEnabled(writable);
   ui->comboTlsKeyLength->setEnabled(writable);
@@ -492,6 +499,7 @@ bool SettingsDialog::isModified() const
       (ui->rbCloseToTray->isChecked() != Settings::value(Settings::Gui::CloseToTray).toBool()) ||
       (ui->cbElevateDaemon->isChecked() != Settings::value(Settings::Daemon::Elevate).toBool()) ||
       (ui->comboUpdates->currentData() != updateModeSetting(Settings::value)) ||
+      (ui->cbUpdateTestBuilds->isChecked() != Settings::value(Settings::Gui::UpdateTestBuilds).toBool()) ||
       (ui->cbGuiDebug->isChecked() != Settings::value(Settings::Log::GuiDebug).toBool()) ||
       (ui->cbShowVersion->isChecked() != Settings::value(Settings::Gui::ShowVersionInTitle).toBool()) ||
       (ui->cbStartOnLogin->isChecked() != Settings::value(Settings::Gui::StartOnLogin).toBool()) ||
@@ -528,6 +536,7 @@ bool SettingsDialog::isDefault() const
       (ui->rbCloseToTray->isChecked() == Settings::defaultValue(Settings::Gui::CloseToTray).toBool()) &&
       (ui->cbElevateDaemon->isChecked() == Settings::defaultValue(Settings::Daemon::Elevate).toBool()) &&
       (ui->comboUpdates->currentData() == updateModeSetting(Settings::defaultValue)) &&
+      (ui->cbUpdateTestBuilds->isChecked() == Settings::defaultValue(Settings::Gui::UpdateTestBuilds).toBool()) &&
       (ui->cbGuiDebug->isChecked() == Settings::defaultValue(Settings::Log::GuiDebug).toBool()) &&
       (ui->cbShowVersion->isChecked() == Settings::defaultValue(Settings::Gui::ShowVersionInTitle).toBool()) &&
       (ui->cbStartOnLogin->isChecked() == Settings::defaultValue(Settings::Gui::StartOnLogin).toBool()) &&
@@ -557,6 +566,7 @@ void SettingsDialog::resetToDefault()
   ui->cbPreventSleep->setChecked(Settings::defaultValue(Settings::Core::PreventSleep).toBool());
   ui->cbElevateDaemon->setChecked(Settings::defaultValue(Settings::Daemon::Elevate).toBool());
   ui->comboUpdates->setCurrentIndex(ui->comboUpdates->findData(updateModeSetting(Settings::defaultValue)));
+  ui->cbUpdateTestBuilds->setChecked(Settings::defaultValue(Settings::Gui::UpdateTestBuilds).toBool());
   ui->cbGuiDebug->setChecked(Settings::defaultValue(Settings::Log::GuiDebug).toBool());
   ui->cbShowVersion->setChecked(Settings::defaultValue(Settings::Gui::ShowVersionInTitle).toBool());
   ui->cbStartOnLogin->setChecked(Settings::defaultValue(Settings::Gui::StartOnLogin).toBool());

@@ -22,6 +22,13 @@ class DaemonIpcServer : public IpcServer
 public:
   explicit DaemonIpcServer(QObject *parent, const QString &logFilename);
 
+  //! Tells the app how an update is going, see DaemonIpcClient::updateStatus
+  void sendUpdateStatus(const QString &state, const QString &detail);
+
+Q_SIGNALS:
+  void installUpdateRequested(const QString &version);
+  void cancelUpdateRequested();
+
 private:
   void processCommand(QLocalSocket *clientSocket, const QString &command, const QStringList &parts) override;
   void processLogLevel(QLocalSocket *&clientSocket, const QStringList &messageParts);

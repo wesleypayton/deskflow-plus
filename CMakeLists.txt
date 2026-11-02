@@ -39,11 +39,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Fallback for when git can not be found
+# Deskflow Plus has its own version numbers, from annotated tags named plus-v<major>.<minor>.<patch>; the
+# fourth number counts the commits since that tag. Fallback for when git can not be found
 set(DESKFLOW_VERSION_MAJOR 1)
-set(DESKFLOW_VERSION_MINOR 27)
+set(DESKFLOW_VERSION_MINOR 0)
 set(DESKFLOW_VERSION_PATCH 0)
 set(DESKFLOW_VERSION_TWEAK 0)
+# the Deskflow release it's based on, from Deskflow's own v<version> tags
+set(DESKFLOW_UPSTREAM_VERSION "1.27.0")
 
 # Get the version from git if it's a git repository
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
@@ -56,12 +59,22 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
       ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     execute_process(
-      COMMAND ${GIT_EXECUTABLE} describe --long --match v* --always
+      COMMAND ${GIT_EXECUTABLE} describe --abbrev=0 --match v[0-9]*
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+      OUTPUT_VARIABLE UPSTREAM_TAG
+      ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    if(UPSTREAM_TAG MATCHES "^v([0-9]+\\.[0-9]+\\.[0-9]+)")
+      set(DESKFLOW_UPSTREAM_VERSION "${CMAKE_MATCH_1}")
+    endif()
+    unset(UPSTREAM_TAG)
+    execute_process(
+      COMMAND ${GIT_EXECUTABLE} describe --long --match plus-v* --always
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
       OUTPUT_VARIABLE GITREV
       ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    string(FIND "${GITREV}" "v" isRev)
+    string(FIND "${GITREV}" "plus-v" isRev)
     if(NOT ${isRev} EQUAL -1)
       string(REGEX MATCH [0-9]+ MAJOR ${GITREV})
       string(REGEX MATCH \\.[0-9]+ MINOR ${GITREV})
@@ -113,7 +126,7 @@ unset(DESKFLOW_VERSION_MINOR)
 unset(DESKFLOW_VERSION_PATCH)
 unset(DESKFLOW_VERSION_TWEAK)
 
-message(STATUS "Building ${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}")
+message(STATUS "Building ${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}, based on Deskflow ${DESKFLOW_UPSTREAM_VERSION}")
 
 # Set lib versions
 set(REQUIRED_OPENSSL_VERSION 3.0)

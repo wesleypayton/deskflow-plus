@@ -24,9 +24,14 @@ public:
   void sendStopProcess();
   void sendClearSettings();
   void requestLogPath();
+  //! Asks the service to download and install \p version, see DaemonUpdater
+  void sendInstallUpdate(const QString &version);
+  void sendCancelUpdate();
 
 Q_SIGNALS:
   void logPathReceived(const QString &logPath);
+  //! How the update is going: downloading (with a percent), installing, cancelled or failed (with the reason)
+  void updateStatus(const QString &state, const QString &detail);
 
 protected:
   void processCommand(const QString &command, const QStringList &parts) override;

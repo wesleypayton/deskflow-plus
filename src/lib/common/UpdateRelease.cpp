@@ -7,13 +7,14 @@
 #include "UpdateRelease.h"
 
 #include "common/PlatformInfo.h"
+#include "common/VersionInfo.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
 
-namespace deskflow::gui::updates {
+namespace deskflow::updates {
 
 namespace {
 
@@ -23,7 +24,9 @@ const auto kNever = QStringLiteral("never");
 
 std::optional<Release> releaseFrom(const QJsonObject &release)
 {
-  static const QRegularExpression setupName(QStringLiteral(R"(^deskflow-plus-(\d+\.\d+\.\d+\.\d+)-win-x64-setup\.exe$)")
+  // a release is named by three numbers, a test build by four
+  static const QRegularExpression setupName(
+      QStringLiteral(R"(^deskflow-plus-(\d+\.\d+\.\d+(?:\.\d+)?)-win-x64-setup\.exe$)")
   );
   static const QRegularExpression sha256(
       QStringLiteral("^sha256:([0-9a-f]{64})$"), QRegularExpression::CaseInsensitiveOption
@@ -48,7 +51,8 @@ std::optional<Release> releaseFrom(const QJsonObject &release)
         name,
         url,
         size,
-        digestMatch.captured(1).toLower().toLatin1()
+        digestMatch.captured(1).toLower().toLatin1(),
+        release.value(QStringLiteral("prerelease")).toBool()
     };
   }
   return {};
@@ -82,7 +86,17 @@ QString modeToString(Mode mode)
   }
 }
 
-std::optional<Release> newerRelease(const QByteArray &json, const QVersionNumber &current)
+QVersionNumber currentVersion()
+{
+  return QVersionNumber::fromString(QString::fromLatin1(kVersion));
+}
+
+bool isTestBuild(const QVersionNumber &version)
+{
+  return version.segmentCount() > 3 && version.segmentAt(3) != 0;
+}
+
+std::optional<Release> newerRelease(const QByteArray &json, const QVersionNumber &current, bool testBuilds)
 {
   const auto document = QJsonDocument::fromJson(json);
   if (!document.isArray())
@@ -90,11 +104,24 @@ std::optional<Release> newerRelease(const QByteArray &json, const QVersionNumber
 
   std::optional<Release> newest;
   for (const auto &value : document.array()) {
-    if (auto release = releaseFrom(value.toObject());
-        release && release->version > (newest ? newest->version : current))
+    auto release = releaseFrom(value.toObject());
+    if (release && (testBuilds || !release->testBuild) && release->version > (newest ? newest->version : current))
       newest = std::move(release);
   }
   return newest;
 }
 
-} // namespace deskflow::gui::updates
+std::optional<Release> findRelease(const QByteArray &json, const QVersionNumber &version)
+{
+  const auto document = QJsonDocument::fromJson(json);
+  if (!document.isArray())
+    return {};
+
+  for (const auto &value : document.array()) {
+    if (auto release = releaseFrom(value.toObject()); release && release->version == version)
+      return release;
+  }
+  return {};
+}
+
+} // namespace deskflow::updates

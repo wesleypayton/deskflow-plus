@@ -123,7 +123,20 @@
       Impersonate="yes"
       Return="ignore" />
 
+    <!-- see wix-custom.cpp; as the system, after the test build's files are replaced -->
+    <CustomAction
+      Id="RemoveTestBuilds"
+      BinaryRef="CustomDLL"
+      DllEntry="RemoveTestBuilds"
+      Execute="deferred"
+      Impersonate="no"
+      Return="ignore" />
+
     <InstallExecuteSequence>
+      <Custom
+        Action="RemoveTestBuilds"
+        Before="InstallFinalize"
+        Condition="NOT (REMOVE = &quot;ALL&quot;)" />
       <Custom
         Action="RemoveLoginStartup"
         Before="InstallFinalize"

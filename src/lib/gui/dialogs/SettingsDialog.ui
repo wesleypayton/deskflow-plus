@@ -109,6 +109,16 @@
         </layout>
        </item>
        <item>
+        <widget class="QCheckBox" name="cbUpdateTestBuilds">
+         <property name="toolTip">
+          <string>Test builds have the newest fixes and features, and haven't been tried as much</string>
+         </property>
+         <property name="text">
+          <string>Include test builds</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="cbPreventSleep">
          <property name="text">
           <string>Prevent this computer from going to sleep</string>

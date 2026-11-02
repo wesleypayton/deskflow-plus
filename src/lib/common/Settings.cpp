@@ -9,6 +9,7 @@
 #include "LogLevel.h"
 #include "NetworkProtocol.h"
 #include "PlatformInfo.h"
+#include "UpdateRelease.h"
 #include "UrlConstants.h"
 #include "common/KeyboardModifier.h"
 
@@ -356,6 +357,10 @@ QVariant Settings::defaultValue(const QString &key)
 
   if (key == Gui::UpdateMode)
     return QStringLiteral("ask");
+
+  // someone running a test build gets the next one
+  if (key == Gui::UpdateTestBuilds)
+    return deskflow::updates::isTestBuild(deskflow::updates::currentVersion());
 
   if (key == Server::ExternalConfigFile)
     return QStringLiteral("%1/%2-server.conf").arg(Settings::settingsPath(), kAppId);

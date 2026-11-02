@@ -6,10 +6,11 @@
 
 #include "Updater.h"
 
-#include "UpdateDownload.h"
 #include "common/Constants.h"
 #include "common/Settings.h"
+#include "common/UpdateDownload.h"
 #include "common/VersionInfo.h"
+#include "gui/ipc/DaemonIpcClient.h"
 
 #include <QDateTime>
 #include <QDesktopServices>
@@ -26,7 +27,7 @@
 #include <shellapi.h>
 #endif
 
-using namespace deskflow::gui::updates;
+using namespace deskflow::updates;
 using namespace std::chrono_literals;
 
 namespace {
@@ -37,11 +38,6 @@ constexpr auto kCheckInterval = 24h;
 // a check that couldn't reach GitHub tries again sooner
 constexpr auto kRetryInterval = 1h;
 constexpr auto kCheckTimeout = 30s;
-
-QVersionNumber currentVersion()
-{
-  return QVersionNumber::fromString(QString::fromLatin1(kVersion));
-}
 
 Mode updateMode()
 {
@@ -56,7 +52,7 @@ QString versionLines(const Release &release)
 
 QString installNote()
 {
-  return Updater::tr("%1 closes for a moment while Windows installs the update, then starts again.").arg(kDisplayName);
+  return Updater::tr("%1 closes for a moment while the update installs, then starts again.").arg(kDisplayName);
 }
 
 } // namespace
@@ -123,7 +119,8 @@ void Updater::check(QWidget *parent, bool manual)
       return;
     }
 
-    const auto release = newerRelease(reply->readAll(), currentVersion());
+    const auto release =
+        newerRelease(reply->readAll(), currentVersion(), Settings::value(Settings::Gui::UpdateTestBuilds).toBool());
     if (!release) {
       qDebug("%s is the newest version", kVersion);
       if (manual && parent)
@@ -227,6 +224,70 @@ void Updater::install(const Release &release, QWidget *parent)
     QDesktopServices::openUrl(release.pageUrl);
     return;
   }
+  if (m_installing)
+    return;
+  m_installing = true;
+
+  // the service downloads and checks the setup itself, and runs it with no permission prompt; it's only told
+  // which version to install
+  auto *service = new deskflow::gui::ipc::DaemonIpcClient(this);
+  QPointer<QProgressDialog> progress;
+  if (parent != nullptr) {
+    progress = new QProgressDialog(
+        tr("Downloading %1 %2...").arg(kDisplayName, release.version.toString()), tr("Cancel"), 0, 100, parent
+    );
+    progress->setWindowTitle(tr("Updating %1").arg(kDisplayName));
+    progress->setMinimumDuration(0);
+    progress->setAutoClose(false);
+    progress->setAutoReset(false);
+    connect(progress, &QProgressDialog::canceled, service, &deskflow::gui::ipc::DaemonIpcClient::sendCancelUpdate);
+    progress->show();
+  }
+
+  const auto version = release.version.toString();
+  connect(service, &deskflow::gui::ipc::DaemonIpcClient::connected, service, [service, version] {
+    service->sendInstallUpdate(version);
+  });
+  const auto withoutService = [this, service, progress, release, parent = QPointer(parent)] {
+    qInfo("the background service can't install the update, so setup will ask for permission");
+    service->deleteLater();
+    if (progress)
+      progress->deleteLater();
+    m_installing = false;
+    installWithPermission(release, parent);
+  };
+  connect(service, &deskflow::gui::ipc::DaemonIpcClient::connectionFailed, this, withoutService);
+  connect(service, &deskflow::gui::ipc::DaemonIpcClient::versionMismatch, this, withoutService);
+  connect(
+      service, &deskflow::gui::ipc::DaemonIpcClient::updateStatus, this,
+      [this, service, progress, parent = QPointer(parent)](const QString &state, const QString &detail) {
+        if (state == QStringLiteral("downloading")) {
+          if (progress)
+            progress->setValue(detail.toInt());
+          return;
+        }
+
+        service->deleteLater();
+        if (progress)
+          progress->deleteLater();
+        m_installing = false;
+        if (state == QStringLiteral("installing")) {
+          qInfo("the background service is installing the update");
+          Q_EMIT installerStarted();
+        } else if (state == QStringLiteral("cancelled")) {
+          qInfo("the update was cancelled");
+        } else {
+          qWarning("the update failed: %s", qPrintable(detail));
+          if (parent)
+            QMessageBox::warning(parent, tr("Update"), tr("Couldn't install the update. %1").arg(detail));
+        }
+      }
+  );
+  service->connectToServer();
+}
+
+void Updater::installWithPermission(const Release &release, QWidget *parent)
+{
   if (m_installing)
     return;
   m_installing = true;

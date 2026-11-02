@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CPack's WiX template (CMake 3.31, BSD-3-Clause), changed only to let a lower version install over a
+  higher one. See deploy.cmake.
+-->
+
+<?include "cpack_variables.wxi"?>
+
+<Wix
+    xmlns="http://wixtoolset.org/schemas/v4/wxs"@CPACK_WIX_CUSTOM_XMLNS_EXPANDED@
+    RequiredVersion="4.0"
+    >
+
+    <Package
+        Name="$(var.CPACK_PACKAGE_NAME)"
+        Version="$(var.CPACK_PACKAGE_VERSION)"
+        Manufacturer="$(var.CPACK_PACKAGE_VENDOR)"
+        UpgradeCode="$(var.CPACK_WIX_UPGRADE_GUID)"
+        ProductCode="$(var.CPACK_WIX_PRODUCT_GUID)"
+        Scope="$(var.CPACK_WIX_INSTALL_SCOPE)"
+        InstallerVersion="500"
+        Language="1033"
+        Compressed="yes"
+        >
+
+        <Media Id="1" Cabinet="media1.cab" EmbedCab="yes"/>
+
+        <!--
+          Replaces any installed version, lower or higher: the test builds before 1.0 were numbered
+          1.27.0.x, after the Deskflow release they started from
+        -->
+        <MajorUpgrade
+            Schedule="afterInstallInitialize"
+            AllowSameVersionUpgrades="yes"
+            AllowDowngrades="yes"/>
+
+        <WixVariable Id="WixUILicenseRtf" Value="$(var.CPACK_WIX_LICENSE_RTF)"/>
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_ROOT"/>
+
+        <?ifdef CPACK_WIX_PRODUCT_ICON?>
+        <Property Id="ARPPRODUCTICON" Value="ProductIcon.ico" />
+        <Icon Id="ProductIcon.ico" SourceFile="$(var.CPACK_WIX_PRODUCT_ICON)"/>
+        <?endif?>
+
+        <?ifdef CPACK_WIX_UI_BANNER?>
+        <WixVariable Id="WixUIBannerBmp" Value="$(var.CPACK_WIX_UI_BANNER)"/>
+        <?endif?>
+
+        <?ifdef CPACK_WIX_UI_DIALOG?>
+        <WixVariable Id="WixUIDialogBmp" Value="$(var.CPACK_WIX_UI_DIALOG)"/>
+        <?endif?>
+
+        <FeatureRef Id="ProductFeature"/>
+
+        <ui:WixUI Id="$(var.CPACK_WIX_UI_REF)" />
+        <UIRef Id="WixUI_ErrorProgressText" />
+
+        <?include "properties.wxi"?>
+        <?include "product_fragment.wxi"?>
+    </Package>
+</Wix>

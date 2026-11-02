@@ -40,6 +40,13 @@ void DaemonIpcServer::processCommand(QLocalSocket *clientSocket, const QString &
   } else if (command == QStringLiteral("logPath")) {
     LOG_DEBUG("daemon ipc server got log path request");
     writeToClientSocket(clientSocket, QStringLiteral("logPath=%1").arg(m_logFilename.toUtf8()));
+  } else if (command == QStringLiteral("installUpdate") && parts.size() == 2) {
+    LOG_INFO("the app asked for version %s to be installed", qPrintable(parts.at(1)));
+    Q_EMIT installUpdateRequested(parts.at(1));
+    writeToClientSocket(clientSocket, kAckMessage);
+  } else if (command == QStringLiteral("cancelUpdate")) {
+    Q_EMIT cancelUpdateRequested();
+    writeToClientSocket(clientSocket, kAckMessage);
   } else if (command == QStringLiteral("clearSettings")) {
     LOG_DEBUG("daemon ipc server got clear settings message");
     Q_EMIT clearSettingsRequested();
@@ -47,6 +54,14 @@ void DaemonIpcServer::processCommand(QLocalSocket *clientSocket, const QString &
   } else {
     LOG_WARN("daemon ipc server got unknown command: %s", command.toUtf8().constData());
   }
+}
+
+void DaemonIpcServer::sendUpdateStatus(const QString &state, const QString &detail)
+{
+  // the detail is free text, and the message ends at a line break
+  auto text = detail;
+  text.replace(QLatin1Char('\n'), QLatin1Char(' ')).replace(QLatin1Char('='), QLatin1Char('-'));
+  broadcastCommand(QStringLiteral("updateStatus"), QStringLiteral("%1|%2").arg(state, text));
 }
 
 void DaemonIpcServer::processLogLevel(QLocalSocket *&clientSocket, const QStringList &messageParts)
