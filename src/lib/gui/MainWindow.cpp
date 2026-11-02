@@ -48,7 +48,11 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QScreen>
+#include <QDateTime>
+#include <QSaveFile>
 #include <QScrollBar>
+#include <QStandardPaths>
+#include <QTextStream>
 #include <QToolTip>
 
 #include <memory>
@@ -81,6 +85,7 @@ MainWindow::MainWindow()
       m_actionRestartCore{new QAction(this)},
       m_actionStopCore{new QAction(this)},
       m_actionShowHelp{new QAction(this)},
+      m_actionSaveLogs{new QAction(this)},
       m_networkMonitor{new NetworkMonitor(this)}
 {
   ui->setupUi(this);
@@ -259,6 +264,7 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::securityLevelChanged, m_statusBar, &StatusBar::setSecurityLevel);
 
   connect(m_actionAbout, &QAction::triggered, this, &MainWindow::openAboutDialog);
+  connect(m_actionSaveLogs, &QAction::triggered, this, &MainWindow::saveLogs);
   connect(m_actionMinimize, &QAction::triggered, this, &MainWindow::hide);
 
   connect(m_actionQuit, &QAction::triggered, this, &MainWindow::close);
@@ -519,6 +525,67 @@ void MainWindow::findServers()
   finder->find(port);
 }
 
+void MainWindow::saveLogs()
+{
+  // the end of a long log is what's wanted
+  constexpr qint64 kMaxServiceLog = 4 * 1024 * 1024;
+
+  const auto suggested = QStringLiteral("%1/deskflow-plus-logs-%2.txt")
+                             .arg(
+                                 QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
+                                 QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd-HHmm"))
+                             );
+  const auto path =
+      QFileDialog::getSaveFileName(this, tr("Save Logs for a Bug Report"), suggested, tr("Text files (*.txt)"));
+  if (path.isEmpty())
+    return;
+
+  QString text;
+  QTextStream out(&text);
+  out << kDisplayName << " logs, saved " << QDateTime::currentDateTime().toString(Qt::ISODate) << "\n"
+      << "Version: " << kVersion << " (" << kVersionGitSha << "), based on Deskflow " << kUpstreamVersion << "\n"
+      << "Qt: " << qVersion() << "\n"
+      << "System: " << QSysInfo::prettyProductName() << "\n"
+      << "Mode: " << (ui->rbModeServer->isChecked() ? "server" : "client") << "\n"
+      << "Portable: " << (Settings::isPortableMode() ? "yes" : "no") << "\n"
+      << "Computer name: " << Settings::value(Settings::Core::ComputerName).toString() << "\n\n";
+
+  out << "== This app's log\n" << m_logDock->text() << "\n\n";
+
+  // in the background service's log on Windows, the core's own messages too
+  const auto serviceLog = Settings::value(Settings::Daemon::LogFile).toString();
+  if (QFile file(serviceLog); file.open(QIODevice::ReadOnly)) {
+    if (file.size() > kMaxServiceLog)
+      file.seek(file.size() - kMaxServiceLog);
+    out << "== The background service's log, " << QDir::toNativeSeparators(serviceLog) << "\n"
+        << QString::fromUtf8(file.readAll()) << "\n\n";
+  }
+
+  if (QFile file(Settings::settingsFile()); file.open(QIODevice::ReadOnly))
+    out << "== Settings, " << QDir::toNativeSeparators(Settings::settingsFile()) << "\n"
+        << QString::fromUtf8(file.readAll()) << "\n";
+
+  QSaveFile file(path);
+  if (!file.open(QIODevice::WriteOnly) || file.write(text.toUtf8()) < 0 || !file.commit()) {
+    QMessageBox::warning(this, tr("Save Logs"), tr("Couldn't save the logs: %1").arg(file.errorString()));
+    return;
+  }
+
+  QMessageBox message(this);
+  message.setIcon(QMessageBox::Information);
+  message.setWindowTitle(tr("Save Logs"));
+  message.setText(tr("The logs are saved in %1.").arg(QDir::toNativeSeparators(path)));
+  message.setInformativeText(
+      tr("They include this computer's name and settings, and the names and addresses of the computers it "
+         "connects to. Attach the file to your bug report.")
+  );
+  const auto *show = message.addButton(tr("Show in Folder"), QMessageBox::ActionRole);
+  message.addButton(QMessageBox::Ok);
+  message.exec();
+  if (message.clickedButton() == show)
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(path).absolutePath()));
+}
+
 void MainWindow::openSettings()
 {
   auto dialog = SettingsDialog(this, m_serverConfig);
@@ -719,6 +786,7 @@ void MainWindow::createMenuBar()
 
   m_menuHelp->addAction(m_actionAbout);
   m_menuHelp->addAction(m_actionShowHelp);
+  m_menuHelp->addAction(m_actionSaveLogs);
 
   auto menuBar = new QMenuBar(this);
   menuBar->addMenu(m_menuFile);
@@ -1120,6 +1188,7 @@ void MainWindow::updateText()
   m_actionAbout->setText(tr("About %1...").arg(kDisplayName));
 
   m_actionShowHelp->setText(tr("View &Help"));
+  m_actionSaveLogs->setText(tr("Save &Logs for a Bug Report..."));
 
   //: start / restart core shortcut
   m_actionStartCore->setShortcut(QKeySequence(tr("Ctrl+S")));

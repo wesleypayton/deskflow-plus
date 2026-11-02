@@ -100,6 +100,7 @@ private:
   void openAboutDialog();
   void openSettings();
   void findServers();
+  void saveLogs();
   void startCore();
   void stopCore();
   bool saveServerConfig();
@@ -213,6 +214,7 @@ private:
   QAction *m_actionRestartCore = nullptr;
   QAction *m_actionStopCore = nullptr;
   QAction *m_actionShowHelp = nullptr;
+  QAction *m_actionSaveLogs = nullptr;
 
   // Network monitoring
   NetworkMonitor *m_networkMonitor = nullptr;
