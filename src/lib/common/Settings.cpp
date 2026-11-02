@@ -351,8 +351,11 @@ QVariant Settings::defaultValue(const QString &key)
   if (key == Gui::StartOnLogin)
     return deskflow::platform::isWindows() && !Settings::isPortableMode();
 
-  if (key == Gui::UpdateCheckUrl)
-    return kUrlUpdateCheck;
+  if (key == Gui::UpdateReleasesUrl)
+    return kUrlReleases;
+
+  if (key == Gui::UpdateMode)
+    return QStringLiteral("ask");
 
   if (key == Server::ExternalConfigFile)
     return QStringLiteral("%1/%2-server.conf").arg(Settings::settingsPath(), kAppId);

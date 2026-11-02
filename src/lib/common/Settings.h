@@ -76,8 +76,11 @@ public:
   {
     inline static const auto Autohide = QStringLiteral("gui/autoHide");
     inline static const auto AutoStartCore = QStringLiteral("gui/startCoreWithGui");
-    inline static const auto AutoUpdateCheck = QStringLiteral("gui/enableUpdateCheck");
-    inline static const auto UpdateCheckUrl = QStringLiteral("gui/updateCheckUrl");
+    //! Ask, always or never, see gui/UpdateRelease.h
+    inline static const auto UpdateMode = QStringLiteral("gui/updateMode");
+    //! After Yes or No, when to ask about a new version again
+    inline static const auto UpdateAskAfter = QStringLiteral("gui/updateAskAfter");
+    inline static const auto UpdateReleasesUrl = QStringLiteral("gui/updateReleasesUrl");
     inline static const auto CloseReminder = QStringLiteral("gui/closeReminder");
     inline static const auto CloseToTray = QStringLiteral("gui/closeToTray");
     inline static const auto LogExpanded = QStringLiteral("gui/logExpanded");
@@ -311,8 +314,9 @@ private:
     , Log::GuiDebug
     , Gui::Autohide
     , Gui::AutoStartCore
-    , Gui::AutoUpdateCheck
-    , Gui::UpdateCheckUrl
+    , Gui::UpdateMode
+    , Gui::UpdateAskAfter
+    , Gui::UpdateReleasesUrl
     , Gui::CloseReminder
     , Gui::CloseToTray
     , Gui::LogExpanded

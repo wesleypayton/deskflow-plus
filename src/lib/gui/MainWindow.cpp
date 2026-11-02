@@ -311,8 +311,10 @@ void MainWindow::connectSlots()
   connect(m_logDock->toggleViewAction(), &QAction::toggled, this, &MainWindow::toggleLogVisible);
 
   connect(m_statusBar, &StatusBar::requestShowMyFingerprints, this, &MainWindow::showMyFingerprint);
-  connect(m_statusBar, &StatusBar::requestUpdateVersion, this, &MainWindow::openGetNewVersionUrl);
-  connect(&m_versionChecker, &VersionChecker::updateFound, m_statusBar, &StatusBar::updateFound);
+  connect(m_statusBar, &StatusBar::requestUpdateVersion, this, [this] { m_updater.offerUpdate(this); });
+  connect(&m_updater, &Updater::updateFound, m_statusBar, &StatusBar::updateFound);
+  // quits as it would from the menu, rather than going to the tray and making setup wait
+  connect(&m_updater, &Updater::installerStarted, this, &MainWindow::close, Qt::QueuedConnection);
 
   connect(m_guiDupeChecker, &QLocalServer::newConnection, this, &MainWindow::showAndActivate);
 
@@ -441,7 +443,7 @@ void MainWindow::clearSettings()
   m_networkMonitor->stopMonitoring();
 
   disconnect(&m_coreProcess, nullptr, this, nullptr);
-  disconnect(&m_versionChecker, nullptr, this, nullptr);
+  disconnect(&m_updater, nullptr, this, nullptr);
   disconnect(m_guiDupeChecker, nullptr, this, nullptr);
   disconnect(m_trayIcon, nullptr, this, nullptr);
   disconnect(m_logDock->toggleViewAction(), nullptr, this, nullptr);
@@ -471,16 +473,13 @@ void MainWindow::openAboutDialog()
   about.exec();
 }
 
-void MainWindow::openGetNewVersionUrl() const
-{
-  QDesktopServices::openUrl(QUrl(kUrlDownload));
-}
-
 void MainWindow::openSettings()
 {
   auto dialog = SettingsDialog(this, m_serverConfig);
 
   connect(&dialog, &SettingsDialog::requestRemoveAllSettings, this, &MainWindow::clearSettings, Qt::UniqueConnection);
+  connect(&dialog, &SettingsDialog::requestUpdateCheck, this, [this, &dialog] { m_updater.checkNow(&dialog); });
+  connect(&m_updater, &Updater::checkFinished, &dialog, &SettingsDialog::updateCheckFinished);
   if (dialog.exec() == QDialog::Accepted) {
     Settings::save();
     disconnect(&dialog, &SettingsDialog::requestRemoveAllSettings, nullptr, nullptr);
@@ -651,15 +650,7 @@ void MainWindow::open(bool background)
   const auto kCriticalDialogDelay = 100;
   QTimer::singleShot(kCriticalDialogDelay, this, &messages::raiseCriticalDialog);
 
-  if (!Settings::value(Settings::Gui::AutoUpdateCheck).isValid()) {
-    Settings::setValue(Settings::Gui::AutoUpdateCheck, messages::showUpdateCheckOption(this));
-  }
-
-  if (Settings::value(Settings::Gui::AutoUpdateCheck).toBool()) {
-    m_versionChecker.checkLatest();
-  } else {
-    qDebug() << "skipping check for new version, disabled";
-  }
+  m_updater.start();
 
   if (Settings::value(Settings::Gui::AutoStartCore).toBool()) {
     if (ui->rbModeClient->isChecked() && ui->lineHostname->text().isEmpty())

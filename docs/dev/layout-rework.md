@@ -179,6 +179,22 @@ Also from Mouse Without Borders:
   `Server::startRemoteControl`. Deskflow's dead corners only cover the corners
   of each computer's outline, and are set per computer.
 
+Updates (`gui/Updater.h`):
+
+* The app checks this fork's GitHub releases, test builds included, 30
+  seconds after it starts and once a day after (an hour after a failed check).
+  Upstream's check asked `api.deskflow.org`, which would offer stock Deskflow.
+* A release is used when it has a setup named
+  `deskflow-plus-<version>-win-x64-setup.exe` whose SHA-256 GitHub lists
+  (`gui/UpdateRelease.h`). The download is kept only if its size and SHA-256
+  match (`gui/UpdateDownload.h`), then run with `runas /passive`: Windows asks
+  for permission at once, so a "no" leaves the app running, and setup shows
+  only its progress and starts the app again through Explorer, as the user.
+  The app quits once setup is running, so setup doesn't wait on it.
+* `gui/updateMode` is ask, always or never; `gui/updateAskAfter` holds off
+  asking for a week after Yes or No. The files aren't code signed; with
+  signing, the service could install updates without the permission prompt.
+
 Since the second two-machine test:
 
 * A cursor crossing from a client lands at the edge of the next computer

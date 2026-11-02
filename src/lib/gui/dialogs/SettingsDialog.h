@@ -26,8 +26,12 @@ public:
   SettingsDialog(QWidget *parent, const ServerConfig &serverConfig);
   ~SettingsDialog() override;
 
+  //! Lets "Check now" be pressed again
+  void updateCheckFinished();
+
 Q_SIGNALS:
   void requestRemoveAllSettings();
+  void requestUpdateCheck();
 
 protected:
   void changeEvent(QEvent *e) override;
@@ -44,6 +48,7 @@ private:
   void updateTlsControlsEnabled();
   void resetAllSettings();
   void updateText();
+  void checkForUpdates();
 
   /// @brief Load all settings.
   void loadFromConfig();

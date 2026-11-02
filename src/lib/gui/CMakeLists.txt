@@ -37,8 +37,12 @@ add_library(${target} STATIC
   StyleUtils.h
   TlsUtility.cpp
   TlsUtility.h
-  VersionChecker.cpp
-  VersionChecker.h
+  UpdateDownload.cpp
+  UpdateDownload.h
+  UpdateRelease.cpp
+  UpdateRelease.h
+  Updater.cpp
+  Updater.h
   config/ComputerConfig.h
   config/Computer.cpp
   config/Computer.h

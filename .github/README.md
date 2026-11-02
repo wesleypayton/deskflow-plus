@@ -54,6 +54,12 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
 - **Corners that don't cross.** Optionally, the cursor won't cross to another computer within 100 pixels of
   a monitor's corner, so reaching for the Start button or a window's close button doesn't send it across.
   Turn it on in **Configure Server → Advanced → Don't cross near a monitor's corners**.
+- **Updates itself.** When a new release is out, Deskflow Plus asks whether to update: **Always** (update
+  now and from then on without asking), **Yes** (just this time), **No** (not this time), or **Never** (stop
+  asking). After Yes or No it asks again a week later. It downloads the setup from this repository's
+  releases, checks it against the SHA-256 the release lists, and installs it; Windows asks for permission,
+  then Deskflow Plus closes for a moment and starts again. Change your answer or check right away under
+  **Settings → New versions**. A portable copy is pointed at the download page instead.
 
 Files are sent through the server, encrypted with the rest of the connection, and are never written
 outside the folder they're dropped in. More detail is in the [design notes](../docs/dev/layout-rework.md).
@@ -81,7 +87,8 @@ Get the latest build from [Releases](https://github.com/wesleypayton/deskflow-pl
   folder. The portable copy can't control the login screen or administrator (UAC) prompts.
 
 Each release lists the SHA-256 checksum of its files. To check a download, compare it with the output of
-`Get-FileHash <file>` in PowerShell.
+`Get-FileHash <file>` in PowerShell. Once installed, Deskflow Plus finds and installs new releases itself,
+test builds included, and checks each download the same way.
 
 The files aren't code signed, so Windows SmartScreen will warn the first time: choose **More info**, then
 **Run anyway**. Deskflow Plus and Deskflow share their settings and network port, so don't run both at once.
