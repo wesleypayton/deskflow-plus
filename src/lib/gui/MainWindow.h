@@ -16,6 +16,7 @@
 #include <QUrl>
 
 #include "Updater.h"
+#include "common/Constants.h"
 #include "config/ServerConfig.h"
 #include "gui/core/CoreProcess.h"
 #include "gui/core/NetworkMonitor.h"
@@ -167,7 +168,7 @@ private:
 
   void serverClientsChanged(const QStringList &clients);
 
-  inline static const auto m_guiSocketName = QStringLiteral("deskflow-gui");
+  inline static const auto m_guiSocketName = QString::fromLatin1(kGuiIpcName);
   inline static const auto m_nameRegEx = QRegularExpression(QStringLiteral("^[\\w\\-_\\.]{0,255}$"));
 
   Updater m_updater{this};

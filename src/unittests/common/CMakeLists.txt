@@ -28,3 +28,10 @@ create_test(
   SOURCE KeySequenceTests.cpp
   WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/common"
 )
+
+create_test(
+  NAME SettingsMigrationTests
+  DEPENDS common
+  SOURCE SettingsMigrationTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/common"
+)

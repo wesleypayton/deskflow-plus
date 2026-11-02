@@ -112,8 +112,8 @@ project(
 )
 
 # Define Additional "PROJECT" vars for packaging and metadata
-set(CMAKE_PROJECT_PROPER_NAME "Deskflow")
-# shown to people; the proper name above stays Deskflow's, since settings are stored under it
+# settings are kept under this name, so Deskflow Plus and Deskflow can be set up differently
+set(CMAKE_PROJECT_PROPER_NAME "Deskflow Plus")
 set(CMAKE_PROJECT_DISPLAY_NAME "Deskflow Plus")
 set(CMAKE_PROJECT_VENDOR "${CMAKE_PROJECT_PROPER_NAME} Devs")
 set(CMAKE_PROJECT_COPYRIGHT "(C) 2024-2026 ${CMAKE_PROJECT_VENDOR}")
