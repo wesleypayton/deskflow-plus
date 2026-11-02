@@ -32,7 +32,9 @@ std::optional<Release> releaseFrom(const QJsonObject &release)
       QStringLiteral("^sha256:([0-9a-f]{64})$"), QRegularExpression::CaseInsensitiveOption
   );
 
-  if (release.value(QStringLiteral("draft")).toBool())
+  // the test builds before 1.0 were numbered 1.27.0.x, higher than any release since, and tagged v1.27.0-plus.N
+  if (release.value(QStringLiteral("draft")).toBool() ||
+      !release.value(QStringLiteral("tag_name")).toString().startsWith(QStringLiteral("plus-v")))
     return {};
 
   for (const auto &value : release.value(QStringLiteral("assets")).toArray()) {

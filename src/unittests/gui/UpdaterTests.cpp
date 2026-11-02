@@ -50,7 +50,7 @@ QJsonObject release(const QString &tag, const QJsonArray &assets, bool draft = f
 QJsonObject releaseOf(const QString &version, bool draft = false)
 {
   return release(
-      QStringLiteral("v-%1").arg(version),
+      QStringLiteral("plus-v%1").arg(version),
       {asset(QStringLiteral("deskflow-plus-%1-win-x64-portable.exe").arg(version)),
        asset(QStringLiteral("deskflow-plus-%1-win-x64-setup.exe").arg(version))},
       draft, version.count(QLatin1Char('.')) == 3
@@ -81,7 +81,7 @@ void UpdaterTests::newerRelease_picksNewest()
   QCOMPARE(found->setupSha256, QByteArray("8a4222344c741d1be811e760358c6f6051a94acb8c45d9aba9fa9fabaf402603"));
   QCOMPARE(
       found->pageUrl.toString(),
-      QStringLiteral("https://github.com/wesleypayton/deskflow-plus/releases/tag/v-1.27.0.60")
+      QStringLiteral("https://github.com/wesleypayton/deskflow-plus/releases/tag/plus-v1.27.0.60")
   );
 }
 
@@ -101,11 +101,13 @@ void UpdaterTests::newerRelease_skipsUnusable()
   const auto found = newerRelease(
       json(
           {releaseOf(QStringLiteral("1.27.0.90"), true),
-           release(QStringLiteral("no-digest"), {asset(setup, QString())}),
-           release(QStringLiteral("other-digest"), {asset(setup, QStringLiteral("sha512:abcd"))}),
-           release(QStringLiteral("empty"), {asset(setup, kDigest, 0)}), release(QStringLiteral("http"), {plainHttp}),
+           release(QStringLiteral("plus-v-no-digest"), {asset(setup, QString())}),
+           release(QStringLiteral("plus-v-other-digest"), {asset(setup, QStringLiteral("sha512:abcd"))}),
+           release(QStringLiteral("plus-v-empty"), {asset(setup, kDigest, 0)}),
+           release(QStringLiteral("plus-v-http"), {plainHttp}),
            release(
-               QStringLiteral("portable-only"), {asset(QStringLiteral("deskflow-plus-1.27.0.80-win-x64-portable.exe"))}
+               QStringLiteral("plus-v-portable-only"),
+               {asset(QStringLiteral("deskflow-plus-1.27.0.80-win-x64-portable.exe"))}
            ),
            releaseOf(QStringLiteral("1.27.0.55"))}
       ),
@@ -141,6 +143,16 @@ void UpdaterTests::newerRelease_testBuildsOnlyWhenAsked()
 
   // a test build is newer than the release it follows
   QVERIFY(!newerRelease(releases, QVersionNumber({1, 0, 1, 4}), false).has_value());
+}
+
+void UpdaterTests::newerRelease_skipsTestBuildsBefore1()
+{
+  // tagged the way the test builds before 1.0 were, numbered higher than any release since
+  const auto setup = QStringLiteral("deskflow-plus-1.27.0.55-win-x64-setup.exe");
+  const auto releases =
+      json({release(QStringLiteral("v1.27.0-plus.3"), {asset(setup)}), releaseOf(QStringLiteral("1.0.0"))});
+  QCOMPARE(newerRelease(releases, QVersionNumber({0, 9, 0}), true)->version, QVersionNumber({1, 0, 0}));
+  QVERIFY(!findRelease(releases, QVersionNumber({1, 27, 0, 55})).has_value());
 }
 
 void UpdaterTests::findRelease_exactVersion()
