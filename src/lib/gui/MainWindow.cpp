@@ -279,6 +279,13 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::peerFingerprint, this, &MainWindow::handlePeerFingerprint);
   connect(&m_coreProcess, &CoreProcess::missingKeyboardLayouts, this, &MainWindow::handleMissingKeyboardLayouts);
   connect(&m_coreProcess, &CoreProcess::fileTransferStatus, this, &MainWindow::showFileTransferStatus);
+  connect(&m_coreProcess, &CoreProcess::connectionSpeed, this, [this](const QString &name, bool slow, int ms) {
+    if (slow)
+      m_slowConnections.insert(name, ms);
+    else
+      m_slowConnections.remove(name);
+    m_statusBar->setSlowConnections(m_slowConnections);
+  });
   connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
     // remember the client's real arrangement so the layout shows it, even once it has disconnected
     m_reportedShapes.insert(name, monitors);
@@ -951,6 +958,10 @@ void MainWindow::coreProcessStateChanged(ProcessState state)
 {
   using enum ProcessState;
   updateStatus();
+  if (state != Started && !m_slowConnections.isEmpty()) {
+    m_slowConnections.clear();
+    m_statusBar->setSlowConnections(m_slowConnections);
+  }
   if (state == Started) {
     qDebug() << "recording that core has started";
     Settings::setValue(Settings::Gui::AutoStartCore, true);

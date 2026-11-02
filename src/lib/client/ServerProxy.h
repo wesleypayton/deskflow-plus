@@ -88,14 +88,14 @@ protected:
     // do nothing
   }
 
+  void resetKeepAliveAlarm();
+  void setKeepAliveRate(double);
+
 private:
   // if compressing mouse motion then send the last motion now
   void flushCompressedMouse();
 
   void sendInfo(const ClientInfo &);
-
-  void resetKeepAliveAlarm();
-  void setKeepAliveRate(double);
 
   // modifier key translation
   KeyID translateKey(KeyID) const;

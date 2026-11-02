@@ -175,6 +175,8 @@ private:
   bool m_saveOnExit = true;
   bool m_clientErrorVisible = false;
   ServerConfig m_serverConfig;
+  // clients the server's connection to is slow, and how many milliseconds a round trip takes
+  QMap<QString, int> m_slowConnections;
 
   // the latest monitors each client reported, re-applied after the server settings are saved
   QMap<QString, QList<QRect>> m_reportedShapes;

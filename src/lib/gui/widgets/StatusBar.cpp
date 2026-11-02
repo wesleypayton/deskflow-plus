@@ -19,6 +19,7 @@ StatusBar::StatusBar(QWidget *parent)
       m_lblSecurityIcon{new QLabel(this)},
       m_lblStatus{new QLabel(this)},
       m_btnUpdate{new QPushButton(this)},
+      m_lblSlowConnection{new QLabel(this)},
       m_retryTimer{new QTimer(this)}
 {
   static const auto btnHeight = height() - 2;
@@ -40,13 +41,16 @@ StatusBar::StatusBar(QWidget *parent)
   m_lblStatus->setText(tr("%1 is not running").arg(kDisplayName));
   insertPermanentWidget(2, m_lblStatus, 1);
 
+  m_lblSlowConnection->setVisible(false);
+  insertPermanentWidget(3, m_lblSlowConnection);
+
   m_btnUpdate->setVisible(false);
   m_btnUpdate->setFlat(true);
   m_btnUpdate->setLayoutDirection(Qt::RightToLeft);
   m_btnUpdate->setIcon(QIcon::fromTheme(QStringLiteral("software-updates-release")));
   m_btnUpdate->setFixedHeight(btnHeight);
   m_btnUpdate->setIconSize(iconSize);
-  insertPermanentWidget(3, m_btnUpdate);
+  insertPermanentWidget(4, m_btnUpdate);
   connect(m_btnUpdate, &QPushButton::clicked, this, &StatusBar::requestUpdateVersion);
 
   m_retryTimer->setInterval(1000);
@@ -169,6 +173,12 @@ void StatusBar::updateFound(const QString &version)
   m_btnUpdate->setToolTip(tr("A new version v%1 is available").arg(version));
 }
 
+void StatusBar::setSlowConnections(const QMap<QString, int> &computers)
+{
+  m_slowConnections = computers;
+  updateText();
+}
+
 void StatusBar::changeEvent(QEvent *e)
 {
   QStatusBar::changeEvent(e);
@@ -180,6 +190,19 @@ void StatusBar::updateText()
 {
   m_btnFingerprint->setToolTip(tr("View local fingerprint"));
   m_btnUpdate->setText(tr("Update available"));
+
+  m_lblSlowConnection->setVisible(!m_slowConnections.isEmpty());
+  if (!m_slowConnections.isEmpty()) {
+    m_lblSlowConnection->setText(
+        m_slowConnections.size() == 1 ? tr("Slow connection to %1").arg(m_slowConnections.firstKey())
+                                      : tr("Slow connections")
+    );
+    QStringList lines;
+    for (const auto &[name, ms] : m_slowConnections.asKeyValueRange())
+      lines.append(tr("%1: %2 ms there and back, which makes the mouse stutter").arg(name).arg(ms));
+    lines.append(tr("A wired connection, or turning off Wi-Fi power saving, usually helps."));
+    m_lblSlowConnection->setToolTip(lines.join(QLatin1Char('\n')));
+  }
   setSecurityLevel(m_securityLevel);
 }
 

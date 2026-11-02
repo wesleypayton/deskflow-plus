@@ -98,6 +98,8 @@ Q_SIGNALS:
   void peerFingerprint(const QString &fingerprint);
   void missingKeyboardLayouts(const QString &layouts);
   void computerShape(const QString &computerName, const QList<QRect> &monitors);
+  //! The server's connection to \p name became slow, or quick again
+  void connectionSpeed(const QString &name, bool slow, int milliseconds);
   void fileTransferStatus(
       const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
   );
