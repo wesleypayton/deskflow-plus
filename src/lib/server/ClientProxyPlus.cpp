@@ -129,8 +129,13 @@ bool ClientProxyPlus::recvPlusFeatures()
 
   m_features = features & deskflow::plus::kFeatures;
   LOG_INFO("client \"%s\" is Deskflow Plus, using features 0x%x", getName().c_str(), m_features);
-  if (m_features & deskflow::plus::kFeatureQuickKeepAlive)
+  if (m_features & deskflow::plus::kFeatureQuickKeepAlive) {
+    // the keep alives already go at the standard rate since the handshake, and setting the rate doesn't restart
+    // them; going on every three seconds, the client, which expects one a second, would give up on the server
     resetHeartbeatRate();
+    removeHeartbeatTimer();
+    addHeartbeatTimer();
+  }
   return true;
 }
 
