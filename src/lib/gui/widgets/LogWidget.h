@@ -18,6 +18,7 @@ class LogWidget : public QWidget
 public:
   explicit LogWidget(QWidget *parent = nullptr);
   void appendLine(const QString &msg);
+  QString text() const;
   void findNext(const QString &text);
   void findPrevious(const QString &text);
 

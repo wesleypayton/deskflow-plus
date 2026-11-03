@@ -644,19 +644,35 @@ void Client::setupRemoteInput()
 
 void Client::sendRemoteInput()
 {
-  for (const auto &input : deskflow::remote::platform::takeInput()) {
+  using namespace deskflow::remote;
+  for (auto input : platform::takeInput()) {
     if (m_stream == nullptr)
       return;
+
+    // the left button held against an edge: carried across only if it's dragging files, which are offered first
+    if (input.type == InputType::Edge && input.d != 0) {
+      if (!m_transferAgent)
+        continue;
+      if (input.d == kEdgeButtonReleased) {
+        deskflow::transfer::probeForDrag(*m_transferAgent, *m_transferState, false);
+        continue;
+      }
+      if (!deskflow::transfer::probeForDrag(*m_transferAgent, *m_transferState, true) ||
+          !m_transferAgent->offered(m_transferState->dragOffer))
+        continue;
+      input.d = kEdgeCarryingDrag;
+    }
+
     ProtocolUtil::writef(
         m_stream, kMsgDRemoteInput, static_cast<uint32_t>(input.type), input.a, input.b, input.c, input.d
     );
   }
 }
 
-void Client::setRemoteCapture(bool capture)
+void Client::setRemoteCapture(bool capture, bool keepButtons)
 {
   if (m_watchingInput)
-    deskflow::remote::platform::setCapture(capture);
+    deskflow::remote::platform::setCapture(capture, keepButtons);
 }
 
 void Client::cleanupTimer()

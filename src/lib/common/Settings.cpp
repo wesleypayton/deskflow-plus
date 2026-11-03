@@ -9,6 +9,8 @@
 #include "LogLevel.h"
 #include "NetworkProtocol.h"
 #include "PlatformInfo.h"
+#include "SettingsMigration.h"
+#include "UpdateRelease.h"
 #include "UrlConstants.h"
 #include "common/KeyboardModifier.h"
 
@@ -70,11 +72,31 @@ void Settings::clearState()
 
 Settings::Settings(QObject *parent) : QObject(parent), m_settingsWatcher{new QFileSystemWatcher(this)}
 {
+  const auto xdgStateHome = qEnvironmentVariable("XDG_STATE_HOME");
+  const auto stateBase = !xdgStateHome.isEmpty()
+                             ? xdgStateHome
+                             : QStandardPaths::standardLocations(QStandardPaths::GenericStateLocation).at(0);
+  const auto stateFile = QStringLiteral("%1/%2.state").arg(stateBase, kAppName);
+
+  // the first time, bring over the settings Deskflow Plus kept with Deskflow's before 1.0
+  deskflow::settingsMigration::Locations locations{
+      UserSettingFile, SystemSettingFile, SystemDir, stateFile, {}, Daemon::ConfigFile
+  };
+#ifdef Q_OS_WIN
+  locations.portableFile = portableSettingsFile();
+#endif
+  // only Deskflow Plus's own programs use the real settings, so the unit tests don't change or move anyone's
+  const bool ownProgram = QCoreApplication::applicationName().startsWith(QString::fromUtf8(kAppName));
+  if (ownProgram)
+    deskflow::settingsMigration::migrate(locations);
+
   QString fileToLoad;
 #ifdef Q_OS_WIN
   const auto portableFile = portableSettingsFile();
   qDebug().noquote() << "checking for portable settings file at:" << portableFile;
-  if (QFile(portableFile).exists())
+  if (!ownProgram)
+    fileToLoad = QStringLiteral("%1/%2-%3.conf").arg(QDir::tempPath(), kAppId, QCoreApplication::applicationName());
+  else if (QFile(portableFile).exists())
     fileToLoad = portableFile;
 #else
   if (const auto xdgConfigHome = qEnvironmentVariable("XDG_CONFIG_HOME"); !xdgConfigHome.isEmpty())
@@ -94,12 +116,6 @@ Settings::Settings(QObject *parent) : QObject(parent), m_settingsWatcher{new QFi
   m_settingsProxy = std::make_shared<QSettingsProxy>();
   m_settingsProxy->load(fileToLoad);
   qInfo().noquote() << "initial settings file:" << m_settings->fileName();
-
-  const auto xdgStateHome = qEnvironmentVariable("XDG_STATE_HOME");
-  const auto stateBase = !xdgStateHome.isEmpty()
-                             ? xdgStateHome
-                             : QStandardPaths::standardLocations(QStandardPaths::GenericStateLocation).at(0);
-  const auto stateFile = QStringLiteral("%1/%2.state").arg(stateBase, kAppName);
 
   m_stateSettings = new QSettings(stateFile, QSettings::IniFormat, this);
 
@@ -356,6 +372,10 @@ QVariant Settings::defaultValue(const QString &key)
 
   if (key == Gui::UpdateMode)
     return QStringLiteral("ask");
+
+  // someone running a test build gets the next one
+  if (key == Gui::UpdateTestBuilds)
+    return deskflow::updates::isTestBuild(deskflow::updates::currentVersion());
 
   if (key == Server::ExternalConfigFile)
     return QStringLiteral("%1/%2-server.conf").arg(Settings::settingsPath(), kAppId);

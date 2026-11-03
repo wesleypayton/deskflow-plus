@@ -105,7 +105,7 @@ public:
   }
 
   //! Tell the client to start or stop capturing its own mouse and keyboard and sending them here
-  virtual void setRemoteCapture(bool)
+  virtual void setRemoteCapture(bool, bool = false)
   {
     // only clients that support remote input capture
   }

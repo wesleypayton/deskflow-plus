@@ -16,6 +16,7 @@
 #include <QUrl>
 
 #include "Updater.h"
+#include "common/Constants.h"
 #include "config/ServerConfig.h"
 #include "gui/core/CoreProcess.h"
 #include "gui/core/NetworkMonitor.h"
@@ -98,6 +99,8 @@ private:
   void clearSettings();
   void openAboutDialog();
   void openSettings();
+  void findServers();
+  void saveLogs();
   void startCore();
   void stopCore();
   bool saveServerConfig();
@@ -167,7 +170,7 @@ private:
 
   void serverClientsChanged(const QStringList &clients);
 
-  inline static const auto m_guiSocketName = QStringLiteral("deskflow-gui");
+  inline static const auto m_guiSocketName = QString::fromLatin1(kGuiIpcName);
   inline static const auto m_nameRegEx = QRegularExpression(QStringLiteral("^[\\w\\-_\\.]{0,255}$"));
 
   Updater m_updater{this};
@@ -175,6 +178,8 @@ private:
   bool m_saveOnExit = true;
   bool m_clientErrorVisible = false;
   ServerConfig m_serverConfig;
+  // clients the server's connection to is slow, and how many milliseconds a round trip takes
+  QMap<QString, int> m_slowConnections;
 
   // the latest monitors each client reported, re-applied after the server settings are saved
   QMap<QString, QList<QRect>> m_reportedShapes;
@@ -209,6 +214,7 @@ private:
   QAction *m_actionRestartCore = nullptr;
   QAction *m_actionStopCore = nullptr;
   QAction *m_actionShowHelp = nullptr;
+  QAction *m_actionSaveLogs = nullptr;
 
   // Network monitoring
   NetworkMonitor *m_networkMonitor = nullptr;

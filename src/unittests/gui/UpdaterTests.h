@@ -14,6 +14,10 @@ private Q_SLOTS:
   void newerRelease_noneWhenCurrent();
   void newerRelease_skipsUnusable();
   void newerRelease_badJson();
+  void newerRelease_testBuildsOnlyWhenAsked();
+  void newerRelease_skipsTestBuildsBefore1();
+  void findRelease_exactVersion();
+  void isTestBuild_fourthNumber();
   void mode_roundTrips();
   void download_keepsMatchingFile();
   void download_dropsChangedFile();

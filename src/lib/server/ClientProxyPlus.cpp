@@ -12,10 +12,27 @@
 #include "deskflow/ProtocolUtil.h"
 #include "deskflow/RemoteInput.h"
 #include "deskflow/TransferProtocol.h"
+#include "deskflow/ipc/CoreIpc.h"
 #include "server/Server.h"
+
+#include <QString>
 
 #include <array>
 #include <cstring>
+
+namespace {
+
+using namespace std::chrono_literals;
+
+// a keep alive taking this long to come back makes the mouse stutter; on a wired network it's under a millisecond
+constexpr auto kSlowRoundTrip = 100ms;
+constexpr auto kQuickRoundTrip = 50ms;
+
+// how many in a row it takes to say the connection is slow, or quick again
+constexpr int kSlowInARow = 3;
+constexpr int kQuickInARow = 5;
+
+} // namespace
 
 ClientProxyPlus::ClientProxyPlus(
     const std::string &name, deskflow::IStream *adoptedStream, Server *server, IEventQueue *events
@@ -24,6 +41,14 @@ ClientProxyPlus::ClientProxyPlus(
       m_events(events)
 {
   // do nothing
+}
+
+ClientProxyPlus::~ClientProxyPlus()
+{
+  if (m_slow)
+    ipcSendToClient(
+        QStringLiteral("connectionSpeed"), QStringLiteral("%1|gone|0").arg(QString::fromStdString(getName()))
+    );
 }
 
 deskflow::MonitorList ClientProxyPlus::getMonitors() const
@@ -43,6 +68,10 @@ deskflow::MonitorList ClientProxyPlus::getMonitors() const
 
 bool ClientProxyPlus::parseMessage(const uint8_t *code)
 {
+  if (m_awaitingKeepAlive && memcmp(code, kMsgCKeepAlive, 4) == 0) {
+    m_awaitingKeepAlive = false;
+    noteRoundTrip(std::chrono::steady_clock::now() - m_keepAliveSent);
+  }
   if (memcmp(code, kMsgDPlusFeatures, 4) == 0) {
     return recvPlusFeatures();
   }
@@ -67,9 +96,10 @@ void ClientProxyPlus::sendTransfer(const deskflow::transfer::TransferMessage &me
   deskflow::transfer::writeTransferMessage(getStream(), message);
 }
 
-void ClientProxyPlus::setRemoteCapture(bool capture)
+void ClientProxyPlus::setRemoteCapture(bool capture, bool keepButtons)
 {
-  ProtocolUtil::writef(getStream(), kMsgDRemoteCapture, capture ? 1 : 0);
+  // 2 keeps the client's buttons held, carrying a drag; a client before 1.0 takes it as 1
+  ProtocolUtil::writef(getStream(), kMsgDRemoteCapture, capture ? (keepButtons ? 2 : 1) : 0);
 }
 
 bool ClientProxyPlus::recvRemoteInput()
@@ -99,7 +129,50 @@ bool ClientProxyPlus::recvPlusFeatures()
 
   m_features = features & deskflow::plus::kFeatures;
   LOG_INFO("client \"%s\" is Deskflow Plus, using features 0x%x", getName().c_str(), m_features);
+  if (m_features & deskflow::plus::kFeatureQuickKeepAlive)
+    resetHeartbeatRate();
   return true;
+}
+
+void ClientProxyPlus::keepAlive()
+{
+  // one that hasn't come back yet is timed from when it went
+  if (!m_awaitingKeepAlive) {
+    m_keepAliveSent = std::chrono::steady_clock::now();
+    m_awaitingKeepAlive = true;
+  }
+  ClientProxy1_8::keepAlive();
+}
+
+void ClientProxyPlus::resetHeartbeatRate()
+{
+  if (m_features & deskflow::plus::kFeatureQuickKeepAlive)
+    setHeartbeatRate(deskflow::plus::kPlusKeepAliveRate, deskflow::plus::kPlusKeepAliveRate * kKeepAlivesUntilDeath);
+  else
+    ClientProxy1_8::resetHeartbeatRate();
+}
+
+void ClientProxyPlus::noteRoundTrip(std::chrono::steady_clock::duration time)
+{
+  m_slowInARow = time >= kSlowRoundTrip ? m_slowInARow + 1 : 0;
+  m_quickInARow = time < kQuickRoundTrip ? m_quickInARow + 1 : 0;
+
+  const auto ms = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(time).count());
+  if (!m_slow && m_slowInARow >= kSlowInARow) {
+    m_slow = true;
+    LOG_WARN("the connection to \"%s\" is slow, messages take %d ms to go there and back", getName().c_str(), ms);
+  } else if (m_slow && m_quickInARow >= kQuickInARow) {
+    m_slow = false;
+    LOG_INFO("the connection to \"%s\" is quick again, %d ms", getName().c_str(), ms);
+  } else {
+    return;
+  }
+  ipcSendToClient(
+      QStringLiteral("connectionSpeed"),
+      QStringLiteral("%1|%2|%3")
+          .arg(QString::fromStdString(getName()), m_slow ? QStringLiteral("slow") : QStringLiteral("ok"))
+          .arg(ms)
+  );
 }
 
 bool ClientProxyPlus::recvMonitors()

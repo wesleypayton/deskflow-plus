@@ -44,10 +44,22 @@ void DaemonIpcClient::requestLogPath()
   sendMessage(QStringLiteral("logPath"));
 }
 
+void DaemonIpcClient::sendInstallUpdate(const QString &version)
+{
+  sendMessage(QStringLiteral("installUpdate=%1").arg(version));
+}
+
+void DaemonIpcClient::sendCancelUpdate()
+{
+  sendMessage(QStringLiteral("cancelUpdate"));
+}
+
 void DaemonIpcClient::processCommand(const QString &command, const QStringList &parts)
 {
   if (command == QStringLiteral("logPath") && parts.size() == 2) {
     Q_EMIT logPathReceived(parts.at(1));
+  } else if (command == QStringLiteral("updateStatus") && parts.size() == 2) {
+    Q_EMIT updateStatus(parts.at(1).section(QLatin1Char('|'), 0, 0), parts.at(1).section(QLatin1Char('|'), 1));
   }
 }
 

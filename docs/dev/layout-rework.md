@@ -187,21 +187,61 @@ meanwhile; a drag from the server only crosses once its files are listed, and
 copied files offered after the cursor has moved on follow it
 (`Server::receiveTransfer`).
 
-Updates (`gui/Updater.h`):
+Versions and releases:
 
-* The app checks this fork's GitHub releases, test builds included, 30
-  seconds after it starts and once a day after (an hour after a failed check).
-  Upstream's check asked `api.deskflow.org`, which would offer stock Deskflow.
+* Deskflow Plus has its own version numbers from 1.0, from annotated tags
+  named `plus-v<major>.<minor>.<patch>`; the fourth number counts the commits
+  since the tag. A release is built at its tag (fourth number 0) and its files
+  are named with three numbers; a test build has four and is published as a
+  GitHub pre-release. The Deskflow release it's based on comes from Deskflow's
+  own `v<version>` tags and shows in the About box. `git describe` only sees
+  annotated tags, so make the tag with `git tag -a plus-v1.0.1 -m ...` and push
+  it before building, rather than letting `gh release create` make one.
+* The test builds before 1.0 were numbered 1.27.0.x. To install over them, the
+  MSI allows downgrades (`deploy/windows/wix-template.wxs.in`, CPack's template
+  with that one change), the setup .exe has a new upgrade code, and the MSI
+  removes the old setup's entry in Apps (`RemoveTestBuilds`,
+  `deploy/windows/wix-custom.cpp`).
+
+Updates (`gui/Updater.h`, `common/UpdateRelease.h`):
+
+* The app checks this fork's GitHub releases 30 seconds after it starts and
+  once a day after (an hour after a failed check). Test builds are offered only
+  with `gui/updateTestBuilds`, which is on by default when running one.
 * A release is used when it has a setup named
-  `deskflow-plus-<version>-win-x64-setup.exe` whose SHA-256 GitHub lists
-  (`gui/UpdateRelease.h`). The download is kept only if its size and SHA-256
-  match (`gui/UpdateDownload.h`), then run with `runas /passive`: Windows asks
-  for permission at once, so a "no" leaves the app running, and setup shows
-  only its progress and starts the app again through Explorer, as the user.
-  The app quits once setup is running, so setup doesn't wait on it.
+  `deskflow-plus-<version>-win-x64-setup.exe` whose SHA-256 GitHub lists.
+* The background service installs it (`apps/deskflow-daemon/DaemonUpdater.h`):
+  the app only says which version, and the service fetches the release list
+  from the URL it was built with, downloads the setup into the system's own
+  profile, keeps it only if its size and SHA-256 match
+  (`common/UpdateDownload.h`), and runs it with `/quiet LaunchAfterSetup=0`.
+  Setup stops the service, so it leaves a note in
+  `HKLM\SOFTWARE\Deskflow Plus`, and the new service starts the app for the
+  signed in user. Without the service, the app runs setup with `runas`, and
+  Windows asks for permission.
 * `gui/updateMode` is ask, always or never; `gui/updateAskAfter` holds off
-  asking for a week after Yes or No. The files aren't code signed; with
-  signing, the service could install updates without the permission prompt.
+  asking for a week after Yes or No.
+
+Since 1.0 also:
+
+* Settings, logs and certificates are kept under Deskflow Plus's own name, and
+  the programs talk to each other under names of their own
+  (`deskflow-plus-daemon`, `-core`, `-gui`), so Deskflow and Deskflow Plus
+  don't share anything but the network port. The first run copies what was
+  kept with Deskflow's before (`common/SettingsMigration.h`): the service the
+  system settings and the user settings it starts the core with, the app the
+  user's settings, state, certificates and trusted computers.
+* A server answers clients looking for it over UDP on its own port number
+  (`common/Discovery.h`), and **Find...** on a client lists the answers.
+* Between Plus computers keep alives go every second (feature 16), so a lost
+  connection is noticed after 3 seconds; the server times their round trips
+  and warns in the status bar when three in a row take 100 ms or more.
+* A client's own mouse pushed against an edge with the left button held looks
+  for a file drag, offers the files, and crosses keeping the button held
+  (`kEdgeCarryingDrag`, `setCapture(..., keepButtons)`), so letting go drops
+  them on the computer the cursor is on, through `Server::finishFileDrag`.
+* **Help → Save Logs for a Bug Report...** saves the app's log, the end of the
+  service's log and the settings in one file.
 
 Since the second two-machine test:
 

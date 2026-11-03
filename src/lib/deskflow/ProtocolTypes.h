@@ -1168,8 +1168,13 @@ inline constexpr uint32_t kFeatureMonitors = 1;     //!< kMsgDMonitors
 inline constexpr uint32_t kFeatureFileTransfer = 2; //!< the file transfer messages
 inline constexpr uint32_t kFeatureRemoteInput = 4;  //!< kMsgDRemoteInput and kMsgDRemoteCapture
 inline constexpr uint32_t kFeatureCompressedClipboard = 8; //!< clipboard data is compressed on the network
-inline constexpr uint32_t kFeatures =
-    kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput | kFeatureCompressedClipboard;
+inline constexpr uint32_t kFeatureQuickKeepAlive = 16; //!< keep alives every kPlusKeepAliveRate seconds
+inline constexpr uint32_t kFeatures = kFeatureMonitors | kFeatureFileTransfer | kFeatureRemoteInput |
+                                      kFeatureCompressedClipboard | kFeatureQuickKeepAlive;
+
+//! With kFeatureQuickKeepAlive, how often keep alives go, so a lost connection is noticed after three of these
+//! seconds rather than nine, and the cursor comes back to the server sooner
+inline constexpr double kPlusKeepAliveRate = 1.0;
 } // namespace deskflow::plus
 
 /**

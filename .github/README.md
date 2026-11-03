@@ -43,9 +43,15 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
   Progress shows in the app's status bar, and a notification says when files arrive.
 - **Drag files across.** Drag files in Explorer to the edge of the screen and keep holding: the cursor
   crosses to the next computer, and releasing drops the files into the folder or desktop under the cursor.
+  This works with a client's own mouse too.
 - **Use any computer's mouse and keyboard.** A client's own mouse crosses to the server and on to the other
   computers, as in Mouse Without Borders, and its keyboard follows. Bring the cursor back to the client and
   its mouse and keyboard work there again.
+- **Find servers on the network.** On a client, **Find...** next to **Connect to** lists the Deskflow Plus
+  servers on your network; pick one and its name and address are filled in.
+- **Quick to notice a lost connection.** Between Deskflow Plus computers a dropped connection is noticed in
+  about 3 seconds rather than 9, so the cursor comes back to the server sooner. When the connection to a
+  client is slow enough to make the mouse stutter, the server's status bar says so.
 - **Starts with Windows and reconnects.** The installed version starts in the tray when you sign in and
   reconnects to the computers it was connected to; its background service already reconnects at the login
   screen, before anyone signs in. Turn this off under **Settings → Start when I sign in, and reconnect**.
@@ -56,18 +62,23 @@ between computers, in the spirit of ShareMouse and Mouse Without Borders.
   Turn it on in **Configure Server → Advanced → Don't cross near a monitor's corners**.
 - **Updates itself.** When a new release is out, Deskflow Plus asks whether to update: **Always** (update
   now and from then on without asking), **Yes** (just this time), **No** (not this time), or **Never** (stop
-  asking). After Yes or No it asks again a week later. It downloads the setup from this repository's
-  releases, checks it against the SHA-256 the release lists, and installs it; Windows asks for permission,
-  then Deskflow Plus closes for a moment and starts again. Change your answer or check right away under
-  **Settings → New versions**. A portable copy is pointed at the download page instead.
+  asking). After Yes or No it asks again a week later. The background service downloads the setup from this
+  repository's releases, checks it against the SHA-256 the release lists, and installs it with no permission
+  prompt; Deskflow Plus closes for a moment and starts again. Change your answer, or check right away,
+  under **Settings → New versions**, where **Include test builds** also offers the test builds between
+  releases. A portable copy is pointed at the download page instead.
+- **Its own settings.** Deskflow Plus keeps its settings apart from Deskflow's, so both can be installed and
+  set up differently. Settings from an earlier Deskflow Plus test build are brought over the first time.
+- **In nine languages**, besides English: German, Spanish, French, Brazilian Portuguese, Italian,
+  Japanese, Korean, Russian and Simplified Chinese.
 
 Files are sent through the server, encrypted with the rest of the connection, and are never written
 outside the folder they're dropped in. More detail is in the [design notes](../docs/dev/layout-rework.md).
 
 ## Status
 
-Deskflow Plus is **Windows only** for now, and early: the new features have been tested on one PC but not
-yet across many setups. Expect rough edges, and please report what you find.
+Deskflow Plus is **Windows only** for now. It has been used day to day across two PCs, but not yet across
+many setups, so please report what you find.
 
 Builds for macOS and Linux will come once the features are in good shape. They'll be marked as untested
 until someone has tried them, and the new features may not work there at first.
@@ -79,7 +90,9 @@ until someone has tried them, and the new features may not work there at first.
 
 ## Download
 
-Get the latest build from [Releases](https://github.com/wesleypayton/deskflow-plus/releases):
+Get the latest release from [Releases](https://github.com/wesleypayton/deskflow-plus/releases). Releases
+are numbered from 1.0; builds marked as pre-releases, with a fourth number such as 1.0.0.5, are test
+builds of what's coming next.
 
 - **`...-setup.exe`** installs Deskflow Plus, along with the Microsoft Visual C++ runtime if it's missing.
   It installs as its own app, so it won't replace an official Deskflow install.
@@ -88,10 +101,15 @@ Get the latest build from [Releases](https://github.com/wesleypayton/deskflow-pl
 
 Each release lists the SHA-256 checksum of its files. To check a download, compare it with the output of
 `Get-FileHash <file>` in PowerShell. Once installed, Deskflow Plus finds and installs new releases itself,
-test builds included, and checks each download the same way.
+and checks each download the same way.
 
 The files aren't code signed, so Windows SmartScreen will warn the first time: choose **More info**, then
-**Run anyway**. Deskflow Plus and Deskflow share their settings and network port, so don't run both at once.
+**Run anyway**. Deskflow Plus and Deskflow use the same network port, so only one of them can run at a time.
+
+> [!IMPORTANT]
+> **Coming from a test build (1.27.0.x)?** Install 1.0 by hand once: the test builds' updater doesn't
+> know the new numbering. Setup replaces the test build, and your settings, layout and trusted computers
+> come with you.
 
 > [!NOTE]
 > Deskflow Plus needs the Microsoft Visual C++ Redistributable. The setup installs it for you and the
@@ -108,8 +126,8 @@ Install or unpack Deskflow Plus on each computer, then:
    program is sharing the mouse and clipboard.
 2. **On the computer whose keyboard and mouse you'll use (the server)**, open Deskflow Plus and choose
    **Server**. When Windows asks about network access, allow it on private networks.
-3. **On the other computer (the client)**, choose **Client**, enter the server's IP address or computer
-   name, and start it. Allow network access here too.
+3. **On the other computer (the client)**, choose **Client**, click **Find...** and pick the server, or
+   enter its IP address or computer name, and start it. Allow network access here too.
 4. **Accept the security prompt** on both computers the first time they connect. It shows each side's
    fingerprint so you know you're talking to the right computer.
 5. **Add the client** when the server asks about an unrecognised computer. It's placed next to the server.
@@ -130,15 +148,16 @@ be copied at once (512 MB by default, 0 turns it off).
 - **Windows only.** The new features have only been built and tested on Windows.
 - **One client's mouse at a time.** If two people at two clients both move onto other computers, the
   one who crossed last takes over, and the other's mouse goes back to working on their own computer.
-- **A client's mouse can't carry a file drag across**, and it doesn't cross while one of its buttons is held,
-  so dragging a window against the edge still snaps it.
+- **A client's own mouse only crosses with a button held when it's dragging files**, so dragging a window
+  against the edge still snaps it.
+- **A permission (UAC) prompt on the server can hand its mouse and keyboard to a client.** If the server's
+  cursor gets stuck on a client, stop Deskflow Plus on the client and the server takes its cursor back.
 - **The cursor only crosses at the outer edge of a computer.** It crosses wherever a monitor on each side
   meets that edge, which the green lines show. A monitor set back from the edge, such as the shorter of
   two side by side, can't be crossed from on that side.
 - **Dragging files needs the Deskflow Plus window running** (it can be closed to the tray) when Deskflow Plus
   is installed, as it does the parts of a drop that must run as you.
-- **Not yet tried on two separate computers**: using a client's own mouse and keyboard on other computers,
-  dropping into an open folder or onto the desktop, dropping into the right tab of an Explorer window with
+- **Not yet tried much on two separate computers**: dropping into the right tab of an Explorer window with
   several, and dragging files that start on a client.
 - **The portable copy can't control the login screen or UAC prompts**, as it doesn't include the
   background service.
@@ -157,6 +176,9 @@ be copied at once (512 MB by default, 0 turns it off).
 - **The computers don't connect.** Check both are on the same network, that Windows allowed Deskflow Plus
   through the firewall (look for Deskflow Plus or Deskflow in Windows Defender Firewall's allowed apps), and that
   Deskflow, Mouse Without Borders and ShareMouse aren't running.
+- **The mouse stutters or freezes on a client.** Usually the network: if the server's status bar says the
+  connection is slow, a wired connection, or turning off the Wi-Fi adapter's power saving, helps. A freeze
+  of a few seconds followed by reconnecting is a dropped connection.
 - **Windows blocks the download.** Choose **More info**, then **Run anyway**. The files aren't code signed.
 - **A missing DLL error.** Install the Visual C++ Redistributable linked under [Download](#download).
 - **A copied image doesn't arrive.** Deskflow Plus computers compress the clipboard, so this is rare
@@ -166,10 +188,11 @@ be copied at once (512 MB by default, 0 turns it off).
   sharing must be on, and copies over the copied files limit are skipped. The status bar and a
   notification say when a transfer fails, and why.
 
-To report a problem, turn up the logging first: in **Settings**, set the log level to **Debug**, try again,
-then [open an issue](https://github.com/wesleypayton/deskflow-plus/issues) with what you did, which
-computer was the server, and the log lines from around that time. Lines mentioning `drag probe`,
-`offers`, `carrying`, `sending … files` or `file transfer failed` help most with file transfer problems.
+To report a problem, turn up the logging first: in **Settings**, set the log level to **Debug**, and try
+again. Then choose **Help → Save Logs for a Bug Report...** on each computer, and
+[open an issue](https://github.com/wesleypayton/deskflow-plus/issues) with what you did, which computer was
+the server, and the saved files. They include the computers' names, addresses and settings. The
+background service's own log is in `C:\ProgramData\Deskflow Plus\deskflow-daemon.log`.
 
 ## Uninstalling
 
@@ -199,9 +222,11 @@ and its contributors. Deskflow began as Synergy, created by Chris Schoeneman in 
 
 ## AI disclosure
 
-The Deskflow Plus additions (the free-form layout, monitor reporting, file transfer and Windows
-packaging) were coded with **Claude Opus 5.5**, an AI model made by Anthropic, working under the
-maintainer's direction. The original Deskflow code it builds on was written by the Deskflow contributors.
+The Deskflow Plus additions (the free-form layout, monitor reporting, file transfer, updates, Windows
+packaging and the translations of its strings) were made with **Claude Opus 5.5**, an AI model made by
+Anthropic, working under the maintainer's direction. The original Deskflow code it builds on, and the
+translations it already had, were written by the Deskflow contributors. Corrections to the translations
+are welcome.
 
 ## License
 

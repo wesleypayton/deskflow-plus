@@ -19,7 +19,7 @@ void stopWatching()
 {
 }
 
-void setCapture(bool)
+void setCapture(bool, bool)
 {
 }
 

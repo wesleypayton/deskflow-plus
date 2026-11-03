@@ -12,6 +12,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QList>
+#include <QLocale>
 #include <QMap>
 #include <QObject>
 #include <QTranslator>
@@ -80,14 +81,36 @@ I18N::I18N(QObject *parent) : QObject{parent}
 
   detectLanguages();
 
+  if (Settings::value(Settings::Core::Language).toString().isEmpty()) {
+    loadSystemLanguage();
+  } else {
+    m_currentLang = Settings::value(Settings::Core::Language).toString();
+    loadTranslations(m_currentLang);
+  }
+}
+
+void I18N::loadTranslations(const QString &langName)
+{
+  const auto translations = m_translations.value(langName);
+  for (const auto &translation : translations) {
+    auto translator = new QTranslator(this);
+    if (translator->load(translation)) {
+      m_currentTranslations.append(translator);
+      QCoreApplication::installTranslator(translator);
+    } else {
+      delete translator;
+    }
+  }
+}
+
+void I18N::loadSystemLanguage()
+{
   static const auto s_prefix = QStringLiteral("_");
 
-  if (Settings::value(Settings::Core::Language).toString().isEmpty()) {
-    auto appTranslator = new QTranslator(this);
-    if (appTranslator->load(QLocale(), kAppId, s_prefix, m_appTrPath)) {
-      m_currentTranslations.append(appTranslator);
-      QCoreApplication::installTranslator(appTranslator);
-    }
+  auto appTranslator = new QTranslator(this);
+  if (appTranslator->load(QLocale(), kAppId, s_prefix, m_appTrPath)) {
+    m_currentTranslations.append(appTranslator);
+    QCoreApplication::installTranslator(appTranslator);
 
     m_currentLang = m_nameMap.key(appTranslator->translate("i18n", "LocalizedName"));
     if (m_currentLang.isEmpty())
@@ -97,16 +120,22 @@ I18N::I18N(QObject *parent) : QObject{parent}
     if (qtTranslator->load(QLocale(), QStringLiteral("qt"), s_prefix, m_qtTrPath)) {
       m_currentTranslations.append(qtTranslator);
       QCoreApplication::installTranslator(qtTranslator);
+    } else {
+      delete qtTranslator;
     }
-  } else {
-    m_currentLang = Settings::value(Settings::Core::Language).toString();
-    const auto translations = m_translations.value(m_currentLang);
-    for (const auto &translation : translations) {
-      auto translator = new QTranslator(this);
-      if (translator->load(translation)) {
-        m_currentTranslations.append(translator);
-        QCoreApplication::installTranslator(translator);
-      }
+    return;
+  }
+  delete appTranslator;
+
+  // a regional variant with no translation of its own, such as Portugal's Portuguese or Taiwan's Chinese, takes
+  // the closest there is
+  const auto language = QLocale::languageToCode(QLocale().language());
+  m_currentLang = QStringLiteral("en");
+  for (const auto &code : m_translations.keys()) {
+    if (code.section(QLatin1Char('_'), 0, 0) == language) {
+      m_currentLang = code;
+      loadTranslations(code);
+      break;
     }
   }
 }
@@ -133,7 +162,19 @@ QString I18N::currentLanguage()
 
 void I18N::setLanguage(const QString &langName)
 {
-  if (langName == instance()->m_currentLang) {
+  // no language follows the system's
+  if (langName.isEmpty()) {
+    Settings::setValue(Settings::Core::Language, QString());
+    for (const auto &translation : std::as_const(instance()->m_currentTranslations))
+      QCoreApplication::removeTranslator(translation);
+    qDeleteAll(instance()->m_currentTranslations);
+    instance()->m_currentTranslations.clear();
+    instance()->loadSystemLanguage();
+    Q_EMIT instance()->languageChanged(instance()->m_currentLang);
+    return;
+  }
+
+  if (langName == instance()->m_currentLang && !Settings::value(Settings::Core::Language).toString().isEmpty()) {
     return;
   }
 

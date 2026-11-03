@@ -6,6 +6,7 @@
  */
 
 #include "DaemonApp.h"
+#include "DaemonUpdater.h"
 
 #include "arch/Arch.h"
 #include "base/EventQueue.h"
@@ -94,6 +95,13 @@ int main(int argc, char **argv)
     const auto ipcServer = new ipc::DaemonIpcServer(&app, qPrintable(DaemonApp::logFilename())); // NOSONAR - Qt managed
     ipcServer->listen();
     daemon.connectIpcServer(ipcServer);
+
+    // updates are installed here, where they need no permission prompt
+    const auto updater = new DaemonUpdater(&app); // NOSONAR - Qt managed
+    QObject::connect(ipcServer, &ipc::DaemonIpcServer::installUpdateRequested, updater, &DaemonUpdater::install);
+    QObject::connect(ipcServer, &ipc::DaemonIpcServer::cancelUpdateRequested, updater, &DaemonUpdater::cancel);
+    QObject::connect(updater, &DaemonUpdater::status, ipcServer, &ipc::DaemonIpcServer::sendUpdateStatus);
+    DaemonUpdater::restartAppAfterUpdate();
 
     QThread daemonThread;
     QObject::connect(&daemonThread, &QThread::finished, &app, &QCoreApplication::quit);

@@ -61,6 +61,9 @@ configure_file(
 # This patch set ups filewall rules, the service and msm module
 set(CPACK_WIX_PATCH_FILE "${CMAKE_CURRENT_BINARY_DIR}/wix-patch.xml")
 
+# CPack's template, letting 1.0 replace the higher-numbered test builds
+set(CPACK_WIX_TEMPLATE "${MY_DIR}/wix-template.wxs.in")
+
 # Creates a DLL that can be used by our MSI for custom actions.
 configure_file(
   ${MY_DIR}/wix-custom.h.in

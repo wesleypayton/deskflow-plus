@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>Deskflow について</translation>
+        <translation type="vanished">Deskflow について</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -50,6 +50,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Close</source>
         <translation>閉じる(&amp;C)</translation>
+    </message>
+    <message>
+        <source>About Deskflow Plus</source>
+        <translation>Deskflow Plus について</translation>
+    </message>
+    <message>
+        <source>%1, based on Deskflow %2</source>
+        <translation>%1（Deskflow %2 ベース）</translation>
     </message>
 </context>
 <context>
@@ -178,177 +186,177 @@ p, li { white-space: pre-wrap; }
     <name>ComputerLayoutView</name>
     <message>
         <source>This computer</source>
-        <translation type="unfinished"></translation>
+        <translation>このコンピューター</translation>
     </message>
     <message>
         <source>Edit…</source>
-        <translation type="unfinished"></translation>
+        <translation>編集…</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Drag a new computer here to add it.</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいコンピューターをここにドラッグして追加します。</translation>
     </message>
 </context>
 <context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
-        <translation type="unfinished">コンピューター設定</translation>
+        <translation>コンピューターの設定</translation>
     </message>
     <message>
         <source>Computer Info</source>
-        <translation type="unfinished">コンピューター情報</translation>
+        <translation>コンピューター情報</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Modifier Keys</source>
-        <translation type="unfinished">修飾キー</translation>
+        <translation>修飾キー</translation>
     </message>
     <message>
         <source>M&amp;eta</source>
-        <translation type="unfinished">M&amp;eta</translation>
+        <translation>M&amp;eta</translation>
     </message>
     <message>
         <source>&amp;Ctrl</source>
-        <translation type="unfinished">&amp;Ctrl</translation>
+        <translation>&amp;Ctrl</translation>
     </message>
     <message>
         <source>S&amp;uper</source>
-        <translation type="unfinished">S&amp;uper</translation>
+        <translation>S&amp;uper</translation>
     </message>
     <message>
         <source>Al&amp;t</source>
-        <translation type="unfinished">Al&amp;t</translation>
+        <translation>Al&amp;t</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
     <message>
         <source>Alt Gr</source>
-        <translation type="unfinished">Alt Gr</translation>
+        <translation>Alt Gr</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">なし</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <source>&amp;Shift</source>
-        <translation type="unfinished">&amp;Shift</translation>
+        <translation>&amp;Shift</translation>
     </message>
     <message>
         <source>Alt &amp;Gr</source>
-        <translation type="unfinished">Alt &amp;Gr</translation>
+        <translation>Alt &amp;Gr</translation>
     </message>
     <message>
         <source>Dead Corners</source>
-        <translation type="unfinished">無効領域</translation>
+        <translation>デッドコーナー</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">左上</translation>
+        <translation>左上</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">右上</translation>
+        <translation>右上</translation>
     </message>
     <message>
         <source>Corner si&amp;ze</source>
-        <translation type="unfinished">大きさ(&amp;Z)</translation>
+        <translation>コーナーのサイズ(&amp;Z)</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">左下</translation>
+        <translation>左下</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">右下</translation>
+        <translation>右下</translation>
     </message>
     <message>
         <source>Fixes</source>
-        <translation type="unfinished">修正</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <source>SCROLL LOCK key</source>
-        <translation type="unfinished">SCROLL LOCK キー</translation>
+        <translation>SCROLL LOCK キー</translation>
     </message>
     <message>
         <source>CAPS LOCK key</source>
-        <translation type="unfinished">CAPS LOCK キー</translation>
+        <translation>CAPS LOCK キー</translation>
     </message>
     <message>
         <source>NUM LOCK key</source>
-        <translation type="unfinished">NUM LOCK キー</translation>
+        <translation>NUM LOCK キー</translation>
     </message>
     <message>
         <source>XTest for Xinerama</source>
-        <translation type="unfinished">Xinerama での XTest</translation>
+        <translation>Xinerama 用の XTest</translation>
     </message>
     <message>
         <source>X11 computers Only, When enabled the client will not give focus to its focused window as soon as the client is switched to. This can help prevent unwanted focus stealing with some X11 setups.</source>
-        <translation type="unfinished">X11環境でのみ有効です。この設定を有効にすると、クライアントに切り替えた際、そのクライアント内のウィンドウに即座にフォーカスが移らなくなります。これにより、一部のX11環境で発生しがちな、意図しないフォーカスの横取り（フォーカス・スティーリング）を防ぐことができます。</translation>
+        <translation>X11 のコンピューターのみ。有効にすると、クライアントに切り替えたときに、そのアクティブなウィンドウにすぐにはフォーカスを渡しません。一部の X11 環境で不要なフォーカスの奪取を防げます。</translation>
     </message>
     <message>
         <source>Weaken X11 Focus</source>
-        <translation type="unfinished">X11のフォーカスを弱める</translation>
+        <translation>X11 のフォーカスを弱める</translation>
     </message>
     <message>
         <source>Aliases</source>
-        <translation type="unfinished">別名</translation>
+        <translation>エイリアス</translation>
     </message>
     <message>
         <source>&amp;Add</source>
-        <translation type="unfinished">追加(&amp;A)</translation>
+        <translation>追加(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation type="unfinished">削除(&amp;R)</translation>
+        <translation>削除(&amp;R)</translation>
     </message>
     <message>
         <source>Computer name is empty</source>
-        <translation type="unfinished">コンピューター名が空です</translation>
+        <translation>コンピューター名が空です</translation>
     </message>
     <message>
         <source>The computer name cannot be empty. Please either fill in a name or cancel the dialog.</source>
-        <translation type="unfinished">コンピューター名を空にすることはできません。名前を入力するか、ダイアログをキャンセルしてください。</translation>
+        <translation>コンピューター名は空にできません。名前を入力するか、ダイアログをキャンセルしてください。</translation>
     </message>
     <message>
         <source>Computer name matches alias</source>
-        <translation type="unfinished">コンピューター名がエイリアスと一致しています</translation>
+        <translation>コンピューター名がエイリアスと同じです</translation>
     </message>
     <message>
         <source>The computer name cannot be the same as an alias. Please either remove the alias or change the computer name.</source>
-        <translation type="unfinished">コンピューター名をエイリアスと同じにすることはできません。エイリアスを削除するか、コンピューター名を変更してください。</translation>
+        <translation>コンピューター名はエイリアスと同じにできません。エイリアスを削除するか、コンピューター名を変更してください。</translation>
     </message>
 </context>
 <context>
     <name>ComputerSetupModel</name>
     <message>
         <source>&lt;center&gt;Computer: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag computer to the trashcan to remove it</source>
-        <translation type="unfinished">&lt;center&gt;コンピュータ: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;ダブルクリックして設定を編集&lt;br&gt;コンピュータをゴミ箱にドラッグして削除</translation>
+        <translation>&lt;center&gt;コンピューター: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;ダブルクリックで設定を編集&lt;br&gt;ごみ箱にドラッグすると削除</translation>
     </message>
 </context>
 <context>
@@ -574,6 +582,42 @@ Do you want to connect to the server?
         <translation>サーバー設定をファイルに保存できませんでした。</translation>
     </message>
     <message>
+        <source>Looking...</source>
+        <translation>検索中...</translation>
+    </message>
+    <message>
+        <source>No %1 servers answered on this network. Check that the server is running.</source>
+        <translation>このネットワークで応答した %1 サーバーはありません。サーバーが起動しているか確認してください。</translation>
+    </message>
+    <message>
+        <source>Save Logs for a Bug Report</source>
+        <translation>不具合報告用にログを保存</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation>テキスト ファイル (*.txt)</translation>
+    </message>
+    <message>
+        <source>Save Logs</source>
+        <translation>ログを保存</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t save the logs: %1</source>
+        <translation>ログを保存できませんでした: %1</translation>
+    </message>
+    <message>
+        <source>The logs are saved in %1.</source>
+        <translation>ログを %1 に保存しました。</translation>
+    </message>
+    <message>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <translation>このコンピューターの名前と設定、接続先のコンピューターの名前とアドレスが含まれます。ファイルを不具合報告に添付してください。</translation>
+    </message>
+    <message>
+        <source>Show in Folder</source>
+        <translation>フォルダーに表示</translation>
+    </message>
+    <message>
         <source>Start</source>
         <translation>起動</translation>
     </message>
@@ -598,48 +642,66 @@ Do you want to connect to the server?
         <translation>ヘルプを表示(&amp;H)</translation>
     </message>
     <message>
+        <source>Save &amp;Logs for a Bug Report...</source>
+        <translation>不具合報告用にログを保存(&amp;L)...</translation>
+    </message>
+    <message>
         <source>Receiving files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを受信中: %1% (%3 MB 中 %2 MB)</translation>
     </message>
     <message>
         <source>Sending files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを送信中: %1% (%3 MB 中 %2 MB)</translation>
     </message>
     <message>
         <source>Files sent</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを送信しました</translation>
     </message>
     <message numerus="yes">
         <source>Received %n dropped item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ドロップされた %n 個の項目を受信しました</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Received %n copied item(s), ready to paste</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>コピーされた %n 個の項目を受信しました。貼り付けできます</numerusform>
         </translation>
     </message>
     <message>
         <source>Files received</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを受信しました</translation>
     </message>
     <message>
         <source>File transfer failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル転送に失敗しました: %1</translation>
     </message>
     <message>
         <source>File transfer failed</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル転送に失敗しました</translation>
     </message>
     <message>
         <source>Invalid Computer Name</source>
-        <translation type="unfinished"></translation>
+        <translation>無効なコンピューター名</translation>
     </message>
     <message>
         <source>Computer name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>そのコンピューター名は既にあります</translation>
+    </message>
+    <message>
+        <source>The name you have chosen is invalid.
+
+Valid names:
+â€¢ Use letters and numbers
+â€¢ May also use _ or -
+â€¢ Are between 1 and 255 characters</source>
+        <translation type="vanished">選んだ名前は無効です。
+
+有効な名前:
+• 英字と数字を使う
+• _ と - も使える
+• 1～255 文字</translation>
     </message>
     <message>
         <source>No IP Detected</source>
@@ -798,13 +860,21 @@ Additionally, check you are able to %1 the server config file: %2</source>
         <source>&lt;p&gt;Keyboard layout support requires matching layouts on all computers. The following layouts from the other computer are not installed on this computer:&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Please install them to enable support for these layouts.&lt;/p&gt;</source>
         <translation>&lt;p&gt;キーボードレイアウトのサポートには対応するレイアウトが全てのコンピューターに必要です。別のコンピューターで使用されている以下のレイアウトがこのコンピューターにインストールされていません:&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;サポートを有効にするには、これらのレイアウトをインストールしてください。&lt;/p&gt;</translation>
     </message>
+    <message>
+        <source>Look for Deskflow Plus servers on this network</source>
+        <translation>このネットワークで Deskflow Plus サーバーを探す</translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation>検索...</translation>
+    </message>
 </context>
 <context>
     <name>NewComputerWidget</name>
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation type="unfinished">Unnamed</translation>
+        <translation>名前なし</translation>
     </message>
 </context>
 <context>
@@ -885,7 +955,7 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
-        <translation type="unfinished"></translation>
+        <translation>「%1」という新しいクライアントを受け入れました。サーバーのコンピューター配置に追加してください。</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -901,15 +971,15 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>No thanks</source>
-        <translation>不要です</translation>
+        <translation type="vanished">不要です</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>更新を確認する</translation>
+        <translation type="vanished">更新を確認する</translation>
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;%1 の起動時にソフトウェア更新を確認しますか？&lt;/p&gt;&lt;p&gt;更新の確認にはインターネット接続が必要です。&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;%1 の起動時にソフトウェア更新を確認しますか？&lt;/p&gt;&lt;p&gt;更新の確認にはインターネット接続が必要です。&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
@@ -952,31 +1022,31 @@ Additionally, check you are able to %1 the server config file: %2</source>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>AltGr</source>
-        <translation type="unfinished">AltGr</translation>
+        <translation>AltGr</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">なし</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
 </context>
 <context>
@@ -1155,23 +1225,35 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>Drag a computer off the layout onto the trashcan to remove it.</source>
-        <translation type="unfinished"></translation>
+        <translation>配置からごみ箱にコンピューターをドラッグすると削除されます。</translation>
     </message>
     <message>
         <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
-        <translation type="unfinished"></translation>
+        <translation>コンピューターは自由にドラッグでき、互いにくっつきます。2 台が接している所でカーソルが移ります。コンピューターをダブルクリックすると編集できます。</translation>
     </message>
     <message>
         <source>Drag onto the layout to add a new computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>配置にドラッグして新しいコンピューターを追加します。</translation>
     </message>
     <message>
         <source>Copied files limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>コピーしたファイルの上限:</translation>
     </message>
     <message>
         <source>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスプローラーでコピーしたファイルは、このサイズまでカーソルについて別のコンピューターに送られます。0 でオフになります。</translation>
+    </message>
+    <message>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
+        <translation>モニターの角の近くでは移らない(&amp;C)。範囲</translation>
+    </message>
+    <message>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
+        <translation>スタート ボタン、ウィンドウの閉じるボタン、ホット コーナーに向かうときに、カーソルが別のコンピューターに移らないようにします</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> px</translation>
     </message>
 </context>
 <context>
@@ -1182,7 +1264,7 @@ Enabling this setting will disable the server config GUI.</source>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>起動時にソフトウェア更新を確認する</translation>
+        <translation type="vanished">起動時にソフトウェア更新を確認する</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
@@ -1305,6 +1387,42 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>詳細なデバッグ出力</translation>
     </message>
     <message>
+        <source>Ask me</source>
+        <translation>確認する</translation>
+    </message>
+    <message>
+        <source>Ask when there&apos;s a new version</source>
+        <translation>新しいバージョンがあるときに確認する</translation>
+    </message>
+    <message>
+        <source>Install automatically</source>
+        <translation>自動でインストール</translation>
+    </message>
+    <message>
+        <source>Install new versions as soon as they&apos;re found</source>
+        <translation>新しいバージョンが見つかり次第インストールする</translation>
+    </message>
+    <message>
+        <source>Don&apos;t check</source>
+        <translation>確認しない</translation>
+    </message>
+    <message>
+        <source>Don&apos;t look for new versions</source>
+        <translation>新しいバージョンを探さない</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Windows と同じ</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>システムと同じ</translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation>確認中...</translation>
+    </message>
+    <message>
         <source>Automatic</source>
         <translation>自動</translation>
     </message>
@@ -1367,6 +1485,30 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Remove all settings</source>
         <translation>すべての設定を消去する</translation>
+    </message>
+    <message>
+        <source>New versions</source>
+        <translation>新しいバージョン</translation>
+    </message>
+    <message>
+        <source>Check now</source>
+        <translation>今すぐ確認</translation>
+    </message>
+    <message>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
+        <translation>テスト版には最新の修正と機能がありますが、試された回数は少なめです</translation>
+    </message>
+    <message>
+        <source>Include test builds</source>
+        <translation>テスト版も含める</translation>
+    </message>
+    <message>
+        <source>Start when I sign in, and reconnect</source>
+        <translation>サインイン時に起動して再接続する</translation>
+    </message>
+    <message>
+        <source>Starts in the background each time you sign in and, if it was running before, connects again</source>
+        <translation>サインインのたびにバックグラウンドで起動し、前回動いていた場合は再接続します</translation>
     </message>
 </context>
 <context>
@@ -1452,6 +1594,22 @@ Enabling this setting will disable the server config GUI.</source>
         <translation>ソフトウェア更新あり</translation>
     </message>
     <message>
+        <source>Slow connection to %1</source>
+        <translation>%1 への接続が遅い</translation>
+    </message>
+    <message>
+        <source>Slow connections</source>
+        <translation>接続が遅い</translation>
+    </message>
+    <message>
+        <source>%1: %2 ms there and back, which makes the mouse stutter</source>
+        <translation>%1: 往復 %2 ms のため、マウスがカクつきます</translation>
+    </message>
+    <message>
+        <source>A wired connection, or turning off Wi-Fi power saving, usually helps.</source>
+        <translation>有線接続にするか、Wi-Fi の省電力をオフにすると改善することがあります。</translation>
+    </message>
+    <message>
         <source>%1 is connecting...</source>
         <translation>%1 は接続処理中…</translation>
     </message>
@@ -1466,6 +1624,130 @@ Enabling this setting will disable the server config GUI.</source>
     <message>
         <source>Encryption Disabled</source>
         <translation>暗号化無効</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDownload</name>
+    <message>
+        <source>The download was cancelled.</source>
+        <translation>ダウンロードを取り消しました。</translation>
+    </message>
+    <message>
+        <source>The file is %1 bytes, but the release lists %2.</source>
+        <translation>ファイルは %1 バイトですが、リリースには %2 と記載されています。</translation>
+    </message>
+    <message>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
+        <translation>ファイルがリリースの記載と違います: SHA-256 が一致しません。</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>新しいバージョン: %1（&lt;a href=&quot;%2&quot;&gt;新機能&lt;/a&gt;）&lt;br&gt;お使いのバージョン: %3</translation>
+    </message>
+    <message>
+        <source>%1 closes for a moment while the update installs, then starts again.</source>
+        <translation>更新のインストール中は %1 がしばらく閉じ、その後もう一度起動します。</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>更新を確認</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t check for updates: %1</source>
+        <translation>更新を確認できませんでした: %1</translation>
+    </message>
+    <message>
+        <source>You have the newest version of %1, %2.</source>
+        <translation>%1 の最新バージョン %2 をお使いです。</translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation>更新があります</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available. Would you like to update?&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1 の新しいバージョンがあります。更新しますか?&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>常に</translation>
+    </message>
+    <message>
+        <source>Update now, and install new versions automatically from now on</source>
+        <translation>今すぐ更新し、今後は新しいバージョンを自動でインストールする</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>はい</translation>
+    </message>
+    <message>
+        <source>Open the download page</source>
+        <translation>ダウンロード ページを開く</translation>
+    </message>
+    <message>
+        <source>Update this time</source>
+        <translation>今回は更新する</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>いいえ</translation>
+    </message>
+    <message numerus="yes">
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
+        <translation>
+            <numerusform>今回は更新しません。%n 日後にもう一度確認します。</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>しない</translation>
+    </message>
+    <message>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
+        <translation>更新せず、今後も確認しません。設定で変更できます。</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available.&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;%1 の新しいバージョンがあります。&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Open download page</source>
+        <translation>ダウンロード ページを開く</translation>
+    </message>
+    <message>
+        <source>Update now</source>
+        <translation>今すぐ更新</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>後で</translation>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation>%1 %2 をダウンロード中...</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Updating %1</source>
+        <translation>%1 を更新中</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t install the update. %1</source>
+        <translation>更新をインストールできませんでした。%1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download the update. %1</source>
+        <translation>更新をダウンロードできませんでした。%1</translation>
     </message>
 </context>
 <context>
@@ -1495,19 +1777,19 @@ Enabling this setting will disable the server config GUI.</source>
     <name>validators::ComputerLineNameValidator</name>
     <message>
         <source>Computer name cannot be empty</source>
-        <translation type="unfinished">コンピュータ名を空にすることはできません</translation>
+        <translation>コンピューター名は空にできません</translation>
     </message>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation type="unfinished">コンピューター名に空白を含めることはできません</translation>
+        <translation>コンピューター名にスペースは使えません</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation type="unfinished">無効な文字が含まれているか長すぎます</translation>
+        <translation>無効な文字が含まれているか、長すぎます</translation>
     </message>
     <message>
         <source>A computer with this name already exists</source>
-        <translation type="unfinished">この名前のコンピューターはすでに存在します</translation>
+        <translation>この名前のコンピューターは既にあります</translation>
     </message>
 </context>
 </TS>

@@ -21,7 +21,7 @@ namespace deskflow::remote {
 //! What a RemoteInput carries
 enum class InputType : uint8_t
 {
-  Edge = 1, //!< a: side (a Direction), b: x, c: y
+  Edge = 1, //!< a: side (a Direction), b: x, c: y, d: kEdgeCarryingDrag when carrying dragged files
   Move,     //!< a: dx, b: dy
   Button,   //!< a: button (1 left, 2 right, 3 middle, 4 and 5 the side buttons), b: 1 pressed or 0 released
   Wheel,    //!< a: horizontal, b: vertical
@@ -30,6 +30,16 @@ enum class InputType : uint8_t
 
 inline constexpr int32_t kKeyExtended = 1;
 inline constexpr int32_t kKeyReleased = 2;
+
+//! @name An edge's d
+//@{
+//! Pushed against with the left button held, which might be a file drag; only seen on the client
+inline constexpr int32_t kEdgeButtonHeld = 1;
+//! The left button held at the edge was let go there; only seen on the client
+inline constexpr int32_t kEdgeButtonReleased = 2;
+//! Carrying files dragged on the client, which it has offered: they go where the button is let go
+inline constexpr int32_t kEdgeCarryingDrag = 3;
+//@}
 
 //! One piece of input from a client's own mouse or keyboard
 struct RemoteInput
@@ -67,8 +77,10 @@ bool startWatching(std::function<void()> wake);
 //! Stop watching, and stop capturing
 void stopWatching();
 
-//! Start or stop keeping this computer's mouse and keyboard input from its applications
-void setCapture(bool capture);
+//! Start or stop keeping this computer's mouse and keyboard input from its applications. With
+//! \p keepButtons, buttons already held are kept held for the computer the input goes to, so letting
+//! go of a drag drops it there.
+void setCapture(bool capture, bool keepButtons = false);
 
 //! The input waiting to be sent
 std::vector<RemoteInput> takeInput();

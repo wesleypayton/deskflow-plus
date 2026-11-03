@@ -28,6 +28,8 @@ void ServerProxyPlus::enablePlus(uint32_t serverFeatures)
   m_features = serverFeatures & deskflow::plus::kFeatures;
   LOG_INFO("server is Deskflow Plus, using features 0x%x", m_features);
   ProtocolUtil::writef(getStream(), kMsgDPlusFeatures, deskflow::plus::kFeatures);
+  if (m_features & deskflow::plus::kFeatureQuickKeepAlive)
+    setKeepAliveRate(deskflow::plus::kPlusKeepAliveRate);
 
   // the computer info went before we knew, so send the monitors now
   sendExtraInfo();
@@ -36,11 +38,23 @@ void ServerProxyPlus::enablePlus(uint32_t serverFeatures)
 ServerProxy::ConnectionResult ServerProxyPlus::parseMessage(const uint8_t *code)
 {
   using namespace deskflow::transfer;
+  if (m_features & deskflow::plus::kFeatureQuickKeepAlive) {
+    // resetting the options puts the keep alives back to the standard rate
+    if (memcmp(code, kMsgCResetOptions, 4) == 0) {
+      const auto result = ServerProxy1_8::parseMessage(code);
+      setKeepAliveRate(deskflow::plus::kPlusKeepAliveRate);
+      return result;
+    }
+    // on a slow network a keep alive can wait behind a large transfer, which shows the server is there
+    if (isTransferMessage(code) || memcmp(code, kMsgDClipboard, 4) == 0)
+      resetKeepAliveAlarm();
+  }
   if ((m_features & deskflow::plus::kFeatureRemoteInput) && memcmp(code, kMsgDRemoteCapture, 4) == 0) {
     uint8_t capture = 0;
     if (!ProtocolUtil::readf(getStream(), kMsgDRemoteCapture + 4, &capture))
       return ConnectionResult::Disconnect;
-    getClient()->setRemoteCapture(capture != 0);
+    // 2 keeps the buttons held, carrying a drag
+    getClient()->setRemoteCapture(capture != 0, capture == 2);
     return ConnectionResult::Okay;
   }
   if (!(m_features & deskflow::plus::kFeatureFileTransfer) || !isTransferMessage(code))

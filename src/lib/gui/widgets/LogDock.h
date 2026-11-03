@@ -19,6 +19,8 @@ class LogDock : public QDockWidget
 public:
   explicit LogDock(QWidget *parent = nullptr);
   void appendLine(const QString &msg);
+  //! Everything the log shows
+  QString text() const;
   void setFloating(bool floating);
 
 protected:

@@ -176,7 +176,7 @@ public:
   void handleTransferMessage(const deskflow::transfer::TransferMessage &message);
 
   //! The server wants this computer's own mouse and keyboard captured and sent to it, or no longer
-  void setRemoteCapture(bool capture);
+  void setRemoteCapture(bool capture, bool keepButtons = false);
 
   //@}
 

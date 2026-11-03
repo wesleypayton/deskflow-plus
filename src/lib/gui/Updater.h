@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "UpdateRelease.h"
+#include "common/UpdateRelease.h"
 
 #include <QObject>
 #include <QPointer>
@@ -16,9 +16,10 @@ class QNetworkAccessManager;
 class QWidget;
 
 // Checks the GitHub releases for a newer version, at startup and once a day after, and does what
-// the update setting says: asks (Always, Yes, No or Never), installs, or does nothing. Installing
-// downloads the setup, checks it against the release, and runs it, which asks Windows for
-// permission, closes the app, upgrades it and starts it again.
+// the update setting says: asks (Always, Yes, No or Never), installs, or does nothing. The
+// background service installs it: it downloads the setup itself, checks it against the release,
+// and runs it, then starts the app again once it's upgraded. Without the service, the app does the
+// same, and Windows asks for permission to run setup.
 class Updater : public QObject
 {
   Q_OBJECT
@@ -44,15 +45,16 @@ Q_SIGNALS:
 private:
   void scheduledCheck();
   void check(QWidget *parent, bool manual);
-  void askToUpdate(const deskflow::gui::updates::Release &release);
-  bool confirmInstall(const deskflow::gui::updates::Release &release, QWidget *parent) const;
-  void install(const deskflow::gui::updates::Release &release, QWidget *parent);
+  void askToUpdate(const deskflow::updates::Release &release);
+  bool confirmInstall(const deskflow::updates::Release &release, QWidget *parent) const;
+  void install(const deskflow::updates::Release &release, QWidget *parent);
+  void installWithPermission(const deskflow::updates::Release &release, QWidget *parent);
   static bool runSetup(const QString &path);
 
   QWidget *m_window;
   QNetworkAccessManager *m_network;
   QTimer m_nextCheck;
-  std::optional<deskflow::gui::updates::Release> m_newer;
+  std::optional<deskflow::updates::Release> m_newer;
   bool m_asking = false;
   bool m_installing = false;
 };

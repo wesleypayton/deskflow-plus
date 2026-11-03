@@ -762,6 +762,11 @@ void CoreProcess::onCoreIpcMessageReceived(const QString &command, const QString
           parts.at(3).toULongLong(), parts.at(4).toULongLong(), parts.mid(5).join(QLatin1Char('|'))
       );
     }
+  } else if (command == "connectionSpeed") {
+    // name|slow, ok or gone|milliseconds
+    const auto parts = args.split(QLatin1Char('|'));
+    if (parts.size() == 3)
+      Q_EMIT connectionSpeed(parts.at(0), parts.at(1) == QStringLiteral("slow"), parts.at(2).toInt());
   } else if (command == "computerShape") {
     // name|x,y,width,height;x,y,width,height...
     const auto name = args.section(QLatin1Char('|'), 0, 0);

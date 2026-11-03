@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About Deskflow</source>
-        <translation>Informazioni su Deskflow</translation>
+        <translation type="vanished">Informazioni su Deskflow</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -50,6 +50,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }  
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;  
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/deskflow/deskflow/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#508ed8;&quot;&gt;Collaboratori al codice&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>About Deskflow Plus</source>
+        <translation>Informazioni su Deskflow Plus</translation>
+    </message>
+    <message>
+        <source>%1, based on Deskflow %2</source>
+        <translation>%1, basato su Deskflow %2</translation>
     </message>
 </context>
 <context>
@@ -139,216 +147,216 @@ p, li { white-space: pre-wrap; }
     <name>ClientConfigDialog</name>
     <message>
         <source>Client Configuration</source>
-        <translation type="unfinished">Configurazione del client</translation>
+        <translation>Configurazione del client</translation>
     </message>
     <message>
         <source>Use server&apos;s keyboard language on this computer</source>
-        <translation type="unfinished">Usa la lingua della tastiera del server su questo computer</translation>
+        <translation>Usa la lingua della tastiera del server su questo computer</translation>
     </message>
     <message>
         <source>Scroll Modifiers</source>
-        <translation type="unfinished">Modificatori di scorrimento</translation>
+        <translation>Modificatori di scorrimento</translation>
     </message>
     <message>
         <source>Invert</source>
-        <translation type="unfinished">Invertire</translation>
+        <translation>Inverti</translation>
     </message>
     <message>
         <source>Horizontal Scroll</source>
-        <translation type="unfinished">Scorrimento orizzontale</translation>
+        <translation>Scorrimento orizzontale</translation>
     </message>
     <message>
         <source>Vertical Scroll</source>
-        <translation type="unfinished">Scorrimento verticale</translation>
+        <translation>Scorrimento verticale</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished">Scala</translation>
+        <translation>Scala</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allow the client to slow the rate it attempts to reconnect to the server when connections attempts are failing. The delay between connection attempts will  start at 1 second intervals and can be a maxium of 5 minutes between connection attempts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Consente al client di rallentare la frequenza dei tentativi di riconnessione al server quando i tentativi di connessione falliscono. Il ritardo tra i tentativi di connessione inizierà a intervalli di 1 secondo, fino a raggiungere un massimo di 5 minuti tra un tentativo e l&apos;altro.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Consente al client di riprovare a collegarsi al server meno spesso quando i tentativi falliscono. L’attesa tra un tentativo e l’altro parte da 1 secondo e può arrivare a 5 minuti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use dynamic reconnection time based on connection attempts</source>
-        <translation type="unfinished">Utilizza un tempo di riconnessione dinamico basato sui tentativi di connessione</translation>
+        <translation>Adatta il tempo di riconnessione ai tentativi di connessione</translation>
     </message>
 </context>
 <context>
     <name>ComputerLayoutView</name>
     <message>
         <source>This computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo computer</translation>
     </message>
     <message>
         <source>Edit…</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica…</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <source>Drag a new computer here to add it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina qui un nuovo computer per aggiungerlo.</translation>
     </message>
 </context>
 <context>
     <name>ComputerSettingsDialog</name>
     <message>
         <source>Computer settings</source>
-        <translation type="unfinished">Impostazioni computer</translation>
+        <translation>Impostazioni del computer</translation>
     </message>
     <message>
         <source>Computer Info</source>
-        <translation type="unfinished">Informazioni computer</translation>
+        <translation>Informazioni sul computer</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Modifier Keys</source>
-        <translation type="unfinished">Tasti modificatori</translation>
+        <translation>Tasti modificatori</translation>
     </message>
     <message>
         <source>M&amp;eta</source>
-        <translation type="unfinished">M&amp;eta</translation>
+        <translation>M&amp;eta</translation>
     </message>
     <message>
         <source>&amp;Ctrl</source>
-        <translation type="unfinished">&amp;Ctrl</translation>
+        <translation>&amp;Ctrl</translation>
     </message>
     <message>
         <source>S&amp;uper</source>
-        <translation type="unfinished">S&amp;uper</translation>
+        <translation>S&amp;uper</translation>
     </message>
     <message>
         <source>Al&amp;t</source>
-        <translation type="unfinished">Al&amp;t</translation>
+        <translation>Al&amp;t</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Maiusc</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
     <message>
         <source>Alt Gr</source>
-        <translation type="unfinished">Alt Gr</translation>
+        <translation>Alt Gr</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Nessuno</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>&amp;Shift</source>
-        <translation type="unfinished">&amp;Shift</translation>
+        <translation>&amp;Maiusc</translation>
     </message>
     <message>
         <source>Alt &amp;Gr</source>
-        <translation type="unfinished">Alt &amp;Gr</translation>
+        <translation>Alt &amp;Gr</translation>
     </message>
     <message>
         <source>Dead Corners</source>
-        <translation type="unfinished">Angoli morti</translation>
+        <translation>Angoli morti</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">In alto a sinistra</translation>
+        <translation>In alto a sinistra</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">In alto a destra</translation>
+        <translation>In alto a destra</translation>
     </message>
     <message>
         <source>Corner si&amp;ze</source>
-        <translation type="unfinished">Di&amp;mensioni angolo</translation>
+        <translation>&amp;Dimensione dell’angolo</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">In basso a sinistra</translation>
+        <translation>In basso a sinistra</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">In basso a destra</translation>
+        <translation>In basso a destra</translation>
     </message>
     <message>
         <source>Fixes</source>
-        <translation type="unfinished">Correzioni</translation>
+        <translation>Correzioni</translation>
     </message>
     <message>
         <source>SCROLL LOCK key</source>
-        <translation type="unfinished">Tasto BLOC SCORR</translation>
+        <translation>Tasto BLOC SCORR</translation>
     </message>
     <message>
         <source>CAPS LOCK key</source>
-        <translation type="unfinished">Tasto BLOC MAIUSC</translation>
+        <translation>Tasto BLOC MAIUSC</translation>
     </message>
     <message>
         <source>NUM LOCK key</source>
-        <translation type="unfinished">Tasto BLOC NUM</translation>
+        <translation>Tasto BLOC NUM</translation>
     </message>
     <message>
         <source>XTest for Xinerama</source>
-        <translation type="unfinished">XTest per Xinerama</translation>
+        <translation>XTest per Xinerama</translation>
     </message>
     <message>
         <source>X11 computers Only, When enabled the client will not give focus to its focused window as soon as the client is switched to. This can help prevent unwanted focus stealing with some X11 setups.</source>
-        <translation type="unfinished">Solo per computer X11: se questa opzione è abilitata, il client non assegnerà il focus alla propria finestra attiva nel momento in cui si passa al client stesso. Ciò può aiutare a prevenire il furto di focus indesiderato con alcune configurazioni X11.</translation>
+        <translation>Solo computer X11. Se attivo, il client non dà subito il focus alla sua finestra attiva quando si passa a lui. Può evitare furti di focus indesiderati con alcune configurazioni X11.</translation>
     </message>
     <message>
         <source>Weaken X11 Focus</source>
-        <translation type="unfinished">Indebolisci la messa a fuoco di X11</translation>
+        <translation>Indebolisci il focus X11</translation>
     </message>
     <message>
         <source>Aliases</source>
-        <translation type="unfinished">Alias</translation>
+        <translation>Alias</translation>
     </message>
     <message>
         <source>&amp;Add</source>
-        <translation type="unfinished">&amp;Aggiungi</translation>
+        <translation>&amp;Aggiungi</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Rimuovi</translation>
+        <translation>&amp;Rimuovi</translation>
     </message>
     <message>
         <source>Computer name is empty</source>
-        <translation type="unfinished">Il nome del computer è vuoto.</translation>
+        <translation>Il nome del computer è vuoto</translation>
     </message>
     <message>
         <source>The computer name cannot be empty. Please either fill in a name or cancel the dialog.</source>
-        <translation type="unfinished">Il nome del computer non può essere vuoto. Inserire un nome oppure annullare la finestra di dialogo.</translation>
+        <translation>Il nome del computer non può essere vuoto. Inserisci un nome o annulla la finestra.</translation>
     </message>
     <message>
         <source>Computer name matches alias</source>
-        <translation type="unfinished">Il nome del computer corrisponde all&apos;alias</translation>
+        <translation>Il nome del computer coincide con un alias</translation>
     </message>
     <message>
         <source>The computer name cannot be the same as an alias. Please either remove the alias or change the computer name.</source>
-        <translation type="unfinished">Il nome del computer non può coincidere con un alias. Rimuovere l&apos;alias o modificare il nome del computer.</translation>
+        <translation>Il nome del computer non può essere uguale a un alias. Rimuovi l’alias o cambia il nome del computer.</translation>
     </message>
 </context>
 <context>
     <name>ComputerSetupModel</name>
     <message>
         <source>&lt;center&gt;Computer: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Double click to edit settings&lt;br&gt;Drag computer to the trashcan to remove it</source>
-        <translation type="unfinished">&lt;center&gt;Computer: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Fai doppio clic per modificare le impostazioni&lt;br&gt;Trascina il computer nel cestino per rimuoverlo</translation>
+        <translation>&lt;center&gt;Computer: &lt;b&gt;%1&lt;/b&gt;&lt;/center&gt;&lt;br&gt;Fai doppio clic per modificare le impostazioni&lt;br&gt;Trascina il computer nel cestino per rimuoverlo</translation>
     </message>
 </context>
 <context>
@@ -435,11 +443,11 @@ Vuoi connetterti al server?
     <name>HelpDialog</name>
     <message>
         <source>%1 Help</source>
-        <translation type="unfinished">%1 Aiuto</translation>
+        <translation>Guida di %1</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Vicino</translation>
+        <translation>Chiudi</translation>
     </message>
 </context>
 <context>
@@ -476,27 +484,27 @@ Vuoi connetterti al server?
     <name>LogLevel</name>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">Fatale</translation>
+        <translation>Fatale</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Avviso</translation>
+        <translation>Avviso</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Informazioni</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">Debug</translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>Verbose</source>
-        <translation type="unfinished">Verboso</translation>
+        <translation>Dettagliato</translation>
     </message>
 </context>
 <context>
@@ -561,7 +569,7 @@ Vuoi connetterti al server?
     </message>
     <message>
         <source>View &amp;Help</source>
-        <translation type="unfinished">Visualizza la &amp;guida</translation>
+        <translation>Visualizza la &amp;guida</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
@@ -602,6 +610,42 @@ Vuoi connetterti al server?
         <translation>Impossibile salvare la configurazione del server nel file.</translation>
     </message>
     <message>
+        <source>Looking...</source>
+        <translation>Ricerca...</translation>
+    </message>
+    <message>
+        <source>No %1 servers answered on this network. Check that the server is running.</source>
+        <translation>Nessun server %1 ha risposto su questa rete. Controlla che il server sia in esecuzione.</translation>
+    </message>
+    <message>
+        <source>Save Logs for a Bug Report</source>
+        <translation>Salva i log per una segnalazione di bug</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation>File di testo (*.txt)</translation>
+    </message>
+    <message>
+        <source>Save Logs</source>
+        <translation>Salva i log</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t save the logs: %1</source>
+        <translation>Impossibile salvare i log: %1</translation>
+    </message>
+    <message>
+        <source>The logs are saved in %1.</source>
+        <translation>I log sono stati salvati in %1.</translation>
+    </message>
+    <message>
+        <source>They include this computer&apos;s name and settings, and the names and addresses of the computers it connects to. Attach the file to your bug report.</source>
+        <translation>Contengono il nome e le impostazioni di questo computer, e i nomi e gli indirizzi dei computer a cui si collega. Allega il file alla segnalazione di bug.</translation>
+    </message>
+    <message>
+        <source>Show in Folder</source>
+        <translation>Mostra nella cartella</translation>
+    </message>
+    <message>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
@@ -622,50 +666,68 @@ Vuoi connetterti al server?
         <translation>Errore di connessione %1</translation>
     </message>
     <message>
+        <source>Save &amp;Logs for a Bug Report...</source>
+        <translation>Salva i &amp;log per una segnalazione di bug...</translation>
+    </message>
+    <message>
         <source>Receiving files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricezione dei file: %1% (%2 di %3 MB)</translation>
     </message>
     <message>
         <source>Sending files: %1% (%2 of %3 MB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Invio dei file: %1% (%2 di %3 MB)</translation>
     </message>
     <message>
         <source>Files sent</source>
-        <translation type="unfinished"></translation>
+        <translation>File inviati</translation>
     </message>
     <message numerus="yes">
         <source>Received %n dropped item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Ricevuto %n elemento trascinato</numerusform>
+            <numerusform>Ricevuti %n elementi trascinati</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Received %n copied item(s), ready to paste</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Ricevuto %n elemento copiato, pronto da incollare</numerusform>
+            <numerusform>Ricevuti %n elementi copiati, pronti da incollare</numerusform>
         </translation>
     </message>
     <message>
         <source>Files received</source>
-        <translation type="unfinished"></translation>
+        <translation>File ricevuti</translation>
     </message>
     <message>
         <source>File transfer failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasferimento dei file non riuscito: %1</translation>
     </message>
     <message>
         <source>File transfer failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasferimento dei file non riuscito</translation>
     </message>
     <message>
         <source>Invalid Computer Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome del computer non valido</translation>
     </message>
     <message>
         <source>Computer name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nome del computer esiste già</translation>
+    </message>
+    <message>
+        <source>The name you have chosen is invalid.
+
+Valid names:
+â€¢ Use letters and numbers
+â€¢ May also use _ or -
+â€¢ Are between 1 and 255 characters</source>
+        <translation type="vanished">Il nome scelto non è valido.
+
+I nomi validi:
+• usano lettere e numeri
+• possono contenere anche _ o -
+• hanno da 1 a 255 caratteri</translation>
     </message>
     <message>
         <source>No IP Detected</source>
@@ -677,11 +739,11 @@ Vuoi connetterti al server?
     </message>
     <message>
         <source>Using IP: </source>
-        <translation type="unfinished">Utilizzo dell&apos;indirizzo IP: </translation>
+        <translation>IP in uso: </translation>
     </message>
     <message>
         <source>Suggested IP: </source>
-        <translation type="unfinished">IP suggerito: </translation>
+        <translation>IP suggerito: </translation>
     </message>
     <message>
         <source>&lt;p&gt;If connecting via the hostname fails, try %1&lt;/p&gt;</source>
@@ -698,8 +760,8 @@ Vuoi connetterti al server?
     <message>
         <source>
 A bound IP is now invalid, you may need to restart the server.</source>
-        <translation type="unfinished">
-L&apos;indirizzo IP associato non è più valido, potrebbe essere necessario riavviare il server.</translation>
+        <translation>
+Un IP associato non è più valido, potrebbe essere necessario riavviare il server.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -733,7 +795,7 @@ Nomi validi:
     </message>
     <message>
         <source>invalid certificate, generating a new one</source>
-        <translation type="unfinished">certificato non valido, ne viene generato uno nuovo</translation>
+        <translation>certificato non valido, ne viene generato uno nuovo</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -758,47 +820,55 @@ Nomi validi:
     </message>
     <message>
         <source>&amp;Configure Client</source>
-        <translation type="unfinished">&amp;Configurare il client</translation>
+        <translation>&amp;Configura il client</translation>
     </message>
     <message>
         <source>Connect to:</source>
-        <translation type="unfinished">Connettiti a:</translation>
+        <translation>Connetti a:</translation>
     </message>
     <message>
         <source>&lt;html&gt;Hostname or IP address of the server computer.&lt;br/&gt;May contain a comma seperated list.&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;Nome host o indirizzo IP del computer server.&lt;br/&gt;Può contenere un elenco separato da virgole.&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;Nome o indirizzo IP del computer server.&lt;br/&gt;Può essere un elenco separato da virgole.&lt;/html&gt;</translation>
     </message>
     <message>
         <source>read</source>
-        <translation type="unfinished">leggere</translation>
+        <translation>leggere</translation>
     </message>
     <message>
         <source>read and write</source>
-        <translation type="unfinished">leggere e scrivere</translation>
+        <translation>leggere e scrivere</translation>
     </message>
     <message>
         <source>The Core executable could not be started.
 Please check if you have sufficient permissions to run %1.</source>
-        <translation type="unfinished">Impossibile avviare l&apos;eseguibile Core.
-Verifica di avere i permessi sufficienti per eseguire %1.</translation>
+        <translation>Impossibile avviare l’eseguibile del core.
+Controlla di avere i permessi necessari per eseguire %1.</translation>
     </message>
     <message>
         <source>
 Additionally, check you are able to %1 the server config file: %2</source>
-        <translation type="unfinished">
-Inoltre, verifica di poter %1 il file di configurazione del server: %2</translation>
+        <translation>
+Controlla anche di poter %1 il file di configurazione del server: %2</translation>
     </message>
     <message>
         <source>Don&apos;t show this again</source>
-        <translation type="unfinished"></translation>
+        <translation>Non mostrare più</translation>
     </message>
     <message>
         <source>Missing Keyboard Layouts</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout di tastiera mancanti</translation>
     </message>
     <message>
         <source>&lt;p&gt;Keyboard layout support requires matching layouts on all computers. The following layouts from the other computer are not installed on this computer:&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Please install them to enable support for these layouts.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;I layout di tastiera devono essere gli stessi su tutti i computer. Questi layout dell’altro computer non sono installati su questo:&lt;/p&gt;&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Installali per poterli usare.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Look for Deskflow Plus servers on this network</source>
+        <translation>Cerca server Deskflow Plus su questa rete</translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation>Trova...</translation>
     </message>
 </context>
 <context>
@@ -806,7 +876,7 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     <message>
         <source>Unnamed</source>
         <extracomment>Used as the hostname. Translation may not contain spaces</extracomment>
-        <translation type="unfinished">Senzanome</translation>
+        <translation>SenzaNome</translation>
     </message>
 </context>
 <context>
@@ -885,7 +955,7 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     </message>
     <message>
         <source>A new client called &apos;%1&apos; has been accepted. You&apos;ll need to add it to your server&apos;s computer layout.</source>
-        <translation type="unfinished"></translation>
+        <translation>È stato accettato un nuovo client chiamato «%1». Aggiungilo alla disposizione dei computer del server.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -901,15 +971,15 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     </message>
     <message>
         <source>No thanks</source>
-        <translation>No, grazie</translation>
+        <translation type="vanished">No, grazie</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Controlla aggiornamenti</translation>
+        <translation type="vanished">Controlla aggiornamenti</translation>
     </message>
     <message>
         <source>&lt;p&gt;Would you like to check for updates when %1 starts?&lt;/p&gt;&lt;p&gt;Checking for updates requires an Internet connection.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Vuoi controllare gli aggiornamenti all&apos;avvio di %1?&lt;/p&gt;&lt;p&gt;Il controllo degli aggiornamenti richiede una connessione Internet.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;Vuoi controllare gli aggiornamenti all&apos;avvio di %1?&lt;/p&gt;&lt;p&gt;Il controllo degli aggiornamenti richiede una connessione Internet.&lt;/p&gt;&lt;p&gt;URL: &lt;pre&gt;%2&lt;/pre&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Background service offline</source>
@@ -930,21 +1000,21 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     <message>
         <source>failed to read key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">impossibile leggere la chiave dal file del certificato: %1</translation>
+        <translation>impossibile leggere la chiave dal file del certificato: %1</translation>
     </message>
     <message>
         <source>failed to parse certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">impossibile analizzare il file del certificato: %1</translation>
+        <translation>impossibile analizzare il file del certificato: %1</translation>
     </message>
     <message>
         <source>key detected is the incorrect size</source>
-        <translation type="unfinished">la chiave rilevata ha una dimensione errata</translation>
+        <translation>la chiave rilevata ha una dimensione errata</translation>
     </message>
     <message>
         <source>failed to read RSA key from certificate file: %1</source>
         <extracomment>%1 will be replaced by the certificate path</extracomment>
-        <translation type="unfinished">impossibile leggere la chiave RSA dal file del certificato: %1</translation>
+        <translation>impossibile leggere la chiave RSA dal file del certificato: %1</translation>
     </message>
     <message>
         <source>%1 is already running</source>
@@ -952,50 +1022,50 @@ Inoltre, verifica di poter %1 il file di configurazione del server: %2</translat
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>AltGr</source>
-        <translation type="unfinished">AltGr</translation>
+        <translation>AltGr</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished">Ctrl</translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Nessuno</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation>Maiusc</translation>
     </message>
     <message>
         <source>Super</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Ricerca</translation>
+        <translation>Cerca</translation>
     </message>
     <message>
         <source>Find next</source>
-        <translation type="unfinished">Trova successivo</translation>
+        <translation>Trova successivo</translation>
     </message>
     <message>
         <source>Find previous</source>
-        <translation type="unfinished">Trova precedente</translation>
+        <translation>Trova precedente</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished">Trova...</translation>
+        <translation>Trova...</translation>
     </message>
 </context>
 <context>
@@ -1151,27 +1221,39 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>Enable lock to computer at startup</source>
-        <translation type="unfinished">Abilita il blocco al computer all&apos;avvio</translation>
+        <translation>Attiva il blocco sul computer all’avvio</translation>
     </message>
     <message>
         <source>Drag a computer off the layout onto the trashcan to remove it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina un computer fuori dalla disposizione, nel cestino, per rimuoverlo.</translation>
     </message>
     <message>
         <source>Drag computers anywhere; they snap together. The cursor crosses wherever two computers touch. Double click a computer to edit it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina i computer dove vuoi; si agganciano tra loro. Il cursore passa dove due computer si toccano. Fai doppio clic su un computer per modificarlo.</translation>
     </message>
     <message>
         <source>Drag onto the layout to add a new computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina nella disposizione per aggiungere un nuovo computer.</translation>
     </message>
     <message>
         <source>Copied files limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite dei file copiati:</translation>
     </message>
     <message>
         <source>Files copied in Explorer follow the cursor to another computer, up to this size. 0 turns it off.</source>
-        <translation type="unfinished"></translation>
+        <translation>I file copiati in Esplora file seguono il cursore su un altro computer, fino a questa dimensione. 0 disattiva la funzione.</translation>
+    </message>
+    <message>
+        <source>Don&apos;t cross near a monitor&apos;s &amp;corners, within</source>
+        <translation>Non passare vicino agli &amp;angoli di un monitor, entro</translation>
+    </message>
+    <message>
+        <source>Keeps the cursor from crossing to another computer while reaching for the Start button, a window&apos;s close button or a hot corner</source>
+        <translation>Impedisce al cursore di passare a un altro computer quando vai al pulsante Start, al pulsante di chiusura di una finestra o a un angolo attivo</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> px</translation>
     </message>
 </context>
 <context>
@@ -1182,7 +1264,7 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation>Controlla aggiornamenti all&apos;avvio</translation>
+        <translation type="vanished">Controlla aggiornamenti all&apos;avvio</translation>
     </message>
     <message>
         <source>Prevent this computer from going to sleep</source>
@@ -1250,11 +1332,11 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>%1 Clear Settings</source>
-        <translation type="unfinished">%1 Azzera Impostazioni</translation>
+        <translation>%1 - Cancella le impostazioni</translation>
     </message>
     <message>
         <source>&lt;p&gt;Are you sure you want to clear all settings and restart %1?&lt;/p&gt; &lt;p&gt;This action cannot be undone.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;Sei sicuro di voler cancellare tutte le impostazioni e riavviare %1?&lt;/p&gt; &lt;p&gt;Questa operazione non può essere annullata.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Vuoi davvero cancellare tutte le impostazioni e riavviare %1?&lt;/p&gt; &lt;p&gt;L’operazione non può essere annullata.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Required messages</source>
@@ -1279,6 +1361,42 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     <message>
         <source>Verbose debug output</source>
         <translation>Output di debug dettagliato</translation>
+    </message>
+    <message>
+        <source>Ask me</source>
+        <translation>Chiedimelo</translation>
+    </message>
+    <message>
+        <source>Ask when there&apos;s a new version</source>
+        <translation>Chiedi quando c’è una nuova versione</translation>
+    </message>
+    <message>
+        <source>Install automatically</source>
+        <translation>Installa automaticamente</translation>
+    </message>
+    <message>
+        <source>Install new versions as soon as they&apos;re found</source>
+        <translation>Installa le nuove versioni appena vengono trovate</translation>
+    </message>
+    <message>
+        <source>Don&apos;t check</source>
+        <translation>Non controllare</translation>
+    </message>
+    <message>
+        <source>Don&apos;t look for new versions</source>
+        <translation>Non cercare nuove versioni</translation>
+    </message>
+    <message>
+        <source>Same as Windows</source>
+        <translation>Come Windows</translation>
+    </message>
+    <message>
+        <source>Same as the system</source>
+        <translation>Come il sistema</translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation>Controllo...</translation>
     </message>
     <message>
         <source>TLS Certificate Regenerated</source>
@@ -1306,11 +1424,11 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>Automatic</source>
-        <translation type="unfinished">Automatica</translation>
+        <translation>Automatico</translation>
     </message>
     <message>
         <source>Include version in the window title</source>
-        <translation type="unfinished">Includi la versione nel titolo della finestra</translation>
+        <translation>Mostra la versione nel titolo della finestra</translation>
     </message>
     <message>
         <source>Log to file</source>
@@ -1322,7 +1440,7 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>&amp;General</source>
-        <translation type="unfinished">&amp;Generale</translation>
+        <translation>&amp;Generale</translation>
     </message>
     <message>
         <source>&amp;Network</source>
@@ -1330,70 +1448,94 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished">&amp;Finestra</translation>
+        <translation>&amp;Finestra</translation>
     </message>
     <message>
         <source>When the main window is closed</source>
-        <translation type="unfinished">Quando la finestra principale è chiusa</translation>
+        <translation>Quando la finestra principale viene chiusa</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Esci</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>Send to background</source>
-        <translation type="unfinished">Invia in background</translation>
+        <translation>Manda in background</translation>
     </message>
     <message>
         <source>When the application starts</source>
-        <translation type="unfinished">Quando l&apos;applicazione si avvia</translation>
+        <translation>All’avvio dell’applicazione</translation>
     </message>
     <message>
         <source>Show the main window</source>
-        <translation type="unfinished">Mostra la finestra principale</translation>
+        <translation>Mostra la finestra principale</translation>
     </message>
     <message>
         <source>Run command on enter</source>
-        <translation type="unfinished">Esegui il comando alla pressione di Invio</translation>
+        <translation>Esegui un comando all’ingresso</translation>
     </message>
     <message>
         <source>Run command on exit</source>
-        <translation type="unfinished">Esegui comando all&apos;uscita</translation>
+        <translation>Esegui un comando all’uscita</translation>
     </message>
     <message>
         <source>Using a log level higher than Info may affect performance.</source>
-        <translation type="unfinished">L&apos;utilizzo di un livello di log superiore a Info potrebbe influire sulle prestazioni.</translation>
+        <translation>Un livello di log superiore a Info può ridurre le prestazioni.</translation>
     </message>
     <message>
         <source>Remove all settings</source>
-        <translation type="unfinished">Rimuovi tutte le impostazioni</translation>
+        <translation>Rimuovi tutte le impostazioni</translation>
+    </message>
+    <message>
+        <source>New versions</source>
+        <translation>Nuove versioni</translation>
+    </message>
+    <message>
+        <source>Check now</source>
+        <translation>Controlla ora</translation>
+    </message>
+    <message>
+        <source>Test builds have the newest fixes and features, and haven&apos;t been tried as much</source>
+        <translation>Le versioni di prova hanno le correzioni e le funzioni più recenti, e sono state provate meno</translation>
+    </message>
+    <message>
+        <source>Include test builds</source>
+        <translation>Includi le versioni di prova</translation>
+    </message>
+    <message>
+        <source>Start when I sign in, and reconnect</source>
+        <translation>Avvia all’accesso e riconnetti</translation>
+    </message>
+    <message>
+        <source>Starts in the background each time you sign in and, if it was running before, connects again</source>
+        <translation>Si avvia in background a ogni accesso e, se era in esecuzione, si ricollega</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialogButtonBox</name>
     <message>
         <source>Settings are read only</source>
-        <translation type="unfinished">Le impostazioni sono di sola lettura</translation>
+        <translation>Le impostazioni sono di sola lettura</translation>
     </message>
     <message>
         <source>%1 is not writable</source>
-        <translation type="unfinished">%1 non è scrivibile</translation>
+        <translation>%1 non è scrivibile</translation>
     </message>
     <message>
         <source>Close and save changes</source>
-        <translation type="unfinished">Chiudi e salva le modifiche</translation>
+        <translation>Chiudi e salva le modifiche</translation>
     </message>
     <message>
         <source>Close and forget changes</source>
-        <translation type="unfinished">Chiudi e dimentica le modifiche</translation>
+        <translation>Chiudi e scarta le modifiche</translation>
     </message>
     <message>
         <source>Reset to stored values</source>
-        <translation type="unfinished">Ripristina i valori memorizzati</translation>
+        <translation>Ripristina i valori salvati</translation>
     </message>
     <message>
         <source>Reset to default values</source>
-        <translation type="unfinished">Ripristina i valori predefiniti</translation>
+        <translation>Ripristina i valori predefiniti</translation>
     </message>
 </context>
 <context>
@@ -1453,12 +1595,28 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
         <translation>Aggiornamento disponibile</translation>
     </message>
     <message>
+        <source>Slow connection to %1</source>
+        <translation>Connessione lenta con %1</translation>
+    </message>
+    <message>
+        <source>Slow connections</source>
+        <translation>Connessioni lente</translation>
+    </message>
+    <message>
+        <source>%1: %2 ms there and back, which makes the mouse stutter</source>
+        <translation>%1: %2 ms andata e ritorno, per questo il mouse va a scatti</translation>
+    </message>
+    <message>
+        <source>A wired connection, or turning off Wi-Fi power saving, usually helps.</source>
+        <translation>Di solito aiuta una connessione via cavo, o disattivare il risparmio energetico del Wi-Fi.</translation>
+    </message>
+    <message>
         <source>%1 is connecting...</source>
         <translation>%1 è in connessione...</translation>
     </message>
     <message>
         <source>%1 is waiting %2 seconds before the next retry</source>
-        <translation type="unfinished">%1 attende %2 secondi prima del prossimo tentativo</translation>
+        <translation>%1 aspetta %2 secondi prima del prossimo tentativo</translation>
     </message>
     <message>
         <source>%1 Encryption Enabled</source>
@@ -1467,6 +1625,131 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     <message>
         <source>Encryption Disabled</source>
         <translation>Crittografia disabilitata</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDownload</name>
+    <message>
+        <source>The download was cancelled.</source>
+        <translation>Il download è stato annullato.</translation>
+    </message>
+    <message>
+        <source>The file is %1 bytes, but the release lists %2.</source>
+        <translation>Il file è di %1 byte, ma la versione ne indica %2.</translation>
+    </message>
+    <message>
+        <source>The file isn&apos;t the one the release lists: its SHA-256 doesn&apos;t match.</source>
+        <translation>Il file non è quello indicato dalla versione: il suo SHA-256 non corrisponde.</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>New version: %1 (&lt;a href=&quot;%2&quot;&gt;what&apos;s new&lt;/a&gt;)&lt;br&gt;Your version: %3</source>
+        <translation>Nuova versione: %1 (&lt;a href=&quot;%2&quot;&gt;novità&lt;/a&gt;)&lt;br&gt;La tua versione: %3</translation>
+    </message>
+    <message>
+        <source>%1 closes for a moment while the update installs, then starts again.</source>
+        <translation>%1 si chiude per un momento mentre l’aggiornamento si installa, poi si riavvia.</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Cerca aggiornamenti</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t check for updates: %1</source>
+        <translation>Impossibile cercare aggiornamenti: %1</translation>
+    </message>
+    <message>
+        <source>You have the newest version of %1, %2.</source>
+        <translation>Hai la versione più recente di %1, %2.</translation>
+    </message>
+    <message>
+        <source>Update available</source>
+        <translation>Aggiornamento disponibile</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available. Would you like to update?&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;È disponibile una nuova versione di %1. Vuoi aggiornare?&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Sempre</translation>
+    </message>
+    <message>
+        <source>Update now, and install new versions automatically from now on</source>
+        <translation>Aggiorna ora e installa automaticamente le nuove versioni da adesso in poi</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Sì</translation>
+    </message>
+    <message>
+        <source>Open the download page</source>
+        <translation>Apri la pagina di download</translation>
+    </message>
+    <message>
+        <source>Update this time</source>
+        <translation>Aggiorna questa volta</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>No</translation>
+    </message>
+    <message numerus="yes">
+        <source>Don&apos;t update this time. You&apos;ll be asked again in %n day(s).</source>
+        <translation>
+            <numerusform>Non aggiornare questa volta. Te lo chiederemo di nuovo tra %n giorno.</numerusform>
+            <numerusform>Non aggiornare questa volta. Te lo chiederemo di nuovo tra %n giorni.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Mai</translation>
+    </message>
+    <message>
+        <source>Don&apos;t update, and don&apos;t ask again. You can change this in Settings.</source>
+        <translation>Non aggiornare e non chiedere più. Puoi cambiarlo nelle impostazioni.</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;A new version of %1 is available.&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</source>
+        <translation>&lt;p&gt;È disponibile una nuova versione di %1.&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Open download page</source>
+        <translation>Apri la pagina di download</translation>
+    </message>
+    <message>
+        <source>Update now</source>
+        <translation>Aggiorna ora</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Non ora</translation>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation>Download di %1 %2...</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Updating %1</source>
+        <translation>Aggiornamento di %1</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Aggiornamento</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t install the update. %1</source>
+        <translation>Impossibile installare l’aggiornamento. %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download the update. %1</source>
+        <translation>Impossibile scaricare l’aggiornamento. %1</translation>
     </message>
 </context>
 <context>
@@ -1481,34 +1764,34 @@ L&apos;abilitazione di questa impostazione disabiliterà l&apos;interfaccia graf
     <name>validators::AliasValidator</name>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation type="unfinished">Il nome del computer non può contenere spazi</translation>
+        <translation>Il nome del computer non può contenere spazi</translation>
     </message>
     <message>
         <source>Aliases may not be ip addresses</source>
-        <translation type="unfinished">Gli alias non possono essere indirizzi IP</translation>
+        <translation>Gli alias non possono essere indirizzi IP</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation type="unfinished">Contiene caratteri non validi o è troppo lungo</translation>
+        <translation>Contiene caratteri non validi o è troppo lungo</translation>
     </message>
 </context>
 <context>
     <name>validators::ComputerLineNameValidator</name>
     <message>
         <source>Computer name cannot be empty</source>
-        <translation type="unfinished">Il nome del computer non può essere vuoto</translation>
+        <translation>Il nome del computer non può essere vuoto</translation>
     </message>
     <message>
         <source>Computer name cannot contain spaces</source>
-        <translation type="unfinished">Il nome del computer non può contenere spazi</translation>
+        <translation>Il nome del computer non può contenere spazi</translation>
     </message>
     <message>
         <source>Contains invalid characters or is too long</source>
-        <translation type="unfinished">Contiene caratteri non validi o è troppo lungo</translation>
+        <translation>Contiene caratteri non validi o è troppo lungo</translation>
     </message>
     <message>
         <source>A computer with this name already exists</source>
-        <translation type="unfinished">Esiste già un computer con questo nome</translation>
+        <translation>Esiste già un computer con questo nome</translation>
     </message>
 </context>
 </TS>

@@ -20,6 +20,7 @@
 #include "dialogs/ServerConfigDialog.h"
 #include "dialogs/SettingsDialog.h"
 
+#include "common/Discovery.h"
 #include "common/PlatformInfo.h"
 #include "common/Settings.h"
 #include "common/UrlConstants.h"
@@ -47,7 +48,11 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QScreen>
+#include <QSaveFile>
 #include <QScrollBar>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <QToolTip>
 
 #include <memory>
 
@@ -79,6 +84,7 @@ MainWindow::MainWindow()
       m_actionRestartCore{new QAction(this)},
       m_actionStopCore{new QAction(this)},
       m_actionShowHelp{new QAction(this)},
+      m_actionSaveLogs{new QAction(this)},
       m_networkMonitor{new NetworkMonitor(this)}
 {
   ui->setupUi(this);
@@ -257,6 +263,7 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::securityLevelChanged, m_statusBar, &StatusBar::setSecurityLevel);
 
   connect(m_actionAbout, &QAction::triggered, this, &MainWindow::openAboutDialog);
+  connect(m_actionSaveLogs, &QAction::triggered, this, &MainWindow::saveLogs);
   connect(m_actionMinimize, &QAction::triggered, this, &MainWindow::hide);
 
   connect(m_actionQuit, &QAction::triggered, this, &MainWindow::close);
@@ -279,6 +286,13 @@ void MainWindow::connectSlots()
   connect(&m_coreProcess, &CoreProcess::peerFingerprint, this, &MainWindow::handlePeerFingerprint);
   connect(&m_coreProcess, &CoreProcess::missingKeyboardLayouts, this, &MainWindow::handleMissingKeyboardLayouts);
   connect(&m_coreProcess, &CoreProcess::fileTransferStatus, this, &MainWindow::showFileTransferStatus);
+  connect(&m_coreProcess, &CoreProcess::connectionSpeed, this, [this](const QString &name, bool slow, int ms) {
+    if (slow)
+      m_slowConnections.insert(name, ms);
+    else
+      m_slowConnections.remove(name);
+    m_statusBar->setSlowConnections(m_slowConnections);
+  });
   connect(&m_coreProcess, &CoreProcess::computerShape, this, [this](const QString &name, const QList<QRect> &monitors) {
     // remember the client's real arrangement so the layout shows it, even once it has disconnected
     m_reportedShapes.insert(name, monitors);
@@ -299,6 +313,7 @@ void MainWindow::connectSlots()
 
   connect(ui->lineHostname, &QLineEdit::returnPressed, ui->btnRestartCore, &QPushButton::click);
   connect(ui->lineHostname, &QLineEdit::textChanged, this, &MainWindow::remoteHostChanged);
+  connect(ui->btnFindServers, &QToolButton::clicked, this, &MainWindow::findServers);
 
   connect(ui->btnSaveServerConfig, &QPushButton::clicked, this, &MainWindow::saveServerConfig);
   connect(ui->btnConfigureServer, &QPushButton::clicked, this, [this] { showConfigureServer(""); });
@@ -471,6 +486,103 @@ void MainWindow::openAboutDialog()
 {
   AboutDialog about(this);
   about.exec();
+}
+
+void MainWindow::findServers()
+{
+  using deskflow::discovery::Server;
+  ui->btnFindServers->setEnabled(false);
+  ui->btnFindServers->setText(tr("Looking..."));
+
+  const auto port = static_cast<quint16>(Settings::value(Settings::Core::Port).toInt());
+  auto *finder = new deskflow::discovery::Finder(this);
+  connect(finder, &deskflow::discovery::Finder::finished, this, [this, finder, port](const QList<Server> &servers) {
+    finder->deleteLater();
+    ui->btnFindServers->setEnabled(true);
+    ui->btnFindServers->setText(tr("Find..."));
+
+    const auto below = ui->btnFindServers->mapToGlobal(QPoint(0, ui->btnFindServers->height()));
+    if (servers.isEmpty()) {
+      QToolTip::showText(
+          below, tr("No %1 servers answered on this network. Check that the server is running.").arg(kDisplayName),
+          ui->btnFindServers
+      );
+      return;
+    }
+
+    QMenu menu(this);
+    for (const auto &server : servers) {
+      // the name, and the address in case the name can't be looked up
+      auto connectTo = QStringLiteral("%1, %2").arg(server.name, server.address.toString());
+      if (server.port != port)
+        connectTo = QStringLiteral("%1:%3, %2:%3").arg(server.name, server.address.toString()).arg(server.port);
+      const auto *action = menu.addAction(QStringLiteral("%1 (%2)").arg(server.name, server.address.toString()));
+      connect(action, &QAction::triggered, this, [this, connectTo] { ui->lineHostname->setText(connectTo); });
+    }
+    menu.exec(below);
+  });
+  finder->find(port);
+}
+
+void MainWindow::saveLogs()
+{
+  // the end of a long log is what's wanted
+  constexpr qint64 kMaxServiceLog = 4 * 1024 * 1024;
+
+  const auto suggested = QStringLiteral("%1/deskflow-plus-logs-%2.txt")
+                             .arg(
+                                 QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
+                                 QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd-HHmm"))
+                             );
+  const auto path =
+      QFileDialog::getSaveFileName(this, tr("Save Logs for a Bug Report"), suggested, tr("Text files (*.txt)"));
+  if (path.isEmpty())
+    return;
+
+  QString text;
+  QTextStream out(&text);
+  out << kDisplayName << " logs, saved " << QDateTime::currentDateTime().toString(Qt::ISODate) << "\n"
+      << "Version: " << kVersion << " (" << kVersionGitSha << "), based on Deskflow " << kUpstreamVersion << "\n"
+      << "Qt: " << qVersion() << "\n"
+      << "System: " << QSysInfo::prettyProductName() << "\n"
+      << "Mode: " << (ui->rbModeServer->isChecked() ? "server" : "client") << "\n"
+      << "Portable: " << (Settings::isPortableMode() ? "yes" : "no") << "\n"
+      << "Computer name: " << Settings::value(Settings::Core::ComputerName).toString() << "\n\n";
+
+  out << "== This app's log\n" << m_logDock->text() << "\n\n";
+
+  // in the background service's log on Windows, the core's own messages too
+  const auto serviceLog = Settings::value(Settings::Daemon::LogFile).toString();
+  if (QFile file(serviceLog); file.open(QIODevice::ReadOnly)) {
+    if (file.size() > kMaxServiceLog)
+      file.seek(file.size() - kMaxServiceLog);
+    out << "== The background service's log, " << QDir::toNativeSeparators(serviceLog) << "\n"
+        << QString::fromUtf8(file.readAll()) << "\n\n";
+  }
+
+  if (QFile file(Settings::settingsFile()); file.open(QIODevice::ReadOnly))
+    out << "== Settings, " << QDir::toNativeSeparators(Settings::settingsFile()) << "\n"
+        << QString::fromUtf8(file.readAll()) << "\n";
+
+  QSaveFile file(path);
+  if (!file.open(QIODevice::WriteOnly) || file.write(text.toUtf8()) < 0 || !file.commit()) {
+    QMessageBox::warning(this, tr("Save Logs"), tr("Couldn't save the logs: %1").arg(file.errorString()));
+    return;
+  }
+
+  QMessageBox message(this);
+  message.setIcon(QMessageBox::Information);
+  message.setWindowTitle(tr("Save Logs"));
+  message.setText(tr("The logs are saved in %1.").arg(QDir::toNativeSeparators(path)));
+  message.setInformativeText(
+      tr("They include this computer's name and settings, and the names and addresses of the computers it "
+         "connects to. Attach the file to your bug report.")
+  );
+  const auto *show = message.addButton(tr("Show in Folder"), QMessageBox::ActionRole);
+  message.addButton(QMessageBox::Ok);
+  message.exec();
+  if (message.clickedButton() == show)
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(path).absolutePath()));
 }
 
 void MainWindow::openSettings()
@@ -673,6 +785,7 @@ void MainWindow::createMenuBar()
 
   m_menuHelp->addAction(m_actionAbout);
   m_menuHelp->addAction(m_actionShowHelp);
+  m_menuHelp->addAction(m_actionSaveLogs);
 
   auto menuBar = new QMenuBar(this);
   menuBar->addMenu(m_menuFile);
@@ -951,6 +1064,10 @@ void MainWindow::coreProcessStateChanged(ProcessState state)
 {
   using enum ProcessState;
   updateStatus();
+  if (state != Started && !m_slowConnections.isEmpty()) {
+    m_slowConnections.clear();
+    m_statusBar->setSlowConnections(m_slowConnections);
+  }
   if (state == Started) {
     qDebug() << "recording that core has started";
     Settings::setValue(Settings::Gui::AutoStartCore, true);
@@ -1070,6 +1187,7 @@ void MainWindow::updateText()
   m_actionAbout->setText(tr("About %1...").arg(kDisplayName));
 
   m_actionShowHelp->setText(tr("View &Help"));
+  m_actionSaveLogs->setText(tr("Save &Logs for a Bug Report..."));
 
   //: start / restart core shortcut
   m_actionStartCore->setShortcut(QKeySequence(tr("Ctrl+S")));

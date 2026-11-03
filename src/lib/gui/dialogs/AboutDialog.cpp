@@ -29,7 +29,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent), ui{std::make_unique
   ui->btnCopyVersion->setIcon(QIcon::fromTheme(QIcon::ThemeIcon::EditCopy));
   connect(ui->btnCopyVersion, &QPushButton::clicked, this, &AboutDialog::copyVersionText);
 
-  ui->lblVersion->setText(kDisplayVersion);
+  ui->lblVersion->setText(tr("%1, based on Deskflow %2").arg(kDisplayVersion, kUpstreamVersion));
   ui->lblDescription->setText(kAppDescription);
   ui->lblCopyright->setText(kCopyright);
 
@@ -49,8 +49,9 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent), ui{std::make_unique
 
 void AboutDialog::copyVersionText() const
 {
-  QString infoString = QStringLiteral("%1: %2 (%3)\nQt: %4\nSystem: %5")
-                           .arg(kDisplayName, kVersion, kVersionGitSha, qVersion(), QSysInfo::prettyProductName());
+  QString infoString = QStringLiteral("%1: %2 (%3)\nBased on Deskflow: %4\nQt: %5\nSystem: %6")
+                           .arg(kDisplayName, kVersion, kVersionGitSha, kUpstreamVersion, qVersion())
+                           .arg(QSysInfo::prettyProductName());
   if (Settings::isPortableMode()) {
     infoString.append(QStringLiteral("\nPortable Mode"));
   }

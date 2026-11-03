@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <QMap>
 #include <QStatusBar>
 
 #include "common/Enums.h"
@@ -31,6 +32,8 @@ public:
   void setSecurityLevel(const QString &securityLevel);
   void setBtnFingerprintVisible(bool visible);
   void updateFound(const QString &version);
+  //! Warns that the connections to these computers are slow, with how long a round trip takes; empty hides it
+  void setSlowConnections(const QMap<QString, int> &computers);
 
 Q_SIGNALS:
   void requestShowMyFingerprints();
@@ -46,6 +49,8 @@ private:
   QLabel *m_lblSecurityIcon = nullptr;
   QLabel *m_lblStatus = nullptr;
   QPushButton *m_btnUpdate = nullptr;
+  QLabel *m_lblSlowConnection = nullptr;
+  QMap<QString, int> m_slowConnections;
   bool m_encrypted = false;
   QString m_securityLevel;
   int m_connectionInterval = -1;

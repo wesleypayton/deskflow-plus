@@ -49,6 +49,9 @@ private:
   void resetAllSettings();
   void updateText();
   void checkForUpdates();
+  QString systemLanguageText() const;
+  //! The language chosen, or empty to follow the system's
+  QString selectedLanguage() const;
 
   /// @brief Load all settings.
   void loadFromConfig();

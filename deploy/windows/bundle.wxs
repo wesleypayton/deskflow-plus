@@ -5,6 +5,10 @@
 
   The setup .exe: installs the Visual C++ runtime if it's missing or too old,
   then the Deskflow Plus MSI. Built by make-release.ps1.
+
+  The test builds, numbered 1.27.0.x, had the upgrade code {3B8E5C71-2A4F-4D96-B0E3-7C1F9A6D2E45}.
+  Setup won't install over a higher number of itself, so 1.0 has a new one, and the MSI removes
+  the test build's entry in Apps (RemoveTestBuilds in wix-custom.cpp).
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
      xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal"
@@ -13,7 +17,7 @@
       Name="Deskflow Plus"
       Version="$(Version)"
       Manufacturer="Deskflow Plus"
-      UpgradeCode="{3B8E5C71-2A4F-4D96-B0E3-7C1F9A6D2E45}"
+      UpgradeCode="{619DCDB8-F494-46F7-B6CD-AD6D38B512D3}"
       IconSourceFile="$(Icon)">
 
     <BootstrapperApplication>
@@ -27,7 +31,8 @@
           ShowVersion="yes" />
     </BootstrapperApplication>
 
-    <Variable Name="LaunchAfterSetup" Type="numeric" Value="1" />
+    <!-- the background service installs updates with LaunchAfterSetup=0, and starts the app itself -->
+    <Variable Name="LaunchAfterSetup" Type="numeric" Value="1" bal:Overridable="yes" />
 
     <!-- the MSI needs at least this runtime, see wix-custom.cpp -->
     <util:RegistrySearch

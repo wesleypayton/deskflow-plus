@@ -13,9 +13,9 @@
 
 #include "common/I18N.h"
 #include "common/Settings.h"
+#include "common/UpdateRelease.h"
 #include "gui/LoginStartup.h"
 #include "gui/TlsUtility.h"
-#include "gui/UpdateRelease.h"
 #include "gui/core/NetworkMonitor.h"
 #include "gui/widgets/SettingsDialogButtonBox.h"
 
@@ -25,6 +25,7 @@
 #include <QMessageBox>
 
 using namespace deskflow::gui;
+namespace updates = deskflow::updates;
 
 namespace {
 
@@ -53,14 +54,20 @@ SettingsDialog::SettingsDialog(QWidget *parent, const ServerConfig &serverConfig
 
   // set up the language combo
   I18N::reDetectLanguages();
+  // first, following the system's language, which isn't one of the languages it detects
+  ui->comboLanguage->addItem(systemLanguageText());
   ui->comboLanguage->addItems(I18N::detectedLanguages());
-  ui->comboLanguage->setCurrentText(I18N::toNativeName(I18N::currentLanguage()));
+  if (Settings::value(Settings::Core::Language).toString().isEmpty())
+    ui->comboLanguage->setCurrentIndex(0);
+  else
+    ui->comboLanguage->setCurrentText(I18N::toNativeName(I18N::currentLanguage()));
 
   updateText();
 
   ui->lblUpdates->setVisible(updates::isSupported());
   ui->comboUpdates->setVisible(updates::isSupported());
   ui->btnCheckUpdates->setVisible(updates::isSupported());
+  ui->cbUpdateTestBuilds->setVisible(updates::isSupported());
 
   ui->btnClearAllSettings->setIcon(QIcon::fromTheme(QStringLiteral("edit-clear-all")));
 
@@ -129,9 +136,8 @@ void SettingsDialog::initConnections() const
   connect(ui->btnBrowseLog, &QPushButton::clicked, this, &SettingsDialog::browseLogPath);
   connect(ui->groupLogToFile, &QGroupBox::toggled, this, &SettingsDialog::setLogToFile);
   connect(ui->comboLogLevel, &QComboBox::currentIndexChanged, this, &SettingsDialog::logLevelChanged);
-  connect(ui->comboLanguage, &QComboBox::currentTextChanged, this, [](const QString &lang) {
-    const auto shortName = I18N::nativeTo639Name(lang);
-    I18N::setLanguage(shortName);
+  connect(ui->comboLanguage, &QComboBox::currentIndexChanged, this, [this](int index) {
+    I18N::setLanguage(index == 0 ? QString() : I18N::nativeTo639Name(ui->comboLanguage->itemText(index)));
   });
 
   // Connect modifiable controls
@@ -146,6 +152,7 @@ void SettingsDialog::initConnections() const
   connect(ui->rbCloseToTray, &QRadioButton::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->cbElevateDaemon, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->comboUpdates, &QComboBox::currentIndexChanged, this, &SettingsDialog::setButtonBoxEnabledButtons);
+  connect(ui->cbUpdateTestBuilds, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->btnCheckUpdates, &QPushButton::clicked, this, &SettingsDialog::checkForUpdates);
   connect(ui->cbGuiDebug, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
   connect(ui->cbShowVersion, &QCheckBox::toggled, this, &SettingsDialog::setButtonBoxEnabledButtons);
@@ -235,11 +242,13 @@ void SettingsDialog::updateText()
     }
   }
 
+  if (ui->comboLanguage->count() > 0)
+    ui->comboLanguage->setItemText(0, systemLanguageText());
+
   using updates::Mode;
   const QList<std::tuple<Mode, QString, QString>> updateModes = {
       {Mode::Ask, tr("Ask me"), tr("Ask when there's a new version")},
-      {Mode::Always, tr("Install automatically"),
-       tr("Install new versions when they're found. Windows still asks for permission.")},
+      {Mode::Always, tr("Install automatically"), tr("Install new versions as soon as they're found")},
       {Mode::Never, tr("Don't check"), tr("Don't look for new versions")}
   };
   for (const auto &[mode, text, toolTip] : updateModes) {
@@ -255,6 +264,17 @@ void SettingsDialog::updateText()
     ui->comboUpdates->setItemText(index, text);
     ui->comboUpdates->setItemData(index, toolTip, Qt::ToolTipRole);
   }
+}
+
+QString SettingsDialog::systemLanguageText() const
+{
+  return deskflow::platform::isWindows() ? tr("Same as Windows") : tr("Same as the system");
+}
+
+QString SettingsDialog::selectedLanguage() const
+{
+  // empty follows the system's language
+  return ui->comboLanguage->currentIndex() == 0 ? QString() : I18N::nativeTo639Name(ui->comboLanguage->currentText());
 }
 
 void SettingsDialog::checkForUpdates()
@@ -279,8 +299,10 @@ void SettingsDialog::accept()
   Settings::setValue(Settings::Log::File, ui->lineLogFilename->text());
   Settings::setValue(Settings::Daemon::Elevate, ui->cbElevateDaemon->isChecked());
   Settings::setValue(Settings::Gui::Autohide, ui->rbAutoHide->isChecked());
-  if (updates::isSupported())
+  if (updates::isSupported()) {
     Settings::setValue(Settings::Gui::UpdateMode, ui->comboUpdates->currentData());
+    Settings::setValue(Settings::Gui::UpdateTestBuilds, ui->cbUpdateTestBuilds->isChecked());
+  }
   Settings::setValue(Settings::Core::PreventSleep, ui->cbPreventSleep->isChecked());
   Settings::setValue(Settings::Security::Certificate, ui->lineTlsCertPath->text());
   Settings::setValue(Settings::Security::KeySize, ui->comboTlsKeyLength->currentText().toInt());
@@ -288,7 +310,7 @@ void SettingsDialog::accept()
   Settings::setValue(Settings::Gui::CloseToTray, ui->rbCloseToTray->isChecked());
   Settings::setValue(Settings::Gui::SymbolicTrayIcon, ui->rbIconMono->isChecked());
   Settings::setValue(Settings::Security::CheckPeers, ui->cbRequireClientCert->isChecked());
-  Settings::setValue(Settings::Core::Language, I18N::nativeTo639Name(ui->comboLanguage->currentText()));
+  Settings::setValue(Settings::Core::Language, selectedLanguage());
   Settings::setValue(Settings::Log::GuiDebug, ui->cbGuiDebug->isChecked());
   Settings::setValue(Settings::Gui::ShowVersionInTitle, ui->cbShowVersion->isChecked());
   if (loginStartup::isSupported()) {
@@ -321,6 +343,7 @@ void SettingsDialog::loadFromConfig()
   ui->cbPreventSleep->setChecked(Settings::value(Settings::Core::PreventSleep).toBool());
   ui->cbElevateDaemon->setChecked(Settings::value(Settings::Daemon::Elevate).toBool());
   ui->comboUpdates->setCurrentIndex(ui->comboUpdates->findData(updateModeSetting(Settings::value)));
+  ui->cbUpdateTestBuilds->setChecked(Settings::value(Settings::Gui::UpdateTestBuilds).toBool());
   ui->cbGuiDebug->setChecked(Settings::value(Settings::Log::GuiDebug).toBool());
   ui->cbShowVersion->setChecked(Settings::value(Settings::Gui::ShowVersionInTitle).toBool());
   ui->cbStartOnLogin->setChecked(Settings::value(Settings::Gui::StartOnLogin).toBool());
@@ -441,6 +464,7 @@ void SettingsDialog::updateControls()
   ui->rbShowOnStart->setEnabled(writable);
   ui->btnClearAllSettings->setEnabled(writable);
   ui->comboUpdates->setEnabled(writable);
+  ui->cbUpdateTestBuilds->setEnabled(writable);
   ui->cbPreventSleep->setEnabled(writable);
   ui->lineTlsCertPath->setEnabled(writable);
   ui->comboTlsKeyLength->setEnabled(writable);
@@ -492,6 +516,7 @@ bool SettingsDialog::isModified() const
       (ui->rbCloseToTray->isChecked() != Settings::value(Settings::Gui::CloseToTray).toBool()) ||
       (ui->cbElevateDaemon->isChecked() != Settings::value(Settings::Daemon::Elevate).toBool()) ||
       (ui->comboUpdates->currentData() != updateModeSetting(Settings::value)) ||
+      (ui->cbUpdateTestBuilds->isChecked() != Settings::value(Settings::Gui::UpdateTestBuilds).toBool()) ||
       (ui->cbGuiDebug->isChecked() != Settings::value(Settings::Log::GuiDebug).toBool()) ||
       (ui->cbShowVersion->isChecked() != Settings::value(Settings::Gui::ShowVersionInTitle).toBool()) ||
       (ui->cbStartOnLogin->isChecked() != Settings::value(Settings::Gui::StartOnLogin).toBool()) ||
@@ -505,7 +530,7 @@ bool SettingsDialog::isModified() const
       (ui->cbRunExitCommand->isChecked() != Settings::value(Settings::Core::EnableExitCommand).toBool()) ||
       (ui->lineCommandEnter->text() != Settings::value(Settings::Core::ComputerEnterCommand).toString()) ||
       (ui->lineCommandExit->text() != Settings::value(Settings::Core::ComputerExitCommand).toString()) ||
-      (I18N::nativeTo639Name(ui->comboLanguage->currentText()) != Settings::value(Settings::Core::Language).toString());
+      (selectedLanguage() != Settings::value(Settings::Core::Language).toString());
 
   if (!ignoreInterface)
     modified = modified || ui->comboInterface->currentText() != Settings::value(Settings::Core::Interface).toString();
@@ -528,6 +553,7 @@ bool SettingsDialog::isDefault() const
       (ui->rbCloseToTray->isChecked() == Settings::defaultValue(Settings::Gui::CloseToTray).toBool()) &&
       (ui->cbElevateDaemon->isChecked() == Settings::defaultValue(Settings::Daemon::Elevate).toBool()) &&
       (ui->comboUpdates->currentData() == updateModeSetting(Settings::defaultValue)) &&
+      (ui->cbUpdateTestBuilds->isChecked() == Settings::defaultValue(Settings::Gui::UpdateTestBuilds).toBool()) &&
       (ui->cbGuiDebug->isChecked() == Settings::defaultValue(Settings::Log::GuiDebug).toBool()) &&
       (ui->cbShowVersion->isChecked() == Settings::defaultValue(Settings::Gui::ShowVersionInTitle).toBool()) &&
       (ui->cbStartOnLogin->isChecked() == Settings::defaultValue(Settings::Gui::StartOnLogin).toBool()) &&
@@ -542,12 +568,13 @@ bool SettingsDialog::isDefault() const
       (ui->lineCommandExit->text() == Settings::defaultValue(Settings::Core::ComputerExitCommand).toString()) &&
       (ui->cbRunEnterCommand->isChecked() == Settings::defaultValue(Settings::Core::EnableEnterCommand).toBool()) &&
       (ui->cbRunExitCommand->isChecked() == Settings::defaultValue(Settings::Core::EnableExitCommand).toBool()) &&
-      (ui->comboLanguage->currentText() == "English")
+      (ui->comboLanguage->currentIndex() == 0)
   );
 }
 
 void SettingsDialog::resetToDefault()
 {
+  ui->comboLanguage->setCurrentIndex(0);
   ui->sbPort->setValue(Settings::defaultValue(Settings::Core::Port).toInt());
   ui->comboLogLevel->setCurrentIndex(
       static_cast<int>(LogLevel::fromOption(Settings::defaultValue(Settings::Log::Level).toString()))
@@ -557,6 +584,7 @@ void SettingsDialog::resetToDefault()
   ui->cbPreventSleep->setChecked(Settings::defaultValue(Settings::Core::PreventSleep).toBool());
   ui->cbElevateDaemon->setChecked(Settings::defaultValue(Settings::Daemon::Elevate).toBool());
   ui->comboUpdates->setCurrentIndex(ui->comboUpdates->findData(updateModeSetting(Settings::defaultValue)));
+  ui->cbUpdateTestBuilds->setChecked(Settings::defaultValue(Settings::Gui::UpdateTestBuilds).toBool());
   ui->cbGuiDebug->setChecked(Settings::defaultValue(Settings::Log::GuiDebug).toBool());
   ui->cbShowVersion->setChecked(Settings::defaultValue(Settings::Gui::ShowVersionInTitle).toBool());
   ui->cbStartOnLogin->setChecked(Settings::defaultValue(Settings::Gui::StartOnLogin).toBool());
