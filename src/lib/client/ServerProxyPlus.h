@@ -8,6 +8,9 @@
 
 #include "client/ServerProxy1_8.h"
 
+#include <chrono>
+#include <optional>
+
 //! Proxy for a protocol 1.8 server, with the Deskflow Plus features once the server says it has them
 class ServerProxyPlus : public ServerProxy1_8
 {
@@ -40,5 +43,11 @@ protected:
   ConnectionResult parseMessage(const uint8_t *code) override;
 
 private:
+  void noteKeepAlive();
+
   uint32_t m_features = 0;
+
+  // keep alives are only expected each second once two have come within kQuickKeepAliveGap, see noteKeepAlive()
+  std::optional<std::chrono::steady_clock::time_point> m_lastKeepAlive;
+  bool m_quickKeepAlives = false;
 };

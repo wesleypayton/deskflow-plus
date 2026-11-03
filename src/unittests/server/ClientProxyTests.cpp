@@ -14,7 +14,10 @@
 #include "server/ClientProxy1_6.h"
 #include "server/ClientProxy1_7.h"
 #include "server/ClientProxy1_8.h"
+#include "server/ClientProxyPlus.h"
 
+#include <algorithm>
+#include <cstring>
 #include <memory>
 #include <string>
 #include <vector>
@@ -62,9 +65,18 @@ public:
   {
   }
 
-  uint32_t read(void *, uint32_t) override
+  void feed(const QByteArray &bytes)
   {
-    return 0;
+    m_input.append(bytes);
+  }
+
+  uint32_t read(void *buffer, uint32_t n) override
+  {
+    const auto count = std::min<qsizetype>(n, m_input.size());
+    if (buffer != nullptr)
+      std::memcpy(buffer, m_input.constData(), count);
+    m_input.remove(0, count);
+    return static_cast<uint32_t>(count);
   }
 
   void flush() override
@@ -96,6 +108,48 @@ public:
 
 private:
   QByteArray m_buffer;
+  QByteArray m_input;
+};
+
+// records the timers made, by how long they wait
+class TimerQueue : public MockEventQueue
+{
+public:
+  EventQueueTimer *newTimer(double duration, void *) override
+  {
+    repeating.push_back(duration);
+    return nextTimer();
+  }
+
+  EventQueueTimer *newOneShotTimer(double duration, void *) override
+  {
+    oneShot.push_back(duration);
+    return nextTimer();
+  }
+
+  std::vector<double> repeating;
+  std::vector<double> oneShot;
+
+private:
+  EventQueueTimer *nextTimer()
+  {
+    return reinterpret_cast<EventQueueTimer *>(++m_next);
+  }
+
+  uintptr_t m_next = 0x1000;
+};
+
+class PlusProxy : public ClientProxyPlus
+{
+public:
+  using ClientProxyPlus::ClientProxyPlus;
+  using ClientProxyPlus::parseMessage;
+
+  //! what the handshake does once the client's info arrives
+  void startKeepAlives()
+  {
+    addHeartbeatTimer();
+  }
 };
 
 std::unique_ptr<ClientProxy> makeProxy(int minor, deskflow::IStream *stream, IEventQueue *events)
@@ -146,6 +200,23 @@ const int32_t kCount = 3;
 const std::string kLang = "en";
 
 } // namespace
+
+void ClientProxyTests::plusKeepAlives_quickOnceAgreed()
+{
+  TimerQueue events;
+  auto *stream = new CapturingStream;
+  PlusProxy proxy("client", stream, reinterpret_cast<Server *>(0x1), &events);
+  proxy.startKeepAlives();
+  QCOMPARE(events.repeating.back(), kKeepAliveRate);
+
+  // the client says it's Deskflow Plus, with every feature
+  stream->feed(QByteArray::fromHex("0000001f"));
+  QVERIFY(proxy.parseMessage(reinterpret_cast<const uint8_t *>("DPLS")));
+
+  // the keep alives go every second from now on, not only once something else restarts them
+  QCOMPARE(events.repeating.back(), deskflow::plus::kPlusKeepAliveRate);
+  QCOMPARE(events.oneShot.back(), deskflow::plus::kPlusKeepAliveRate * kKeepAlivesUntilDeath);
+}
 
 void ClientProxyTests::initTestCase()
 {
