@@ -48,6 +48,7 @@ platformHooks(std::function<void(const TransferMessage &)> send, std::shared_ptr
     }
 
     state->receivedClipboardFiles = items;
+    state->receivedClipboardAt = std::chrono::steady_clock::now();
     if (platform::putFilesOnClipboard(items))
       LOG_INFO("received %d copied items, ready to paste", static_cast<int>(items.size()));
   };
@@ -73,13 +74,24 @@ platformHooks(std::function<void(const TransferMessage &)> send, std::shared_ptr
   return hooks;
 }
 
-void offerClipboardFiles(TransferAgent &agent, const LocalTransferState &state)
+void offerClipboardFiles(TransferAgent &agent, LocalTransferState &state, bool onlyIfNew)
 {
   const auto files = platform::filesOnClipboard();
   if (files.empty()) {
+    if (onlyIfNew && state.lastOfferedClipboardFiles.empty())
+      return;
+    LOG_DEBUG("no copied files to offer");
+    state.lastOfferedClipboardFiles.clear();
     agent.withdraw(TransferKind::Clipboard);
+  } else if (onlyIfNew && files == state.lastOfferedClipboardFiles) {
+    // the same files as before, and the cursor may well be passing the edge again and again
+    return;
   } else if (files != state.receivedClipboardFiles) {
+    LOG_DEBUG("offering %d copied items", static_cast<int>(files.size()));
+    state.lastOfferedClipboardFiles = files;
     agent.offer(TransferKind::Clipboard, files);
+  } else {
+    LOG_DEBUG("the copied files are the ones just received, not offering them");
   }
 }
 

@@ -218,4 +218,10 @@ void IpcClient::sendMessage(const QString &message)
   qDebug().noquote() << QStringLiteral("%1 ipc client sent message: %2").arg(m_typeName, message);
 }
 
+void IpcClient::waitUntilSent(int ms)
+{
+  if (m_state == State::Connected && m_socket->bytesToWrite() > 0)
+    m_socket->waitForBytesWritten(ms);
+}
+
 } // namespace deskflow::gui::ipc

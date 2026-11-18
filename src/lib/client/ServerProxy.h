@@ -12,6 +12,7 @@
 #include "deskflow/ClipboardChunk.h"
 #include "deskflow/ClipboardTypes.h"
 #include "deskflow/KeyTypes.h"
+#include "deskflow/MouseLagMeter.h"
 
 class Client;
 class ClientInfo;
@@ -141,6 +142,11 @@ private:
   int32_t m_dyMouse = 0;
 
   bool m_ignoreMouse = false;
+
+  // says in the log when the cursor stutters, and whether the moves came late or were slow to apply
+  deskflow::MouseLagMeter m_mouseLag;
+  void moveCursor(bool relative, int32_t x, int32_t y);
+  void reportMouseLag();
 
   KeyModifierID m_modifierTranslationTable[kKeyModifierIDLast];
 

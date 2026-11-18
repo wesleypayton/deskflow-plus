@@ -19,6 +19,7 @@ private Q_SLOTS:
   void dragOntoAnotherSpringsBack();
   void reportedMonitorsGrowAwayFromServer();
   void reportedMonitorsIgnoredForServerAndUnknown();
+  void localMonitorComesBack();
 
 private:
   inline static const QString m_settingsPath = QStringLiteral("tmp/layout");

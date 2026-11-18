@@ -170,7 +170,7 @@ void ServerConfig::ensureLayout()
   // the server's own monitors are always known, the clients' are kept from when they were last seen
   for (auto &computer : computers()) {
     if (!computer.isNull() && computer.isServer() && !local.isEmpty())
-      computer.setMonitors(local);
+      applyMonitors(computer, local);
   }
 
   for (auto &computer : computers()) {
@@ -301,36 +301,86 @@ bool ServerConfig::updateComputerMonitors(const QString &computerName, const QLi
     if (computer.isNull() || computer.isServer() || computer.name() != computerName)
       continue;
 
-    Computer updated(computer);
-    updated.setMonitors(monitors);
-    if (updated == computer)
-      return false;
-
-    // grow or shrink away from the neighbours: keep each corner in turn and take the first that fits
-    QList<QRectF> others;
-    for (const auto &other : std::as_const(m_computers)) {
-      if (&other != &computer && !other.isNull() && other.hasLayout())
-        others.append(QRectF(other.layoutRect()));
-    }
-    const auto old = computer.layoutRect();
-    const auto size = updated.layoutRect().size();
-    const std::array corners = {
-        old.topLeft(), QPoint(old.x() + old.width() - size.width(), old.y()),
-        QPoint(old.x(), old.y() + old.height() - size.height()),
-        QPoint(old.x() + old.width() - size.width(), old.y() + old.height() - size.height())
-    };
-    for (const auto &corner : corners) {
-      if (!deskflow::gui::layout::overlapsAny(QRectF(QRect(corner, size)), others)) {
-        updated.moveLayoutTo(corner);
-        break;
-      }
-    }
-
-    computer = updated;
-    m_computers.placeInLayout(computer);
-    return true;
+    return applyMonitors(computer, monitors);
   }
   return false;
+}
+
+bool ServerConfig::updateLocalMonitors()
+{
+  return updateLocalMonitors(deskflow::gui::localMonitors());
+}
+
+bool ServerConfig::updateLocalMonitors(const QList<QRect> &monitors)
+{
+  if (monitors.isEmpty())
+    return false;
+
+  for (auto &computer : computers()) {
+    if (!computer.isNull() && computer.isServer())
+      return applyMonitors(computer, monitors);
+  }
+  return false;
+}
+
+bool ServerConfig::applyMonitors(Computer &computer, const QList<QRect> &monitors)
+{
+  // an unseen computer's single stand-in monitor isn't a real one to line up with
+  const auto before = computer.hasMonitors() ? computer.monitors() : QList<QRect>();
+
+  Computer updated(computer);
+  updated.setMonitors(monitors);
+  if (updated == computer)
+    return false;
+
+  QList<QRectF> others;
+  for (const auto &other : std::as_const(m_computers)) {
+    if (&other != &computer && !other.isNull() && other.hasLayout())
+      others.append(QRectF(other.layoutRect()));
+  }
+  const auto old = computer.layoutRect();
+  const auto size = updated.layoutRect().size();
+
+  QList<QPoint> positions;
+
+  // first choice: the monitors that are still there stay where they are, so one that comes and goes
+  // (asleep at sign-in, unplugged for a while) leaves the layout as it was once it's back
+  const auto after = updated.monitors();
+  qsizetype mostKept = 0;
+  QPoint keptOffset;
+  for (const auto &was : before) {
+    for (const auto &now : after) {
+      if (was.size() != now.size())
+        continue;
+      const auto offset = was.topLeft() - now.topLeft();
+      const auto kept = std::ranges::count_if(after, [&before, &offset](const QRect &monitor) {
+        return before.contains(monitor.translated(offset));
+      });
+      if (kept > mostKept) {
+        mostKept = kept;
+        keptOffset = offset;
+      }
+    }
+  }
+  if (mostKept > 0)
+    positions.append(old.topLeft() + keptOffset);
+
+  // otherwise grow or shrink away from the neighbours: keep each corner in turn and take the first that fits
+  positions.append(old.topLeft());
+  positions.append(QPoint(old.x() + old.width() - size.width(), old.y()));
+  positions.append(QPoint(old.x(), old.y() + old.height() - size.height()));
+  positions.append(QPoint(old.x() + old.width() - size.width(), old.y() + old.height() - size.height()));
+
+  for (const auto &position : std::as_const(positions)) {
+    if (!deskflow::gui::layout::overlapsAny(QRectF(QRect(position, size)), others)) {
+      updated.moveLayoutTo(position);
+      break;
+    }
+  }
+
+  computer = updated;
+  m_computers.placeInLayout(computer);
+  return true;
 }
 
 void ServerConfig::setConfigFile(const QString &configFile) const

@@ -22,6 +22,12 @@ struct LocalTransferState
   //! files received for the clipboard, so putting them there isn't mistaken for the user copying them
   std::vector<std::filesystem::path> receivedClipboardFiles;
 
+  //! the copied files last offered to the server, to offer new ones only; see offerClipboardFiles()
+  std::vector<std::filesystem::path> lastOfferedClipboardFiles;
+
+  //! when they were put on the clipboard, so the clipboard the server sends right after doesn't wipe them
+  std::chrono::steady_clock::time_point receivedClipboardAt;
+
   //! the incoming drag lands in a folder the user can't see, so show it when done
   bool revealDrop = false;
 
@@ -42,7 +48,11 @@ TransferAgent::Hooks
 platformHooks(std::function<void(const TransferMessage &)> send, std::shared_ptr<LocalTransferState> state);
 
 //! Offer the files on the clipboard, or withdraw the offer if it now holds something else
-void offerClipboardFiles(TransferAgent &agent, const LocalTransferState &state);
+/*!
+With \p onlyIfNew nothing is sent unless the files differ from the ones last offered, for checking
+the clipboard without being told it changed, as the cursor leaves the server.
+*/
+void offerClipboardFiles(TransferAgent &agent, LocalTransferState &state, bool onlyIfNew = false);
 
 //! Look for a file drag under the cursor, or stop looking
 /*!

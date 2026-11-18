@@ -13,6 +13,7 @@
 #include <QProcess>
 #include <QRegularExpression>
 #include <QSystemTrayIcon>
+#include <QTimer>
 #include <QUrl>
 
 #include "Updater.h"
@@ -132,6 +133,8 @@ private:
   void updateComputerName();
   void saveSettings() const;
   void applyReportedShapes();
+  //! Read this computer's monitors again, and pass any change on to the running server
+  void refreshLocalMonitors();
   void showFileTransferStatus(
       const QString &phase, bool incoming, bool dragged, qulonglong done, qulonglong total, const QString &detail
   );
@@ -176,6 +179,8 @@ private:
   Updater m_updater{this};
   bool m_secureSocket = false;
   bool m_saveOnExit = true;
+  // Quit was chosen from a menu, rather than the window being closed by signing out or an update
+  bool m_quitRequested = false;
   bool m_clientErrorVisible = false;
   ServerConfig m_serverConfig;
   // clients the server's connection to is slow, and how many milliseconds a round trip takes
@@ -183,6 +188,8 @@ private:
 
   // the latest monitors each client reported, re-applied after the server settings are saved
   QMap<QString, QList<QRect>> m_reportedShapes;
+  // a display change arrives as a burst of signals, so wait for it to settle before reading the monitors
+  QTimer *m_monitorsTimer = nullptr;
   deskflow::gui::CoreProcess m_coreProcess;
   QSet<QString> m_ignoredClients;
   bool m_newClientPromptShowing = false;

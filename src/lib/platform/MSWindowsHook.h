@@ -67,6 +67,9 @@ public:
   //! Copy the hook's physical key state; false until it has observed an event.
   static bool getPhysicalKeyState(BYTE keys[kVirtualKeyCount]);
 
+  //! The longest, in milliseconds, a relayed mouse move waited to reach the hook since this was last called
+  static uint32_t takeLateMoveMs();
+
   static EHookResult install();
 
   static int uninstall();

@@ -114,6 +114,15 @@ void DaemonApp::clearWatchdogCommand()
 #endif
 }
 
+void DaemonApp::pauseWatchdogCommand()
+{
+  // the app was quit: stop the core, but keep the config path so the core starts again with the computer
+  LOG_INFO("the app was quit, stopping the core until the app or the computer next starts");
+#if defined(Q_OS_WIN)
+  m_pWatchdog->setProcessConfig("", false);
+#endif
+}
+
 void DaemonApp::clearSettings()
 {
   LOG_INFO("clearing daemon settings");
@@ -135,6 +144,10 @@ void DaemonApp::connectIpcServer(const ipc::DaemonIpcServer *ipcServer) const
   );
   connect(
       ipcServer, &ipc::DaemonIpcServer::stopProcessRequested, this, &DaemonApp::clearWatchdogCommand,
+      Qt::DirectConnection
+  );
+  connect(
+      ipcServer, &ipc::DaemonIpcServer::pauseProcessRequested, this, &DaemonApp::pauseWatchdogCommand,
       Qt::DirectConnection
   );
   connect(

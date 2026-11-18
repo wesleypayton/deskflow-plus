@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "deskflow/MouseLagMeter.h"
 #include "deskflow/PlatformComputer.h"
 #include "platform/MSWindowsHook.h"
 #include "platform/MSWindowsPowerManager.h"
@@ -276,6 +277,10 @@ private:
 
   // each monitor, in the same coordinates as the shape
   deskflow::MonitorList m_monitors;
+
+  // says in the log when this computer is late passing its mouse's moves to another computer
+  deskflow::MouseLagMeter m_mouseLag;
+  void noteMouseMoveWait(const MSG &msg);
 
   // last mouse position
   int32_t m_xCursor = 0;

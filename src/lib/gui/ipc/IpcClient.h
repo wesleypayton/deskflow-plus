@@ -55,6 +55,9 @@ protected:
 
   void sendMessage(const QString &message);
 
+  //! Wait, for up to \p ms, until what was sent has left; for a message sent just before the app quits
+  void waitUntilSent(int ms);
+
 private:
   void attemptConnection();
   void handleHandshakeMessage(const QStringList &parts);

@@ -503,6 +503,10 @@ void Server::switchComputer(BaseClientProxy *dst, int32_t x, int32_t y, bool for
       for (ClipboardID id = 0; id < kClipboardEnd; ++id) {
         const ClipboardInfo &clipboard = m_clipboards[id];
         if (clipboard.m_clipboardOwner == getName(m_primaryClient)) {
+          // copied files aren't part of the clipboard data compared below, and this computer is only told that
+          // its clipboard was grabbed by the first copy after another computer's, so look for them here
+          if (id == kClipboardClipboard)
+            offerPrimaryClipboardFiles(true);
           onClipboardChanged(m_primaryClient, id, clipboard.m_clipboardSeqNum);
         }
       }
@@ -2449,10 +2453,10 @@ void Server::deliverTransfer(const std::string &computer, const deskflow::transf
   }
 }
 
-void Server::offerPrimaryClipboardFiles()
+void Server::offerPrimaryClipboardFiles(bool onlyIfNew)
 {
   if (m_transferAgent)
-    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState);
+    deskflow::transfer::offerClipboardFiles(*m_transferAgent, *m_transferState, onlyIfNew);
 }
 
 void Server::startClipboardTransfer(BaseClientProxy *destination)

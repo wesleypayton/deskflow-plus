@@ -66,7 +66,18 @@ public:
    */
   bool updateComputerMonitors(const QString &computerName, const QList<QRect> &monitors);
 
+  /**
+   * @brief Read this computer's monitors again and apply them to the server in the layout.
+   * They are only otherwise read when the settings load, which at sign-in can be before every monitor is up.
+   * @return true if anything changed
+   */
+  bool updateLocalMonitors();
+
+  //! As updateLocalMonitors(), with the monitors given in desktop coordinates rather than read from the OS
+  bool updateLocalMonitors(const QList<QRect> &monitors);
+
 private:
+  bool applyMonitors(Computer &computer, const QList<QRect> &monitors);
   void recall();
   void setupComputers();
   QSettingsProxy &settings();

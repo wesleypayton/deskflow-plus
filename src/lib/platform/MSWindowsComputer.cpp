@@ -846,11 +846,31 @@ void MSWindowsComputer::handleSystemEvent(const Event &event)
   MSG *msg = static_cast<MSG *>(event.getData());
   assert(msg != nullptr);
 
+  if (m_isPrimary && !m_isOnComputer && msg->message == DESKFLOW_MSG_MOUSE_MOVE)
+    noteMouseMoveWait(*msg);
+
   if (onPreDispatch(msg->hwnd, msg->message, msg->wParam, msg->lParam)) {
     return;
   }
   TranslateMessage(msg);
   DispatchMessage(msg);
+}
+
+void MSWindowsComputer::noteMouseMoveWait(const MSG &msg)
+{
+  using namespace std::chrono;
+
+  // how long the move waited for the hook to take it, then in the queue for this thread to send it on
+  const DWORD queued = GetTickCount() - msg.time;
+  const DWORD waited = MSWindowsHook::takeLateMoveMs() + (queued < 5000 ? queued : 0);
+  m_mouseLag.stepTook(milliseconds(waited));
+
+  if (const auto report = m_mouseLag.takeReport(deskflow::MouseLagMeter::Clock::now()); report) {
+    LOG_WARN(
+        "mouse stutter: this computer was slow to pass on its mouse's moves %d time(s), up to %d ms late",
+        report->slowSteps, report->slowestStepMs
+    );
+  }
 }
 
 void MSWindowsComputer::updateButtons()

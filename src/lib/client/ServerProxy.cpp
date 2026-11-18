@@ -121,6 +121,7 @@ void ServerProxy::handleData()
   }
 
   flushCompressedMouse();
+  reportMouseLag();
 }
 
 ServerProxy::ConnectionResult ServerProxy::parseHandshakeMessage(const uint8_t *code)
@@ -377,13 +378,44 @@ void ServerProxy::flushCompressedMouse()
 {
   if (m_compressMouse) {
     m_compressMouse = false;
-    m_client->mouseMove(m_xMouse, m_yMouse);
+    moveCursor(false, m_xMouse, m_yMouse);
   }
   if (m_compressMouseRelative) {
     m_compressMouseRelative = false;
-    m_client->mouseRelativeMove(m_dxMouse, m_dyMouse);
+    moveCursor(true, m_dxMouse, m_dyMouse);
     m_dxMouse = 0;
     m_dyMouse = 0;
+  }
+}
+
+void ServerProxy::moveCursor(bool relative, int32_t x, int32_t y)
+{
+  const auto start = deskflow::MouseLagMeter::Clock::now();
+  if (relative)
+    m_client->mouseRelativeMove(x, y);
+  else
+    m_client->mouseMove(x, y);
+  m_mouseLag.stepTook(deskflow::MouseLagMeter::Clock::now() - start);
+}
+
+void ServerProxy::reportMouseLag()
+{
+  m_mouseLag.batchEnded();
+  const auto report = m_mouseLag.takeReport(deskflow::MouseLagMeter::Clock::now());
+  if (!report)
+    return;
+
+  if (report->lateBursts > 0) {
+    LOG_WARN(
+        "mouse stutter: moves arrived late from the server %d time(s), held up for up to %d ms and then up to %d at once",
+        report->lateBursts, report->longestGapMs, report->mostMovesAtOnce
+    );
+  }
+  if (report->slowSteps > 0) {
+    LOG_WARN(
+        "mouse stutter: this computer was slow to move its cursor %d time(s), taking up to %d ms", report->slowSteps,
+        report->slowestStepMs
+    );
   }
 }
 
@@ -668,6 +700,7 @@ void ServerProxy::mouseMove()
   int16_t x;
   int16_t y;
   ProtocolUtil::readf(m_stream, kMsgDMouseMove + 4, &x, &y);
+  m_mouseLag.moveArrived(deskflow::MouseLagMeter::Clock::now());
 
   // note if we should ignore the move
   ignore = m_ignoreMouse;
@@ -690,7 +723,7 @@ void ServerProxy::mouseMove()
 
   // forward
   if (!ignore) {
-    m_client->mouseMove(x, y);
+    moveCursor(false, x, y);
   }
 }
 
@@ -701,6 +734,7 @@ void ServerProxy::mouseRelativeMove()
   int16_t dx;
   int16_t dy;
   ProtocolUtil::readf(m_stream, kMsgDMouseRelMove + 4, &dx, &dy);
+  m_mouseLag.moveArrived(deskflow::MouseLagMeter::Clock::now());
 
   // note if we should ignore the move
   ignore = m_ignoreMouse;
@@ -720,7 +754,7 @@ void ServerProxy::mouseRelativeMove()
 
   // forward
   if (!ignore) {
-    m_client->mouseRelativeMove(dx, dy);
+    moveCursor(true, dx, dy);
   }
 }
 

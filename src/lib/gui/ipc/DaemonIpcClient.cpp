@@ -34,6 +34,12 @@ void DaemonIpcClient::sendStopProcess()
   sendMessage(QStringLiteral("stop"));
 }
 
+void DaemonIpcClient::sendPauseProcess()
+{
+  sendMessage(QStringLiteral("pause"));
+  waitUntilSent(2000);
+}
+
 void DaemonIpcClient::sendClearSettings()
 {
   sendMessage(QStringLiteral("clearSettings"));

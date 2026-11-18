@@ -44,6 +44,13 @@ public:
   void stop(std::optional<ProcessMode> processMode = std::nullopt);
   void restart();
   void cleanup();
+
+  /**
+   * @brief Stop a core the background service runs, because the user quit the app.
+   * The service starts it again when the computer next starts, and the app does when it's next opened,
+   * so quitting means "off for now". Returns once the service has been told.
+   */
+  void pauseForQuit();
   void applyLogLevel();
   void clearSettings();
   void retryDaemon();

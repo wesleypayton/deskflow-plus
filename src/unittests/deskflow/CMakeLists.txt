@@ -85,6 +85,14 @@ create_test(
   WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
 )
 
+create_test(
+  NAME MouseLagMeterTests
+  DEPENDS app
+  LIBS arch base ${extra_libs}
+  SOURCE MouseLagMeterTests.cpp
+  WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src/lib/deskflow"
+)
+
 if(BUILD_X11_SUPPORT)
   create_test(
     NAME XkbLayoutParserTests

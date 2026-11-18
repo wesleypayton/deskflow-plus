@@ -23,10 +23,12 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QEventLoop>
 #include <QFile>
 #include <QMetaEnum>
 #include <QMutexLocker>
 #include <QRegularExpression>
+#include <QTimer>
 
 namespace deskflow::gui {
 
@@ -582,6 +584,30 @@ void CoreProcess::cleanup()
   if (isDesktop && isRunning) {
     stop();
   }
+}
+
+void CoreProcess::pauseForQuit()
+{
+  const auto isService = Settings::value(Settings::Core::ProcessMode).value<ProcessMode>() == ProcessMode::Service;
+  if (!isService || m_processState == ProcessState::Stopped)
+    return;
+
+  // the service is normally still connected from starting the core; if not, give it a moment
+  if (!m_daemonIpcClient->isConnected()) {
+    QEventLoop wait;
+    connect(m_daemonIpcClient, &ipc::DaemonIpcClient::connected, &wait, &QEventLoop::quit);
+    connect(m_daemonIpcClient, &ipc::DaemonIpcClient::connectionFailed, &wait, &QEventLoop::quit);
+    QTimer::singleShot(3000, &wait, &QEventLoop::quit);
+    m_daemonIpcClient->connectToServer();
+    wait.exec();
+  }
+  if (!m_daemonIpcClient->isConnected()) {
+    qWarning("couldn't reach the background service, so the core is left running");
+    return;
+  }
+
+  qInfo("quitting, so asking the background service to stop the core until the app or the computer next starts");
+  m_daemonIpcClient->sendPauseProcess();
 }
 
 void CoreProcess::reloadServerConfig()

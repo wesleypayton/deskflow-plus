@@ -229,6 +229,8 @@ private:
   void handleDisconnectRequested(const Event &event);
   void handleShapeChanged();
   void handleClipboardGrabbed(const Event &event);
+  void announceClipboardGrab(ClipboardID id);
+  bool newClipboardFilesCopied() const;
   void handleHello();
   void handleSuspend();
   void handleResume();

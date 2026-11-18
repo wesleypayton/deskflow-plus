@@ -135,6 +135,12 @@ public:
   //! Monitor rectangles relative to the top left of layoutRect(), one covering it all if unknown
   [[nodiscard]] QList<QRect> monitors() const;
 
+  //! True once the computer's real monitors are known, rather than the one monitor assumed until then
+  [[nodiscard]] bool hasMonitors() const
+  {
+    return !m_monitors.isEmpty();
+  }
+
   //! Set the computer's size and monitors from absolute monitor rectangles, keeping its layout position
   void setMonitors(const QList<QRect> &monitors);
 

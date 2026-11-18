@@ -10,6 +10,7 @@
 #include "base/Log.h"
 #include "deskflow/DisplayException.h"
 
+#include <atomic>
 #include <cstring>
 #include <mutex>
 
@@ -26,6 +27,7 @@ static HHOOK g_keyboardLL = nullptr;
 static HHOOK g_mouseLL = nullptr;
 static bool g_screenSaver = false;
 static EHookMode g_mode = kHOOK_DISABLE;
+static std::atomic<DWORD> g_lateMoveMs = 0;
 static uint32_t g_zoneSides = 0;
 static int32_t g_zoneSize = 0;
 static int32_t g_xComputer = 0;
@@ -638,6 +640,13 @@ static LRESULT CALLBACK mouseLLHook(int code, WPARAM wParam, LPARAM lParam)
     int32_t y = static_cast<int32_t>(info->pt.y);
     int32_t w = static_cast<int16_t>(HIWORD(info->mouseData));
 
+    // Windows stamps the move when the mouse made it; anything since is this thread being too busy to take it.
+    // a stamp from another clock would read as a huge wait, so those aren't believed
+    if (wParam == WM_MOUSEMOVE && g_mode == kHOOK_RELAY_EVENTS && !injected) {
+      if (const DWORD waited = GetTickCount() - info->time; waited < 5000 && waited > g_lateMoveMs.load())
+        g_lateMoveMs.store(waited);
+    }
+
     // handle the message
     if (mouseHookHandler(wParam, x, y, w)) {
       return 1;
@@ -645,6 +654,11 @@ static LRESULT CALLBACK mouseLLHook(int code, WPARAM wParam, LPARAM lParam)
   }
 
   return CallNextHookEx(g_mouseLL, code, wParam, lParam);
+}
+
+uint32_t MSWindowsHook::takeLateMoveMs()
+{
+  return g_lateMoveMs.exchange(0);
 }
 
 EHookResult MSWindowsHook::install()

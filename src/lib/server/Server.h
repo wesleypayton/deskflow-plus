@@ -237,7 +237,7 @@ private:
   // file transfer
   void setupFileTransfer();
   void deliverTransfer(const std::string &computer, const deskflow::transfer::TransferMessage &message);
-  void offerPrimaryClipboardFiles();
+  void offerPrimaryClipboardFiles(bool onlyIfNew = false);
   void startClipboardTransfer(BaseClientProxy *destination);
   bool fileDragAllowsSwitch();
   void finishFileDrag();

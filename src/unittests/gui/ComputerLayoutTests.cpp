@@ -210,4 +210,30 @@ void ComputerLayoutTests::reportedMonitorsIgnoredForServerAndUnknown()
   QVERIFY(!config.updateComputerMonitors("laptop", {}));
 }
 
+void ComputerLayoutTests::localMonitorComesBack()
+{
+  ServerConfig config;
+  const QRect main(0, 0, 1920, 1200);
+  const QRect second(1920, -240, 2560, 1440);
+
+  QVERIFY(config.updateLocalMonitors({main, second}));
+  const auto both = find(config, "server")->layoutRect();
+  QCOMPARE(both.size(), QSize(4480, 1440));
+  QCOMPARE(find(config, "server")->monitors().size(), 2);
+
+  // the second monitor isn't up yet, as can happen at sign-in: the main one stays where it was
+  QVERIFY(config.updateLocalMonitors({main}));
+  const auto *server = find(config, "server");
+  QCOMPARE(server->monitors().size(), 1);
+  QCOMPARE(server->layoutRect(), QRect(both.topLeft() + QPoint(0, 240), main.size()));
+
+  // and once it is, the layout is as it was
+  QVERIFY(config.updateLocalMonitors({main, second}));
+  QCOMPARE(find(config, "server")->layoutRect(), both);
+  QCOMPARE(find(config, "server")->monitors().size(), 2);
+
+  QVERIFY(!config.updateLocalMonitors({main, second}));
+  QVERIFY(!config.updateLocalMonitors(QList<QRect>()));
+}
+
 QTEST_MAIN(ComputerLayoutTests)

@@ -63,16 +63,46 @@ HGLOBAL copyToGlobal(const void *data, size_t size)
 std::vector<std::filesystem::path> filesOnClipboard()
 {
   std::vector<std::filesystem::path> items;
-  if (!IsClipboardFormatAvailable(CF_HDROP))
-    return items;
+  bool sawFileList = false;
 
-  // the copying program may still be handing the list over when we're told the clipboard changed
+  // the copying program may still be handing the list over when we're told the clipboard changed,
+  // so the list not being there yet is retried too, not only a list that can't be read
   for (int attempt = 0; attempt < kReadAttempts && items.empty(); ++attempt) {
     if (attempt > 0)
       Sleep(kReadRetryMs);
     if (!openClipboard(nullptr))
       return items;
 
+    if (!IsClipboardFormatAvailable(CF_HDROP)) {
+      if (attempt == 0 || attempt == kReadAttempts - 1) {
+        // which formats are there, to tell why a copied file isn't seen
+        std::string formats;
+        for (UINT format = EnumClipboardFormats(0); format != 0; format = EnumClipboardFormats(format)) {
+          wchar_t name[64] = {};
+          if (format >= 0xC000)
+            GetClipboardFormatNameW(format, name, 63);
+          formats += std::to_string(format);
+          if (name[0] != L'\0') {
+            formats += '=';
+            for (const wchar_t *c = name; *c != L'\0'; ++c)
+              formats += *c < 128 ? static_cast<char>(*c) : '?';
+          }
+          formats += ' ';
+        }
+        LOG_DEBUG("no file list on the clipboard (attempt %d), formats: %s", attempt + 1, formats.c_str());
+      }
+
+      // a copy of plain text is no reason to wait; only keep trying when something else says files are coming
+      bool filesComing = false;
+      for (const auto *name : {L"Shell IDList Array", L"FileNameW", L"FileName", L"Preferred DropEffect"})
+        filesComing = filesComing || IsClipboardFormatAvailable(RegisterClipboardFormatW(name));
+      CloseClipboard();
+      if (!filesComing)
+        break;
+      continue;
+    }
+
+    sawFileList = true;
     if (auto *drop = static_cast<HDROP>(GetClipboardData(CF_HDROP)); drop != nullptr) {
       const auto count = DragQueryFileW(drop, 0xFFFFFFFF, nullptr, 0);
       for (UINT i = 0; i < count; ++i) {
@@ -84,9 +114,10 @@ std::vector<std::filesystem::path> filesOnClipboard()
     CloseClipboard();
   }
 
-  if (items.empty())
-    LOG_WARN("the clipboard has a file list that couldn't be read");
-  else
+  if (items.empty()) {
+    if (sawFileList)
+      LOG_WARN("the clipboard has a file list that couldn't be read");
+  } else
     LOG_DEBUG("the clipboard has %d copied items", static_cast<int>(items.size()));
   return items;
 }

@@ -249,6 +249,13 @@ bool Client::leave()
   m_computer->leave();
 
   if (m_enableClipboard) {
+    // files copied without this computer being told, see newClipboardFilesCopied(), are announced as the cursor leaves
+    if (m_maximumClipboardSize != 0 && !m_ownClipboard[kClipboardClipboard] && newClipboardFilesCopied()) {
+      LOG_DEBUG("copied files found as the cursor leaves, announcing them");
+      for (ClipboardID id = 0; id < kClipboardEnd; ++id)
+        announceClipboardGrab(id);
+    }
+
     // send clipboards that we own and that have changed
     for (ClipboardID id = 0; id < kClipboardEnd; ++id) {
       if (m_ownClipboard[id]) {
@@ -265,6 +272,16 @@ void Client::setClipboard(ClipboardID id, const IClipboard *clipboard)
   m_computer->setClipboard(id, clipboard);
   m_ownClipboard[id] = false;
   m_sentClipboard[id] = false;
+
+  // the server sends its clipboard as the cursor arrives, which can land just after copied files were put on
+  // this one. Setting it empties the clipboard, so put those files back; text the server sent stays.
+  constexpr auto kFilesRecently = std::chrono::seconds(3);
+  // both clipboards the server sends are the same one on Windows, so the second empties it again
+  if (m_transferState && !m_transferState->receivedClipboardFiles.empty() &&
+      std::chrono::steady_clock::now() - m_transferState->receivedClipboardAt < kFilesRecently) {
+    LOG_DEBUG("putting the just received files back on the clipboard");
+    deskflow::transfer::platform::putFilesOnClipboard(m_transferState->receivedClipboardFiles);
+  }
 }
 
 void Client::grabClipboard(ClipboardID id)
@@ -772,22 +789,38 @@ void Client::handleClipboardGrabbed(const Event &event)
   }
 
   const auto *info = static_cast<const IComputer::ClipboardInfo *>(event.getData());
+  announceClipboardGrab(info->m_id);
+}
 
+void Client::announceClipboardGrab(ClipboardID id)
+{
   // grab ownership
-  m_server->onGrabClipboard(info->m_id);
-  if (info->m_id == kClipboardClipboard)
+  m_server->onGrabClipboard(id);
+  if (id == kClipboardClipboard)
     offerClipboardFiles();
 
   // we now own the clipboard and it has not been sent to the server
-  m_ownClipboard[info->m_id] = true;
-  m_sentClipboard[info->m_id] = false;
-  m_timeClipboard[info->m_id] = 0;
+  m_ownClipboard[id] = true;
+  m_sentClipboard[id] = false;
+  m_timeClipboard[id] = 0;
 
   // if we're not the active computer then send the clipboard now,
   // otherwise we'll wait until we leave.
   if (!m_active) {
-    sendClipboard(info->m_id);
+    sendClipboard(id);
   }
+}
+
+bool Client::newClipboardFilesCopied() const
+{
+  if (!m_transferAgent || !m_transferState)
+    return false;
+
+  // a copy of files is only reported when this computer thought the clipboard was its own, which a copy right after
+  // another one isn't, so look at the clipboard itself
+  const auto files = deskflow::transfer::platform::filesOnClipboard();
+  return !files.empty() && files != m_transferState->receivedClipboardFiles &&
+         files != m_transferState->lastOfferedClipboardFiles;
 }
 
 void Client::handleHello()

@@ -22,6 +22,9 @@ public:
   void sendConfigFile(const QString &configFile);
   void sendStartProcess();
   void sendStopProcess();
+  //! Stops the core like sendStopProcess(), but the service starts it again the next time the computer starts.
+  //! Doesn't return until the message has left, as the app quits straight after
+  void sendPauseProcess();
   void sendClearSettings();
   void requestLogPath();
   //! Asks the service to download and install \p version, see DaemonUpdater
